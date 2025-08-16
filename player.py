@@ -38,12 +38,6 @@ class Player(CircleShape):
         if keys[pygame.K_SPACE]:
             self.shoot()
 
-    def rotate(self, dt):
-        self.rotation += PLAYER_TURN_SPEED * dt
-
-    def move(self, dt):
-        forward = pygame.Vector2(0, 1).rotate(self.rotation)
-        self.position += forward * PLAYER_SPEED * dt
         if self.position[0] > SCREEN_WIDTH:
             self.position[0] = 0
         if self.position[0] < 0:
@@ -52,6 +46,22 @@ class Player(CircleShape):
             self.position[1] = 0
         if self.position[1] < 0:
             self.position[1] = SCREEN_HEIGHT
+        
+        self.velocity *= 0.99
+
+        if self.velocity.length() > PLAYER_SPEED:
+            self.velocity.scale_to_length(PLAYER_SPEED)
+
+        self.position += self.velocity * dt
+
+    def rotate(self, dt):
+        self.rotation += PLAYER_TURN_SPEED * dt
+
+    def move(self, dt):
+        forward = pygame.Vector2(0, 1).rotate(self.rotation)
+        self.velocity += forward * PLAYER_ACCELERATION * dt
+
+        
 
     def shoot(self):
         if self.shoot_timer > 0:
