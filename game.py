@@ -1,13 +1,16 @@
 import pygame
-from game_play import GamePlay
+from main_menu import MainMenu
 
 class Game():
     def __init__(self, screen):
         self.screen = screen
         self.clock = pygame.time.Clock()
         self.dt = 0
-        self.current_scene = GamePlay(self.screen, self.dt)
         self.running = True
+        self.set_scene(MainMenu(self, self.screen, self.dt))
+
+    def set_scene(self, new_scene):
+        self.current_scene = new_scene
 
     def run(self):
         while self.running:
@@ -18,6 +21,10 @@ class Game():
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     self.running = False
+
+            # font = pygame.font.Font(None, 36) 
+            # fps_text = font.render(f"FPS: {int(self.clock.get_fps())}", True, (255, 255, 255))
+            # self.screen.blit(fps_text, (10, 10)) 
 
             pygame.display.flip()
 
