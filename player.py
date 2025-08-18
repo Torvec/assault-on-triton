@@ -1,7 +1,16 @@
 import pygame
 from circleshape import CircleShape
 from shot import Shot
-from global_consts import *
+from global_consts import (
+    PLAYER_RADIUS,
+    SCREEN_WIDTH,
+    SCREEN_HEIGHT,
+    PLAYER_SPEED,
+    PLAYER_TURN_SPEED,
+    PLAYER_ACCELERATION,
+    SHOT_COOLDOWN,
+    SHOT_SPEED
+)
 
 
 class Player(CircleShape):
@@ -21,7 +30,9 @@ class Player(CircleShape):
         return [a, b, c]
     
     def draw(self, screen):
-        pygame.draw.polygon(screen, "white", self.triangle(), 2)
+        pygame.draw.polygon(screen, "slategray3", self.triangle(), 0)
+        # Shows collision circle
+        # pygame.draw.circle( screen, "red", (int(self.position.x), int(self.position.y)), self.radius, 1)
 
     def update(self, dt):
         self.shoot_timer -= dt
@@ -66,7 +77,7 @@ class Player(CircleShape):
     def shoot(self):
         if self.shoot_timer > 0:
             return
-        self.shoot_timer = PLAYER_SHOOT_COOLDOWN
+        self.shoot_timer = SHOT_COOLDOWN
         shot = Shot(self.position.x, self.position.y)
-        shot.velocity = pygame.Vector2(0,1).rotate(self.rotation) * PLAYER_SHOOT_SPEED
+        shot.velocity = pygame.Vector2(0,1).rotate(self.rotation) * SHOT_SPEED
         self.shoot_sound.play()

@@ -22,10 +22,6 @@ class Game():
                 if event.type == pygame.QUIT:
                     self.running = False
 
-            # font = pygame.font.Font(None, 36) 
-            # fps_text = font.render(f"FPS: {int(self.clock.get_fps())}", True, (255, 255, 255))
-            # self.screen.blit(fps_text, (10, 10)) 
-
             pygame.display.flip()
 
             self.dt = self.clock.tick(60) / 1000

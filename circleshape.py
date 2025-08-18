@@ -1,9 +1,8 @@
 import pygame
 
-# Base class for game objects
 class CircleShape(pygame.sprite.Sprite):
     def __init__(self, x, y, radius):
-        # we will be using this later
+        # Used to auto add sprites to groups upon creation if a .container attribute is present
         if hasattr(self, "containers"):
             super().__init__(self.containers)
         else:
@@ -14,11 +13,9 @@ class CircleShape(pygame.sprite.Sprite):
         self.radius = radius
 
     def draw(self, screen):
-        # sub-classes must override
         pass
 
     def update(self, dt):
-        # sub-classes must override
         pass
 
     def collides_with(self, other):
