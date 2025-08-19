@@ -12,7 +12,6 @@ from global_consts import (
     SHOT_SPEED
 )
 
-
 class Player(CircleShape):
     def __init__(self, x, y):
         super().__init__(x, y, PLAYER_RADIUS)
@@ -71,8 +70,6 @@ class Player(CircleShape):
     def move(self, dt):
         forward = pygame.Vector2(0, 1).rotate(self.rotation)
         self.velocity += forward * PLAYER_ACCELERATION * dt
-
-        
 
     def shoot(self):
         if self.shoot_timer > 0:
