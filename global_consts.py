@@ -19,7 +19,14 @@ SHOT_RADIUS = 5
 SHOT_SPEED = 500
 SHOT_COOLDOWN = 0.3
 SHOT_MAX_RANGE = 500
+SHOT_SFX = 'assets/720118__baggonotes__player_shoot1.wav'
 
 GAME_OVER_TEXT = 'Game Over!'
 GAME_OVER_REPLAY = "Press ENTER to Replay!"
 GAME_OVER_MAIN_MENU = 'Press ESC to return to Main Menu'
+
+SCOREBOARD_TITLE = "High Scores"
+
+OPTIONS_TITLE = "Options"
+
+CREDITS_TITLE = "Credits"

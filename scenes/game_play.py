@@ -3,7 +3,7 @@ from global_consts import SCREEN_WIDTH, SCREEN_HEIGHT
 from scenes.scene import Scene
 from entities.player import Player
 from entities.asteroid import Asteroid
-from entities.asteroidfield import AsteroidField
+from utils.asteroid_spawn_manager import AsteroidSpawnManager
 from entities.shot import Shot
 from scenes.game_over import GameOver
 
@@ -13,11 +13,12 @@ class GamePlay(Scene):
         self.asteroids = pygame.sprite.Group()
         self.shots = pygame.sprite.Group()
         Asteroid.containers = (self.asteroids, self.updateable, self.drawable)
-        AsteroidField.containers = self.updateable
-        AsteroidField()
+        AsteroidSpawnManager.containers = self.updateable
+        AsteroidSpawnManager()
         Player.containers = (self.updateable, self.drawable)
         self.player = Player(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2)
         Shot.containers = (self.shots, self.updateable, self.drawable)
+        self.score = 0
 
     def update(self, dt):
         super().update(dt)
@@ -28,6 +29,12 @@ class GamePlay(Scene):
                     if shot.collides_with(asteroid):
                         shot.kill()
                         asteroid.split()
+                        self.score += 1
     
     def draw(self, screen):
         super().draw(screen)
+
+        score_font = pygame.font.Font(None, 32)
+        score = score_font.render(f"Score: {self.score}", True, "grey90")
+        score_rect = score.get_rect(center=(SCREEN_WIDTH // 2, 16))
+        self.screen.blit(score, score_rect)

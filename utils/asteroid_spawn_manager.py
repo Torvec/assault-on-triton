@@ -4,7 +4,7 @@ from entities.asteroid import Asteroid
 from global_consts import *
 
 
-class AsteroidField(pygame.sprite.Sprite):
+class AsteroidSpawnManager(pygame.sprite.Sprite):
     edges = [
         [
             pygame.Vector2(1, 0),

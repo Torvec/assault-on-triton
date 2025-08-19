@@ -9,7 +9,8 @@ from global_consts import (
     PLAYER_TURN_SPEED,
     PLAYER_ACCELERATION,
     SHOT_COOLDOWN,
-    SHOT_SPEED
+    SHOT_SPEED,
+    SHOT_SFX
 )
 
 class Player(CircleShape):
@@ -17,7 +18,7 @@ class Player(CircleShape):
         super().__init__(x, y, PLAYER_RADIUS)
         self.rotation = 0
         self.shoot_timer = 0
-        self.shoot_sound = pygame.mixer.Sound('assets/720118__baggonotes__player_shoot1.wav')
+        self.shoot_sound = pygame.mixer.Sound(SHOT_SFX)
         self.shoot_sound.set_volume(0.5)
     
     def triangle(self):
