@@ -6,7 +6,7 @@ from global_consts import (
     SCREEN_WIDTH, 
     SCREEN_HEIGHT
 )
-from scene import Scene
+from scenes.scene import Scene
 
 class GameOver(Scene):
     def __init__(self, game, screen, dt):
@@ -16,10 +16,10 @@ class GameOver(Scene):
         super().update(dt)
         keys = pygame.key.get_pressed()
         if keys[pygame.K_RETURN]:
-            from game_play import GamePlay
+            from scenes.game_play import GamePlay
             self.game.set_scene(GamePlay(self.game, self.screen, self.dt))
         if keys[pygame.K_ESCAPE]:
-            from main_menu import MainMenu
+            from scenes.main_menu import MainMenu
             self.game.set_scene(MainMenu(self.game, self.screen, self.dt))
 
     def draw(self, screen):

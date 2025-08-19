@@ -1,5 +1,5 @@
 import pygame
-from circleshape import CircleShape
+from entities.circleshape import CircleShape
 from global_consts import SHOT_RADIUS, SHOT_MAX_RANGE
 
 class Shot(CircleShape):

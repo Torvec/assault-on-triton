@@ -1,5 +1,5 @@
 import pygame
-from scene import Scene
+from scenes.scene import Scene
 from global_consts import (
     GAME_TITLE, 
     MAIN_MENU_MESSAGE, 
@@ -15,7 +15,7 @@ class MainMenu(Scene):
         super().update(dt)
         keys = pygame.key.get_pressed()
         if keys[pygame.K_RETURN]:
-            from game_play import GamePlay
+            from scenes.game_play import GamePlay
             self.game.set_scene(GamePlay(self.game, self.screen, self.dt))
 
     def draw(self, screen):

@@ -1,5 +1,5 @@
 import pygame
-from main_menu import MainMenu
+from scenes.main_menu import MainMenu
 
 class Game():
     def __init__(self, screen):

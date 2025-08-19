@@ -1,11 +1,11 @@
 import pygame
 from global_consts import SCREEN_WIDTH, SCREEN_HEIGHT
-from scene import Scene
-from player import Player
-from asteroid import Asteroid
-from asteroidfield import AsteroidField
-from shot import Shot
-from game_over import GameOver
+from scenes.scene import Scene
+from entities.player import Player
+from entities.asteroid import Asteroid
+from entities.asteroidfield import AsteroidField
+from entities.shot import Shot
+from scenes.game_over import GameOver
 
 class GamePlay(Scene):
     def __init__(self, game, screen, dt):

@@ -1,6 +1,6 @@
 import pygame
-from circleshape import CircleShape
-from shot import Shot
+from entities.circleshape import CircleShape
+from entities.shot import Shot
 from global_consts import (
     PLAYER_RADIUS,
     SCREEN_WIDTH,
@@ -17,7 +17,7 @@ class Player(CircleShape):
         super().__init__(x, y, PLAYER_RADIUS)
         self.rotation = 0
         self.shoot_timer = 0
-        self.shoot_sound = pygame.mixer.Sound('720118__baggonotes__player_shoot1.wav')
+        self.shoot_sound = pygame.mixer.Sound('assets/720118__baggonotes__player_shoot1.wav')
         self.shoot_sound.set_volume(0.5)
     
     def triangle(self):
