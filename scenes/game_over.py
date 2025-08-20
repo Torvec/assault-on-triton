@@ -1,12 +1,16 @@
 import pygame
+from scenes.scene import Scene
+from utils.render_text import render_text
 from global_consts import (
     GAME_OVER_TEXT, 
+    GAME_OVER_SCORE,
     GAME_OVER_REPLAY, 
-    GAME_OVER_MAIN_MENU, 
+    GAME_OVER_MAIN_MENU,
+    GAME_OVER_SCOREBOARD,
+    GAME_OVER_CREDITS,
     SCREEN_WIDTH, 
     SCREEN_HEIGHT
 )
-from scenes.scene import Scene
 
 class GameOver(Scene):
     def __init__(self, game, screen, dt):
@@ -27,23 +31,45 @@ class GameOver(Scene):
     def draw(self, screen):
         super().draw(screen)
 
-        title_font = pygame.font.Font(None, 128)
-        title_upper = GAME_OVER_TEXT.upper()
-        title = title_font.render(title_upper, False, "white")
-        title_rect = title.get_rect(center=(SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2 - 40))
-        self.screen.blit(title, title_rect)
-
-        score_font = pygame.font.Font(None, 64)
-        score = score_font.render(f'SCORE: {self.score.show_score()}', False, "white")
-        score_rect = score.get_rect(center=(SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2 + 36))
-        self.screen.blit(score, score_rect)
-        
-        replay_font = pygame.font.Font(None, 36)
-        replay = replay_font.render(GAME_OVER_REPLAY, False, "grey")
-        replay_rect = replay.get_rect(center=(SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2 + 72))
-        self.screen.blit(replay, replay_rect)
-
-        main_menu_font = pygame.font.Font(None, 36)
-        main_menu = main_menu_font.render(GAME_OVER_MAIN_MENU, False, "grey")
-        main_menu_rect = main_menu.get_rect(center=(SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2 + 108))
-        self.screen.blit(main_menu, main_menu_rect)
+        render_text(
+            self.screen,
+            GAME_OVER_TEXT,
+            128,
+            "white",
+            (SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2 - 40)
+        )
+        render_text(
+            self.screen,
+            GAME_OVER_SCORE + str(self.score.show_score()),
+            64,
+            "white",
+            (SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2 + 36)
+        )
+        render_text(
+            self.screen,
+            GAME_OVER_REPLAY,
+            36,
+            "grey",
+            (SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2 + 72)
+        )
+        render_text(
+            self.screen,
+            GAME_OVER_MAIN_MENU,
+            36,
+            "grey",
+            (SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2 + 108)
+        )
+        render_text(
+            self.screen,
+            GAME_OVER_SCOREBOARD,
+            36,
+            "grey",
+            (SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2 + 144)
+        )
+        render_text(
+            self.screen,
+            GAME_OVER_CREDITS,
+            36,
+            "grey",
+            (SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2 + 180)
+        )

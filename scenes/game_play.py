@@ -6,6 +6,7 @@ from entities.asteroid import Asteroid
 from utils.asteroid_spawn_manager import AsteroidSpawnManager
 from entities.shot import Shot
 from scenes.game_over import GameOver
+from utils.render_text import render_text
 
 class GamePlay(Scene):
     def __init__(self, game, screen, dt):
@@ -34,7 +35,10 @@ class GamePlay(Scene):
     def draw(self, screen):
         super().draw(screen)
 
-        score_font = pygame.font.Font(None, 32)
-        score = score_font.render(f"Score: {self.score.show_score()}", True, "grey90")
-        score_rect = score.get_rect(center=(SCREEN_WIDTH // 2, 16))
-        self.screen.blit(score, score_rect)
+        render_text(
+            self.screen,
+            f"Score: {self.score.show_score()}",
+            32,
+            "grey90",
+            (SCREEN_WIDTH // 2, 16)
+        )

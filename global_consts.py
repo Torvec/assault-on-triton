@@ -1,6 +1,9 @@
 GAME_TITLE = 'Asteroids'
 
-MAIN_MENU_MESSAGE = 'Press ENTER to Play!'
+MAIN_MENU_PLAY = '[ENTER] Play!'
+MAIN_MENU_OPTIONS = '[O] Options'
+MAIN_MENU_SCOREBOARD = '[S] Scoreboard'
+MAIN_MENU_CREDITS = '[C] Credits'
 
 SCREEN_WIDTH = 1280
 SCREEN_HEIGHT = 1280
@@ -22,8 +25,11 @@ SHOT_MAX_RANGE = 500
 SHOT_SFX = 'assets/720118__baggonotes__player_shoot1.wav'
 
 GAME_OVER_TEXT = 'Game Over!'
-GAME_OVER_REPLAY = "Press ENTER to Replay!"
-GAME_OVER_MAIN_MENU = 'Press ESC to return to Main Menu'
+GAME_OVER_SCORE = 'SCORE: '
+GAME_OVER_REPLAY = "[ENTER] Replay!"
+GAME_OVER_MAIN_MENU = '[ESC] Main Menu'
+GAME_OVER_SCOREBOARD = '[S] Scoreboard'
+GAME_OVER_CREDITS = '[C] Credits'
 
 SCOREBOARD_TITLE = "High Scores"
 

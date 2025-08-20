@@ -1,8 +1,12 @@
 import pygame
 from scenes.scene import Scene
+from utils.render_text import render_text
 from global_consts import (
     GAME_TITLE, 
-    MAIN_MENU_MESSAGE, 
+    MAIN_MENU_PLAY, 
+    MAIN_MENU_OPTIONS,
+    MAIN_MENU_SCOREBOARD,
+    MAIN_MENU_CREDITS,
     SCREEN_WIDTH, 
     SCREEN_HEIGHT
 )
@@ -20,30 +24,50 @@ class MainMenu(Scene):
         if keys[pygame.K_o]:
             from scenes.options import Options
             self.game.set_scene(Options(self.game, self.screen, self.dt))
+        if keys[pygame.K_s]:
+            from scenes.scoreboard import Scoreboard
+            self.game.set_scene(Scoreboard(self.game, self.screen, self.dt))
         if keys[pygame.K_c]:
             from scenes.credits import Credits
             self.game.set_scene(Credits(self.game, self.screen, self.dt))
+        
 
     def draw(self, screen):
         super().draw(screen)
 
-        title_font = pygame.font.Font(None, 128)
-        title_upper = GAME_TITLE.upper()
-        title = title_font.render(title_upper, False, "white")
-        title_rect = title.get_rect(center=(SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2 - 40))
-        self.screen.blit(title, title_rect)
+        render_text(
+            self.screen,
+            GAME_TITLE.upper(),
+            128,
+            "white",
+            (SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2 - 40)
+        )
+        render_text(
+            self.screen,
+            MAIN_MENU_PLAY,
+            36,
+            "grey",
+            (SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2 + 36)
+        )
+        render_text(
+            self.screen,
+            MAIN_MENU_OPTIONS,
+            36,
+            "grey",
+            (SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2 + 72)
+        )
+        render_text(
+            self.screen,
+            MAIN_MENU_SCOREBOARD,
+            36,
+            "grey",
+            (SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2 + 108)
+        )
+        render_text(
+            self.screen,
+            MAIN_MENU_CREDITS,
+            36,
+            "grey",
+            (SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2 + 144)
+        )
         
-        message_font = pygame.font.Font(None, 36)
-        message = message_font.render(MAIN_MENU_MESSAGE, False, "grey")
-        message_rect = message.get_rect(center=(SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2 + 36))
-        self.screen.blit(message, message_rect)
-
-        options_font = pygame.font.Font(None, 36)
-        options = options_font.render("[O] Options", False, "grey")
-        options_rect = options.get_rect(center=(SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2 + 72))
-        self.screen.blit(options, options_rect)
-
-        credits_font = pygame.font.Font(None, 36)
-        credits = credits_font.render("[C] Credits", False, "grey")
-        credits_rect = credits.get_rect(center=(SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2 + 108))
-        self.screen.blit(credits, credits_rect)
