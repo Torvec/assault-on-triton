@@ -18,7 +18,7 @@ class GamePlay(Scene):
         Player.containers = (self.updateable, self.drawable)
         self.player = Player(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2)
         Shot.containers = (self.shots, self.updateable, self.drawable)
-        self.score = 0
+        self.score = game.score_manager
 
     def update(self, dt):
         super().update(dt)
@@ -29,12 +29,12 @@ class GamePlay(Scene):
                     if shot.collides_with(asteroid):
                         shot.kill()
                         asteroid.split()
-                        self.score += 1
+                        self.score.inc_score(1)
     
     def draw(self, screen):
         super().draw(screen)
 
         score_font = pygame.font.Font(None, 32)
-        score = score_font.render(f"Score: {self.score}", True, "grey90")
+        score = score_font.render(f"Score: {self.score.show_score()}", True, "grey90")
         score_rect = score.get_rect(center=(SCREEN_WIDTH // 2, 16))
         self.screen.blit(score, score_rect)

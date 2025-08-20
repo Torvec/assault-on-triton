@@ -11,6 +11,7 @@ from scenes.scene import Scene
 class GameOver(Scene):
     def __init__(self, game, screen, dt):
         super().__init__(game, screen, dt)
+        self.score = game.score_manager
 
     def update(self, dt):
         super().update(dt)
@@ -18,6 +19,7 @@ class GameOver(Scene):
         if keys[pygame.K_RETURN]:
             from scenes.game_play import GamePlay
             self.game.set_scene(GamePlay(self.game, self.screen, self.dt))
+            self.score.score = 0
         if keys[pygame.K_ESCAPE]:
             from scenes.main_menu import MainMenu
             self.game.set_scene(MainMenu(self.game, self.screen, self.dt))
@@ -30,13 +32,18 @@ class GameOver(Scene):
         title = title_font.render(title_upper, False, "white")
         title_rect = title.get_rect(center=(SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2 - 40))
         self.screen.blit(title, title_rect)
+
+        score_font = pygame.font.Font(None, 64)
+        score = score_font.render(f'SCORE: {self.score.show_score()}', False, "white")
+        score_rect = score.get_rect(center=(SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2 + 36))
+        self.screen.blit(score, score_rect)
         
         replay_font = pygame.font.Font(None, 36)
         replay = replay_font.render(GAME_OVER_REPLAY, False, "grey")
-        replay_rect = replay.get_rect(center=(SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2 + 36))
+        replay_rect = replay.get_rect(center=(SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2 + 72))
         self.screen.blit(replay, replay_rect)
 
         main_menu_font = pygame.font.Font(None, 36)
         main_menu = main_menu_font.render(GAME_OVER_MAIN_MENU, False, "grey")
-        main_menu_rect = main_menu.get_rect(center=(SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2 + 64))
+        main_menu_rect = main_menu.get_rect(center=(SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2 + 108))
         self.screen.blit(main_menu, main_menu_rect)

@@ -1,5 +1,6 @@
 import pygame
 from scenes.main_menu import MainMenu
+from utils.score_manager import ScoreManager
 
 class Game():
     def __init__(self, screen):
@@ -7,6 +8,7 @@ class Game():
         self.clock = pygame.time.Clock()
         self.dt = 0
         self.running = True
+        self.score_manager = ScoreManager()
         self.set_scene(MainMenu(self, self.screen, self.dt))
 
     def set_scene(self, new_scene):
