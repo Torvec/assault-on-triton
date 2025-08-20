@@ -1,6 +1,7 @@
 import pygame
-from global_consts import TITLE_GAME, SCREEN_WIDTH, SCREEN_HEIGHT
 from game import Game
+from global_consts import TITLE_GAME, SCREEN_WIDTH, SCREEN_HEIGHT
+
 
 def main():
     pygame.init()
@@ -9,6 +10,7 @@ def main():
     screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
     game = Game(screen)
     game.run()
+
 
 if __name__ == "__main__":
     main()

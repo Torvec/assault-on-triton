@@ -1,5 +1,4 @@
 import pygame
-from global_consts import SCREEN_WIDTH, SCREEN_HEIGHT
 from scenes.scene import Scene
 from entities.player import Player
 from entities.asteroid import Asteroid
@@ -7,6 +6,8 @@ from utils.asteroid_spawn_manager import AsteroidSpawnManager
 from entities.shot import Shot
 from scenes.game_over import GameOver
 from utils.render_text import render_text
+from global_consts import SCREEN_WIDTH, SCREEN_HEIGHT
+
 
 class GamePlay(Scene):
     def __init__(self, game, screen, dt):
@@ -20,18 +21,40 @@ class GamePlay(Scene):
         self.player = Player(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2)
         Shot.containers = (self.shots, self.updateable, self.drawable)
         self.score = game.score_manager
+        self.score.score = 0
+        self.isPaused = False
+        print(self.isPaused)
 
-    def update(self, dt):
-        super().update(dt)
-        for asteroid in self.asteroids:
+    def update(self, dt, events):
+
+        for event in events:
+            if event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
+                self.isPaused = not self.isPaused
+            if self.isPaused:
+                if event.type == pygame.KEYDOWN and event.key == pygame.K_1:
+                    self.game.scene_manager.set_scene(
+                        GamePlay(self.game, self.screen, self.dt)
+                    )
+                if event.type == pygame.KEYDOWN and event.key == pygame.K_2:
+                    from scenes.main_menu import MainMenu
+
+                    self.game.scene_manager.set_scene(
+                        MainMenu(self.game, self.screen, self.dt)
+                    )
+
+        if not self.isPaused:
+            super().update(dt)
+            for asteroid in self.asteroids:
                 if asteroid.collides_with(self.player):
-                    self.game.set_scene(GameOver(self.game, self.screen, self.dt))
+                    self.game.scene_manager.set_scene(
+                        GameOver(self.game, self.screen, self.dt)
+                    )
                 for shot in self.shots:
                     if shot.collides_with(asteroid):
                         shot.kill()
                         asteroid.split()
                         self.score.inc_score(1)
-    
+
     def draw(self, screen):
         super().draw(screen)
 
@@ -40,5 +63,35 @@ class GamePlay(Scene):
             f"Score: {self.score.show_score()}",
             32,
             "grey90",
-            (SCREEN_WIDTH // 2, 16)
+            (SCREEN_WIDTH // 2, 16),
         )
+
+        if self.isPaused:
+            render_text(
+                self.screen,
+                "Paused",
+                64,
+                "white",
+                (SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2),
+            )
+            render_text(
+                self.screen,
+                "[ESC] Resume",
+                36,
+                "grey",
+                (SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2 + 36),
+            )
+            render_text(
+                self.screen,
+                "[1] Restart",
+                36,
+                "grey",
+                (SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2 + 72),
+            )
+            render_text(
+                self.screen,
+                "[2] Main Menu",
+                36,
+                "grey",
+                (SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2 + 108),
+            )

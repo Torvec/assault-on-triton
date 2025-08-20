@@ -1,5 +1,6 @@
 import pygame
 
+
 class CircleShape(pygame.sprite.Sprite):
     def __init__(self, x, y, radius):
         # Used to auto add sprites to groups upon creation if a .container attribute is present

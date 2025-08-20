@@ -10,8 +10,9 @@ from global_consts import (
     PLAYER_ACCELERATION,
     SHOT_COOLDOWN,
     SHOT_SPEED,
-    SHOT_SFX
+    SHOT_SFX,
 )
+
 
 class Player(CircleShape):
     def __init__(self, x, y):
@@ -20,7 +21,7 @@ class Player(CircleShape):
         self.shoot_timer = 0
         self.shoot_sound = pygame.mixer.Sound(SHOT_SFX)
         self.shoot_sound.set_volume(0.5)
-    
+
     def triangle(self):
         forward = pygame.Vector2(0, 1).rotate(self.rotation)
         right = pygame.Vector2(0, 1).rotate(self.rotation + 90) * self.radius / 1.5
@@ -28,7 +29,7 @@ class Player(CircleShape):
         b = self.position - forward * self.radius - right
         c = self.position - forward * self.radius + right
         return [a, b, c]
-    
+
     def draw(self, screen):
         pygame.draw.polygon(screen, "slategray3", self.triangle(), 0)
         # Shows collision circle
@@ -57,7 +58,7 @@ class Player(CircleShape):
             self.position[1] = 0
         if self.position[1] < 0:
             self.position[1] = SCREEN_HEIGHT
-        
+
         self.velocity *= 0.99
 
         if self.velocity.length() > PLAYER_SPEED:
@@ -77,5 +78,5 @@ class Player(CircleShape):
             return
         self.shoot_timer = SHOT_COOLDOWN
         shot = Shot(self.position.x, self.position.y)
-        shot.velocity = pygame.Vector2(0,1).rotate(self.rotation) * SHOT_SPEED
+        shot.velocity = pygame.Vector2(0, 1).rotate(self.rotation) * SHOT_SPEED
         self.shoot_sound.play()

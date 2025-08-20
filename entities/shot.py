@@ -2,6 +2,7 @@ import pygame
 from entities.circleshape import CircleShape
 from global_consts import SHOT_RADIUS, SHOT_MAX_RANGE
 
+
 class Shot(CircleShape):
     def __init__(self, x, y):
         super().__init__(x, y, SHOT_RADIUS)
