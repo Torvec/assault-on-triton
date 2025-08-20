@@ -2,11 +2,11 @@ import pygame
 from scenes.scene import Scene
 from utils.render_text import render_text
 from global_consts import (
-    GAME_TITLE, 
-    MAIN_MENU_PLAY, 
-    MAIN_MENU_OPTIONS,
-    MAIN_MENU_SCOREBOARD,
-    MAIN_MENU_CREDITS,
+    TITLE_GAME, 
+    MENU_ITEM_PLAY, 
+    MENU_ITEM_OPTIONS,
+    MENU_ITEM_SCOREBOARD,
+    MENU_ITEM_CREDITS,
     SCREEN_WIDTH, 
     SCREEN_HEIGHT
 )
@@ -37,35 +37,35 @@ class MainMenu(Scene):
 
         render_text(
             self.screen,
-            GAME_TITLE.upper(),
+            TITLE_GAME.upper(),
             128,
             "white",
             (SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2 - 40)
         )
         render_text(
             self.screen,
-            MAIN_MENU_PLAY,
+            MENU_ITEM_PLAY,
             36,
             "grey",
             (SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2 + 36)
         )
         render_text(
             self.screen,
-            MAIN_MENU_OPTIONS,
+            MENU_ITEM_OPTIONS,
             36,
             "grey",
             (SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2 + 72)
         )
         render_text(
             self.screen,
-            MAIN_MENU_SCOREBOARD,
+            MENU_ITEM_SCOREBOARD,
             36,
             "grey",
             (SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2 + 108)
         )
         render_text(
             self.screen,
-            MAIN_MENU_CREDITS,
+            MENU_ITEM_CREDITS,
             36,
             "grey",
             (SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2 + 144)

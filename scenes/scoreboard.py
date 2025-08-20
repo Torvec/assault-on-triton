@@ -1,7 +1,7 @@
 import pygame
 from scenes.scene import Scene
 from utils.render_text import render_text
-from global_consts import SCREEN_WIDTH, SCOREBOARD_TITLE
+from global_consts import SCREEN_WIDTH, TITLE_SCOREBOARD
 
 class Scoreboard(Scene):
     def __init__(self, game, screen, dt):
@@ -20,7 +20,7 @@ class Scoreboard(Scene):
 
         render_text(
             self.screen,
-            SCOREBOARD_TITLE.upper(),
+            TITLE_SCOREBOARD.upper(),
             64,
             "white",
             (SCREEN_WIDTH // 2, 64)

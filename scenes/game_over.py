@@ -2,12 +2,12 @@ import pygame
 from scenes.scene import Scene
 from utils.render_text import render_text
 from global_consts import (
-    GAME_OVER_TEXT, 
-    GAME_OVER_SCORE,
-    GAME_OVER_REPLAY, 
-    GAME_OVER_MAIN_MENU,
-    GAME_OVER_SCOREBOARD,
-    GAME_OVER_CREDITS,
+    TITLE_GAME_OVER, 
+    TITLE_SCORE,
+    MENU_ITEM_REPLAY, 
+    MENU_ITEM_MAIN_MENU,
+    MENU_ITEM_SCOREBOARD,
+    MENU_ITEM_CREDITS,
     SCREEN_WIDTH, 
     SCREEN_HEIGHT
 )
@@ -27,48 +27,54 @@ class GameOver(Scene):
         if keys[pygame.K_ESCAPE]:
             from scenes.main_menu import MainMenu
             self.game.set_scene(MainMenu(self.game, self.screen, self.dt))
+        if keys[pygame.K_s]:
+            from scenes.scoreboard import Scoreboard
+            self.game.set_scene(Scoreboard(self.game, self.screen, self.dt))
+        if keys[pygame.K_c]:
+            from scenes.credits import Credits
+            self.game.set_scene(Credits(self.game, self.screen, self.dt))
 
     def draw(self, screen):
         super().draw(screen)
 
         render_text(
             self.screen,
-            GAME_OVER_TEXT,
+            TITLE_GAME_OVER,
             128,
             "white",
             (SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2 - 40)
         )
         render_text(
             self.screen,
-            GAME_OVER_SCORE + str(self.score.show_score()),
+            TITLE_SCORE + str(self.score.show_score()),
             64,
             "white",
             (SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2 + 36)
         )
         render_text(
             self.screen,
-            GAME_OVER_REPLAY,
+            MENU_ITEM_REPLAY,
             36,
             "grey",
             (SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2 + 72)
         )
         render_text(
             self.screen,
-            GAME_OVER_MAIN_MENU,
+            MENU_ITEM_MAIN_MENU,
             36,
             "grey",
             (SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2 + 108)
         )
         render_text(
             self.screen,
-            GAME_OVER_SCOREBOARD,
+            MENU_ITEM_SCOREBOARD,
             36,
             "grey",
             (SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2 + 144)
         )
         render_text(
             self.screen,
-            GAME_OVER_CREDITS,
+            MENU_ITEM_CREDITS,
             36,
             "grey",
             (SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2 + 180)

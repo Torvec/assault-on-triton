@@ -1,7 +1,7 @@
 import pygame
 from scenes.scene import Scene
 from utils.render_text import render_text
-from global_consts import SCREEN_WIDTH, CREDITS_TITLE
+from global_consts import SCREEN_WIDTH, TITLE_CREDITS
 
 class Credits(Scene):
     def __init__(self, game, screen, dt):
@@ -20,7 +20,7 @@ class Credits(Scene):
 
         render_text(
             self.screen,
-            CREDITS_TITLE.upper(),
+            TITLE_CREDITS.upper(),
             64,
             "white",
             (SCREEN_WIDTH // 2, 64)

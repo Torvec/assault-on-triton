@@ -1,7 +1,7 @@
 import pygame
 from scenes.scene import Scene
 from utils.render_text import render_text
-from global_consts import SCREEN_WIDTH, OPTIONS_TITLE
+from global_consts import SCREEN_WIDTH, TITLE_OPTIONS
 
 class Options(Scene):
     def __init__(self, game, screen, dt):
@@ -20,7 +20,7 @@ class Options(Scene):
 
         render_text(
             self.screen,
-            OPTIONS_TITLE.upper(),
+            TITLE_OPTIONS.upper(),
             64,
             "white",
             (SCREEN_WIDTH // 2, 64)
