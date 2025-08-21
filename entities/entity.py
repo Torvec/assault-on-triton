@@ -1,14 +1,14 @@
 import pygame
 
 
-class CircleShape(pygame.sprite.Sprite):
-    def __init__(self, x, y, radius):
+class Entity(pygame.sprite.Sprite):
+    def __init__(self, game, x, y, radius):
         # Used to auto add sprites to groups upon creation if a .container attribute is present
         if hasattr(self, "containers"):
             super().__init__(self.containers)
         else:
             super().__init__()
-
+        self.game = game
         self.position = pygame.Vector2(x, y)
         self.velocity = pygame.Vector2(0, 0)
         self.radius = radius

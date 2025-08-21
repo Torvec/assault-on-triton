@@ -8,8 +8,6 @@ from global_consts import (
     MENU_ITEM_MAIN_MENU,
     MENU_ITEM_SCOREBOARD,
     MENU_ITEM_CREDITS,
-    SCREEN_WIDTH,
-    SCREEN_HEIGHT,
 )
 
 
@@ -55,40 +53,40 @@ class GameOver(Scene):
             TITLE_GAME_OVER,
             128,
             "white",
-            (SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2 - 40),
+            (self.game.screen_w // 2, self.game.screen_h // 2 - 40),
         )
         render_text(
             self.screen,
             TITLE_SCORE + str(self.score.show_score()),
             64,
             "white",
-            (SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2 + 36),
+            (self.game.screen_w // 2, self.game.screen_h // 2 + 36),
         )
         render_text(
             self.screen,
             MENU_ITEM_REPLAY,
             36,
             "grey",
-            (SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2 + 72),
+            (self.game.screen_w // 2, self.game.screen_h // 2 + 72),
         )
         render_text(
             self.screen,
             MENU_ITEM_MAIN_MENU,
             36,
             "grey",
-            (SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2 + 108),
+            (self.game.screen_w // 2, self.game.screen_h // 2 + 108),
         )
         render_text(
             self.screen,
             MENU_ITEM_SCOREBOARD,
             36,
             "grey",
-            (SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2 + 144),
+            (self.game.screen_w // 2, self.game.screen_h // 2 + 144),
         )
         render_text(
             self.screen,
             MENU_ITEM_CREDITS,
             36,
             "grey",
-            (SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2 + 180),
+            (self.game.screen_w // 2, self.game.screen_h // 2 + 180),
         )

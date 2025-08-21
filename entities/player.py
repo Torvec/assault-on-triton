@@ -1,10 +1,8 @@
 import pygame
-from entities.circleshape import CircleShape
+from entities.entity import Entity
 from entities.shot import Shot
 from global_consts import (
     PLAYER_RADIUS,
-    SCREEN_WIDTH,
-    SCREEN_HEIGHT,
     PLAYER_SPEED,
     PLAYER_TURN_SPEED,
     PLAYER_ACCELERATION,
@@ -14,9 +12,9 @@ from global_consts import (
 )
 
 
-class Player(CircleShape):
-    def __init__(self, x, y):
-        super().__init__(x, y, PLAYER_RADIUS)
+class Player(Entity):
+    def __init__(self, game, x, y):
+        super().__init__(game, x, y, PLAYER_RADIUS)
         self.rotation = 0
         self.shoot_timer = 0
         self.shoot_sound = pygame.mixer.Sound(SHOT_SFX)
@@ -50,14 +48,14 @@ class Player(CircleShape):
         if keys[pygame.K_SPACE]:
             self.shoot()
 
-        if self.position[0] > SCREEN_WIDTH:
+        if self.position[0] > self.game.screen_w:
             self.position[0] = 0
         if self.position[0] < 0:
-            self.position[0] = SCREEN_WIDTH
-        if self.position[1] > SCREEN_HEIGHT:
+            self.position[0] = self.game.screen_w
+        if self.position[1] > self.game.screen_h:
             self.position[1] = 0
         if self.position[1] < 0:
-            self.position[1] = SCREEN_HEIGHT
+            self.position[1] = self.game.screen_h
 
         self.velocity *= 0.99
 
@@ -77,6 +75,6 @@ class Player(CircleShape):
         if self.shoot_timer > 0:
             return
         self.shoot_timer = SHOT_COOLDOWN
-        shot = Shot(self.position.x, self.position.y)
+        shot = Shot(self.game, self.position.x, self.position.y)
         shot.velocity = pygame.Vector2(0, 1).rotate(self.rotation) * SHOT_SPEED
         self.shoot_sound.play()

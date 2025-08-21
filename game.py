@@ -7,6 +7,8 @@ from utils.scene_manager import SceneManager
 class Game:
     def __init__(self, screen):
         self.screen = screen
+        self.screen_w = self.screen.get_width()
+        self.screen_h = self.screen.get_height()
         self.clock = pygame.time.Clock()
         self.dt = 0
         self.running = True

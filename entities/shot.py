@@ -1,11 +1,11 @@
 import pygame
-from entities.circleshape import CircleShape
+from entities.entity import Entity
 from global_consts import SHOT_RADIUS, SHOT_MAX_RANGE
 
 
-class Shot(CircleShape):
-    def __init__(self, x, y):
-        super().__init__(x, y, SHOT_RADIUS)
+class Shot(Entity):
+    def __init__(self, game, x, y):
+        super().__init__(game, x, y, SHOT_RADIUS)
         self.start_position = pygame.Vector2(x, y)
 
     def draw(self, screen):

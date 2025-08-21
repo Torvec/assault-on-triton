@@ -6,7 +6,6 @@ from utils.asteroid_spawn_manager import AsteroidSpawnManager
 from entities.shot import Shot
 from scenes.game_over import GameOver
 from utils.render_text import render_text
-from global_consts import SCREEN_WIDTH, SCREEN_HEIGHT
 
 
 class GamePlay(Scene):
@@ -16,9 +15,11 @@ class GamePlay(Scene):
         self.shots = pygame.sprite.Group()
         Asteroid.containers = (self.asteroids, self.updateable, self.drawable)
         AsteroidSpawnManager.containers = self.updateable
-        AsteroidSpawnManager()
+        AsteroidSpawnManager(self.game)
         Player.containers = (self.updateable, self.drawable)
-        self.player = Player(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2)
+        self.player = Player(
+            self.game, self.game.screen_w // 2, self.game.screen_h // 2
+        )
         Shot.containers = (self.shots, self.updateable, self.drawable)
         self.score = game.score_manager
         self.score.score = 0
@@ -63,7 +64,7 @@ class GamePlay(Scene):
             f"Score: {self.score.show_score()}",
             32,
             "grey90",
-            (SCREEN_WIDTH // 2, 16),
+            (self.game.screen_w // 2, 16),
         )
 
         if self.isPaused:
@@ -72,26 +73,26 @@ class GamePlay(Scene):
                 "Paused",
                 64,
                 "white",
-                (SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2),
+                (self.game.screen_w // 2, self.game.screen_h // 2),
             )
             render_text(
                 self.screen,
                 "[ESC] Resume",
                 36,
                 "grey",
-                (SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2 + 36),
+                (self.game.screen_w // 2, self.game.screen_h // 2 + 36),
             )
             render_text(
                 self.screen,
                 "[1] Restart",
                 36,
                 "grey",
-                (SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2 + 72),
+                (self.game.screen_w // 2, self.game.screen_h // 2 + 72),
             )
             render_text(
                 self.screen,
                 "[2] Main Menu",
                 36,
                 "grey",
-                (SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2 + 108),
+                (self.game.screen_w // 2, self.game.screen_h // 2 + 108),
             )

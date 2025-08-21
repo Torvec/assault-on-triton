@@ -1,7 +1,7 @@
 import pygame
 from scenes.scene import Scene
 from utils.render_text import render_text
-from global_consts import SCREEN_WIDTH, TITLE_SCOREBOARD
+from global_consts import TITLE_SCOREBOARD
 
 
 class Scoreboard(Scene):
@@ -23,6 +23,12 @@ class Scoreboard(Scene):
         super().draw(screen)
 
         render_text(
-            self.screen, TITLE_SCOREBOARD.upper(), 64, "white", (SCREEN_WIDTH // 2, 64)
+            self.screen,
+            TITLE_SCOREBOARD.upper(),
+            64,
+            "white",
+            (self.game.screen_w // 2, 64),
         )
-        render_text(self.screen, "scores go here", 36, "grey", (SCREEN_WIDTH // 2, 100))
+        render_text(
+            self.screen, "scores go here", 36, "grey", (self.game.screen_w // 2, 100)
+        )

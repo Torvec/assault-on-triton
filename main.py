@@ -1,13 +1,16 @@
 import pygame
 from game import Game
-from global_consts import TITLE_GAME, SCREEN_WIDTH, SCREEN_HEIGHT
+from global_consts import TITLE_GAME
 
 
 def main():
     pygame.init()
     pygame.mixer.init()
     pygame.display.set_caption(TITLE_GAME)
-    screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
+    info = pygame.display.Info()
+    height = info.current_h
+    width = height
+    screen = pygame.display.set_mode((width, height), pygame.NOFRAME)
     game = Game(screen)
     game.run()
 
