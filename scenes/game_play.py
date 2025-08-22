@@ -45,11 +45,20 @@ class GamePlay(Scene):
 
         if not self.isPaused:
             super().update(dt)
+
             for asteroid in self.asteroids:
-                if asteroid.collides_with(self.player):
-                    self.game.scene_manager.set_scene(
-                        GameOver(self.game, self.screen, self.dt)
-                    )
+                if (
+                    asteroid.collides_with(self.player)
+                    and self.player.invincibleTime == 0
+                ):
+                    self.player.lives -= 1
+                    asteroid.split()
+                    if self.player.lives <= 0:
+                        self.game.scene_manager.set_scene(
+                            GameOver(self.game, self.screen, self.dt)
+                        )
+                    self.player.respawn()
+
                 for shot in self.shots:
                     if shot.collides_with(asteroid):
                         shot.kill()
@@ -64,7 +73,15 @@ class GamePlay(Scene):
             f"Score: {self.score.show_score()}",
             32,
             "grey90",
-            (self.game.screen_w // 2, 16),
+            (self.game.screen_w // 2, self.game.screen_h - 64),
+        )
+
+        render_text(
+            self.screen,
+            f"Lives: {self.player.lives}",
+            32,
+            "grey90",
+            (self.game.screen_w // 4, self.game.screen_h - 64),
         )
 
         if self.isPaused:

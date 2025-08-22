@@ -16,6 +16,8 @@ class Player(Entity):
     def __init__(self, game, x, y):
         super().__init__(game, x, y, PLAYER_RADIUS)
         self.rotation = 0
+        self.lives = 3
+        self.invincibleTime = 0
         self.shoot_timer = 0
         self.shoot_sound = pygame.mixer.Sound(SHOT_SFX)
         self.shoot_sound.set_volume(0.5)
@@ -64,6 +66,11 @@ class Player(Entity):
 
         self.position += self.velocity * dt
 
+        if self.invincibleTime > 0:
+            self.invincibleTime -= dt
+            if self.invincibleTime < 0:
+                self.invincibleTime = 0
+
     def rotate(self, dt):
         self.rotation += PLAYER_TURN_SPEED * dt
 
@@ -78,3 +85,10 @@ class Player(Entity):
         shot = Shot(self.game, self.position.x, self.position.y)
         shot.velocity = pygame.Vector2(0, 1).rotate(self.rotation) * SHOT_SPEED
         self.shoot_sound.play()
+
+    def respawn(self):
+        self.invincibleTime = 5
+        self.position = (
+            self.game.screen_w // 2,
+            self.game.screen_h // 2,
+        )
