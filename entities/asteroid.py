@@ -12,6 +12,7 @@ class Asteroid(Entity):
         pygame.draw.circle(screen, "wheat4", self.position, self.radius, 2)
 
     def update(self, dt):
+        super().update(dt)
         self.position += self.velocity * dt
 
     def split(self):

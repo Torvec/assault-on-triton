@@ -32,10 +32,9 @@ class Player(Entity):
 
     def draw(self, screen):
         pygame.draw.polygon(screen, "slategray3", self.triangle(), 0)
-        # Shows collision circle
-        # pygame.draw.circle( screen, "red", (int(self.position.x), int(self.position.y)), self.radius, 1)
 
     def update(self, dt):
+        super().update(dt)
         self.shoot_timer -= dt
         keys = pygame.key.get_pressed()
 
@@ -49,15 +48,6 @@ class Player(Entity):
             self.move(-dt)
         if keys[pygame.K_SPACE]:
             self.shoot()
-
-        if self.position[0] > self.game.screen_w:
-            self.position[0] = 0
-        if self.position[0] < 0:
-            self.position[0] = self.game.screen_w
-        if self.position[1] > self.game.screen_h:
-            self.position[1] = 0
-        if self.position[1] < 0:
-            self.position[1] = self.game.screen_h
 
         self.velocity *= 0.99
 
@@ -83,7 +73,9 @@ class Player(Entity):
             return
         self.shoot_timer = SHOT_COOLDOWN
         shot = Shot(self.game, self.position.x, self.position.y)
-        shot.velocity = pygame.Vector2(0, 1).rotate(self.rotation) * SHOT_SPEED
+        shot.velocity = (
+            pygame.Vector2(0, 1).rotate(self.rotation) * SHOT_SPEED + self.velocity
+        )
         self.shoot_sound.play()
 
     def respawn(self):

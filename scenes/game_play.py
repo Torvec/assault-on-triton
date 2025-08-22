@@ -24,7 +24,6 @@ class GamePlay(Scene):
         self.score = game.score_manager
         self.score.score = 0
         self.isPaused = False
-        print(self.isPaused)
 
     def update(self, dt, events):
 
