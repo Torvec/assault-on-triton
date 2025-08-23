@@ -5,7 +5,7 @@ from entities.asteroid import Asteroid
 from utils.asteroid_spawn_manager import AsteroidSpawnManager
 from entities.shot import Shot
 from scenes.game_over import GameOver
-from utils.render_text import render_text
+from ui.render_text import render_text
 
 
 class GamePlay(Scene):
@@ -36,10 +36,10 @@ class GamePlay(Scene):
                         GamePlay(self.game, self.screen, self.dt)
                     )
                 if event.type == pygame.KEYDOWN and event.key == pygame.K_2:
-                    from scenes.main_menu import MainMenu
+                    from scenes.start import Start
 
                     self.game.scene_manager.set_scene(
-                        MainMenu(self.game, self.screen, self.dt)
+                        Start(self.game, self.screen, self.dt)
                     )
 
         if not self.isPaused:

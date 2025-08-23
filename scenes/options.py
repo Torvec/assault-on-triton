@@ -1,6 +1,6 @@
 import pygame
 from scenes.scene import Scene
-from utils.render_text import render_text
+from ui.render_text import render_text
 from global_consts import TITLE_OPTIONS
 
 
@@ -13,10 +13,10 @@ class Options(Scene):
 
         for event in events:
             if event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
-                from scenes.main_menu import MainMenu
+                from scenes.start import Start
 
                 self.game.scene_manager.set_scene(
-                    MainMenu(self.game, self.screen, self.dt)
+                    Start(self.game, self.screen, self.dt)
                 )
 
     def draw(self, screen):

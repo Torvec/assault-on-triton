@@ -1,6 +1,7 @@
 import pygame
 from scenes.scene import Scene
-from utils.render_text import render_text
+# from ui.menu import Menu
+from ui.render_text import render_text
 from global_consts import (
     TITLE_GAME,
     MENU_ITEM_PLAY,
@@ -10,9 +11,10 @@ from global_consts import (
 )
 
 
-class MainMenu(Scene):
+class Start(Scene):
     def __init__(self, game, screen, dt):
         super().__init__(game, screen, dt)
+        # self.menu = Menu(game, screen)
 
     def update(self, dt, events):
         super().update(dt, events)
@@ -45,39 +47,41 @@ class MainMenu(Scene):
 
     def draw(self, screen):
         super().draw(screen)
+        
+        # self.menu.draw(screen)
 
         render_text(
             self.screen,
             TITLE_GAME.upper(),
             128,
             "white",
-            (self.game.screen_w // 2, self.game.screen_h // 2 - 40),
+            (self.game.screen_w // 2, self.game.screen_h // 2 - 128),
         )
         render_text(
             self.screen,
             MENU_ITEM_PLAY,
             36,
             "grey",
-            (self.game.screen_w // 2, self.game.screen_h // 2 + 36),
+            (self.game.screen_w // 2, self.game.screen_h // 2),
         )
         render_text(
             self.screen,
             MENU_ITEM_OPTIONS,
             36,
             "grey",
-            (self.game.screen_w // 2, self.game.screen_h // 2 + 72),
+            (self.game.screen_w // 2, self.game.screen_h // 2 + 36),
         )
         render_text(
             self.screen,
             MENU_ITEM_SCOREBOARD,
             36,
             "grey",
-            (self.game.screen_w // 2, self.game.screen_h // 2 + 108),
+            (self.game.screen_w // 2, self.game.screen_h // 2 + 72),
         )
         render_text(
             self.screen,
             MENU_ITEM_CREDITS,
             36,
             "grey",
-            (self.game.screen_w // 2, self.game.screen_h // 2 + 144),
+            (self.game.screen_w // 2, self.game.screen_h // 2 + 108),
         )

@@ -1,5 +1,5 @@
 import pygame
-from scenes.main_menu import MainMenu
+from scenes.start import Start
 from utils.score_manager import ScoreManager
 from utils.scene_manager import SceneManager
 
@@ -13,7 +13,7 @@ class Game:
         self.dt = 0
         self.running = True
         self.score_manager = ScoreManager()
-        self.scene_manager = SceneManager(MainMenu(self, self.screen, self.dt))
+        self.scene_manager = SceneManager(Start(self, self.screen, self.dt))
 
     def run(self):
         while self.running:
