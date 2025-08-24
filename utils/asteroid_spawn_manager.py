@@ -1,7 +1,7 @@
 import pygame
 import random
 from entities.asteroid import Asteroid
-from global_consts import (
+from data.global_consts import (
     ASTEROID_MAX_RADIUS,
     ASTEROID_KINDS,
     ASTEROID_MIN_RADIUS,

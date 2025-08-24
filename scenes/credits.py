@@ -1,7 +1,6 @@
 import pygame
 from scenes.scene import Scene
 from ui.render_text import render_text
-from global_consts import TITLE_CREDITS
 
 
 class Credits(Scene):
@@ -23,12 +22,14 @@ class Credits(Scene):
         super().draw(screen)
 
         render_text(
-            self.screen,
-            "CREDITS",
-            64,
-            "white",
-            (self.game.screen_w // 2, 64),
+            screen=self.screen,
+            text="CREDITS",
+            font_size=64,
+            pos=(self.game.screen_w // 2, 64),
         )
         render_text(
-            self.screen, "Credits go here", 36, "grey", (self.game.screen_w // 2, 100)
+            screen=self.screen,
+            text="Credits go here",
+            color="grey",
+            pos=(self.game.screen_w // 2, 128),
         )

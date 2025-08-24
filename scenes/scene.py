@@ -21,7 +21,7 @@ class Scene:
         self.updateable.update(dt)
 
     def draw(self, screen):
-        screen.fill("black")
+        screen.fill("grey2")
         # Draw star field
         for x, y in self.stars:
             pygame.draw.circle(screen, "grey80", (x, y), 1)

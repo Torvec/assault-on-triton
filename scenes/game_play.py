@@ -7,16 +7,6 @@ from utils.asteroid_spawn_manager import AsteroidSpawnManager
 from entities.shot import Shot
 from ui.render_text import render_text
 
-# Game play loop
-# Start
-# 1 Player given objective message (Destroy X asteroids/enemy ships, defend planet from asteroids for x mins, defend space station/ship, etc.)
-# 2 Player spawns in from center or from side they came in on and can move/shoot
-# 3 Targets spawn in at certain intervals/amounts
-# 4 Player destroys targets
-# 5 Objective accomplished message
-# 6 Player chooses which direction to go next (up, down, left, right) but can't go to a previous stage
-# Back to 1
-
 
 class GamePlay(Scene):
     def __init__(self, game, screen, dt):
@@ -85,25 +75,22 @@ class GamePlay(Scene):
         super().draw(screen)
 
         render_text(
-            self.screen,
-            f"Lives: {self.player.lives}",
-            32,
-            "grey90",
-            (self.game.screen_w // 4, self.game.screen_h - 64),
+            screen=self.screen,
+            text=f"Lives: {self.player.lives}",
+            color="grey90",
+            pos=(self.game.screen_w // 4, self.game.screen_h - 64),
         )
         render_text(
-            self.screen,
-            f"Score: {self.score.show_score()}",
-            32,
-            "grey90",
-            (self.game.screen_w // 2, self.game.screen_h - 64),
+            screen=self.screen,
+            text=f"Score: {self.score.show_score()}",
+            color="grey90",
+            pos=(self.game.screen_w // 2, self.game.screen_h - 64),
         )
         render_text(
-            self.screen,
-            f"Targets: {self.asteroid_spawner.show_target_amount()}",
-            32,
-            "grey90",
-            (self.game.screen_w // 3, self.game.screen_h - 64),
+            screen=self.screen,
+            text=f"Targets: {self.asteroid_spawner.show_target_amount()}",
+            color="grey90",
+            pos=(self.game.screen_w // 3, self.game.screen_h - 64),
         )
 
         if self.isPaused:
@@ -118,38 +105,33 @@ class GamePlay(Scene):
             )
 
             render_text(
-                self.screen,
-                "GAME PAUSED",
-                64,
-                "white",
-                (pause_menu_rect.midtop[0], pause_menu_rect.midtop[1] + 64),
+                screen=self.screen,
+                text="GAME PAUSED",
+                font_size=64,
+                pos=(pause_menu_rect.midtop[0], pause_menu_rect.midtop[1] + 64),
                 align="midtop",
             )
             render_text(
-                self.screen,
-                "[ESC] Resume",
-                36,
-                "grey",
-                (pause_menu_rect.center[0], pause_menu_rect.center[1] - 36),
+                screen=self.screen,
+                text="[ESC] Resume",
+                color="grey",
+                pos=(pause_menu_rect.center[0], pause_menu_rect.center[1] - 36),
             )
             render_text(
-                self.screen,
-                "[1] Restart",
-                36,
-                "grey",
-                (pause_menu_rect.center[0], pause_menu_rect.center[1]),
+                screen=self.screen,
+                text="[1] Restart",
+                color="grey",
+                pos=(pause_menu_rect.center[0], pause_menu_rect.center[1]),
             )
             render_text(
-                self.screen,
-                "[2] Main Menu",
-                36,
-                "grey",
-                (pause_menu_rect.center[0], pause_menu_rect.center[1] + 36),
+                screen=self.screen,
+                text="[2] Main Menu",
+                color="grey",
+                pos=(pause_menu_rect.center[0], pause_menu_rect.center[1] + 36),
             )
             render_text(
-                self.screen,
-                "[Q] QUIT",
-                36,
-                "grey",
-                (pause_menu_rect.center[0], pause_menu_rect.center[1] + 72),
+                screen=self.screen,
+                text="[Q] QUIT",
+                color="grey",
+                pos=(pause_menu_rect.center[0], pause_menu_rect.center[1] + 72),
             )

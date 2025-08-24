@@ -45,11 +45,10 @@ class GameOver(Scene):
         super().draw(screen)
 
         render_text(
-            self.screen,
-            "GAME OVER",
-            128,
-            "white",
-            (self.game.screen_w // 2, self.game.screen_h // 2 - 256),
+            screen=self.screen,
+            text="GAME OVER",
+            font_size=128,
+            pos=(self.game.screen_w // 2, self.game.screen_h // 2 - 256),
         )
 
         game_over_menu_rect = pygame.Rect(
@@ -62,45 +61,40 @@ class GameOver(Scene):
         )
 
         render_text(
-            self.screen,
-            f"Score: {self.score.show_score()}",
-            64,
-            "white",
-            (game_over_menu_rect.midtop[0], game_over_menu_rect.midtop[1] + 36),
-            align="midtop"
+            screen=self.screen,
+            text=f"Score: {self.score.show_score()}",
+            font_size=64,
+            color="white",
+            pos=(game_over_menu_rect.midtop[0], game_over_menu_rect.midtop[1] + 36),
+            align="midtop",
         )
         render_text(
-            self.screen,
-            "[Enter] Replay",
-            36,
-            "grey",
-            (game_over_menu_rect.center[0], game_over_menu_rect.center[1] - 72),
+            screen=self.screen,
+            text="[Enter] Replay",
+            color="grey",
+            pos=(game_over_menu_rect.center[0], game_over_menu_rect.center[1] - 72),
         )
         render_text(
-            self.screen,
-            "[ESC] Main Menu",
-            36,
-            "grey",
-            (game_over_menu_rect.center[0], game_over_menu_rect.center[1] - 36),
+            screen=self.screen,
+            text="[ESC] Main Menu",
+            color="grey",
+            pos=(game_over_menu_rect.center[0], game_over_menu_rect.center[1] - 36),
         )
         render_text(
-            self.screen,
-            "[S] Scoreboard",
-            36,
-            "grey",
-            (game_over_menu_rect.center[0], game_over_menu_rect.center[1]),
+            screen=self.screen,
+            text="[S] Scoreboard",
+            color="grey",
+            pos=(game_over_menu_rect.center[0], game_over_menu_rect.center[1]),
         )
         render_text(
-            self.screen,
-            "[C] Credits",
-            36,
-            "grey",
-            (game_over_menu_rect.center[0], game_over_menu_rect.center[1] + 36),
+            screen=self.screen,
+            text="[C] Credits",
+            color="grey",
+            pos=(game_over_menu_rect.center[0], game_over_menu_rect.center[1] + 36),
         )
         render_text(
-            self.screen,
-            "[Q] Quit Game",
-            36,
-            "grey",
-            (game_over_menu_rect.center[0], game_over_menu_rect.center[1] + 72),
+            screen=self.screen,
+            text="[Q] Quit Game",
+            color="grey",
+            pos=(game_over_menu_rect.center[0], game_over_menu_rect.center[1] + 72),
         )

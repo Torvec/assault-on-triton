@@ -1,7 +1,7 @@
 import random
 import pygame
 from entities.entity import Entity
-from global_consts import ASTEROID_MIN_RADIUS
+from data.global_consts import ASTEROID_MIN_RADIUS
 
 
 class Asteroid(Entity):

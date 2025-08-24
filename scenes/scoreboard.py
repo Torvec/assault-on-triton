@@ -22,12 +22,14 @@ class Scoreboard(Scene):
         super().draw(screen)
 
         render_text(
-            self.screen,
-            "HIGH SCORES",
-            64,
-            "white",
-            (self.game.screen_w // 2, 64),
+            screen=self.screen,
+            text="HIGH SCORES",
+            font_size=64,
+            pos=(self.game.screen_w // 2, 64),
         )
         render_text(
-            self.screen, "scores go here", 36, "grey", (self.game.screen_w // 2, 100)
+            screen=self.screen,
+            text="scores go here",
+            color="grey",
+            pos=(self.game.screen_w // 2, 128),
         )
