@@ -13,10 +13,9 @@ class Game:
         self.dt = 0
         self.score_manager = ScoreManager()
         self.scene_manager = SceneManager(Start(self, self.screen, self.dt))
-        self.running = True
 
     def run(self):
-        while self.running:
+        while True:
             events = pygame.event.get()
 
             self.scene_manager.update(self.dt, events)
@@ -24,7 +23,7 @@ class Game:
 
             for event in events:
                 if event.type == pygame.QUIT:
-                    self.running = False
+                    return False
 
             pygame.display.flip()
 

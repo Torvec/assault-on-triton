@@ -3,18 +3,19 @@ import random
 from entities.asteroid import Asteroid
 from global_consts import (
     ASTEROID_MAX_RADIUS,
-    ASTEROID_SPAWN_RATE,
     ASTEROID_KINDS,
     ASTEROID_MIN_RADIUS,
 )
 
 
 class AsteroidSpawnManager(pygame.sprite.Sprite):
-
-    def __init__(self, game):
+    def __init__(self, game, target):
         pygame.sprite.Sprite.__init__(self, self.containers)
         self.game = game
+        self.spawn_rate = 0.8
         self.spawn_timer = 0.0
+        self.spawned = 0
+        self.target_amount = target
         self.edges = [
             [
                 pygame.Vector2(1, 0),
@@ -38,14 +39,18 @@ class AsteroidSpawnManager(pygame.sprite.Sprite):
             ],
         ]
 
+    def show_target_amount(self):
+        return self.target_amount
+
     def spawn(self, radius, position, velocity):
         asteroid = Asteroid(self.game, position.x, position.y, radius)
         asteroid.velocity = velocity
 
     def update(self, dt):
         self.spawn_timer += dt
-        if self.spawn_timer > ASTEROID_SPAWN_RATE:
+        if self.spawn_timer > self.spawn_rate and self.spawned < self.target_amount:
             self.spawn_timer = 0
+            self.spawned += 1
 
             # spawn a new asteroid at a random edge
             edge = random.choice(self.edges)

@@ -36,7 +36,7 @@ class Start(Scene):
                 self.game.scene_manager.set_scene(
                     Credits(self.game, self.screen, self.dt)
                 )
-            if event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
+            if event.type == pygame.KEYDOWN and event.key == pygame.K_q:
                 pygame.quit()
                 sys.exit()
 
@@ -50,38 +50,45 @@ class Start(Scene):
             "white",
             (self.game.screen_w // 2, self.game.screen_h // 2 - 128),
         )
+
+        menu_rect = pygame.Rect(0, 0, self.game.screen_w // 2, self.game.screen_h // 4)
+        menu_rect.center = (self.game.screen_w // 2, self.game.screen_h // 2 + 128)
+        pygame.draw.rect(screen, "grey4", menu_rect)
+        pygame.draw.rect(screen, "grey70", menu_rect, width=4, border_radius=24)
+
         render_text(
             self.screen,
-            "[Enter] Play",
+            "[Enter] PLAY",
             48,
             "grey",
-            (self.game.screen_w // 2, self.game.screen_h // 2),
+            (menu_rect.midtop[0], menu_rect.midtop[1] + 48),
+            align="midtop",
         )
         render_text(
             self.screen,
-            "[O] Options",
+            "[O] OPTIONS",
             36,
             "grey",
-            (self.game.screen_w // 2, self.game.screen_h // 2 + 36),
+            (menu_rect.center[0], menu_rect.center[1] - 36),
         )
         render_text(
             self.screen,
-            "[S] Scoreboard",
+            "[S] SCORES",
             36,
             "grey",
-            (self.game.screen_w // 2, self.game.screen_h // 2 + 72),
+            (menu_rect.center[0], menu_rect.center[1]),
         )
         render_text(
             self.screen,
-            "[C] Credits",
+            "[C] CREDITS",
             36,
             "grey",
-            (self.game.screen_w // 2, self.game.screen_h // 2 + 108),
+            (menu_rect.center[0], menu_rect.center[1] + 36),
         )
         render_text(
             self.screen,
-            "[ESC] Quit Game",
+            "[Q] QUIT",
             36,
             "grey",
-            (self.game.screen_w // 2, self.game.screen_h // 2 + 144),
+            (menu_rect.center[0], menu_rect.center[1] + 72),
         )
