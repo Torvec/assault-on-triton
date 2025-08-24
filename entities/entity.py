@@ -13,8 +13,8 @@ class Entity(pygame.sprite.Sprite):
         self.velocity = pygame.Vector2(0, 0)
         self.radius = radius
 
-    def draw(self, screen):
-        pass
+    def collides_with(self, other):
+        return self.position.distance_to(other.position) <= self.radius + other.radius
 
     def update(self, dt):
         if self.position[0] > self.game.screen_w + self.radius:
@@ -26,5 +26,5 @@ class Entity(pygame.sprite.Sprite):
         if self.position[1] < -self.radius:
             self.position[1] = self.game.screen_h + self.radius
 
-    def collides_with(self, other):
-        return self.position.distance_to(other.position) <= self.radius + other.radius
+    def draw(self, screen):
+        pass

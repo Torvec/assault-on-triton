@@ -9,9 +9,6 @@ class Shot(Entity):
         self.start_position = pygame.Vector2(x, y)
         self.distance_traveled = 0
 
-    def draw(self, screen):
-        pygame.draw.circle(screen, "yellow", self.position, self.radius, 0)
-
     def update(self, dt):
         super().update(dt)
         distance_this_frame = self.velocity.length() * dt
@@ -21,3 +18,6 @@ class Shot(Entity):
             self.kill()
 
         self.position += self.velocity * dt
+
+    def draw(self, screen):
+        pygame.draw.circle(screen, "yellow", self.position, self.radius, 0)

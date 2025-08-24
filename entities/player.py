@@ -30,8 +30,29 @@ class Player(Entity):
         c = self.position - forward * self.radius + right
         return [a, b, c]
 
-    def draw(self, screen):
-        pygame.draw.polygon(screen, "slategray3", self.triangle(), 0)
+    def rotate(self, dt):
+        self.rotation += PLAYER_TURN_SPEED * dt
+
+    def move(self, dt):
+        forward = pygame.Vector2(0, 1).rotate(self.rotation)
+        self.velocity += forward * PLAYER_ACCELERATION * dt
+
+    def shoot(self):
+        if self.shoot_timer > 0:
+            return
+        self.shoot_timer = SHOT_COOLDOWN
+        shot = Shot(self.game, self.position.x, self.position.y)
+        shot.velocity = (
+            pygame.Vector2(0, 1).rotate(self.rotation) * SHOT_SPEED + self.velocity
+        )
+        self.shoot_sound.play()
+
+    def respawn(self):
+        self.invincibleTime = 5
+        self.position = (
+            self.game.screen_w // 2,
+            self.game.screen_h // 2,
+        )
 
     def update(self, dt):
         super().update(dt)
@@ -61,26 +82,5 @@ class Player(Entity):
             if self.invincibleTime < 0:
                 self.invincibleTime = 0
 
-    def rotate(self, dt):
-        self.rotation += PLAYER_TURN_SPEED * dt
-
-    def move(self, dt):
-        forward = pygame.Vector2(0, 1).rotate(self.rotation)
-        self.velocity += forward * PLAYER_ACCELERATION * dt
-
-    def shoot(self):
-        if self.shoot_timer > 0:
-            return
-        self.shoot_timer = SHOT_COOLDOWN
-        shot = Shot(self.game, self.position.x, self.position.y)
-        shot.velocity = (
-            pygame.Vector2(0, 1).rotate(self.rotation) * SHOT_SPEED + self.velocity
-        )
-        self.shoot_sound.play()
-
-    def respawn(self):
-        self.invincibleTime = 5
-        self.position = (
-            self.game.screen_w // 2,
-            self.game.screen_h // 2,
-        )
+    def draw(self, screen):
+        pygame.draw.polygon(screen, "slategray3", self.triangle(), 0)

@@ -8,13 +8,6 @@ class Asteroid(Entity):
     def __init__(self, game, x, y, radius):
         super().__init__(game, x, y, radius)
 
-    def draw(self, screen):
-        pygame.draw.circle(screen, "wheat4", self.position, self.radius, 2)
-
-    def update(self, dt):
-        super().update(dt)
-        self.position += self.velocity * dt
-
     def split(self):
         self.kill()
 
@@ -31,3 +24,10 @@ class Asteroid(Entity):
         asteroid_a.velocity = a_velocity * 1.2
         asteroid_b = Asteroid(self.game, self.position.x, self.position.y, new_radius)
         asteroid_b.velocity = b_velocity * 1.2
+
+    def update(self, dt):
+        super().update(dt)
+        self.position += self.velocity * dt
+
+    def draw(self, screen):
+        pygame.draw.circle(screen, "wheat4", self.position, self.radius, 2)
