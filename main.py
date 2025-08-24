@@ -7,8 +7,8 @@ def main():
     pygame.init()
     pygame.mixer.init()
     pygame.display.set_caption(TITLE_GAME)
-    info = pygame.display.Info()
-    height = info.current_h
+    display_info = pygame.display.Info()
+    height = display_info.current_h
     width = height
     screen = pygame.display.set_mode((width, height), pygame.NOFRAME)
     game = Game(screen)

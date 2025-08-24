@@ -1,20 +1,21 @@
 import pygame
 
 class Menu():
-    def __init__(self, game, screen):
+    def __init__(self, game, screen, dt, width, height, x, y):
         self.game = game
         self.screen = screen
+        self.dt = dt
+        self.width = width
+        self.height = height
+        self.pos_x = x
+        self.pos_y = y
 
-    def update(self):
+    def update(self, dt=None, events=None):
         pass
 
     def draw(self, screen):
-        menu_width = self.game.screen_w // 2
-        menu_height = self.game.screen_h // 2
-        menu_surface = pygame.Surface((menu_width, menu_height), pygame.SRCALPHA)
-        pygame.draw.rect(menu_surface, (255, 255, 255, 128), menu_surface.get_rect())
-
+        menu_surface = pygame.Surface((self.width, self.height))
         menu_rect = menu_surface.get_rect()
-        menu_rect.center = (self.game.screen_w // 2, self.game.screen_h // 2 + 128)
-
+        pygame.draw.rect(menu_surface, "grey", menu_rect)
+        menu_rect.topleft = (self.pos_x, self.pos_y)
         screen.blit(menu_surface, menu_rect)

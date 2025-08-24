@@ -11,9 +11,9 @@ class Game:
         self.screen_h = self.screen.get_height()
         self.clock = pygame.time.Clock()
         self.dt = 0
-        self.running = True
         self.score_manager = ScoreManager()
         self.scene_manager = SceneManager(Start(self, self.screen, self.dt))
+        self.running = True
 
     def run(self):
         while self.running:
