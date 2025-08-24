@@ -1,7 +1,6 @@
 import pygame
 from scenes.scene import Scene
 from ui.render_text import render_text
-from global_consts import TITLE_SCOREBOARD
 
 
 class Scoreboard(Scene):
@@ -24,7 +23,7 @@ class Scoreboard(Scene):
 
         render_text(
             self.screen,
-            TITLE_SCOREBOARD.upper(),
+            "HIGH SCORES",
             64,
             "white",
             (self.game.screen_w // 2, 64),

@@ -1,21 +1,3 @@
-# Title Text
-TITLE_GAME = "Asteroids"
-TITLE_GAME_OVER = "GAME OVER"
-TITLE_SCOREBOARD = "High Scores"
-TITLE_OPTIONS = "Options"
-TITLE_CREDITS = "Credits"
-TITLE_SCORE = "SCORE: "
-TITLE_PAUSED = "Paused"
-TITLE_RESUME = "Resume"
-
-# Menu item labels
-MENU_ITEM_PLAY = "[ENTER] Play!"
-MENU_ITEM_OPTIONS = "[O] Options"
-MENU_ITEM_SCOREBOARD = "[S] Scoreboard"
-MENU_ITEM_CREDITS = "[C] Credits"
-MENU_ITEM_REPLAY = "[ENTER] Replay!"
-MENU_ITEM_MAIN_MENU = "[ESC] Main Menu"
-
 ASTEROID_MIN_RADIUS = 20
 ASTEROID_KINDS = 3
 ASTEROID_SPAWN_RATE = 0.8

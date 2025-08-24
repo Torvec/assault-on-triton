@@ -1,12 +1,11 @@
 import pygame
 from game import Game
-from global_consts import TITLE_GAME
 
 
 def main():
     pygame.init()
     pygame.mixer.init()
-    pygame.display.set_caption(TITLE_GAME)
+    pygame.display.set_caption("Asteroids")
     display_info = pygame.display.Info()
     height = display_info.current_h
     width = height

@@ -24,7 +24,7 @@ class Options(Scene):
 
         render_text(
             self.screen,
-            TITLE_OPTIONS.upper(),
+            "OPTIONS",
             64,
             "white",
             (self.game.screen_w // 2, 64),

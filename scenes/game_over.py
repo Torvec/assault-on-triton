@@ -1,14 +1,7 @@
 import pygame
+import sys
 from scenes.scene import Scene
 from ui.render_text import render_text
-from global_consts import (
-    TITLE_GAME_OVER,
-    TITLE_SCORE,
-    MENU_ITEM_REPLAY,
-    MENU_ITEM_MAIN_MENU,
-    MENU_ITEM_SCOREBOARD,
-    MENU_ITEM_CREDITS,
-)
 
 
 class GameOver(Scene):
@@ -44,49 +37,59 @@ class GameOver(Scene):
                 self.game.scene_manager.set_scene(
                     Credits(self.game, self.screen, self.dt)
                 )
+            if event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
+                pygame.quit()
+                sys.exit()
 
     def draw(self, screen):
         super().draw(screen)
 
         render_text(
             self.screen,
-            TITLE_GAME_OVER,
+            "GAME OVER",
             128,
             "white",
             (self.game.screen_w // 2, self.game.screen_h // 2 - 40),
         )
         render_text(
             self.screen,
-            TITLE_SCORE + str(self.score.show_score()),
+            f"Score: {self.score.show_score()}",
             64,
             "white",
             (self.game.screen_w // 2, self.game.screen_h // 2 + 36),
         )
         render_text(
             self.screen,
-            MENU_ITEM_REPLAY,
+            "[Enter] Replay",
             36,
             "grey",
             (self.game.screen_w // 2, self.game.screen_h // 2 + 72),
         )
         render_text(
             self.screen,
-            MENU_ITEM_MAIN_MENU,
+            "[ESC] Main Menu",
             36,
             "grey",
             (self.game.screen_w // 2, self.game.screen_h // 2 + 108),
         )
         render_text(
             self.screen,
-            MENU_ITEM_SCOREBOARD,
+            "[S] Scoreboard",
             36,
             "grey",
             (self.game.screen_w // 2, self.game.screen_h // 2 + 144),
         )
         render_text(
             self.screen,
-            MENU_ITEM_CREDITS,
+            "[C] Credits",
             36,
             "grey",
             (self.game.screen_w // 2, self.game.screen_h // 2 + 180),
+        )
+        render_text(
+            self.screen,
+            "[ESC] Quit Game",
+            36,
+            "grey",
+            (self.game.screen_w // 2, self.game.screen_h // 2 + 216),
         )

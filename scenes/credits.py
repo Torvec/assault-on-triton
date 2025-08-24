@@ -24,7 +24,7 @@ class Credits(Scene):
 
         render_text(
             self.screen,
-            TITLE_CREDITS.upper(),
+            "CREDITS",
             64,
             "white",
             (self.game.screen_w // 2, 64),

@@ -86,7 +86,7 @@ class GamePlay(Scene):
         if self.isPaused:
             render_text(
                 self.screen,
-                "Paused",
+                "GAME PAUSED",
                 64,
                 "white",
                 (self.game.screen_w // 2, self.game.screen_h // 2),

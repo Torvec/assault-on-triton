@@ -30,4 +30,4 @@ class Game:
 
             self.dt = self.clock.tick(60) / 1000
 
-        pygame.quit()
+        pygame.quit()  # Doesn't need sys.exit() after this because it is the end of the file and nothing is running
