@@ -12,7 +12,7 @@ class Game:
         self.clock = pygame.time.Clock()
         self.dt = 0
         self.score_manager = ScoreManager()
-        self.scene_manager = SceneManager(Start(self, self.screen, self.dt))
+        self.scene_manager = SceneManager(Start(self))
 
     def run(self):
         while True:

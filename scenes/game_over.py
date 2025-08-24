@@ -5,8 +5,8 @@ from ui.render_text import render_text
 
 
 class GameOver(Scene):
-    def __init__(self, game, screen, dt):
-        super().__init__(game, screen, dt)
+    def __init__(self, game):
+        super().__init__(game)
         self.score = game.score_manager
 
     def update(self, dt, events):
@@ -16,27 +16,19 @@ class GameOver(Scene):
             if event.type == pygame.KEYDOWN and event.key == pygame.K_RETURN:
                 from scenes.game_play import GamePlay
 
-                self.game.scene_manager.set_scene(
-                    GamePlay(self.game, self.screen, self.dt)
-                )
+                self.game.scene_manager.set_scene(GamePlay(self.game))
             if event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
                 from scenes.start import Start
 
-                self.game.scene_manager.set_scene(
-                    Start(self.game, self.screen, self.dt)
-                )
+                self.game.scene_manager.set_scene(Start(self.game))
             if event.type == pygame.KEYDOWN and event.key == pygame.K_s:
                 from scenes.scoreboard import Scoreboard
 
-                self.game.scene_manager.set_scene(
-                    Scoreboard(self.game, self.screen, self.dt)
-                )
+                self.game.scene_manager.set_scene(Scoreboard(self.game))
             if event.type == pygame.KEYDOWN and event.key == pygame.K_c:
                 from scenes.credits import Credits
 
-                self.game.scene_manager.set_scene(
-                    Credits(self.game, self.screen, self.dt)
-                )
+                self.game.scene_manager.set_scene(Credits(self.game))
             if event.type == pygame.KEYDOWN and event.key == pygame.K_q:
                 pygame.quit()
                 sys.exit()
@@ -45,7 +37,7 @@ class GameOver(Scene):
         super().draw(screen)
 
         render_text(
-            screen=self.screen,
+            screen=self.game.screen,
             text="GAME OVER",
             font_size=128,
             pos=(self.game.screen_w // 2, self.game.screen_h // 2 - 256),
@@ -61,7 +53,7 @@ class GameOver(Scene):
         )
 
         render_text(
-            screen=self.screen,
+            screen=self.game.screen,
             text=f"Score: {self.score.show_score()}",
             font_size=64,
             color="white",
@@ -69,31 +61,31 @@ class GameOver(Scene):
             align="midtop",
         )
         render_text(
-            screen=self.screen,
+            screen=self.game.screen,
             text="[Enter] Replay",
             color="grey",
             pos=(game_over_menu_rect.center[0], game_over_menu_rect.center[1] - 72),
         )
         render_text(
-            screen=self.screen,
+            screen=self.game.screen,
             text="[ESC] Main Menu",
             color="grey",
             pos=(game_over_menu_rect.center[0], game_over_menu_rect.center[1] - 36),
         )
         render_text(
-            screen=self.screen,
+            screen=self.game.screen,
             text="[S] Scoreboard",
             color="grey",
             pos=(game_over_menu_rect.center[0], game_over_menu_rect.center[1]),
         )
         render_text(
-            screen=self.screen,
+            screen=self.game.screen,
             text="[C] Credits",
             color="grey",
             pos=(game_over_menu_rect.center[0], game_over_menu_rect.center[1] + 36),
         )
         render_text(
-            screen=self.screen,
+            screen=self.game.screen,
             text="[Q] Quit Game",
             color="grey",
             pos=(game_over_menu_rect.center[0], game_over_menu_rect.center[1] + 72),

@@ -3,16 +3,14 @@ import random
 
 
 class Scene:
-    def __init__(self, game, screen, dt):
+    def __init__(self, game):
         self.game = game
-        self.screen = screen
-        self.dt = dt
         self.updateable = pygame.sprite.Group()
         self.drawable = pygame.sprite.Group()
         self.stars = [
             (
-                random.randint(0, screen.get_width()),
-                random.randint(0, screen.get_height()),
+                random.randint(0, self.game.screen.get_width()),
+                random.randint(0, self.game.screen.get_height()),
             )
             for _ in range(150)
         ]
