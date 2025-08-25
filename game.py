@@ -1,7 +1,7 @@
 import pygame
 from scenes.start import Start
-from utils.score_manager import ScoreManager
-from utils.scene_manager import SceneManager
+from managers.score_manager import ScoreManager
+from managers.scene_manager import SceneManager
 
 
 class Game:
@@ -13,9 +13,10 @@ class Game:
         self.dt = 0
         self.score_manager = ScoreManager()
         self.scene_manager = SceneManager(Start(self))
+        self.running = True
 
     def run(self):
-        while True:
+        while self.running:
             events = pygame.event.get()
 
             self.scene_manager.update(self.dt, events)
@@ -23,7 +24,7 @@ class Game:
 
             for event in events:
                 if event.type == pygame.QUIT:
-                    return False
+                    self.running = False
 
             pygame.display.flip()
 

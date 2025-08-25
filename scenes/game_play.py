@@ -1,16 +1,17 @@
 import pygame
-import sys
 from scenes.scene import Scene
+from managers.asteroid_spawn_manager import AsteroidSpawnManager
 from entities.player import Player
 from entities.asteroid import Asteroid
-from utils.asteroid_spawn_manager import AsteroidSpawnManager
 from entities.shot import Shot
-from ui.render_text import render_text
+from ui.pause_menu import PauseMenu
+from ui.game_play_hud import GamePlayHUD
 
 
 class GamePlay(Scene):
     def __init__(self, game):
         super().__init__(game)
+
         self.asteroids = pygame.sprite.Group()
         self.shots = pygame.sprite.Group()
         # Set containers attributes so the sprites automatically get added to the appropriate groups
@@ -30,88 +31,15 @@ class GamePlay(Scene):
         self.player = Player(
             self.game, self.game.screen_w // 2, self.game.screen_h // 2
         )
-        self.score = game.score_manager
+        self.score = self.game.score_manager
         self.score.score = 0
+        self.game_play_hud = GamePlayHUD(self.game, self)
         self.isPaused = False
-
-    def pause_menu_controls(self, events):
-        for event in events:
-            if event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
-                self.isPaused = not self.isPaused
-            if self.isPaused:
-                if event.type == pygame.KEYDOWN and event.key == pygame.K_1:
-                    self.game.scene_manager.set_scene(GamePlay(self.game))
-                if event.type == pygame.KEYDOWN and event.key == pygame.K_2:
-                    from scenes.start import Start
-
-                    self.game.scene_manager.set_scene(Start(self.game))
-                if event.type == pygame.KEYDOWN and event.key == pygame.K_q:
-                    pygame.quit()
-                    sys.exit()
-
-    def pause_menu_display(self, screen):
-        pause_menu_rect = pygame.Rect(
-            0, 0, self.game.screen_w // 2, self.game.screen_h // 4
-        )
-        pause_menu_rect.center = (self.game.screen_w // 2, self.game.screen_h // 2)
-        pygame.draw.rect(screen, "grey4", pause_menu_rect)
-        pygame.draw.rect(screen, "grey70", pause_menu_rect, width=4, border_radius=24)
-
-        render_text(
-            screen=self.game.screen,
-            text="GAME PAUSED",
-            font_size=64,
-            pos=(pause_menu_rect.midtop[0], pause_menu_rect.midtop[1] + 64),
-            align="midtop",
-        )
-        render_text(
-            screen=self.game.screen,
-            text="[ESC] Resume",
-            color="grey",
-            pos=(pause_menu_rect.center[0], pause_menu_rect.center[1] - 36),
-        )
-        render_text(
-            screen=self.game.screen,
-            text="[1] Restart",
-            color="grey",
-            pos=(pause_menu_rect.center[0], pause_menu_rect.center[1]),
-        )
-        render_text(
-            screen=self.game.screen,
-            text="[2] Main Menu",
-            color="grey",
-            pos=(pause_menu_rect.center[0], pause_menu_rect.center[1] + 36),
-        )
-        render_text(
-            screen=self.game.screen,
-            text="[Q] QUIT",
-            color="grey",
-            pos=(pause_menu_rect.center[0], pause_menu_rect.center[1] + 72),
-        )
-
-    def game_HUD(self):
-        render_text(
-            screen=self.game.screen,
-            text=f"Lives: {self.player.lives}",
-            color="grey90",
-            pos=(self.game.screen_w // 4, self.game.screen_h - 64),
-        )
-        render_text(
-            screen=self.game.screen,
-            text=f"Score: {self.score.show_score()}",
-            color="grey90",
-            pos=(self.game.screen_w // 2, self.game.screen_h - 64),
-        )
-        render_text(
-            screen=self.game.screen,
-            text=f"Targets: {self.asteroid_spawner.show_target_amount()}",
-            color="grey90",
-            pos=(self.game.screen_w // 3, self.game.screen_h - 64),
-        )
+        self.pause_menu = PauseMenu(self.game, self)
 
     def update(self, dt, events):
 
-        self.pause_menu_controls(events)
+        self.pause_menu.update(events)
 
         if not self.isPaused:
             super().update(dt)
@@ -138,7 +66,5 @@ class GamePlay(Scene):
 
     def draw(self, screen):
         super().draw(screen)
-        self.game_HUD()
-
-        if self.isPaused:
-            self.pause_menu_display(screen)
+        self.game_play_hud.draw()
+        self.pause_menu.draw(screen)
