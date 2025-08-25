@@ -2,9 +2,7 @@ import pygame
 import random
 from src.menus import *
 from src.managers.asteroid_spawn_manager import AsteroidSpawnManager
-from src.entities.player import Player
-from src.entities.asteroid import Asteroid
-from src.entities.shot import Shot
+from src.entities import Player, Asteroid, Shot
 from src.ui.game_play_hud import GamePlayHUD
 from src.ui.render_text import render_text
 
@@ -59,7 +57,15 @@ class Start(Scene):
 class GamePlay(Scene):
     def __init__(self, game):
         super().__init__(game)
-
+        self.play_area_rect = pygame.Rect(
+            0, 0, self.game.screen_w, self.game.screen_h - 128
+        )
+        self.game_play_hud = GamePlayHUD(self.game, self)
+        self.score = self.game.score_manager
+        self.score.score = 0
+        self.isPaused = False
+        self.pause_menu = PauseMenu(self.game, self)
+        # Entities
         self.asteroids = pygame.sprite.Group()
         self.shots = pygame.sprite.Group()
         # Set containers attributes so the sprites automatically get added to the appropriate groups
@@ -67,23 +73,13 @@ class GamePlay(Scene):
         AsteroidSpawnManager.containers = self.updateable
         Player.containers = (self.updateable, self.drawable)
         Shot.containers = (self.shots, self.updateable, self.drawable)
-
-        self.play_area_rect = pygame.Rect(
-            0, 0, self.game.screen_w, self.game.screen_h - 128
-        )
-        self.game_HUD_rect = pygame.Rect(
-            0, self.game.screen_h - 128, self.game.screen_w, 128
-        )
-
-        self.asteroid_spawner = AsteroidSpawnManager(self.game, 10)
+        self.asteroid_spawner = AsteroidSpawnManager(self.game, 10, self.play_area_rect)
         self.player = Player(
-            self.game, self.game.screen_w // 2, self.game.screen_h // 2
+            self.game,
+            self.play_area_rect.width // 2,
+            self.play_area_rect.height // 2,
+            self.play_area_rect,
         )
-        self.score = self.game.score_manager
-        self.score.score = 0
-        self.game_play_hud = GamePlayHUD(self.game, self)
-        self.isPaused = False
-        self.pause_menu = PauseMenu(self.game, self)
 
     def update(self, dt, events):
 
@@ -112,7 +108,7 @@ class GamePlay(Scene):
 
     def draw(self, screen):
         super().draw(screen)
-        self.game_play_hud.draw()
+        self.game_play_hud.draw(screen)
         self.pause_menu.draw(screen)
 
 

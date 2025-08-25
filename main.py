@@ -9,7 +9,7 @@ def main():
     display_info = pygame.display.Info()
     height = display_info.current_h
     width = height
-    screen = pygame.display.set_mode((width, height), pygame.NOFRAME)
+    screen = pygame.display.set_mode((width, height), pygame.FULLSCREEN)
     game = Game(screen)
     game.run()
 

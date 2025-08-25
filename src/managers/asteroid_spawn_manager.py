@@ -1,6 +1,6 @@
 import pygame
 import random
-from src.entities.asteroid import Asteroid
+from src.entities import Asteroid
 from src.data.global_consts import (
     ASTEROID_MAX_RADIUS,
     ASTEROID_KINDS,
@@ -9,9 +9,10 @@ from src.data.global_consts import (
 
 
 class AsteroidSpawnManager(pygame.sprite.Sprite):
-    def __init__(self, game, target):
+    def __init__(self, game, target, play_area_rect):
         pygame.sprite.Sprite.__init__(self, self.containers)
         self.game = game
+        self.play_area_rect = play_area_rect
         self.spawn_rate = 0.8
         self.spawn_timer = 0.0
         self.spawned = 0
@@ -19,22 +20,30 @@ class AsteroidSpawnManager(pygame.sprite.Sprite):
         self.edges = [
             [
                 pygame.Vector2(1, 0),
-                lambda y: pygame.Vector2(-ASTEROID_MAX_RADIUS, y * self.game.screen_h),
+                lambda y: pygame.Vector2(
+                    self.play_area_rect.left - ASTEROID_MAX_RADIUS,
+                    self.play_area_rect.top + y * self.play_area_rect.height,
+                ),
             ],
             [
                 pygame.Vector2(-1, 0),
                 lambda y: pygame.Vector2(
-                    self.game.screen_w + ASTEROID_MAX_RADIUS, y * self.game.screen_h
+                    self.play_area_rect.right + ASTEROID_MAX_RADIUS,
+                    self.play_area_rect.top + y * self.play_area_rect.height,
                 ),
             ],
             [
                 pygame.Vector2(0, 1),
-                lambda x: pygame.Vector2(x * self.game.screen_w, -ASTEROID_MAX_RADIUS),
+                lambda x: pygame.Vector2(
+                    self.play_area_rect.left + x * self.play_area_rect.width,
+                    self.play_area_rect.top - ASTEROID_MAX_RADIUS,
+                ),
             ],
             [
                 pygame.Vector2(0, -1),
                 lambda x: pygame.Vector2(
-                    x * self.game.screen_w, self.game.screen_h + ASTEROID_MAX_RADIUS
+                    self.play_area_rect.left + x * self.play_area_rect.width,
+                    self.play_area_rect.bottom + ASTEROID_MAX_RADIUS,
                 ),
             ],
         ]
@@ -43,7 +52,9 @@ class AsteroidSpawnManager(pygame.sprite.Sprite):
         return self.target_amount
 
     def spawn(self, radius, position, velocity):
-        asteroid = Asteroid(self.game, position.x, position.y, radius)
+        asteroid = Asteroid(
+            self.game, position.x, position.y, radius, self.play_area_rect
+        )
         asteroid.velocity = velocity
 
     def update(self, dt):
