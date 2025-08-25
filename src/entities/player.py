@@ -48,7 +48,7 @@ class Player(Entity):
         self.shoot_sound.play()
 
     def respawn(self):
-        self.invincibleTime = 5
+        self.invincibleTime = 3
         self.position = (
             self.game.screen_w // 2,
             self.game.screen_h // 2,

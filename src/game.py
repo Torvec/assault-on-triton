@@ -1,7 +1,6 @@
 import pygame
-from scenes.start import Start
+from scenes import Start
 from managers.score_manager import ScoreManager
-from managers.scene_manager import SceneManager
 
 
 class Game:
@@ -12,15 +11,18 @@ class Game:
         self.clock = pygame.time.Clock()
         self.dt = 0
         self.score_manager = ScoreManager()
-        self.scene_manager = SceneManager(Start(self))
+        self.set_scene(Start(self))
         self.running = True
+
+    def set_scene(self, new_scene):
+        self.current_scene = new_scene
 
     def run(self):
         while self.running:
             events = pygame.event.get()
 
-            self.scene_manager.update(self.dt, events)
-            self.scene_manager.draw(self.screen)
+            self.current_scene.update(self.dt, events)
+            self.current_scene.draw(self.screen)
 
             for event in events:
                 if event.type == pygame.QUIT:
