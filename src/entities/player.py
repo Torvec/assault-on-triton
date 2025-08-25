@@ -1,7 +1,7 @@
 import pygame
-from entities.entity import Entity
-from entities.shot import Shot
-from data.global_consts import (
+from src.entities.entity import Entity
+from src.entities.shot import Shot
+from src.data.global_consts import (
     PLAYER_RADIUS,
     PLAYER_SPEED,
     PLAYER_TURN_SPEED,

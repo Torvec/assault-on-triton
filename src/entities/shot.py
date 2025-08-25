@@ -1,6 +1,6 @@
 import pygame
-from entities.entity import Entity
-from data.global_consts import SHOT_RADIUS, SHOT_MAX_RANGE
+from src.entities.entity import Entity
+from src.data.global_consts import SHOT_RADIUS, SHOT_MAX_RANGE
 
 
 class Shot(Entity):

@@ -1,6 +1,6 @@
 import pygame
-from scenes import Start
-from managers.score_manager import ScoreManager
+from src.scenes import Start
+from src.managers.score_manager import ScoreManager
 
 
 class Game:

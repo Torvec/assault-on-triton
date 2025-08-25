@@ -1,4 +1,4 @@
-from ui.render_text import render_text
+from src.ui.render_text import render_text
 
 
 class GamePlayHUD:

@@ -1,6 +1,6 @@
 import sys
 import pygame
-from ui.render_text import render_text
+from src.ui.render_text import render_text
 
 
 class Menu:
@@ -22,19 +22,19 @@ class StartMenu(Menu):
         super().update(events)
         for event in events:
             if event.type == pygame.KEYDOWN and event.key == pygame.K_RETURN:
-                from scenes import GamePlay
+                from src.scenes import GamePlay
 
                 self.game.set_scene(GamePlay(self.game))
             if event.type == pygame.KEYDOWN and event.key == pygame.K_o:
-                from scenes import Options
+                from src.scenes import Options
 
                 self.game.set_scene(Options(self.game))
             if event.type == pygame.KEYDOWN and event.key == pygame.K_s:
-                from scenes import Scoreboard
+                from src.scenes import Scoreboard
 
                 self.game.set_scene(Scoreboard(self.game))
             if event.type == pygame.KEYDOWN and event.key == pygame.K_c:
-                from scenes import Credits
+                from src.scenes import Credits
 
                 self.game.set_scene(Credits(self.game))
             if event.type == pygame.KEYDOWN and event.key == pygame.K_q:
@@ -94,11 +94,11 @@ class PauseMenu(Menu):
                 self.game_play.isPaused = not self.game_play.isPaused
             if self.game_play.isPaused:
                 if event.type == pygame.KEYDOWN and event.key == pygame.K_1:
-                    from scenes import GamePlay
+                    from src.scenes import GamePlay
 
                     self.game.set_scene(GamePlay(self.game))
                 if event.type == pygame.KEYDOWN and event.key == pygame.K_2:
-                    from scenes import Start
+                    from src.scenes import Start
 
                     self.game.set_scene(Start(self.game))
                 if event.type == pygame.KEYDOWN and event.key == pygame.K_q:
@@ -158,19 +158,19 @@ class GameOverMenu(Menu):
 
         for event in events:
             if event.type == pygame.KEYDOWN and event.key == pygame.K_RETURN:
-                from scenes import GamePlay
+                from src.scenes import GamePlay
 
                 self.game.set_scene(GamePlay(self.game))
             if event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
-                from scenes import Start
+                from src.scenes import Start
 
                 self.game.set_scene(Start(self.game))
             if event.type == pygame.KEYDOWN and event.key == pygame.K_s:
-                from scenes import Scoreboard
+                from src.scenes import Scoreboard
 
                 self.game.set_scene(Scoreboard(self.game))
             if event.type == pygame.KEYDOWN and event.key == pygame.K_c:
-                from scenes import Credits
+                from src.scenes import Credits
 
                 self.game.set_scene(Credits(self.game))
             if event.type == pygame.KEYDOWN and event.key == pygame.K_q:

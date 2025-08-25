@@ -1,12 +1,12 @@
 import pygame
 import random
-from menus import *
-from managers.asteroid_spawn_manager import AsteroidSpawnManager
-from entities.player import Player
-from entities.asteroid import Asteroid
-from entities.shot import Shot
-from ui.game_play_hud import GamePlayHUD
-from ui.render_text import render_text
+from src.menus import *
+from src.managers.asteroid_spawn_manager import AsteroidSpawnManager
+from src.entities.player import Player
+from src.entities.asteroid import Asteroid
+from src.entities.shot import Shot
+from src.ui.game_play_hud import GamePlayHUD
+from src.ui.render_text import render_text
 
 
 class Scene:
