@@ -1,7 +1,7 @@
 import random
 import pygame
 
-from src.data.global_consts import (
+from src.global_consts import (
     PLAYER_RADIUS,
     PLAYER_SPEED,
     PLAYER_TURN_SPEED,
