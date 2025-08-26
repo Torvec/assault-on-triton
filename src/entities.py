@@ -58,13 +58,16 @@ class Player(Entity):
         self.invincibleTime = 0
         self.shoot_timer = 0
 
-    def triangle(self):
-        forward = pygame.Vector2(0, 1).rotate(self.rotation)
-        right = pygame.Vector2(0, 1).rotate(self.rotation + 90) * self.radius / 1.5
-        a = self.position + forward * self.radius
-        b = self.position - forward * self.radius - right
-        c = self.position - forward * self.radius + right
-        return [a, b, c]
+    def shape(self):
+        top = self.position + pygame.Vector2(0, -self.radius * 0.75).rotate(
+            self.rotation
+        )
+        right = self.position + pygame.Vector2(self.radius, 0).rotate(self.rotation)
+        bottom = self.position + pygame.Vector2(0, self.radius * 2).rotate(
+            self.rotation
+        )
+        left = self.position + pygame.Vector2(-self.radius, 0).rotate(self.rotation)
+        return [top, right, bottom, left]
 
     def rotate(self, dt):
         self.rotation += PLAYER_TURN_SPEED * dt
@@ -119,7 +122,43 @@ class Player(Entity):
                 self.invincibleTime = 0
 
     def draw(self, screen):
-        pygame.draw.polygon(screen, "slategray3", self.triangle(), 0)
+        pygame.draw.polygon(screen, "slategray3", self.shape(), 0)
+        pygame.draw.circle(screen, "red", self.position, self.radius, 1)
+
+
+class EnemyShip(Entity):
+
+    def __init__(self, game, x, y, radius, play_area_rect, player):
+        super().__init__(game, x, y, radius, play_area_rect)
+        self.hp = 3
+        self.rotation = 0
+        self.player = player
+
+    def shape(self):
+        forward = pygame.Vector2(0, 1).rotate(self.rotation)
+        right = pygame.Vector2(0, 1).rotate(self.rotation + 90) * self.radius / 1.5
+        a = self.position + forward * self.radius
+        b = self.position - forward * self.radius - right
+        c = self.position - forward * self.radius + right
+        return [a, b, c]
+
+    def explode(self):
+        self.kill()
+        # TODO: Debris flys off in random directions and then disappears after a few seconds
+
+    def track_player(self):
+        direction = self.player.position - self.position
+        angle = pygame.Vector2(0, 1).angle_to(direction)
+        return angle
+
+    def update(self, dt):
+        super().update(dt)
+        forward = pygame.Vector2(0, 1).rotate(self.rotation)
+        self.position += forward * 250 * dt
+        self.rotation = self.track_player()
+
+    def draw(self, screen):
+        pygame.draw.polygon(screen, "red", self.shape())
 
 
 class Asteroid(Entity):

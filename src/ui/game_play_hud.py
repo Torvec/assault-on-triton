@@ -30,7 +30,7 @@ class GamePlayHUD:
         )
         render_text(
             screen=screen,
-            text=f"Targets: {self.game_play.asteroid_spawner.show_target_amount()}",
+            text=f"Targets: {self.game_play.asteroid_spawner.show_target_amount()} {self.game_play.enemy_ship_spawner.show_target_amount()}",
             color="grey90",
             pos=(
                 self.game_play_hud_rect.midright[0] - 36,

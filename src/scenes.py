@@ -2,7 +2,8 @@ import pygame
 import random
 from src.menus import *
 from src.managers.asteroid_spawn_manager import AsteroidSpawnManager
-from src.entities import Player, Asteroid, Shot
+from src.managers.enemy_ship_spawn_manager import EnemyShipSpawnManager
+from src.entities import Player, Asteroid, EnemyShip, Shot
 from src.ui.game_play_hud import GamePlayHUD
 from src.ui.render_text import render_text
 
@@ -65,20 +66,25 @@ class GamePlay(Scene):
         self.score.score = 0
         self.isPaused = False
         self.pause_menu = PauseMenu(self.game, self)
-        # Entities
         self.asteroids = pygame.sprite.Group()
+        self.enemy_ships = pygame.sprite.Group()
         self.shots = pygame.sprite.Group()
         # Set containers attributes so the sprites automatically get added to the appropriate groups
         Asteroid.containers = (self.asteroids, self.updateable, self.drawable)
+        EnemyShip.containers = (self.enemy_ships, self.updateable, self.drawable)
         AsteroidSpawnManager.containers = self.updateable
+        EnemyShipSpawnManager.containers = self.updateable
         Player.containers = (self.updateable, self.drawable)
         Shot.containers = (self.shots, self.updateable, self.drawable)
-        self.asteroid_spawner = AsteroidSpawnManager(self.game, 10, self.play_area_rect)
         self.player = Player(
             self.game,
             self.play_area_rect.width // 2,
             self.play_area_rect.height // 2,
             self.play_area_rect,
+        )
+        self.asteroid_spawner = AsteroidSpawnManager(self.game, 10, self.play_area_rect)
+        self.enemy_ship_spawner = EnemyShipSpawnManager(
+            self.game, 5, self.play_area_rect, self.player
         )
 
     def update(self, dt, events):
@@ -104,6 +110,24 @@ class GamePlay(Scene):
                         shot.kill()
                         asteroid.split()
                         self.asteroid_spawner.target_amount -= 1
+                        self.score.inc_score(1)
+
+            for enemy_ship in self.enemy_ships:
+                if (
+                    enemy_ship.collides_with(self.player)
+                    and self.player.invincibleTime == 0
+                ):
+                    self.player.lives -= 1
+                    enemy_ship.explode()
+                    if self.player.lives <= 0:
+                        self.game.set_scene(GameOver(self.game))
+                    self.player.respawn()
+
+                for shot in self.shots:
+                    if shot.collides_with(enemy_ship):
+                        shot.kill()
+                        enemy_ship.explode()
+                        self.enemy_ship_spawner.target_amount -= 1
                         self.score.inc_score(1)
 
     def draw(self, screen):
