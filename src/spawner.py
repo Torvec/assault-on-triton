@@ -11,9 +11,8 @@ from src.global_consts import (
 
 
 class Spawner(pygame.sprite.Sprite):
-    def __init__(self, game, game_play, entities):
+    def __init__(self, game_play, entities):
         pygame.sprite.Sprite.__init__(self, self.containers)
-        self.game = game
         self.game_play = game_play
         self.entities = entities
         self.edges = [
@@ -56,7 +55,6 @@ class Spawner(pygame.sprite.Sprite):
             if count > 0:
                 if entity == "asteroid":
                     asteroid = Asteroid(
-                        self.game,
                         position.x,
                         position.y,
                         radius,
@@ -65,7 +63,6 @@ class Spawner(pygame.sprite.Sprite):
                     asteroid.velocity = velocity
                 if entity == "enemy_ship":
                     enemy_ship = EnemyShip(
-                        self.game,
                         position.x,
                         position.y,
                         radius,
@@ -81,14 +78,13 @@ class Spawner(pygame.sprite.Sprite):
 
 
 class EnemyShipSpawnManager(pygame.sprite.Sprite):
-    def __init__(self, game, game_play, target):
+    def __init__(self, game_play, target_count):
         pygame.sprite.Sprite.__init__(self, self.containers)
-        self.game = game
         self.game_play = game_play
         self.spawn_rate = 1.2
         self.spawn_timer = 0.0
         self.spawned = 0
-        self.target_amount = target
+        self.target_count = target_count
         self.edges = [
             [
                 pygame.Vector2(1, 0),
@@ -124,12 +120,8 @@ class EnemyShipSpawnManager(pygame.sprite.Sprite):
             ],
         ]
 
-    def show_target_amount(self):
-        return self.target_amount
-
     def spawn(self, radius, position, velocity):
         enemy_ship = EnemyShip(
-            self.game,
             position.x,
             position.y,
             radius,
@@ -140,7 +132,7 @@ class EnemyShipSpawnManager(pygame.sprite.Sprite):
 
     def update(self, dt):
         self.spawn_timer += dt
-        if self.spawn_timer > self.spawn_rate and self.spawned < self.target_amount:
+        if self.spawn_timer > self.spawn_rate and self.spawned < self.target_count:
             self.spawn_timer = 0
             self.spawned += 1
 
@@ -153,14 +145,14 @@ class EnemyShipSpawnManager(pygame.sprite.Sprite):
 
 
 class AsteroidSpawnManager(pygame.sprite.Sprite):
-    def __init__(self, game, game_play, target):
+
+    def __init__(self, game_play, target_count):
         pygame.sprite.Sprite.__init__(self, self.containers)
-        self.game = game
         self.game_play = game_play
         self.spawn_rate = 0.8
         self.spawn_timer = 0.0
         self.spawned = 0
-        self.target_amount = target
+        self.target_count = target_count
         self.edges = [
             [
                 pygame.Vector2(1, 0),
@@ -196,18 +188,15 @@ class AsteroidSpawnManager(pygame.sprite.Sprite):
             ],
         ]
 
-    def show_target_amount(self):
-        return self.target_amount
-
     def spawn(self, radius, position, velocity):
         asteroid = Asteroid(
-            self.game, position.x, position.y, radius, self.game_play.play_area_rect
+            position.x, position.y, radius, self.game_play.play_area_rect
         )
         asteroid.velocity = velocity
 
     def update(self, dt):
         self.spawn_timer += dt
-        if self.spawn_timer > self.spawn_rate and self.spawned < self.target_amount:
+        if self.spawn_timer > self.spawn_rate and self.spawned < self.target_count:
             self.spawn_timer = 0
             self.spawned += 1
 

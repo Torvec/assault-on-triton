@@ -3,13 +3,12 @@ from src.render_text import render_text
 
 
 class GamePlayHUD:
-    def __init__(self, game, game_play):
-        self.game = game
+    def __init__(self, game_play):
         self.game_play = game_play
-        self.width = self.game.screen_w
+        self.width = self.game_play.game.screen_w
         self.height = 128
         self.game_play_hud_rect = pygame.Rect(
-            0, self.game.screen_h - self.height, self.width, self.height
+            0, self.game_play.game.screen_h - self.height, self.width, self.height
         )
 
     def draw(self, screen):
@@ -64,7 +63,7 @@ class GamePlayHUD:
         )
         render_text(
             screen=screen,
-            text=f"{self.game_play.wave_manager.show_target_count()}",
+            text=f"{self.game_play.wave_manager.show_remaining_targets()}",
             color="grey90",
             pos=(
                 self.game_play_hud_rect.center[0] + 48,

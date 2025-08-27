@@ -1,6 +1,3 @@
-from src.spawner import Spawner
-
-
 class WaveManager:
     def __init__(self):
         self.waves = [
@@ -36,23 +33,16 @@ class WaveManager:
             {"asteroids": 0, "enemy_ships": 0, "boss": 1},  # Wave 30
         ]
         self.current_wave = 1
-        # self.spawner = Spawner(
-        #     self.game, self.play_area_rect, self.waves[self.current_wave]
-        # )
+        self.remaining_targets = sum(self.waves[self.current_wave - 1].values())
 
     def set_current_wave(self, num):
         self.current_wave = num
 
-    def next_wave(self):
-        self.current_wave += 1
+    def dec_target_count(self):
+        self.remaining_targets -= 1
 
-    def show_target_count(self):
-        wave = self.waves[self.current_wave - 1]
-        targets = wave["asteroids"] + wave["enemy_ships"] + wave["boss"]
-        return targets
+    def show_remaining_targets(self):
+        return self.remaining_targets
 
     def show_current_wave(self):
         return self.current_wave
-
-    def update(self):
-        pass

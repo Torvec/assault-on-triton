@@ -3,23 +3,11 @@ import pygame
 from src.render_text import render_text
 
 
-class Menu:
+class StartMenu:
     def __init__(self, game):
         self.game = game
 
-    def update(self, events=None):
-        pass
-
-    def draw(self, screen):
-        pass
-
-
-class StartMenu(Menu):
-    def __init__(self, game):
-        super().__init__(game)
-
     def update(self, events):
-        super().update(events)
         for event in events:
             if event.type == pygame.KEYDOWN and event.key == pygame.K_RETURN:
                 from src.scenes import GamePlay
@@ -42,8 +30,6 @@ class StartMenu(Menu):
                 sys.exit()
 
     def draw(self, screen):
-        super().draw(screen)
-
         menu_rect = pygame.Rect(0, 0, self.game.screen_w // 2, self.game.screen_h // 4)
         menu_rect.center = (self.game.screen_w // 2, self.game.screen_h // 2 + 128)
         pygame.draw.rect(screen, "grey4", menu_rect)
@@ -83,9 +69,9 @@ class StartMenu(Menu):
         )
 
 
-class PauseMenu(Menu):
+class PauseMenu:
     def __init__(self, game, game_play):
-        super().__init__(game)
+        self.game = game
         self.game_play = game_play
 
     def update(self, events):
@@ -149,13 +135,11 @@ class PauseMenu(Menu):
             )
 
 
-class GameOverMenu(Menu):
+class GameOverMenu:
     def __init__(self, game):
-        super().__init__(game)
+        self.game = game
 
     def update(self, events):
-        super().update(events)
-
         for event in events:
             if event.type == pygame.KEYDOWN and event.key == pygame.K_RETURN:
                 from src.scenes import GamePlay
@@ -178,8 +162,6 @@ class GameOverMenu(Menu):
                 sys.exit()
 
     def draw(self, screen):
-        super().draw(screen)
-
         game_over_menu_rect = pygame.Rect(
             0, 0, self.game.screen_w // 2, self.game.screen_h // 4
         )

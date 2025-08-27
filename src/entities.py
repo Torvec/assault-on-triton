@@ -16,13 +16,12 @@ from src.global_consts import (
 
 
 class Entity(pygame.sprite.Sprite):
-    def __init__(self, game, x, y, radius, play_area_rect):
+    def __init__(self, x, y, radius, play_area_rect):
         # Used to auto add sprites to groups upon creation if a .container attribute is present
         if hasattr(self, "containers"):
             super().__init__(self.containers)
         else:
             super().__init__()
-        self.game = game
         self.position = pygame.Vector2(x, y)
         self.velocity = pygame.Vector2(0, 0)
         self.radius = radius
@@ -51,8 +50,8 @@ class Entity(pygame.sprite.Sprite):
 
 
 class Player(Entity):
-    def __init__(self, game, x, y, play_area_rect):
-        super().__init__(game, x, y, PLAYER_RADIUS, play_area_rect)
+    def __init__(self, x, y, play_area_rect):
+        super().__init__(x, y, PLAYER_RADIUS, play_area_rect)
         self.rotation = 0
         self.lives = 3
         self.invincibleTime = 0
@@ -80,7 +79,7 @@ class Player(Entity):
         if self.shoot_timer > 0:
             return
         self.shoot_timer = SHOT_COOLDOWN
-        shot = Shot(self.game, self.position.x, self.position.y, self.play_area_rect)
+        shot = Shot(self.position.x, self.position.y, self.play_area_rect)
         shot.velocity = (
             pygame.Vector2(0, 1).rotate(self.rotation) * SHOT_SPEED + self.velocity
         )
@@ -128,8 +127,8 @@ class Player(Entity):
 
 class EnemyShip(Entity):
 
-    def __init__(self, game, x, y, radius, play_area_rect, player):
-        super().__init__(game, x, y, radius, play_area_rect)
+    def __init__(self, x, y, radius, play_area_rect, player):
+        super().__init__(x, y, radius, play_area_rect)
         self.hp = 3
         self.rotation = 0
         self.player = player
@@ -162,8 +161,8 @@ class EnemyShip(Entity):
 
 
 class Asteroid(Entity):
-    def __init__(self, game, x, y, radius, play_area_rect):
-        super().__init__(game, x, y, radius, play_area_rect)
+    def __init__(self, x, y, radius, play_area_rect):
+        super().__init__(x, y, radius, play_area_rect)
 
     def split(self):
         self.kill()
@@ -178,11 +177,11 @@ class Asteroid(Entity):
 
         new_radius = self.radius - ASTEROID_MIN_RADIUS
         asteroid_a = Asteroid(
-            self.game, self.position.x, self.position.y, new_radius, self.play_area_rect
+            self.position.x, self.position.y, new_radius, self.play_area_rect
         )
         asteroid_a.velocity = a_velocity * 1.2
         asteroid_b = Asteroid(
-            self.game, self.position.x, self.position.y, new_radius, self.play_area_rect
+            self.position.x, self.position.y, new_radius, self.play_area_rect
         )
         asteroid_b.velocity = b_velocity * 1.2
 
@@ -195,8 +194,8 @@ class Asteroid(Entity):
 
 
 class Shot(Entity):
-    def __init__(self, game, x, y, play_area_rect):
-        super().__init__(game, x, y, SHOT_RADIUS, play_area_rect)
+    def __init__(self, x, y, play_area_rect):
+        super().__init__(x, y, SHOT_RADIUS, play_area_rect)
         self.start_position = pygame.Vector2(x, y)
         self.distance_traveled = 0
 
