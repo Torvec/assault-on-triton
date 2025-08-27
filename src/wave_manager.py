@@ -41,6 +41,9 @@ class WaveManager:
     def dec_target_count(self):
         self.remaining_targets -= 1
 
+    def inc_target_count(self):
+        self.remaining_targets += 1
+
     def show_remaining_targets(self):
         return self.remaining_targets
 

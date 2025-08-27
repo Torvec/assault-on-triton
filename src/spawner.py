@@ -11,85 +11,20 @@ from src.global_consts import (
 
 
 class Spawner(pygame.sprite.Sprite):
-    def __init__(self, game_play, entities):
-        pygame.sprite.Sprite.__init__(self, self.containers)
-        self.game_play = game_play
-        self.entities = entities
-        self.edges = [
-            [
-                pygame.Vector2(1, 0),
-                lambda y: pygame.Vector2(
-                    self.game_play.play_area_rect.left - self.entity.radius,
-                    self.game_play.play_area_rect.top
-                    + y * self.game_play.play_area_rect.height,
-                ),
-            ],
-            [
-                pygame.Vector2(-1, 0),
-                lambda y: pygame.Vector2(
-                    self.game_play.play_area_rect.right + self.entity.radius,
-                    self.game_play.play_area_rect.top
-                    + y * self.game_play.play_area_rect.height,
-                ),
-            ],
-            [
-                pygame.Vector2(0, 1),
-                lambda x: pygame.Vector2(
-                    self.game_play.play_area_rect.left
-                    + x * self.game_play.play_area_rect.width,
-                    self.game_play.play_area_rect.top - self.entity.radius,
-                ),
-            ],
-            [
-                pygame.Vector2(0, -1),
-                lambda x: pygame.Vector2(
-                    self.game_play.play_area_rect.left
-                    + x * self.game_play.play_area_rect.width,
-                    self.game_play.play_area_rect.bottom + self.entity.radius,
-                ),
-            ],
-        ]
-
-    def spawn(self, radius, position, velocity):
-        for entity, count in self.entities:
-            if count > 0:
-                if entity == "asteroid":
-                    asteroid = Asteroid(
-                        position.x,
-                        position.y,
-                        radius,
-                        self.game_play.play_area_rect,
-                    )
-                    asteroid.velocity = velocity
-                if entity == "enemy_ship":
-                    enemy_ship = EnemyShip(
-                        position.x,
-                        position.y,
-                        radius,
-                        self.game_play.play_area_rect,
-                        self.game_play.player,
-                    )
-                enemy_ship.velocity = velocity
-                if entity == "boss":
-                    pass
-
-    def update(self, dt):
-        self.spawn()
-
-
-class EnemyShipSpawnManager(pygame.sprite.Sprite):
     def __init__(self, game_play, target_count):
         pygame.sprite.Sprite.__init__(self, self.containers)
         self.game_play = game_play
-        self.spawn_rate = 1.2
+        self.target_count = target_count
         self.spawn_timer = 0.0
         self.spawned = 0
-        self.target_count = target_count
+        self.entity_class = None
+        self.entity_radius = None
+        self.spawn_rate = None
         self.edges = [
             [
                 pygame.Vector2(1, 0),
                 lambda y: pygame.Vector2(
-                    self.game_play.play_area_rect.left - ENEMY_SHIP_RADIUS,
+                    self.game_play.play_area_rect.left - self.entity_radius,
                     self.game_play.play_area_rect.top
                     + y * self.game_play.play_area_rect.height,
                 ),
@@ -97,7 +32,7 @@ class EnemyShipSpawnManager(pygame.sprite.Sprite):
             [
                 pygame.Vector2(-1, 0),
                 lambda y: pygame.Vector2(
-                    self.game_play.play_area_rect.right + ENEMY_SHIP_RADIUS,
+                    self.game_play.play_area_rect.right + self.entity_radius,
                     self.game_play.play_area_rect.top
                     + y * self.game_play.play_area_rect.height,
                 ),
@@ -107,7 +42,7 @@ class EnemyShipSpawnManager(pygame.sprite.Sprite):
                 lambda x: pygame.Vector2(
                     self.game_play.play_area_rect.left
                     + x * self.game_play.play_area_rect.width,
-                    self.game_play.play_area_rect.top - ENEMY_SHIP_RADIUS,
+                    self.game_play.play_area_rect.top - self.entity_radius,
                 ),
             ],
             [
@@ -115,96 +50,62 @@ class EnemyShipSpawnManager(pygame.sprite.Sprite):
                 lambda x: pygame.Vector2(
                     self.game_play.play_area_rect.left
                     + x * self.game_play.play_area_rect.width,
-                    self.game_play.play_area_rect.bottom + ENEMY_SHIP_RADIUS,
+                    self.game_play.play_area_rect.bottom + self.entity_radius,
                 ),
             ],
         ]
 
-    def spawn(self, radius, position, velocity):
-        enemy_ship = EnemyShip(
-            position.x,
-            position.y,
-            radius,
-            self.game_play.play_area_rect,
-            self.game_play.player,
-        )
-        enemy_ship.velocity = velocity
+    def spawn_entity(self):
+        pass
 
     def update(self, dt):
         self.spawn_timer += dt
         if self.spawn_timer > self.spawn_rate and self.spawned < self.target_count:
             self.spawn_timer = 0
             self.spawned += 1
-
-            # spawn a new enemy ship at a random edge
-            edge = random.choice(self.edges)
-            speed = 200
-            velocity = edge[0] * speed
-            position = edge[1](random.uniform(0, 1))
-            self.spawn(ENEMY_SHIP_RADIUS, position, velocity)
+            self.spawn_entity()
 
 
-class AsteroidSpawnManager(pygame.sprite.Sprite):
+class AsteroidSpawner(Spawner):
 
     def __init__(self, game_play, target_count):
-        pygame.sprite.Sprite.__init__(self, self.containers)
-        self.game_play = game_play
+        super().__init__(game_play, target_count)
+        self.entity_class = Asteroid
+        self.entity_radius = ASTEROID_MAX_RADIUS
         self.spawn_rate = 0.8
-        self.spawn_timer = 0.0
-        self.spawned = 0
-        self.target_count = target_count
-        self.edges = [
-            [
-                pygame.Vector2(1, 0),
-                lambda y: pygame.Vector2(
-                    self.game_play.play_area_rect.left - ASTEROID_MAX_RADIUS,
-                    self.game_play.play_area_rect.top
-                    + y * self.game_play.play_area_rect.height,
-                ),
-            ],
-            [
-                pygame.Vector2(-1, 0),
-                lambda y: pygame.Vector2(
-                    self.game_play.play_area_rect.right + ASTEROID_MAX_RADIUS,
-                    self.game_play.play_area_rect.top
-                    + y * self.game_play.play_area_rect.height,
-                ),
-            ],
-            [
-                pygame.Vector2(0, 1),
-                lambda x: pygame.Vector2(
-                    self.game_play.play_area_rect.left
-                    + x * self.game_play.play_area_rect.width,
-                    self.game_play.play_area_rect.top - ASTEROID_MAX_RADIUS,
-                ),
-            ],
-            [
-                pygame.Vector2(0, -1),
-                lambda x: pygame.Vector2(
-                    self.game_play.play_area_rect.left
-                    + x * self.game_play.play_area_rect.width,
-                    self.game_play.play_area_rect.bottom + ASTEROID_MAX_RADIUS,
-                ),
-            ],
-        ]
 
-    def spawn(self, radius, position, velocity):
-        asteroid = Asteroid(
-            position.x, position.y, radius, self.game_play.play_area_rect
+    def spawn_entity(self):
+        edge = random.choice(self.edges)
+        speed = random.randint(40, 100)
+        velocity = edge[0] * speed
+        velocity = velocity.rotate(random.randint(-30, 30))
+        position = edge[1](random.uniform(0, 1))
+        kind = random.randint(1, ASTEROID_KINDS)
+        actual_radius = ASTEROID_MIN_RADIUS * kind
+
+        asteroid = self.entity_class(
+            position.x, position.y, actual_radius, self.game_play
         )
         asteroid.velocity = velocity
 
-    def update(self, dt):
-        self.spawn_timer += dt
-        if self.spawn_timer > self.spawn_rate and self.spawned < self.target_count:
-            self.spawn_timer = 0
-            self.spawned += 1
 
-            # spawn a new asteroid at a random edge
-            edge = random.choice(self.edges)
-            speed = random.randint(40, 100)
-            velocity = edge[0] * speed
-            velocity = velocity.rotate(random.randint(-30, 30))
-            position = edge[1](random.uniform(0, 1))
-            kind = random.randint(1, ASTEROID_KINDS)
-            self.spawn(ASTEROID_MIN_RADIUS * kind, position, velocity)
+class EnemyShipSpawner(Spawner):
+    def __init__(self, game_play, target_count):
+        super().__init__(game_play, target_count)
+        self.entity_class = EnemyShip
+        self.entity_radius = ENEMY_SHIP_RADIUS
+        self.spawn_rate = 1.2
+
+    def spawn_entity(self):
+        edge = random.choice(self.edges)
+        speed = 200
+        velocity = edge[0] * speed
+        position = edge[1](random.uniform(0, 1))
+
+        enemy_ship = self.entity_class(
+            position.x,
+            position.y,
+            self.entity_radius,
+            self.game_play,
+        )
+        enemy_ship.velocity = velocity

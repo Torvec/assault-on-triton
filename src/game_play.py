@@ -2,7 +2,7 @@ import random
 import pygame
 from src.menus import PauseMenu
 from src.wave_manager import WaveManager
-from src.spawner import EnemyShipSpawnManager, AsteroidSpawnManager
+from src.spawner import EnemyShipSpawner, AsteroidSpawner
 from src.entities import Player, Asteroid, EnemyShip, Shot
 from src.game_play_hud import GamePlayHUD
 
@@ -53,22 +53,22 @@ class GamePlay(Scene):
         # Set containers attributes so the sprites automatically get added to the appropriate groups
         Asteroid.containers = (self.asteroids, self.updateable, self.drawable)
         EnemyShip.containers = (self.enemy_ships, self.updateable, self.drawable)
-        AsteroidSpawnManager.containers = self.updateable
-        EnemyShipSpawnManager.containers = self.updateable
+        AsteroidSpawner.containers = self.updateable
+        EnemyShipSpawner.containers = self.updateable
         Player.containers = (self.updateable, self.drawable)
         Shot.containers = (self.shots, self.updateable, self.drawable)
 
         self.player = Player(
             self.play_area_rect.width // 2,
             self.play_area_rect.height // 2,
-            self.play_area_rect,
+            self,
         )
 
-        self.asteroid_spawner = AsteroidSpawnManager(
+        self.asteroid_spawner = AsteroidSpawner(
             self,
             self.wave_manager.waves[self.wave_manager.current_wave - 1]["asteroids"],
         )
-        self.enemy_ship_spawner = EnemyShipSpawnManager(
+        self.enemy_ship_spawner = EnemyShipSpawner(
             self,
             self.wave_manager.waves[self.wave_manager.current_wave - 1]["enemy_ships"],
         )
@@ -110,7 +110,6 @@ class GamePlay(Scene):
                         if shot.collides_with(entity):
                             shot.kill()
                             handler["destroy_method"](entity)
-                            self.wave_manager.dec_target_count()
                             self.score.inc_score(1)
 
     def draw(self, screen):
