@@ -87,15 +87,6 @@ class GamePlay(Scene):
             self,
         )
 
-        # self.asteroid_spawner = AsteroidSpawner(
-        #     self,
-        #     self.wave_manager.waves[self.wave_manager.current_wave - 1]["asteroids"],
-        # )
-        # self.enemy_ship_spawner = EnemyShipSpawner(
-        #     self,
-        #     self.wave_manager.waves[self.wave_manager.current_wave - 1]["enemy_ships"],
-        # )
-
         self.collision_handlers = [
             {
                 "group": self.asteroids,
@@ -107,33 +98,35 @@ class GamePlay(Scene):
             },
         ]
 
+    def handle_collisions(self):
+        # Handle all entity types with a single loop
+        for handler in self.collision_handlers:
+            for entity in handler["group"]:
+                # Player collision
+                if (
+                    entity.collides_with(self.player)
+                    and self.player.invincibleTime == 0
+                ):
+                    self.player.lives -= 1
+                    handler["destroy_method"](entity)
+                    if self.player.lives <= 0:
+                        self.game.set_scene(GamePlay(self.game))
+                    self.player.respawn()
+
+                # Shot collision
+                for shot in self.shots:
+                    if shot.collides_with(entity):
+                        shot.kill()
+                        handler["destroy_method"](entity)
+                        self.score.inc_score(1)
+
     def update(self, dt, events):
 
         self.pause_menu.update(events)
 
         if not self.isPaused:
             super().update(dt)
-
-            # Handle all entity types with a single loop
-            for handler in self.collision_handlers:
-                for entity in handler["group"]:
-                    # Player collision
-                    if (
-                        entity.collides_with(self.player)
-                        and self.player.invincibleTime == 0
-                    ):
-                        self.player.lives -= 1
-                        handler["destroy_method"](entity)
-                        if self.player.lives <= 0:
-                            self.game.set_scene(GamePlay(self.game))
-                        self.player.respawn()
-
-                    # Shot collision
-                    for shot in self.shots:
-                        if shot.collides_with(entity):
-                            shot.kill()
-                            handler["destroy_method"](entity)
-                            self.score.inc_score(1)
+            self.handle_collisions()
 
         if self.wave_manager.remaining_targets == 0:
             self.wave_manager.set_current_wave()

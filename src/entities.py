@@ -97,6 +97,12 @@ class Player(Entity):
             self.game_play.play_area_rect.height // 2,
         )
 
+    def handle_invincibility(self, dt):
+        if self.invincibleTime > 0:
+            self.invincibleTime -= dt
+        if self.invincibleTime < 0:
+            self.invincibleTime = 0
+
     def controls(self, dt):
         keys = pygame.key.get_pressed()
         mouse_btn = pygame.mouse.get_pressed()
@@ -112,7 +118,7 @@ class Player(Entity):
         if keys[pygame.K_SPACE] or mouse_btn[0]:
             self.shoot()
 
-    def acceleration(self, dt):
+    def apply_acceleration(self, dt):
         self.velocity *= 0.99
 
         if self.velocity.length() > PLAYER_SPEED:
@@ -123,15 +129,10 @@ class Player(Entity):
     def update(self, dt):
         super().update(dt)
         self.controls(dt)
-        self.acceleration(dt)
+        self.apply_acceleration(dt)
         self.update_direction()
-
+        self.handle_invincibility(dt)
         self.shoot_timer -= dt
-
-        if self.invincibleTime > 0:
-            self.invincibleTime -= dt
-            if self.invincibleTime < 0:
-                self.invincibleTime = 0
 
     def draw(self, screen):
         pygame.draw.polygon(screen, "slategray3", self.shape(), 0)
@@ -197,14 +198,14 @@ class EnemyShip(Entity):
 
     def track_player(self):
         direction = self.game_play.player.position - self.position
-        angle = pygame.Vector2(0, 1).angle_to(direction)
-        return angle
+        angle = pygame.Vector2(0, -1).angle_to(direction)
+        self.rotation = angle
 
     def update(self, dt):
         super().update(dt)
         forward = pygame.Vector2(0, 1).rotate(self.rotation)
         self.position += forward * 250 * dt
-        self.rotation = self.track_player()
+        self.track_player()
 
     def draw(self, screen):
         pygame.draw.polygon(screen, "red", self.shape())
@@ -221,13 +222,16 @@ class Shot(Entity):
         self.shoot_sound.set_volume(0.5)
         self.shoot_sound.play()
 
-    def update(self, dt):
-        super().update(dt)
+    def handle_max_range(self, dt):
         distance_this_frame = self.velocity.length() * dt
         self.distance_traveled += distance_this_frame
 
         if self.distance_traveled >= SHOT_MAX_RANGE:
             self.kill()
+
+    def update(self, dt):
+        super().update(dt)
+        self.handle_max_range(dt)
 
         self.position += self.velocity * dt
 
