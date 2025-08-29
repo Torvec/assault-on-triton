@@ -4,7 +4,6 @@ import pygame
 from src.global_consts import (
     PLAYER_RADIUS,
     PLAYER_SPEED,
-    PLAYER_TURN_SPEED,
     PLAYER_ACCELERATION,
     SHOT_COOLDOWN,
     SHOT_SPEED,
@@ -60,28 +59,34 @@ class Player(Entity):
         self.shoot_timer = 0
 
     def shape(self):
-        tp = self.position + pygame.Vector2(0, -self.radius * 0.75).rotate(
-            self.rotation
-        )
+        tp = self.position + pygame.Vector2(0, self.radius * 0.75).rotate(self.rotation)
         rt = self.position + pygame.Vector2(self.radius, 0).rotate(self.rotation)
-        bm = self.position + pygame.Vector2(0, self.radius * 2).rotate(self.rotation)
+        bm = self.position + pygame.Vector2(0, -self.radius * 2).rotate(self.rotation)
         lt = self.position + pygame.Vector2(-self.radius, 0).rotate(self.rotation)
         return [tp, rt, bm, lt]
 
-    def rotate(self, dt):
-        self.rotation += PLAYER_TURN_SPEED * dt
+    def update_direction(self):
+        direction = pygame.mouse.get_pos() - self.position
+        angle = pygame.Vector2(0, -1).angle_to(direction)
+        self.rotation = angle
 
     def move(self, dt):
-        forward = pygame.Vector2(0, 1).rotate(self.rotation)
+        forward = pygame.Vector2(0, -1).rotate(self.rotation)
         self.velocity += forward * PLAYER_ACCELERATION * dt
+
+    def strafe(self, dt):
+        right = pygame.Vector2(1, 0).rotate(self.rotation)
+        self.velocity += right * PLAYER_ACCELERATION * dt
 
     def shoot(self):
         if self.shoot_timer > 0:
             return
         self.shoot_timer = SHOT_COOLDOWN
-        shot = Shot(self.position.x, self.position.y, self.game_play)
+        shot_offset = pygame.Vector2(0, -self.radius).rotate(self.rotation)
+        shot_pos = self.position + shot_offset
+        shot = Shot(shot_pos.x, shot_pos.y, self.game_play)
         shot.velocity = (
-            pygame.Vector2(0, 1).rotate(self.rotation) * SHOT_SPEED + self.velocity
+            pygame.Vector2(0, -1).rotate(self.rotation) * SHOT_SPEED + self.velocity
         )
         shot.sound()
 
@@ -92,28 +97,36 @@ class Player(Entity):
             self.game_play.play_area_rect.height // 2,
         )
 
-    def update(self, dt):
-        super().update(dt)
-        self.shoot_timer -= dt
+    def controls(self, dt):
         keys = pygame.key.get_pressed()
+        mouse_btn = pygame.mouse.get_pressed()
 
         if keys[pygame.K_a] or keys[pygame.K_LEFT]:
-            self.rotate(-dt)
+            self.strafe(-dt)
         if keys[pygame.K_d] or keys[pygame.K_RIGHT]:
-            self.rotate(dt)
+            self.strafe(dt)
         if keys[pygame.K_w] or keys[pygame.K_UP]:
             self.move(dt)
         if keys[pygame.K_s] or keys[pygame.K_DOWN]:
             self.move(-dt)
-        if keys[pygame.K_SPACE]:
+        if keys[pygame.K_SPACE] or mouse_btn[0]:
             self.shoot()
 
+    def acceleration(self, dt):
         self.velocity *= 0.99
 
         if self.velocity.length() > PLAYER_SPEED:
             self.velocity.scale_to_length(PLAYER_SPEED)
 
         self.position += self.velocity * dt
+
+    def update(self, dt):
+        super().update(dt)
+        self.controls(dt)
+        self.acceleration(dt)
+        self.update_direction()
+
+        self.shoot_timer -= dt
 
         if self.invincibleTime > 0:
             self.invincibleTime -= dt
