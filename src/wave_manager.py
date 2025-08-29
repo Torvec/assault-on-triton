@@ -32,11 +32,15 @@ class WaveManager:
             {"asteroids": 64, "enemy_ships": 36, "boss": 0},  # Wave 29
             {"asteroids": 0, "enemy_ships": 0, "boss": 1},  # Wave 30
         ]
-        self.current_wave = 1
-        self.remaining_targets = sum(self.waves[self.current_wave - 1].values())
+        self.current_wave = 0
+        self.remaining_targets = 0
 
-    def set_current_wave(self, num):
-        self.current_wave = num
+    def set_current_wave(self):
+        self.current_wave += 1
+        self.remaining_targets = self.set_target_count(self.current_wave)
+
+    def set_target_count(self, wave):
+        return sum(self.waves[wave - 1].values())
 
     def dec_target_count(self):
         self.remaining_targets -= 1

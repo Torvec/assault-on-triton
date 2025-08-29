@@ -2,22 +2,14 @@ import pygame
 from src.game import Game
 
 
-# def main():
-#     pygame.init()
-#     pygame.mixer.init()
-#     pygame.display.set_caption("Asteroids")
-#     display_info = pygame.display.Info()
-#     height = display_info.current_h
-#     width = height
-#     screen = pygame.display.set_mode((width, height), pygame.FULLSCREEN)
-#     game = Game(screen)
-#     game.run()
-
 def main():
     pygame.init()
     pygame.mixer.init()
     pygame.display.set_caption("Asteroids")
-    screen = pygame.display.set_mode((1200, 1200))
+    display_info = pygame.display.Info()
+    height = display_info.current_h
+    width = height
+    screen = pygame.display.set_mode((width, height), pygame.FULLSCREEN)
     game = Game(screen)
     game.run()
 

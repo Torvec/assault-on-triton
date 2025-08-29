@@ -1,6 +1,5 @@
 import pygame
-# from src.scenes import Start
-from src.game_play import GamePlay
+from src.scenes import GamePlay
 from src.score_manager import ScoreManager
 
 
@@ -12,7 +11,7 @@ class Game:
         self.clock = pygame.time.Clock()
         self.dt = 0
         self.score_manager = ScoreManager()
-        # self.set_scene(Start(self))
+        #! self.set_scene(Start(self))
         self.set_scene(GamePlay(self))
         self.running = True
 
