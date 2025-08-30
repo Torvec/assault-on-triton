@@ -143,7 +143,9 @@ class Player(Entity):
 
     def draw(self, screen):
         pygame.draw.polygon(screen, "slategray3", self.shape(), 0)
-        pygame.draw.circle(screen, "red", self.position, self.radius, 1)
+        pygame.draw.circle(
+            screen, "red", self.position, self.radius, 1
+        )  # Collision circle
 
 
 class Asteroid(Entity):

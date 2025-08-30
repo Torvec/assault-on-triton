@@ -1,6 +1,5 @@
 import random
 import pygame
-
 from src.entities import Asteroid, EnemyShip
 from src.global_consts import (
     ENEMY_SHIP_RADIUS,
@@ -24,7 +23,7 @@ class Spawner(pygame.sprite.Sprite):
         self.edges = [
             # Top edge
             [
-                pygame.Vector2(0, 1), # Downward facing
+                pygame.Vector2(0, 1),  # Downward facing
                 lambda x: pygame.Vector2(
                     self.play_area.left + x * self.play_area.width,
                     self.play_area.top - self.entity_radius,
@@ -32,7 +31,7 @@ class Spawner(pygame.sprite.Sprite):
             ],
             # Right edge
             [
-                pygame.Vector2(-1, 0), # Leftward facing
+                pygame.Vector2(-1, 0),  # Leftward facing
                 lambda y: pygame.Vector2(
                     self.play_area.right + self.entity_radius,
                     self.play_area.top + y * self.play_area.height,
@@ -40,7 +39,7 @@ class Spawner(pygame.sprite.Sprite):
             ],
             # Bottom edge
             [
-                pygame.Vector2(0, -1), # Upward facing
+                pygame.Vector2(0, -1),  # Upward facing
                 lambda x: pygame.Vector2(
                     self.play_area.left + x * self.play_area.width,
                     self.play_area.bottom + self.entity_radius,
@@ -48,7 +47,7 @@ class Spawner(pygame.sprite.Sprite):
             ],
             # Left edge
             [
-                pygame.Vector2(1, 0), # Rightward facing
+                pygame.Vector2(1, 0),  # Rightward facing
                 lambda y: pygame.Vector2(
                     self.play_area.left - self.entity_radius,
                     self.play_area.top + y * self.play_area.height,
