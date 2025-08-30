@@ -198,14 +198,14 @@ class EnemyShip(Entity):
 
     def track_player(self):
         direction = self.game_play.player.position - self.position
-        angle = pygame.Vector2(0, -1).angle_to(direction)
-        self.rotation = angle
+        angle = pygame.Vector2(0, 1).angle_to(direction)
+        return angle
 
     def update(self, dt):
         super().update(dt)
         forward = pygame.Vector2(0, 1).rotate(self.rotation)
         self.position += forward * 250 * dt
-        self.track_player()
+        self.rotation = self.track_player()
 
     def draw(self, screen):
         pygame.draw.polygon(screen, "red", self.shape())
