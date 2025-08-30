@@ -15,42 +15,43 @@ class Spawner(pygame.sprite.Sprite):
         pygame.sprite.Sprite.__init__(self, self.containers)
         self.game_play = game_play
         self.target_count = target_count
+        self.play_area = game_play.play_area_rect
         self.spawn_timer = 0.0
         self.spawned = 0
         self.entity_class = None
         self.entity_radius = None
         self.spawn_rate = None
         self.edges = [
+            # Top edge
             [
-                pygame.Vector2(1, 0),
-                lambda y: pygame.Vector2(
-                    self.game_play.play_area_rect.left - self.entity_radius,
-                    self.game_play.play_area_rect.top
-                    + y * self.game_play.play_area_rect.height,
-                ),
-            ],
-            [
-                pygame.Vector2(-1, 0),
-                lambda y: pygame.Vector2(
-                    self.game_play.play_area_rect.right + self.entity_radius,
-                    self.game_play.play_area_rect.top
-                    + y * self.game_play.play_area_rect.height,
-                ),
-            ],
-            [
-                pygame.Vector2(0, 1),
+                pygame.Vector2(0, 1), # Downward facing
                 lambda x: pygame.Vector2(
-                    self.game_play.play_area_rect.left
-                    + x * self.game_play.play_area_rect.width,
-                    self.game_play.play_area_rect.top - self.entity_radius,
+                    self.play_area.left + x * self.play_area.width,
+                    self.play_area.top - self.entity_radius,
                 ),
             ],
+            # Right edge
             [
-                pygame.Vector2(0, -1),
+                pygame.Vector2(-1, 0), # Leftward facing
+                lambda y: pygame.Vector2(
+                    self.play_area.right + self.entity_radius,
+                    self.play_area.top + y * self.play_area.height,
+                ),
+            ],
+            # Bottom edge
+            [
+                pygame.Vector2(0, -1), # Upward facing
                 lambda x: pygame.Vector2(
-                    self.game_play.play_area_rect.left
-                    + x * self.game_play.play_area_rect.width,
-                    self.game_play.play_area_rect.bottom + self.entity_radius,
+                    self.play_area.left + x * self.play_area.width,
+                    self.play_area.bottom + self.entity_radius,
+                ),
+            ],
+            # Left edge
+            [
+                pygame.Vector2(1, 0), # Rightward facing
+                lambda y: pygame.Vector2(
+                    self.play_area.left - self.entity_radius,
+                    self.play_area.top + y * self.play_area.height,
                 ),
             ],
         ]
@@ -72,7 +73,7 @@ class AsteroidSpawner(Spawner):
         super().__init__(game_play, target_count)
         self.entity_class = Asteroid
         self.entity_radius = ASTEROID_MAX_RADIUS
-        self.spawn_rate = 0.8
+        self.spawn_rate = 1.0
 
     def spawn_entity(self):
         edge = random.choice(self.edges)
@@ -94,7 +95,7 @@ class EnemyShipSpawner(Spawner):
         super().__init__(game_play, target_count)
         self.entity_class = EnemyShip
         self.entity_radius = ENEMY_SHIP_RADIUS
-        self.spawn_rate = 1.2
+        self.spawn_rate = 1.0
 
     def spawn_entity(self):
         edge = random.choice(self.edges)
@@ -105,7 +106,6 @@ class EnemyShipSpawner(Spawner):
         enemy_ship = self.entity_class(
             position.x,
             position.y,
-            self.entity_radius,
             self.game_play,
         )
         enemy_ship.velocity = velocity

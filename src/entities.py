@@ -4,6 +4,7 @@ import pygame
 from src.global_consts import (
     PLAYER_RADIUS,
     ASTEROID_MIN_RADIUS,
+    ENEMY_SHIP_RADIUS,
     SHOT_RADIUS,
 )
 
@@ -156,7 +157,7 @@ class Asteroid(Entity):
         if self.radius <= ASTEROID_MIN_RADIUS:
             return
 
-        random_angle = random.uniform(20, 50)
+        random_angle = random.uniform(20, 60)
 
         a_velocity = self.velocity.rotate(random_angle)
         b_velocity = self.velocity.rotate(-random_angle)
@@ -183,8 +184,8 @@ class Asteroid(Entity):
 
 class EnemyShip(Entity):
 
-    def __init__(self, x, y, radius, game_play):
-        super().__init__(x, y, radius, game_play)
+    def __init__(self, x, y, game_play):
+        super().__init__(x, y, ENEMY_SHIP_RADIUS, game_play)
         self.game_play = game_play
         self.rotation = 0
 
@@ -211,7 +212,7 @@ class EnemyShip(Entity):
     def update(self, dt):
         super().update(dt)
         forward = pygame.Vector2(0, 1).rotate(self.rotation)
-        self.position += forward * 250 * dt
+        self.position += forward * 200 * dt
         self.rotation = self.track_player()
 
     def draw(self, screen):
@@ -235,14 +236,12 @@ class Shot(Entity):
     def handle_max_range(self, dt):
         distance_this_frame = self.velocity.length() * dt
         self.distance_traveled += distance_this_frame
-
         if self.distance_traveled >= self.max_range:
             self.kill()
 
     def update(self, dt):
         super().update(dt)
         self.handle_max_range(dt)
-
         self.position += self.velocity * dt
 
     def draw(self, screen):

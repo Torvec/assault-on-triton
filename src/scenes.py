@@ -110,6 +110,7 @@ class GamePlay(Scene):
                     self.player.lives -= 1
                     handler["destroy_method"](entity)
                     if self.player.lives <= 0:
+                        #! self.game.set_scene(GameOver(self.game))
                         self.game.set_scene(GamePlay(self.game))
                     self.player.respawn()
 
