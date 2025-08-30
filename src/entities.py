@@ -3,14 +3,8 @@ import pygame
 
 from src.global_consts import (
     PLAYER_RADIUS,
-    PLAYER_SPEED,
-    PLAYER_ACCELERATION,
-    SHOT_COOLDOWN,
-    SHOT_SPEED,
     ASTEROID_MIN_RADIUS,
     SHOT_RADIUS,
-    SHOT_MAX_RANGE,
-    SHOT_SFX,
 )
 
 
@@ -23,27 +17,31 @@ class Entity(pygame.sprite.Sprite):
         else:
             super().__init__()
         self.position = pygame.Vector2(x, y)
-        self.velocity = pygame.Vector2(0, 0)
         self.radius = radius
         self.game_play = game_play
+        self.velocity = pygame.Vector2(0, 0)
 
     def collides_with(self, other):
         return self.position.distance_to(other.position) <= self.radius + other.radius
 
-    def update(self, dt):
-        lt = self.game_play.play_area_rect.left
-        rt = self.game_play.play_area_rect.right
-        tp = self.game_play.play_area_rect.top
-        bm = self.game_play.play_area_rect.bottom
+    def handle_edge_wrap(self):
+        edges = {
+            "top": self.game_play.play_area_rect.top,
+            "right": self.game_play.play_area_rect.right,
+            "bottom": self.game_play.play_area_rect.bottom,
+            "left": self.game_play.play_area_rect.left,
+        }
+        if self.position[0] > edges["right"] + self.radius:
+            self.position[0] = edges["left"] - self.radius
+        if self.position[0] < edges["left"] - self.radius:
+            self.position[0] = edges["right"] + self.radius
+        if self.position[1] > edges["bottom"] + self.radius:
+            self.position[1] = edges["top"] - self.radius
+        if self.position[1] < edges["top"] - self.radius:
+            self.position[1] = edges["bottom"] + self.radius
 
-        if self.position[0] > rt + self.radius:
-            self.position[0] = lt - self.radius
-        if self.position[0] < lt - self.radius:
-            self.position[0] = rt + self.radius
-        if self.position[1] > bm + self.radius:
-            self.position[1] = tp - self.radius
-        if self.position[1] < tp - self.radius:
-            self.position[1] = bm + self.radius
+    def update(self, dt):
+        self.handle_edge_wrap()
 
     def draw(self, screen):
         pass
@@ -53,17 +51,25 @@ class Player(Entity):
 
     def __init__(self, x, y, game_play):
         super().__init__(x, y, PLAYER_RADIUS, game_play)
+        self.acceleration = 600
+        self.speed = 300
         self.rotation = 0
         self.lives = 3
         self.invincibleTime = 0
         self.shoot_timer = 0
 
     def shape(self):
-        tp = self.position + pygame.Vector2(0, self.radius * 0.75).rotate(self.rotation)
-        rt = self.position + pygame.Vector2(self.radius, 0).rotate(self.rotation)
-        bm = self.position + pygame.Vector2(0, -self.radius * 2).rotate(self.rotation)
-        lt = self.position + pygame.Vector2(-self.radius, 0).rotate(self.rotation)
-        return [tp, rt, bm, lt]
+        points = {
+            "top": self.position
+            + pygame.Vector2(0, self.radius * 0.75).rotate(self.rotation),
+            "right": self.position
+            + pygame.Vector2(self.radius, 0).rotate(self.rotation),
+            "bottom": self.position
+            + pygame.Vector2(0, -self.radius * 2).rotate(self.rotation),
+            "left": self.position
+            + pygame.Vector2(-self.radius, 0).rotate(self.rotation),
+        }
+        return list(points.values())
 
     def update_direction(self):
         direction = pygame.mouse.get_pos() - self.position
@@ -72,21 +78,21 @@ class Player(Entity):
 
     def move(self, dt):
         forward = pygame.Vector2(0, -1).rotate(self.rotation)
-        self.velocity += forward * PLAYER_ACCELERATION * dt
+        self.velocity += forward * self.acceleration * dt
 
     def strafe(self, dt):
         right = pygame.Vector2(1, 0).rotate(self.rotation)
-        self.velocity += right * PLAYER_ACCELERATION * dt
+        self.velocity += right * self.acceleration * dt
 
     def shoot(self):
         if self.shoot_timer > 0:
             return
-        self.shoot_timer = SHOT_COOLDOWN
+        self.shoot_timer = 0.25
         shot_offset = pygame.Vector2(0, -self.radius).rotate(self.rotation)
         shot_pos = self.position + shot_offset
         shot = Shot(shot_pos.x, shot_pos.y, self.game_play)
         shot.velocity = (
-            pygame.Vector2(0, -1).rotate(self.rotation) * SHOT_SPEED + self.velocity
+            pygame.Vector2(0, -1).rotate(self.rotation) * shot.speed + self.velocity
         )
         shot.sound()
 
@@ -121,8 +127,8 @@ class Player(Entity):
     def apply_acceleration(self, dt):
         self.velocity *= 0.99
 
-        if self.velocity.length() > PLAYER_SPEED:
-            self.velocity.scale_to_length(PLAYER_SPEED)
+        if self.velocity.length() > self.speed:
+            self.velocity.scale_to_length(self.speed)
 
         self.position += self.velocity * dt
 
@@ -179,17 +185,18 @@ class EnemyShip(Entity):
 
     def __init__(self, x, y, radius, game_play):
         super().__init__(x, y, radius, game_play)
-        self.hp = 3
-        self.rotation = 0
         self.game_play = game_play
+        self.rotation = 0
 
     def shape(self):
         forward = pygame.Vector2(0, 1).rotate(self.rotation)
         right = pygame.Vector2(0, 1).rotate(self.rotation + 90) * self.radius / 1.5
-        a = self.position + forward * self.radius
-        b = self.position - forward * self.radius - right
-        c = self.position - forward * self.radius + right
-        return [a, b, c]
+        points = {
+            "top": self.position + forward * self.radius,
+            "right": self.position - forward * self.radius + right,
+            "left": self.position - forward * self.radius - right,
+        }
+        return list(points.values())
 
     def explode(self):
         self.kill()
@@ -216,9 +223,12 @@ class Shot(Entity):
         super().__init__(x, y, SHOT_RADIUS, game_play)
         self.start_position = pygame.Vector2(x, y)
         self.distance_traveled = 0
+        self.max_range = 500
+        self.speed = 500
+        self.sfx = "assets/720118__baggonotes__player_shoot1.wav"
 
     def sound(self):
-        self.shoot_sound = pygame.mixer.Sound(SHOT_SFX)
+        self.shoot_sound = pygame.mixer.Sound(self.sfx)
         self.shoot_sound.set_volume(0.5)
         self.shoot_sound.play()
 
@@ -226,7 +236,7 @@ class Shot(Entity):
         distance_this_frame = self.velocity.length() * dt
         self.distance_traveled += distance_this_frame
 
-        if self.distance_traveled >= SHOT_MAX_RANGE:
+        if self.distance_traveled >= self.max_range:
             self.kill()
 
     def update(self, dt):
