@@ -40,9 +40,6 @@ class Entity(pygame.sprite.Sprite):
         if self in self.game_play.active_targets:
             self.kill()
             self.game_play.active_targets.remove(self)
-            print(
-                f"{self} removed from Active Targets. Length: {len(self.game_play.active_targets)}"
-            )
 
     def update(self, dt):
         self.handle_boundaries()
@@ -104,10 +101,8 @@ class Player(Entity):
 
     def respawn(self):
         self.invincibleTime = 3
-        self.position = (
-            self.game_play.play_area_rect.width // 2,
-            self.game_play.play_area_rect.height // 2,
-        )
+        self.position.x = self.game_play.play_area_rect.width // 2
+        self.position.y = self.game_play.play_area_rect.height - 100
 
     def handle_invincibility(self, dt):
         if self.invincibleTime > 0:
@@ -141,7 +136,6 @@ class Player(Entity):
         self.controls(dt)
         self.apply_acceleration(dt)
         self.handle_boundaries("block")
-        # self.update_direction()
         self.handle_invincibility(dt)
         self.shoot_timer -= dt
 
@@ -159,23 +153,25 @@ class Asteroid(Entity):
         self.radius = random.choice([20, 40, 60])
         self.min_radius = 20
         self.max_radius = 60
-        self.speed = random.randint(40, 100)
+        self.speed = random.randint(80, 120)
 
     def split(self):
         self.remove_active_targets()
         if self.radius <= self.min_radius:
             return
 
-        random_angle = random.uniform(20, 60)
+        new_angle = 30
         new_radius = self.radius - self.min_radius
 
-        asteroid_a = Asteroid(self.position.x, self.position.y, self.game_play)
+        asteroid_a = Asteroid(self.position.x - new_radius, self.position.y, self.game_play)
+        self.game_play.active_targets.add(asteroid_a)
         asteroid_a.radius = new_radius
-        asteroid_a.velocity = self.velocity.rotate(random_angle) * 1.2
+        asteroid_a.velocity = self.velocity.rotate(new_angle) * 1.2
 
-        asteroid_b = Asteroid(self.position.x, self.position.y, self.game_play)
+        asteroid_b = Asteroid(self.position.x + new_radius, self.position.y, self.game_play)
+        self.game_play.active_targets.add(asteroid_b)
         asteroid_b.radius = new_radius
-        asteroid_b.velocity = self.velocity.rotate(-random_angle) * 1.2
+        asteroid_b.velocity = self.velocity.rotate(-new_angle) * 1.2
 
     def update(self, dt):
         super().update(dt)

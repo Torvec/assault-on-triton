@@ -38,7 +38,6 @@ class SequenceManager:
         if self.event_sequence and self.current_event < len(self.event_sequence):
             if not self.event_active:
                 current_action = self.event_sequence[self.current_event]
-                print(f'Event: {current_action["event"]}')
                 for action in current_action["action"]:
                     action()
                 self.event_active = True

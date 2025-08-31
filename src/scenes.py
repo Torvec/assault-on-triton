@@ -84,7 +84,7 @@ class GamePlay(Scene):
 
         self.player = Player(
             self.play_area_rect.width // 2,
-            self.play_area_rect.height // 2,
+            self.play_area_rect.height - 100,
             self,
         )
 

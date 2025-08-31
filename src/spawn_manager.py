@@ -26,9 +26,6 @@ class SpawnManager(pygame.sprite.Sprite):
         entity = self.entity_class(position.x, position.y, self.game_play)
         entity.velocity = self.spawn_location[0] * entity.speed
         self.game_play.active_targets.add(entity)
-        print(
-            f"{entity} added to Active Targets. Length: {len(self.game_play.active_targets)}"
-        )
 
     def update(self, dt):
         self.spawn_timer += dt
