@@ -42,15 +42,15 @@ class GamePlayHUD:
                 self.game_play_hud_rect.center[1],
             ),
         )
-        render_text(
-            screen=screen,
-            text=f"{self.game_play.wave_manager.show_current_wave()}",
-            color="grey90",
-            pos=(
-                self.game_play_hud_rect.center[0] - 48,
-                self.game_play_hud_rect.center[1] + 36,
-            ),
-        )
+        # render_text(
+        #     screen=screen,
+        #     text=f"{self.game_play.wave_manager.show_current_wave()}",
+        #     color="grey90",
+        #     pos=(
+        #         self.game_play_hud_rect.center[0] - 48,
+        #         self.game_play_hud_rect.center[1] + 36,
+        #     ),
+        # )
         # TARGETS
         render_text(
             screen=screen,
@@ -61,15 +61,15 @@ class GamePlayHUD:
                 self.game_play_hud_rect.center[1],
             ),
         )
-        render_text(
-            screen=screen,
-            text=f"{self.game_play.wave_manager.show_remaining_targets()}",
-            color="grey90",
-            pos=(
-                self.game_play_hud_rect.center[0] + 48,
-                self.game_play_hud_rect.center[1] + 36,
-            ),
-        )
+        # render_text(
+        #     screen=screen,
+        #     text=f"{self.game_play.wave_manager.show_remaining_targets()}",
+        #     color="grey90",
+        #     pos=(
+        #         self.game_play_hud_rect.center[0] + 48,
+        #         self.game_play_hud_rect.center[1] + 36,
+        #     ),
+        # )
         # SCORE
         render_text(
             screen=screen,

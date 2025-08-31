@@ -42,7 +42,8 @@ class Entity(pygame.sprite.Sprite):
             self.position[1] = edges["bottom"] + self.radius
 
     def update(self, dt):
-        self.handle_edge_wrap()
+        # self.handle_edge_wrap()
+        pass
 
     def draw(self, screen):
         pass

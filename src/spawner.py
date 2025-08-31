@@ -17,7 +17,6 @@ class Spawner(pygame.sprite.Sprite):
         self.play_area = game_play.play_area_rect
         self.spawn_timer = 0.0
         self.spawned = 0
-        self.entity_class = None
         self.entity_radius = None
         self.spawn_rate = None
         self.edges = [
@@ -60,7 +59,9 @@ class Spawner(pygame.sprite.Sprite):
 
     def update(self, dt):
         self.spawn_timer += dt
-        if self.spawn_timer > self.spawn_rate and self.spawned < self.target_count:
+        if self.spawned == self.target_count:
+            return
+        elif self.spawn_timer > self.spawn_rate:
             self.spawn_timer = 0
             self.spawned += 1
             self.spawn_entity()
@@ -70,7 +71,6 @@ class AsteroidSpawner(Spawner):
 
     def __init__(self, game_play, target_count):
         super().__init__(game_play, target_count)
-        self.entity_class = Asteroid
         self.entity_radius = ASTEROID_MAX_RADIUS
         self.spawn_rate = 1.0
 
@@ -83,16 +83,13 @@ class AsteroidSpawner(Spawner):
         kind = random.randint(1, ASTEROID_KINDS)
         actual_radius = ASTEROID_MIN_RADIUS * kind
 
-        asteroid = self.entity_class(
-            position.x, position.y, actual_radius, self.game_play
-        )
+        asteroid = Asteroid(position.x, position.y, actual_radius, self.game_play)
         asteroid.velocity = velocity
 
 
 class EnemyShipSpawner(Spawner):
     def __init__(self, game_play, target_count):
         super().__init__(game_play, target_count)
-        self.entity_class = EnemyShip
         self.entity_radius = ENEMY_SHIP_RADIUS
         self.spawn_rate = 1.0
 
@@ -102,7 +99,7 @@ class EnemyShipSpawner(Spawner):
         velocity = edge[0] * speed
         position = edge[1](random.uniform(0, 1))
 
-        enemy_ship = self.entity_class(
+        enemy_ship = EnemyShip(
             position.x,
             position.y,
             self.game_play,
