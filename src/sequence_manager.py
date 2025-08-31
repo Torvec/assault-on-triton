@@ -1,16 +1,46 @@
+from src.spawn_manager import SpawnManager
+from src.entities import Asteroid, EnemyShip
+
+
 class SequenceManager:
-    def __init__(self):
+    def __init__(self, game_play):
+        self.game_play = game_play
+        self.setup_sequence()
+
+    def setup_sequence(self):
         self.event_sequence = [
-            {"T": 0, "action": lambda: print("Spawn Player at T-0")},
-            {"T": 5, "action": lambda: print("Spawn Asteroids at T-5")},
-            {"T": 10, "action": lambda: print("Spawn Enemy Ships at T-10")},
-            {"T": 20, "action": lambda: print("The End at T-20")},
-
+            {
+                "event": 0,
+                "action": [
+                    lambda: SpawnManager(self.game_play, Asteroid, 5, 1.0),
+                    lambda: SpawnManager(self.game_play, EnemyShip, 5, 1.0),
+                ],
+            },
+            {
+                "event": 1,
+                "action": [
+                    lambda: SpawnManager(self.game_play, Asteroid, 10, 0.5),
+                    lambda: SpawnManager(self.game_play, EnemyShip, 8, 0.5),
+                ],
+            },
         ]
-        self.time = 0
+        self.current_event = 0
+        self.event_active = False
 
-    def run_sequence(self, dt):
-        self.time += dt
-        while self.event_sequence and self.time >= self.event_sequence[0]["T"]:
-            action = self.event_sequence.pop(0)
-            action["action"]()
+    def reset_sequence(self):
+        self.setup_sequence()
+
+    def set_current_event(self):
+        self.current_event += 1
+        self.event_active = False
+
+    def run_sequence(self):
+        if self.event_sequence and self.current_event < len(self.event_sequence):
+            if not self.event_active:
+                current_action = self.event_sequence[self.current_event]
+                print(f'Event: {current_action["event"]}')
+                for action in current_action["action"]:
+                    action()
+                self.event_active = True
+        else:
+            return

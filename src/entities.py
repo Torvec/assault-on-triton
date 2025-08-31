@@ -1,48 +1,51 @@
 import random
 import pygame
 
-from src.global_consts import (
-    PLAYER_RADIUS,
-    ASTEROID_MIN_RADIUS,
-    ENEMY_SHIP_RADIUS,
-    SHOT_RADIUS,
-)
-
 
 class Entity(pygame.sprite.Sprite):
 
-    def __init__(self, x, y, radius, game_play):
+    def __init__(self, x, y, game_play):
         # Used to auto add sprites to groups upon creation if a .container attribute is present
         if hasattr(self, "containers"):
             super().__init__(self.containers)
         else:
             super().__init__()
         self.position = pygame.Vector2(x, y)
-        self.radius = radius
         self.game_play = game_play
+        self.play_area = game_play.play_area_rect
+        self.radius = 0
         self.velocity = pygame.Vector2(0, 0)
 
     def collides_with(self, other):
         return self.position.distance_to(other.position) <= self.radius + other.radius
 
-    def handle_edge_wrap(self):
+    def handle_boundaries(self, action=None):
         edges = {
-            "top": self.game_play.play_area_rect.top,
-            "right": self.game_play.play_area_rect.right,
-            "bottom": self.game_play.play_area_rect.bottom,
-            "left": self.game_play.play_area_rect.left,
+            "top": self.play_area.top + self.radius,
+            "right": self.play_area.right - self.radius,
+            "bottom": self.play_area.bottom - self.radius,
+            "left": self.play_area.left + self.radius,
         }
-        if self.position[0] > edges["right"] + self.radius:
-            self.position[0] = edges["left"] - self.radius
-        if self.position[0] < edges["left"] - self.radius:
-            self.position[0] = edges["right"] + self.radius
-        if self.position[1] > edges["bottom"] + self.radius:
-            self.position[1] = edges["top"] - self.radius
-        if self.position[1] < edges["top"] - self.radius:
-            self.position[1] = edges["bottom"] + self.radius
+        if action == "block":
+            self.position.x = max(edges["left"], min(self.position.x, edges["right"]))
+            self.position.y = max(edges["top"], min(self.position.y, edges["bottom"]))
+        if action == None and (
+            self.position.x + self.radius < self.play_area.left
+            or self.position.x - self.radius > self.play_area.right
+            or self.position.y - self.radius > self.play_area.bottom
+        ):
+            self.remove_active_targets()
+
+    def remove_active_targets(self):
+        if self in self.game_play.active_targets:
+            self.kill()
+            self.game_play.active_targets.remove(self)
+            print(
+                f"{self} removed from Active Targets. Length: {len(self.game_play.active_targets)}"
+            )
 
     def update(self, dt):
-        # self.handle_edge_wrap()
+        self.handle_boundaries()
         pass
 
     def draw(self, screen):
@@ -52,7 +55,8 @@ class Entity(pygame.sprite.Sprite):
 class Player(Entity):
 
     def __init__(self, x, y, game_play):
-        super().__init__(x, y, PLAYER_RADIUS, game_play)
+        super().__init__(x, y, game_play)
+        self.radius = 20
         self.acceleration = 600
         self.speed = 300
         self.rotation = 0
@@ -73,10 +77,10 @@ class Player(Entity):
         }
         return list(points.values())
 
-    def update_direction(self):
-        direction = pygame.mouse.get_pos() - self.position
-        angle = pygame.Vector2(0, -1).angle_to(direction)
-        self.rotation = angle
+    # def update_direction(self):
+    #     direction = pygame.mouse.get_pos() - self.position
+    #     angle = pygame.Vector2(0, -1).angle_to(direction)
+    #     self.rotation = angle
 
     def move(self, dt):
         forward = pygame.Vector2(0, -1).rotate(self.rotation)
@@ -128,17 +132,16 @@ class Player(Entity):
 
     def apply_acceleration(self, dt):
         self.velocity *= 0.99
-
         if self.velocity.length() > self.speed:
             self.velocity.scale_to_length(self.speed)
-
         self.position += self.velocity * dt
 
     def update(self, dt):
         super().update(dt)
         self.controls(dt)
         self.apply_acceleration(dt)
-        self.update_direction()
+        self.handle_boundaries("block")
+        # self.update_direction()
         self.handle_invincibility(dt)
         self.shoot_timer -= dt
 
@@ -151,31 +154,28 @@ class Player(Entity):
 
 class Asteroid(Entity):
 
-    def __init__(self, x, y, radius, game_play):
-        super().__init__(x, y, radius, game_play)
+    def __init__(self, x, y, game_play):
+        super().__init__(x, y, game_play)
+        self.radius = random.choice([20, 40, 60])
+        self.min_radius = 20
+        self.max_radius = 60
+        self.speed = random.randint(40, 100)
 
     def split(self):
-        self.kill()
-        self.game_play.wave_manager.dec_target_count()
-        if self.radius <= ASTEROID_MIN_RADIUS:
+        self.remove_active_targets()
+        if self.radius <= self.min_radius:
             return
 
         random_angle = random.uniform(20, 60)
+        new_radius = self.radius - self.min_radius
 
-        a_velocity = self.velocity.rotate(random_angle)
-        b_velocity = self.velocity.rotate(-random_angle)
+        asteroid_a = Asteroid(self.position.x, self.position.y, self.game_play)
+        asteroid_a.radius = new_radius
+        asteroid_a.velocity = self.velocity.rotate(random_angle) * 1.2
 
-        new_radius = self.radius - ASTEROID_MIN_RADIUS
-        asteroid_a = Asteroid(
-            self.position.x, self.position.y, new_radius, self.game_play
-        )
-        self.game_play.wave_manager.inc_target_count()
-        asteroid_a.velocity = a_velocity * 1.2
-        asteroid_b = Asteroid(
-            self.position.x, self.position.y, new_radius, self.game_play
-        )
-        self.game_play.wave_manager.inc_target_count()
-        asteroid_b.velocity = b_velocity * 1.2
+        asteroid_b = Asteroid(self.position.x, self.position.y, self.game_play)
+        asteroid_b.radius = new_radius
+        asteroid_b.velocity = self.velocity.rotate(-random_angle) * 1.2
 
     def update(self, dt):
         super().update(dt)
@@ -188,8 +188,10 @@ class Asteroid(Entity):
 class EnemyShip(Entity):
 
     def __init__(self, x, y, game_play):
-        super().__init__(x, y, ENEMY_SHIP_RADIUS, game_play)
+        super().__init__(x, y, game_play)
         self.game_play = game_play
+        self.radius = 20
+        self.speed = 200
         self.rotation = 0
 
     def shape(self):
@@ -203,20 +205,20 @@ class EnemyShip(Entity):
         return list(points.values())
 
     def explode(self):
-        self.kill()
-        self.game_play.wave_manager.dec_target_count()
+        self.remove_active_targets()
+        # self.game_play.wave_manager.dec_target_count()
         # TODO: Debris flys off in random directions and then disappears after a few seconds
 
-    def track_player(self):
-        direction = self.game_play.player.position - self.position
-        angle = pygame.Vector2(0, 1).angle_to(direction)
-        return angle
+    # def track_player(self):
+    #     direction = self.game_play.player.position - self.position
+    #     angle = pygame.Vector2(0, 1).angle_to(direction)
+    #     return angle
 
     def update(self, dt):
         super().update(dt)
         forward = pygame.Vector2(0, 1).rotate(self.rotation)
-        self.position += forward * 200 * dt
-        self.rotation = self.track_player()
+        self.position += forward * self.speed * dt
+        # self.rotation = self.track_player()
 
     def draw(self, screen):
         pygame.draw.polygon(screen, "red", self.shape())
@@ -224,8 +226,8 @@ class EnemyShip(Entity):
 
 class Shot(Entity):
     def __init__(self, x, y, game_play):
-        super().__init__(x, y, SHOT_RADIUS, game_play)
-        self.start_position = pygame.Vector2(x, y)
+        super().__init__(x, y, game_play)
+        self.radius = 5
         self.distance_traveled = 0
         self.max_range = 500
         self.speed = 500

@@ -1,9 +1,8 @@
 import pygame
 import random
 from src.menus import *
-# from src.wave_manager import WaveManager
-# from src.spawner import AsteroidSpawner, EnemyShipSpawner
 from src.sequence_manager import SequenceManager
+from src.spawn_manager import SpawnManager
 from src.entities import Player, Asteroid, EnemyShip, Shot
 from src.game_play_hud import GamePlayHUD
 from src.render_text import render_text
@@ -67,8 +66,9 @@ class GamePlay(Scene):
         self.score.score = 0
         self.isPaused = False
         self.pause_menu = PauseMenu(self.game, self)
-        # self.wave_manager = WaveManager()
-        self.sequence_manager = SequenceManager()
+        self.sequence_manager = SequenceManager(self)
+        self.active_spawners = set()
+        self.active_targets = set()
 
         # Sprite Groups
         self.asteroids = pygame.sprite.Group()
@@ -78,8 +78,7 @@ class GamePlay(Scene):
         # Set containers attributes so the sprites automatically get added to the appropriate groups
         Asteroid.containers = (self.asteroids, self.updateable, self.drawable)
         EnemyShip.containers = (self.enemy_ships, self.updateable, self.drawable)
-        # AsteroidSpawner.containers = self.updateable
-        # EnemyShipSpawner.containers = self.updateable
+        SpawnManager.containers = self.updateable
         Player.containers = (self.updateable, self.drawable)
         Shot.containers = (self.shots, self.updateable, self.drawable)
 
@@ -122,16 +121,11 @@ class GamePlay(Scene):
                         handler["destroy_method"](entity)
                         self.score.inc_score(1)
 
-    # def handle_waves(self):
-    #     self.wave_manager.set_current_wave()
-    #     AsteroidSpawner(
-    #         self,
-    #         self.wave_manager.waves[self.wave_manager.current_wave - 1]["asteroids"],
-    #     )
-    #     EnemyShipSpawner(
-    #         self,
-    #         self.wave_manager.waves[self.wave_manager.current_wave - 1]["enemy_ships"],
-    #     )
+    def handle_event_sequence(self):
+        if not self.active_targets and not self.active_spawners:
+            if self.sequence_manager.event_active:
+                self.sequence_manager.set_current_event()
+            self.sequence_manager.run_sequence()
 
     def update(self, dt, events):
 
@@ -140,10 +134,7 @@ class GamePlay(Scene):
         if not self.isPaused:
             super().update(dt)
             self.handle_collisions()
-            self.sequence_manager.run_sequence(dt)
-
-            # if self.wave_manager.remaining_targets == 0:
-            #     self.handle_waves()
+            self.handle_event_sequence()
 
     def draw(self, screen):
         super().draw(screen)
