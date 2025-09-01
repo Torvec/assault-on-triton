@@ -60,6 +60,7 @@ class Player(Entity):
         self.acceleration = 600
         self.speed = 300
         self.lives = 3
+        self.shield = 100
         self.invincibleTime = 0
         self.shoot_timer = 0
 
@@ -102,9 +103,10 @@ class Player(Entity):
         shot.sound()
 
     def respawn(self):
-        self.invincibleTime = 3
+        self.invincibleTime = 2
         self.position.x = self.game_play.play_area_rect.width // 2
         self.position.y = self.game_play.play_area_rect.height - 100
+        self.shield = 100
 
     def handle_invincibility(self, dt):
         if self.invincibleTime > 0:

@@ -60,10 +60,14 @@ class GamePlay(Scene):
         super().__init__(game)
         self.game_play_hud = GamePlayHUD(self)
         self.play_area_rect = pygame.Rect(
-            0, 0, self.game.screen_w, self.game.screen_h - self.game_play_hud.height
+            0,
+            self.game_play_hud.height,
+            self.game.screen_w,
+            self.game.screen_h - self.game_play_hud.height,
         )
         self.score = self.game.score_manager
         self.score.score = 0
+        self.score.multiplier = 1
         self.isPaused = False
         self.pause_menu = PauseMenu(self)
         self.sequence_manager = SequenceManager(self)
@@ -113,18 +117,24 @@ class GamePlay(Scene):
                     entity.collides_with(self.player)
                     and self.player.invincibleTime == 0
                 ):
-                    self.player.lives -= 1
+                    self.player.shield -= 5
                     handler["destroy_method"](entity)
+                    if self.score.multiplier > 1:
+                        self.score.set_multiplier(-1)
+                    if self.player.shield <= 0:
+                        self.player.lives -= 1
+                        self.player.respawn()
                     if self.player.lives <= 0:
                         #! self.game.set_scene(GameOver(self.game))
                         self.game.set_scene(GamePlay(self.game))
-                    self.player.respawn()
+
                 # Shot collision
                 for shot in self.shots:
                     if shot.collides_with(entity):
                         shot.kill()
                         handler["destroy_method"](entity)
                         self.score.inc_score(1)
+                        self.score.set_multiplier(1)
 
     def handle_event_sequence(self):
         if not self.active_targets and not self.active_spawners:
@@ -138,6 +148,7 @@ class GamePlay(Scene):
             super().update(dt)
             self.handle_collisions()
             self.handle_event_sequence()
+            self.score.handle_streak_timer(dt)
 
     def draw(self, screen):
         super().draw(screen)

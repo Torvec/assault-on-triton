@@ -3,13 +3,32 @@ class ScoreManager:
         self.score = 0
         self.high_score = 0
         self.score_store = ""
+        self.multiplier = 1
+        self.max_streak_timer = 2
+        self.min_streak_timer = 0.4
+        self.decrement_amount = 0.1
+        self.streak_timer = self.max_streak_timer
 
     def inc_score(self, amount):
-        self.score += amount
-        return self.score
+        self.score += amount * self.multiplier
 
-    def show_score(self):
-        return self.score
+    def set_multiplier(self, num):
+        self.multiplier += num
+
+    def set_streak_timer(self):
+        self.streak_timer = (
+            self.max_streak_timer - (self.multiplier - 1) * self.decrement_amount
+        )
+        if self.streak_timer <= self.min_streak_timer:
+            self.streak_timer = self.min_streak_timer
+
+    def handle_streak_timer(self, dt):
+        self.streak_timer -= dt
+        if self.streak_timer <= 0 and self.multiplier > 1:
+            self.set_multiplier(-1)
+            self.set_streak_timer()
+        if self.multiplier == 1:
+            self.streak_timer = self.max_streak_timer
 
     def create_score_store(self):
         # Creates the json file that stores all scores from highest to lowest if one is not found

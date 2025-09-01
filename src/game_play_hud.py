@@ -6,86 +6,58 @@ class GamePlayHUD:
     def __init__(self, game_play):
         self.game_play = game_play
         self.width = self.game_play.game.screen_w
-        self.height = 128
+        self.height = 96
         self.game_play_hud_rect = pygame.Rect(
-            0, self.game_play.game.screen_h - self.height, self.width, self.height
+            0, 0, self.width, self.height
         )
 
     def draw(self, screen):
         pygame.draw.rect(screen, "grey5", self.game_play_hud_rect)
-        # LIVES
+
+        # SCORE x MULTIPLIER
         render_text(
             screen=screen,
-            text="Lives",
+            text=f"Score: {self.game_play.score.score}",
+            font_size=24,
             color="grey90",
             pos=(
-                self.game_play_hud_rect.center[0] - 144,
-                self.game_play_hud_rect.center[1],
+                self.game_play_hud_rect.center[0] - 256,
+                self.game_play_hud_rect.center[1] - 24,
             ),
+            align="midleft"
         )
         render_text(
             screen=screen,
-            text=f"{self.game_play.player.lives}",
+            text=f"Score x{self.game_play.score.multiplier} T-{self.game_play.score.streak_timer:.2f}",
+            font_size=24,
             color="grey90",
             pos=(
-                self.game_play_hud_rect.center[0] - 144,
-                self.game_play_hud_rect.center[1] + 36,
+                self.game_play_hud_rect.center[0] - 256,
+                self.game_play_hud_rect.center[1] + 24,
             ),
+            align="midleft",
         )
-        # EVENT
+
+        # LIVES x SHIELD
         render_text(
             screen=screen,
-            text="Event",
+            text=f"Shield x {self.game_play.player.shield}%",
+            font_size=24,
             color="grey90",
             pos=(
-                self.game_play_hud_rect.center[0] - 48,
-                self.game_play_hud_rect.center[1],
+                self.game_play_hud_rect.center[0] + 256,
+                self.game_play_hud_rect.center[1] - 24,
             ),
-        )
-        render_text(
-            screen=screen,
-            text=f"{self.game_play.sequence_manager.current_event}",
-            color="grey90",
-            pos=(
-                self.game_play_hud_rect.center[0] - 48,
-                self.game_play_hud_rect.center[1] + 36,
-            ),
-        )
-        # TARGETS
-        render_text(
-            screen=screen,
-            text="Targets",
-            color="grey90",
-            pos=(
-                self.game_play_hud_rect.center[0] + 48,
-                self.game_play_hud_rect.center[1],
-            ),
+            align="midright",
         )
         render_text(
             screen=screen,
-            text=f"{len(self.game_play.active_targets)}",
+            text=f"Life x {self.game_play.player.lives}",
+            font_size=24,
             color="grey90",
             pos=(
-                self.game_play_hud_rect.center[0] + 48,
-                self.game_play_hud_rect.center[1] + 36,
+                self.game_play_hud_rect.center[0] + 256,
+                self.game_play_hud_rect.center[1] + 24,
             ),
-        )
-        # SCORE
-        render_text(
-            screen=screen,
-            text="Score",
-            color="grey90",
-            pos=(
-                self.game_play_hud_rect.center[0] + 144,
-                self.game_play_hud_rect.center[1],
-            ),
-        )
-        render_text(
-            screen=screen,
-            text=f"{self.game_play.score.show_score()}",
-            color="grey90",
-            pos=(
-                self.game_play_hud_rect.center[0] + 144,
-                self.game_play_hud_rect.center[1] + 36,
-            ),
+            align="midright"
         )
