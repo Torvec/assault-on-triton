@@ -9,25 +9,26 @@ class StartMenu:
 
     def update(self, events):
         for event in events:
-            if event.type == pygame.KEYDOWN and event.key == pygame.K_RETURN:
-                from src.scenes import GamePlay
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_RETURN:
+                    from src.scenes import GamePlay
 
-                self.game.set_scene(GamePlay(self.game))
-            if event.type == pygame.KEYDOWN and event.key == pygame.K_o:
-                from src.scenes import Options
+                    self.game.set_scene(GamePlay(self.game))
+                if event.key == pygame.K_o:
+                    from src.scenes import Options
 
-                self.game.set_scene(Options(self.game))
-            if event.type == pygame.KEYDOWN and event.key == pygame.K_s:
-                from src.scenes import Scoreboard
+                    self.game.set_scene(Options(self.game))
+                if event.key == pygame.K_s:
+                    from src.scenes import Scoreboard
 
-                self.game.set_scene(Scoreboard(self.game))
-            if event.type == pygame.KEYDOWN and event.key == pygame.K_c:
-                from src.scenes import Credits
+                    self.game.set_scene(Scoreboard(self.game))
+                if event.key == pygame.K_c:
+                    from src.scenes import Credits
 
-                self.game.set_scene(Credits(self.game))
-            if event.type == pygame.KEYDOWN and event.key == pygame.K_q:
-                pygame.quit()
-                sys.exit()
+                    self.game.set_scene(Credits(self.game))
+                if event.key == pygame.K_q:
+                    pygame.quit()
+                    sys.exit()
 
     def draw(self, screen):
         menu_rect = pygame.Rect(0, 0, self.game.screen_w // 2, self.game.screen_h // 4)
@@ -78,20 +79,21 @@ class PauseMenu:
 
     def update(self, events):
         for event in events:
-            if event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
-                self.game_play.isPaused = not self.game_play.isPaused
-            if self.game_play.isPaused:
-                if event.type == pygame.KEYDOWN and event.key == pygame.K_1:
-                    from src.scenes import GamePlay
+            if event.type == pygame.KEYDOWN: 
+                if event.key == pygame.K_ESCAPE:
+                    self.game_play.isPaused = not self.game_play.isPaused
+                if self.game_play.isPaused:
+                    if event.key == pygame.K_1:
+                        from src.scenes import GamePlay
 
-                    self.game_play.game.set_scene(GamePlay(self.game_play.game))
-                if event.type == pygame.KEYDOWN and event.key == pygame.K_2:
-                    from src.scenes import Start
+                        self.game_play.game.set_scene(GamePlay(self.game_play.game))
+                    if event.key == pygame.K_2:
+                        from src.scenes import Start
 
-                    self.game_play.game.set_scene(Start(self.game_play.game))
-                if event.type == pygame.KEYDOWN and event.key == pygame.K_q:
-                    pygame.quit()
-                    sys.exit()
+                        self.game_play.game.set_scene(Start(self.game_play.game))
+                    if event.key == pygame.K_q:
+                        pygame.quit()
+                        sys.exit()
 
     def draw(self, screen):
         if self.game_play.isPaused:
@@ -149,25 +151,26 @@ class GameOverMenu:
 
     def update(self, events):
         for event in events:
-            if event.type == pygame.KEYDOWN and event.key == pygame.K_RETURN:
-                from src.scenes import GamePlay
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_RETURN:
+                    from src.scenes import GamePlay
 
-                self.game.set_scene(GamePlay(self.game))
-            if event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
-                from src.scenes import Start
+                    self.game.set_scene(GamePlay(self.game))
+                if event.key == pygame.K_ESCAPE:
+                    from src.scenes import Start
 
-                self.game.set_scene(Start(self.game))
-            if event.type == pygame.KEYDOWN and event.key == pygame.K_s:
-                from src.scenes import Scoreboard
+                    self.game.set_scene(Start(self.game))
+                if event.key == pygame.K_s:
+                    from src.scenes import Scoreboard
 
-                self.game.set_scene(Scoreboard(self.game))
-            if event.type == pygame.KEYDOWN and event.key == pygame.K_c:
-                from src.scenes import Credits
+                    self.game.set_scene(Scoreboard(self.game))
+                if event.key == pygame.K_c:
+                    from src.scenes import Credits
 
-                self.game.set_scene(Credits(self.game))
-            if event.type == pygame.KEYDOWN and event.key == pygame.K_q:
-                pygame.quit()
-                sys.exit()
+                    self.game.set_scene(Credits(self.game))
+                if event.key == pygame.K_q:
+                    pygame.quit()
+                    sys.exit()
 
     def draw(self, screen):
         game_over_menu_rect = pygame.Rect(
