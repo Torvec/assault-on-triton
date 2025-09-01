@@ -84,11 +84,11 @@ class PauseMenu:
                 if event.type == pygame.KEYDOWN and event.key == pygame.K_1:
                     from src.scenes import GamePlay
 
-                    self.game.set_scene(GamePlay(self.game))
+                    self.game_play.game.set_scene(GamePlay(self.game_play.game))
                 if event.type == pygame.KEYDOWN and event.key == pygame.K_2:
                     from src.scenes import Start
 
-                    self.game.set_scene(Start(self.game))
+                    self.game_play.game.set_scene(Start(self.game_play.game))
                 if event.type == pygame.KEYDOWN and event.key == pygame.K_q:
                     pygame.quit()
                     sys.exit()

@@ -92,7 +92,7 @@ class Player(Entity):
     def shoot(self):
         if self.shoot_timer > 0:
             return
-        self.shoot_timer = 0.25
+        self.shoot_timer = 0.2
         shot_offset = pygame.Vector2(0, -self.radius).rotate(self.rotation)
         shot_pos = self.position + shot_offset
         shot = Shot(shot_pos.x, shot_pos.y, self.game_play)
@@ -259,7 +259,7 @@ class Shot(Entity):
         super().__init__(x, y, game_play)
         self.radius = 5
         self.distance_traveled = 0
-        self.max_range = 500
+        self.max_range = game_play.play_area_rect.height * 0.75
         self.speed = 500
         self.sfx = "assets/720118__baggonotes__player_shoot1.wav"
 
