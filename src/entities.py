@@ -15,6 +15,7 @@ class Entity(pygame.sprite.Sprite):
         self.play_area = game_play.play_area_rect
         self.radius = 0
         self.velocity = pygame.Vector2(0, 0)
+        self.rotation = 0
 
     def collides_with(self, other):
         return self.position.distance_to(other.position) <= self.radius + other.radius
@@ -46,7 +47,9 @@ class Entity(pygame.sprite.Sprite):
         pass
 
     def draw(self, screen):
-        pass
+        pygame.draw.circle(
+            screen, "red", self.position, self.radius, 1
+        )  # Collision circle
 
 
 class Player(Entity):
@@ -56,7 +59,6 @@ class Player(Entity):
         self.radius = 20
         self.acceleration = 600
         self.speed = 300
-        self.rotation = 0
         self.lives = 3
         self.invincibleTime = 0
         self.shoot_timer = 0
@@ -140,10 +142,8 @@ class Player(Entity):
         self.shoot_timer -= dt
 
     def draw(self, screen):
+        super().draw(screen)
         pygame.draw.polygon(screen, "slategray3", self.shape(), 0)
-        pygame.draw.circle(
-            screen, "red", self.position, self.radius, 1
-        )  # Collision circle
 
 
 class Asteroid(Entity):
@@ -163,12 +163,16 @@ class Asteroid(Entity):
         new_angle = 30
         new_radius = self.radius - self.min_radius
 
-        asteroid_a = Asteroid(self.position.x - new_radius, self.position.y, self.game_play)
+        asteroid_a = Asteroid(
+            self.position.x - new_radius, self.position.y, self.game_play
+        )
         self.game_play.active_targets.add(asteroid_a)
         asteroid_a.radius = new_radius
         asteroid_a.velocity = self.velocity.rotate(new_angle) * 1.2
 
-        asteroid_b = Asteroid(self.position.x + new_radius, self.position.y, self.game_play)
+        asteroid_b = Asteroid(
+            self.position.x + new_radius, self.position.y, self.game_play
+        )
         self.game_play.active_targets.add(asteroid_b)
         asteroid_b.radius = new_radius
         asteroid_b.velocity = self.velocity.rotate(-new_angle) * 1.2
@@ -178,6 +182,7 @@ class Asteroid(Entity):
         self.position += self.velocity * dt
 
     def draw(self, screen):
+        super().draw(screen)
         pygame.draw.circle(screen, "wheat4", self.position, self.radius, 2)
 
 
@@ -188,7 +193,6 @@ class EnemyShip(Entity):
         self.game_play = game_play
         self.radius = 20
         self.speed = 200
-        self.rotation = 0
 
     def shape(self):
         forward = pygame.Vector2(0, 1).rotate(self.rotation)
@@ -202,22 +206,52 @@ class EnemyShip(Entity):
 
     def explode(self):
         self.remove_active_targets()
-        # self.game_play.wave_manager.dec_target_count()
-        # TODO: Debris flys off in random directions and then disappears after a few seconds
-
-    # def track_player(self):
-    #     direction = self.game_play.player.position - self.position
-    #     angle = pygame.Vector2(0, 1).angle_to(direction)
-    #     return angle
+        # TODO: Needs Explosion
 
     def update(self, dt):
         super().update(dt)
         forward = pygame.Vector2(0, 1).rotate(self.rotation)
         self.position += forward * self.speed * dt
-        # self.rotation = self.track_player()
 
     def draw(self, screen):
+        super().draw(screen)
         pygame.draw.polygon(screen, "red", self.shape())
+
+
+class Missile(Entity):
+    def __init__(self, x, y, game_play):
+        super().__init__(x, y, game_play)
+        self.radius = 10
+        self.speed = 200
+
+    def shape(self):
+        forward = pygame.Vector2(0, 1).rotate(self.rotation)
+        right = pygame.Vector2(0, 1).rotate(self.rotation + 90) * self.radius // 2
+        points = {
+            "top": self.position + forward * self.radius,
+            "right": self.position - forward * self.radius + right,
+            "left": self.position - forward * self.radius - right,
+        }
+        return list(points.values())
+
+    def explode(self):
+        self.remove_active_targets()
+        # TODO: Needs explosion
+
+    def track_player(self):
+        direction = self.game_play.player.position - self.position
+        angle = pygame.Vector2(0, 1).angle_to(direction)
+        return angle
+
+    def update(self, dt):
+        super().update(dt)
+        forward = pygame.Vector2(0, 1).rotate(self.rotation)
+        self.position += forward * self.speed * dt
+        self.rotation = self.track_player()
+
+    def draw(self, screen):
+        super().draw(screen)
+        pygame.draw.polygon(screen, "white", self.shape())
 
 
 class Shot(Entity):

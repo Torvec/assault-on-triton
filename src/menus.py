@@ -70,9 +70,11 @@ class StartMenu:
 
 
 class PauseMenu:
-    def __init__(self, game, game_play):
-        self.game = game
+    def __init__(self, game_play):
         self.game_play = game_play
+        self.screen = game_play.game.screen
+        self.screen_w = game_play.game.screen_w
+        self.screen_h = game_play.game.screen_h
 
     def update(self, events):
         for event in events:
@@ -94,41 +96,47 @@ class PauseMenu:
     def draw(self, screen):
         if self.game_play.isPaused:
             pause_menu_rect = pygame.Rect(
-                0, 0, self.game.screen_w // 2, self.game.screen_h // 4
+                0,
+                0,
+                self.screen_w // 2,
+                self.screen_h // 4,
             )
-            pause_menu_rect.center = (self.game.screen_w // 2, self.game.screen_h // 2)
+            pause_menu_rect.center = (
+                self.screen_w // 2,
+                self.screen_h // 2,
+            )
             pygame.draw.rect(screen, "grey4", pause_menu_rect)
             pygame.draw.rect(
                 screen, "grey70", pause_menu_rect, width=4, border_radius=24
             )
 
             render_text(
-                screen=self.game.screen,
+                screen=self.screen,
                 text="GAME PAUSED",
                 font_size=64,
                 pos=(pause_menu_rect.midtop[0], pause_menu_rect.midtop[1] + 64),
                 align="midtop",
             )
             render_text(
-                screen=self.game.screen,
+                screen=self.screen,
                 text="[ESC] Resume",
                 color="grey",
                 pos=(pause_menu_rect.center[0], pause_menu_rect.center[1] - 36),
             )
             render_text(
-                screen=self.game.screen,
+                screen=self.screen,
                 text="[1] Restart",
                 color="grey",
                 pos=(pause_menu_rect.center[0], pause_menu_rect.center[1]),
             )
             render_text(
-                screen=self.game.screen,
+                screen=self.screen,
                 text="[2] Main Menu",
                 color="grey",
                 pos=(pause_menu_rect.center[0], pause_menu_rect.center[1] + 36),
             )
             render_text(
-                screen=self.game.screen,
+                screen=self.screen,
                 text="[Q] QUIT",
                 color="grey",
                 pos=(pause_menu_rect.center[0], pause_menu_rect.center[1] + 72),

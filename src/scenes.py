@@ -3,7 +3,7 @@ import random
 from src.menus import *
 from src.sequence_manager import SequenceManager
 from src.spawn_manager import SpawnManager
-from src.entities import Player, Asteroid, EnemyShip, Shot
+from src.entities import Player, Asteroid, EnemyShip, Missile, Shot
 from src.game_play_hud import GamePlayHUD
 from src.render_text import render_text
 
@@ -65,7 +65,7 @@ class GamePlay(Scene):
         self.score = self.game.score_manager
         self.score.score = 0
         self.isPaused = False
-        self.pause_menu = PauseMenu(self.game, self)
+        self.pause_menu = PauseMenu(self)
         self.sequence_manager = SequenceManager(self)
         self.active_spawners = set()
         self.active_targets = set()
@@ -73,11 +73,13 @@ class GamePlay(Scene):
         # Sprite Groups
         self.asteroids = pygame.sprite.Group()
         self.enemy_ships = pygame.sprite.Group()
+        self.missiles = pygame.sprite.Group()
         self.shots = pygame.sprite.Group()
 
         # Set containers attributes so the sprites automatically get added to the appropriate groups
         Asteroid.containers = (self.asteroids, self.updateable, self.drawable)
         EnemyShip.containers = (self.enemy_ships, self.updateable, self.drawable)
+        Missile.containers = (self.missiles, self.updateable, self.drawable)
         SpawnManager.containers = self.updateable
         Player.containers = (self.updateable, self.drawable)
         Shot.containers = (self.shots, self.updateable, self.drawable)
@@ -88,7 +90,8 @@ class GamePlay(Scene):
             self,
         )
 
-        self.collision_handlers = [
+    def handle_collisions(self):
+        collision_handlers = [
             {
                 "group": self.asteroids,
                 "destroy_method": lambda entity: entity.split(),
@@ -97,11 +100,13 @@ class GamePlay(Scene):
                 "group": self.enemy_ships,
                 "destroy_method": lambda entity: entity.explode(),
             },
+            {
+                "group": self.missiles,
+                "destroy_method": lambda entity: entity.explode(),
+            },
         ]
 
-    def handle_collisions(self):
-        # Handle all entity types with a single loop
-        for handler in self.collision_handlers:
+        for handler in collision_handlers:
             for entity in handler["group"]:
                 # Player collision
                 if (
@@ -128,9 +133,7 @@ class GamePlay(Scene):
             self.sequence_manager.run_sequence()
 
     def update(self, dt, events):
-
         self.pause_menu.update(events)
-
         if not self.isPaused:
             super().update(dt)
             self.handle_collisions()
