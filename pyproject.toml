@@ -1,7 +1,7 @@
 [project]
-name = "asteroids"
+name = "assault-on-triton"
 version = "0.1.0"
-description = "Add your description here"
+description = "A 2D shoot-em-up, action, game"
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
