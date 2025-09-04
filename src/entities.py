@@ -50,32 +50,36 @@ class Entity(pygame.sprite.Sprite):
         pygame.draw.circle(
             screen, "red", self.position, self.radius, 1
         )  # Collision circle
+        # pass
 
 
 class Player(Entity):
 
     def __init__(self, x, y, game_play):
         super().__init__(x, y, game_play)
-        self.radius = 20
+        self.radius = 32
         self.acceleration = 600
         self.speed = 300
         self.lives = 3
         self.shield = 100
         self.invincibleTime = 0
         self.shoot_timer = 0
+        self.ship_image = pygame.transform.scale(
+            pygame.image.load("assets/triton_ship.png").convert_alpha(), (64, 64)
+        )
 
-    def shape(self):
-        points = {
-            "top": self.position
-            + pygame.Vector2(0, self.radius * 0.75).rotate(self.rotation),
-            "right": self.position
-            + pygame.Vector2(self.radius, 0).rotate(self.rotation),
-            "bottom": self.position
-            + pygame.Vector2(0, -self.radius * 2).rotate(self.rotation),
-            "left": self.position
-            + pygame.Vector2(-self.radius, 0).rotate(self.rotation),
-        }
-        return list(points.values())
+    # def shape(self):
+    #     points = {
+    #         "top": self.position
+    #         + pygame.Vector2(0, self.radius * 0.75).rotate(self.rotation),
+    #         "right": self.position
+    #         + pygame.Vector2(self.radius, 0).rotate(self.rotation),
+    #         "bottom": self.position
+    #         + pygame.Vector2(0, -self.radius * 2).rotate(self.rotation),
+    #         "left": self.position
+    #         + pygame.Vector2(-self.radius, 0).rotate(self.rotation),
+    #     }
+    #     return list(points.values())
 
     # def update_direction(self):
     #     direction = pygame.mouse.get_pos() - self.position
@@ -145,7 +149,10 @@ class Player(Entity):
 
     def draw(self, screen):
         super().draw(screen)
-        pygame.draw.polygon(screen, "slategray3", self.shape(), 0)
+        rotated_image = pygame.transform.rotate(self.ship_image, -self.rotation)
+        rect = rotated_image.get_rect(center=self.position)
+        screen.blit(rotated_image, rect)
+        # pygame.draw.polygon(screen, "slategray3", self.shape(), 0)  # Old shape drawing (commented out)
 
 
 class Asteroid(Entity):
