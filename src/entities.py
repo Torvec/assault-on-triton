@@ -64,9 +64,7 @@ class Player(Entity):
         self.shield = 100
         self.invincibleTime = 0
         self.shoot_timer = 0
-        self.ship_image = pygame.transform.scale(
-            pygame.image.load("assets/triton_ship.png").convert_alpha(), (64, 64)
-        )
+        self.ship_image = pygame.image.load("assets/triton_ship.png").convert_alpha()
 
     # def shape(self):
     #     points = {
