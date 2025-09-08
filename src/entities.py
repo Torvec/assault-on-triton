@@ -47,23 +47,26 @@ class Entity(pygame.sprite.Sprite):
         pass
 
     def draw(self, screen):
-        pygame.draw.circle(
-            screen, "red", self.position, self.radius, 1
-        )  # Collision circle
-        # pass
+        # pygame.draw.circle(
+        #     screen, "red", self.position, self.radius, 1
+        # )  # Collision circle
+        pass
 
 
 class Player(Entity):
 
     def __init__(self, x, y, game_play):
         super().__init__(x, y, game_play)
-        self.radius = 32
+        self.radius = 48
         self.acceleration = 600
         self.speed = 300
         self.lives = 3
         self.shield = 100
         self.invincibleTime = 0
         self.shoot_timer = 0
+        # self.ship_image = pygame.transform.scale(
+        #     pygame.image.load("assets/triton_ship.png").convert_alpha(), (96, 96)
+        # )
         self.ship_image = pygame.image.load("assets/triton_ship.png").convert_alpha()
 
     # def shape(self):
@@ -147,10 +150,9 @@ class Player(Entity):
 
     def draw(self, screen):
         super().draw(screen)
-        rotated_image = pygame.transform.rotate(self.ship_image, -self.rotation)
-        rect = rotated_image.get_rect(center=self.position)
-        screen.blit(rotated_image, rect)
-        # pygame.draw.polygon(screen, "slategray3", self.shape(), 0)  # Old shape drawing (commented out)
+        ship_rect = self.ship_image.get_rect(center=self.position)
+        screen.blit(self.ship_image, ship_rect)
+        # pygame.draw.polygon(screen, "slategray3", self.shape(), 0)
 
 
 class Asteroid(Entity):
