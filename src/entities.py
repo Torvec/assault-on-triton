@@ -44,7 +44,7 @@ class Entity(pygame.sprite.Sprite):
 
     def update(self, dt):
         self.handle_boundaries()
-        pass
+        # pass
 
     def draw(self, screen):
         # pygame.draw.circle(
@@ -228,6 +228,7 @@ class EnemyShip(Entity):
 
 
 class Missile(Entity):
+
     def __init__(self, x, y, game_play):
         super().__init__(x, y, game_play)
         self.radius = 10
@@ -264,6 +265,7 @@ class Missile(Entity):
 
 
 class Shot(Entity):
+    
     def __init__(self, x, y, game_play):
         super().__init__(x, y, game_play)
         self.radius = 5

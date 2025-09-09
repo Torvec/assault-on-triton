@@ -9,14 +9,15 @@ from src.render_text import render_text
 
 
 class Scene:
+
     def __init__(self, game):
         self.game = game
         self.updateable = pygame.sprite.Group()
         self.drawable = pygame.sprite.Group()
         self.stars = [
             (
-                random.randint(0, self.game.screen.get_width()),
-                random.randint(0, self.game.screen.get_height()),
+                random.randint(0, self.game.gs_w),
+                random.randint(0, self.game.gs_h),
             )
             for _ in range(150)
         ]
@@ -34,6 +35,7 @@ class Scene:
 
 
 class Start(Scene):
+
     def __init__(self, game):
         super().__init__(game)
         self.start_menu = StartMenu(game)
@@ -46,24 +48,25 @@ class Start(Scene):
         super().draw(screen)
 
         render_text(
-            screen=self.game.screen,
+            screen=self.game.game_surface,
             text="ASTEROIDS",
             font_size=128,
-            pos=(self.game.screen_w // 2, self.game.screen_h // 2 - 128),
+            pos=(self.game.gs_w // 2, self.game.gs_h // 2 - 128),
         )
 
         self.start_menu.draw(screen)
 
 
 class GamePlay(Scene):
+
     def __init__(self, game):
         super().__init__(game)
         self.game_play_hud = GamePlayHUD(self)
         self.play_area_rect = pygame.Rect(
             0,
             self.game_play_hud.height,
-            self.game.screen_w,
-            self.game.screen_h - self.game_play_hud.height,
+            self.game.gs_w,
+            self.game.gs_h - self.game_play_hud.height,
         )
         self.score = self.game.score_manager
         self.score.score = 0
@@ -157,6 +160,7 @@ class GamePlay(Scene):
 
 
 class GameOver(Scene):
+
     def __init__(self, game):
         super().__init__(game)
         self.score = game.score_manager
@@ -171,16 +175,17 @@ class GameOver(Scene):
         super().draw(screen)
 
         render_text(
-            screen=self.game.screen,
+            screen=self.game.game_surface,
             text="GAME OVER",
             font_size=128,
-            pos=(self.game.screen_w // 2, self.game.screen_h // 2 - 256),
+            pos=(self.game.gs_w // 2, self.game.gs_h // 2 - 256),
         )
 
         self.game_over_menu.draw(screen)
 
 
 class Options(Scene):
+
     def __init__(self, game):
         super().__init__(game)
 
@@ -195,20 +200,21 @@ class Options(Scene):
         super().draw(screen)
 
         render_text(
-            screen=self.game.screen,
+            screen=self.game.game_surface,
             text="OPTIONS",
             font_size=64,
-            pos=(self.game.screen_w // 2, 64),
+            pos=(self.game.gs_w // 2, 64),
         )
         render_text(
-            screen=self.game.screen,
+            screen=self.game.game_surface,
             text="scores go here",
             color="grey",
-            pos=(self.game.screen_w // 2, 128),
+            pos=(self.game.gs_w // 2, 128),
         )
 
 
 class Scoreboard(Scene):
+
     def __init__(self, game):
         super().__init__(game)
 
@@ -223,20 +229,21 @@ class Scoreboard(Scene):
         super().draw(screen)
 
         render_text(
-            screen=self.game.screen,
+            screen=self.game.game_surface,
             text="HIGH SCORES",
             font_size=64,
-            pos=(self.game.screen_w // 2, 64),
+            pos=(self.game.gs_w // 2, 64),
         )
         render_text(
-            screen=self.game.screen,
+            screen=self.game.game_surface,
             text="scores go here",
             color="grey",
-            pos=(self.game.screen_w // 2, 128),
+            pos=(self.game.gs_w // 2, 128),
         )
 
 
 class Credits(Scene):
+    
     def __init__(self, game):
         super().__init__(game)
 
@@ -251,14 +258,14 @@ class Credits(Scene):
         super().draw(screen)
 
         render_text(
-            screen=self.game.screen,
+            screen=self.game.game_surface,
             text="CREDITS",
             font_size=64,
-            pos=(self.game.screen_w // 2, 64),
+            pos=(self.game.gs_w // 2, 64),
         )
         render_text(
-            screen=self.game.screen,
+            screen=self.game.game_surface,
             text="Credits go here",
             color="grey",
-            pos=(self.game.screen_w // 2, 128),
+            pos=(self.game.gs_w // 2, 128),
         )

@@ -3,9 +3,10 @@ from src.render_text import render_text
 
 
 class GamePlayHUD:
+    
     def __init__(self, game_play):
         self.game_play = game_play
-        self.width = self.game_play.game.screen_w
+        self.width = self.game_play.game.gs_w
         self.height = 96
         self.game_play_hud_rect = pygame.Rect(
             0, 0, self.width, self.height
