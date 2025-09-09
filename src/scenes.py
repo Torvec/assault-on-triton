@@ -128,8 +128,8 @@ class GamePlay(Scene):
                         self.player.lives -= 1
                         self.player.respawn()
                     if self.player.lives <= 0:
-                        #! self.game.set_scene(GameOver(self.game))
-                        self.game.set_scene(GamePlay(self.game))
+                        self.game.set_scene(GameOver(self.game))
+                        # self.game.set_scene(GamePlay(self.game))
 
                 # Shot collision
                 for shot in self.shots:
@@ -243,7 +243,7 @@ class Scoreboard(Scene):
 
 
 class Credits(Scene):
-    
+
     def __init__(self, game):
         super().__init__(game)
 

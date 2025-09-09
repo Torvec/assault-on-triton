@@ -32,7 +32,7 @@ class StartMenu:
                     sys.exit()
 
     def draw(self, screen):
-        menu_rect = pygame.Rect(0, 0, self.game.gs_w // 2, self.game.gs_h // 4)
+        menu_rect = pygame.Rect(0, 0, self.game.gs_w * 0.75, self.game.gs_h // 4)
         menu_rect.center = (self.game.gs_w // 2, self.game.gs_h // 2 + 128)
         pygame.draw.rect(screen, "grey4", menu_rect)
         pygame.draw.rect(screen, "grey70", menu_rect, width=4, border_radius=24)
@@ -81,7 +81,7 @@ class PauseMenu:
 
     def update(self, events):
         for event in events:
-            if event.type == pygame.KEYDOWN: 
+            if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_ESCAPE:
                     self.game_play.isPaused = not self.game_play.isPaused
                 if self.game_play.isPaused:
@@ -102,7 +102,7 @@ class PauseMenu:
             pause_menu_rect = pygame.Rect(
                 0,
                 0,
-                self.screen_w // 2,
+                self.screen_w * 0.75,
                 self.screen_h // 4,
             )
             pause_menu_rect.center = (
@@ -148,7 +148,7 @@ class PauseMenu:
 
 
 class GameOverMenu:
-    
+
     def __init__(self, game):
         self.game = game
 
@@ -177,7 +177,7 @@ class GameOverMenu:
 
     def draw(self, screen):
         game_over_menu_rect = pygame.Rect(
-            0, 0, self.game.gs_w // 2, self.game.gs_h // 4
+            0, 0, self.game.gs_w * 0.75, self.game.gs_h // 4
         )
         game_over_menu_rect.center = (self.game.gs_w // 2, self.game.gs_h // 2)
         pygame.draw.rect(screen, "grey4", game_over_menu_rect)
@@ -187,7 +187,7 @@ class GameOverMenu:
 
         render_text(
             screen=self.game.game_surface,
-            text=f"Score: {self.game.score_manager.show_score()}",
+            text=f"Score: {self.game.score_manager.score}",
             font_size=64,
             color="white",
             pos=(game_over_menu_rect.midtop[0], game_over_menu_rect.midtop[1] + 36),
