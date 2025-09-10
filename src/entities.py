@@ -159,10 +159,13 @@ class Asteroid(Entity):
 
     def __init__(self, x, y, game_play):
         super().__init__(x, y, game_play)
-        self.radius = random.choice([20, 40, 60])
-        self.min_radius = 20
-        self.max_radius = 60
+        self.radius = random.choice([16, 32, 64])
+        self.min_radius = 16
+        self.max_radius = 64
         self.speed = random.randint(80, 120)
+        self.asteroid_lg = pygame.image.load("assets/asteroid_lg.png").convert_alpha()
+        self.asteroid_md = pygame.image.load("assets/asteroid_md.png").convert_alpha()
+        self.asteroid_sm = pygame.image.load("assets/asteroid_sm.png").convert_alpha()
 
     def split(self):
         self.remove_active_targets()
@@ -170,7 +173,7 @@ class Asteroid(Entity):
             return
 
         new_angle = 30
-        new_radius = self.radius - self.min_radius
+        new_radius = self.radius // 2
 
         asteroid_a = Asteroid(
             self.position.x - new_radius, self.position.y, self.game_play
@@ -192,7 +195,15 @@ class Asteroid(Entity):
 
     def draw(self, screen):
         super().draw(screen)
-        pygame.draw.circle(screen, "wheat4", self.position, self.radius, 2)
+        if self.radius == 64:
+            ast_lg_rect = self.asteroid_lg.get_rect(center=self.position)
+            screen.blit(self.asteroid_lg, ast_lg_rect)
+        if self.radius == 32:
+            ast_md_rect = self.asteroid_lg.get_rect(center=self.position)
+            screen.blit(self.asteroid_md, ast_md_rect)
+        if self.radius == 16:
+            ast_sm_rect = self.asteroid_lg.get_rect(center=self.position)
+            screen.blit(self.asteroid_sm, ast_sm_rect)
 
 
 class EnemyShip(Entity):
@@ -265,7 +276,7 @@ class Missile(Entity):
 
 
 class Shot(Entity):
-    
+
     def __init__(self, x, y, game_play):
         super().__init__(x, y, game_play)
         self.radius = 5
