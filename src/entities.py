@@ -211,8 +211,11 @@ class EnemyShip(Entity):
     def __init__(self, x, y, game_play):
         super().__init__(x, y, game_play)
         self.game_play = game_play
-        self.radius = 20
+        self.radius = 32
         self.speed = 200
+        self.enemy_ship_image = pygame.image.load(
+            "assets/enemy_ship.png"
+        ).convert_alpha()
 
     def shape(self):
         forward = pygame.Vector2(0, 1).rotate(self.rotation)
@@ -235,7 +238,9 @@ class EnemyShip(Entity):
 
     def draw(self, screen):
         super().draw(screen)
-        pygame.draw.polygon(screen, "red", self.shape())
+        # pygame.draw.polygon(screen, "red", self.shape())
+        ship_rect = self.enemy_ship_image.get_rect(center=self.position)
+        screen.blit(self.enemy_ship_image, ship_rect)
 
 
 class Missile(Entity):
