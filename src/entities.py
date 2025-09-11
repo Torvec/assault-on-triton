@@ -42,14 +42,22 @@ class Entity(pygame.sprite.Sprite):
             self.kill()
             self.game_play.active_targets.remove(self)
 
+    def show_collision(self):
+        keys = pygame.key.get_pressed()
+        toggle = False
+        if keys[pygame.K_BACKQUOTE]:
+            return not toggle
+
     def update(self, dt):
         self.handle_boundaries()
+        self.show_collision()
         # pass
 
     def draw(self, screen):
-        # pygame.draw.circle(
-        #     screen, "red", self.position, self.radius, 1
-        # )  # Collision circle
+        if self.show_collision():
+            pygame.draw.circle(
+                screen, "red", self.position, self.radius, 1
+            )  # Collision circle
         pass
 
 
@@ -199,10 +207,10 @@ class Asteroid(Entity):
             ast_lg_rect = self.asteroid_lg.get_rect(center=self.position)
             screen.blit(self.asteroid_lg, ast_lg_rect)
         if self.radius == 32:
-            ast_md_rect = self.asteroid_lg.get_rect(center=self.position)
+            ast_md_rect = self.asteroid_md.get_rect(center=self.position)
             screen.blit(self.asteroid_md, ast_md_rect)
         if self.radius == 16:
-            ast_sm_rect = self.asteroid_lg.get_rect(center=self.position)
+            ast_sm_rect = self.asteroid_sm.get_rect(center=self.position)
             screen.blit(self.asteroid_sm, ast_sm_rect)
 
 
