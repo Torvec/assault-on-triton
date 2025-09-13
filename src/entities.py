@@ -88,13 +88,13 @@ class Player(Entity):
         if self.shoot_timer > 0:
             return
         self.shoot_timer = 0.2
-        shot_offset = pygame.Vector2(0, -self.radius).rotate(self.rotation)
+        shot_offset = pygame.Vector2(0, -self.radius)
         shot_pos = self.position + shot_offset
-        shot = Shot(shot_pos.x, shot_pos.y, self.game_play)
-        shot.velocity = (
-            pygame.Vector2(0, -1).rotate(self.rotation) * shot.speed + self.velocity
-        )
-        shot.sound()
+        shot_l = Shot(shot_pos.x - 8, shot_pos.y, self.game_play)
+        shot_r = Shot(shot_pos.x + 8, shot_pos.y, self.game_play)
+        shot_l.velocity = pygame.Vector2(0, -1) * shot_l.speed + self.velocity
+        shot_r.velocity = pygame.Vector2(0, -1) * shot_r.speed + self.velocity
+        shot_l.sound()
 
     def respawn(self):
         self.invincibleTime = 2
@@ -288,10 +288,11 @@ class Shot(Entity):
 
     def __init__(self, x, y, game_play):
         super().__init__(x, y, game_play)
-        self.radius = 5
+        self.radius = 4
         self.distance_traveled = 0
         self.max_range = game_play.play_area_rect.height * 0.75
         self.speed = 500
+        self.shot_image = pygame.image.load("assets/blaster_shot.png")
         self.sfx = "assets/720118__baggonotes__player_shoot1.wav"
 
     def sound(self):
@@ -311,4 +312,6 @@ class Shot(Entity):
         self.position += self.velocity * dt
 
     def draw(self, screen):
-        pygame.draw.circle(screen, "yellow", self.position, self.radius, 0)
+        # pygame.draw.circle(screen, "yellow", self.position, self.radius, 0)
+        shot_rect = self.shot_image.get_rect(center=self.position)
+        screen.blit(self.shot_image, shot_rect)
