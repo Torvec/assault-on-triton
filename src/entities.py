@@ -72,28 +72,9 @@ class Player(Entity):
         self.shield = 100
         self.invincibleTime = 0
         self.shoot_timer = 0
-        # self.ship_image = pygame.transform.scale(
-        #     pygame.image.load("assets/triton_ship.png").convert_alpha(), (96, 96)
-        # )
-        self.ship_image = pygame.image.load("assets/triton_ship.png").convert_alpha()
-
-    # def shape(self):
-    #     points = {
-    #         "top": self.position
-    #         + pygame.Vector2(0, self.radius * 0.75).rotate(self.rotation),
-    #         "right": self.position
-    #         + pygame.Vector2(self.radius, 0).rotate(self.rotation),
-    #         "bottom": self.position
-    #         + pygame.Vector2(0, -self.radius * 2).rotate(self.rotation),
-    #         "left": self.position
-    #         + pygame.Vector2(-self.radius, 0).rotate(self.rotation),
-    #     }
-    #     return list(points.values())
-
-    # def update_direction(self):
-    #     direction = pygame.mouse.get_pos() - self.position
-    #     angle = pygame.Vector2(0, -1).angle_to(direction)
-    #     self.rotation = angle
+        self.ship_image = pygame.image.load(
+            "assets/player_spaceship.png"
+        ).convert_alpha()
 
     def move(self, dt):
         forward = pygame.Vector2(0, -1).rotate(self.rotation)
@@ -160,7 +141,6 @@ class Player(Entity):
         super().draw(screen)
         ship_rect = self.ship_image.get_rect(center=self.position)
         screen.blit(self.ship_image, ship_rect)
-        # pygame.draw.polygon(screen, "slategray3", self.shape(), 0)
 
 
 class Asteroid(Entity):
@@ -171,6 +151,7 @@ class Asteroid(Entity):
         self.min_radius = 16
         self.max_radius = 64
         self.speed = random.randint(80, 120)
+        self.rotation_speed = random.uniform(-90, 90)
         self.asteroid_lg = pygame.image.load("assets/asteroid_lg.png").convert_alpha()
         self.asteroid_md = pygame.image.load("assets/asteroid_md.png").convert_alpha()
         self.asteroid_sm = pygame.image.load("assets/asteroid_sm.png").convert_alpha()
@@ -200,18 +181,20 @@ class Asteroid(Entity):
     def update(self, dt):
         super().update(dt)
         self.position += self.velocity * dt
+        self.rotation += self.rotation_speed * dt
 
     def draw(self, screen):
         super().draw(screen)
         if self.radius == 64:
-            ast_lg_rect = self.asteroid_lg.get_rect(center=self.position)
-            screen.blit(self.asteroid_lg, ast_lg_rect)
-        if self.radius == 32:
-            ast_md_rect = self.asteroid_md.get_rect(center=self.position)
-            screen.blit(self.asteroid_md, ast_md_rect)
-        if self.radius == 16:
-            ast_sm_rect = self.asteroid_sm.get_rect(center=self.position)
-            screen.blit(self.asteroid_sm, ast_sm_rect)
+            image = self.asteroid_lg
+        elif self.radius == 32:
+            image = self.asteroid_md
+        else:
+            image = self.asteroid_sm
+
+        rotated_image = pygame.transform.rotate(image, self.rotation)
+        rect = rotated_image.get_rect(center=self.position)
+        screen.blit(rotated_image, rect)
 
 
 class EnemyShip(Entity):
