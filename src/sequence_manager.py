@@ -1,5 +1,5 @@
 from src.spawn_manager import SpawnManager
-from src.entities import Asteroid, EnemyShip, Missile
+from src.entities import Asteroid, EnemyDrone, EnemyShip, Missile
 
 
 class SequenceManager:
@@ -12,18 +12,20 @@ class SequenceManager:
             {
                 "event": 0,
                 "action": [
-                    lambda: SpawnManager(self.game_play, Asteroid, 20, 1.25),
+                    lambda: SpawnManager(self.game_play, Asteroid, 20, 1.0),
                 ],
             },
             {
                 "event": 1,
                 "action": [
+                    lambda: SpawnManager(self.game_play, EnemyDrone, 8, 0.75),
                     lambda: SpawnManager(self.game_play, EnemyShip, 4, 1.5),
                 ],
             },
             {
                 "event": 2,
                 "action": [
+                    lambda: SpawnManager(self.game_play, EnemyDrone, 12, 0.5),
                     lambda: SpawnManager(self.game_play, EnemyShip, 8, 1.0),
                     lambda: SpawnManager(self.game_play, Missile, 10, 1.2),
                 ],
@@ -33,6 +35,7 @@ class SequenceManager:
                 "action": [
                     lambda: SpawnManager(self.game_play, Asteroid, 20, 1.25),
                     lambda: SpawnManager(self.game_play, EnemyShip, 10, 0.8),
+                    lambda: SpawnManager(self.game_play, EnemyDrone, 16, 0.4),
                     lambda: SpawnManager(self.game_play, Missile, 12, 1.0),
                 ],
             },

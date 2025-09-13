@@ -197,30 +197,19 @@ class Asteroid(Entity):
         screen.blit(rotated_image, rect)
 
 
-class EnemyShip(Entity):
+class EnemyDrone(Entity):
 
     def __init__(self, x, y, game_play):
         super().__init__(x, y, game_play)
-        self.game_play = game_play
-        self.radius = 32
-        self.speed = 200
-        self.enemy_ship_image = pygame.image.load(
-            "assets/enemy_ship.png"
+        self.radius = 16
+        self.speed = 300
+        self.enemy_drone_img = pygame.image.load(
+            "assets/enemy_drone.png"
         ).convert_alpha()
-
-    def shape(self):
-        forward = pygame.Vector2(0, 1).rotate(self.rotation)
-        right = pygame.Vector2(0, 1).rotate(self.rotation + 90) * self.radius / 1.5
-        points = {
-            "top": self.position + forward * self.radius,
-            "right": self.position - forward * self.radius + right,
-            "left": self.position - forward * self.radius - right,
-        }
-        return list(points.values())
 
     def explode(self):
         self.remove_active_targets()
-        # TODO: Needs Explosion
+        # TODO: Add Exposion effect
 
     def update(self, dt):
         super().update(dt)
@@ -229,7 +218,31 @@ class EnemyShip(Entity):
 
     def draw(self, screen):
         super().draw(screen)
-        # pygame.draw.polygon(screen, "red", self.shape())
+        drone_rect = self.enemy_drone_img.get_rect(center=self.position)
+        screen.blit(self.enemy_drone_img, drone_rect)
+
+
+class EnemyShip(Entity):
+
+    def __init__(self, x, y, game_play):
+        super().__init__(x, y, game_play)
+        self.radius = 32
+        self.speed = 200
+        self.enemy_ship_image = pygame.image.load(
+            "assets/enemy_ship.png"
+        ).convert_alpha()
+
+    def explode(self):
+        self.remove_active_targets()
+        # TODO: Add Exposion effect
+
+    def update(self, dt):
+        super().update(dt)
+        forward = pygame.Vector2(0, 1).rotate(self.rotation)
+        self.position += forward * self.speed * dt
+
+    def draw(self, screen):
+        super().draw(screen)
         ship_rect = self.enemy_ship_image.get_rect(center=self.position)
         screen.blit(self.enemy_ship_image, ship_rect)
 

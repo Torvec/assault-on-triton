@@ -3,7 +3,7 @@ import random
 from src.menus import *
 from src.sequence_manager import SequenceManager
 from src.spawn_manager import SpawnManager
-from src.entities import Player, Asteroid, EnemyShip, Missile, Shot
+from src.entities import Player, Asteroid, EnemyDrone, EnemyShip, Missile, Shot
 from src.game_play_hud import GamePlayHUD
 from src.render_text import render_text
 
@@ -79,12 +79,14 @@ class GamePlay(Scene):
 
         # Sprite Groups
         self.asteroids = pygame.sprite.Group()
+        self.enemy_drones = pygame.sprite.Group()
         self.enemy_ships = pygame.sprite.Group()
         self.missiles = pygame.sprite.Group()
         self.shots = pygame.sprite.Group()
 
         # Set containers attributes so the sprites automatically get added to the appropriate groups
         Asteroid.containers = (self.asteroids, self.updateable, self.drawable)
+        EnemyDrone.containers = (self.enemy_drones, self.updateable, self.drawable)
         EnemyShip.containers = (self.enemy_ships, self.updateable, self.drawable)
         Missile.containers = (self.missiles, self.updateable, self.drawable)
         SpawnManager.containers = self.updateable
@@ -102,6 +104,10 @@ class GamePlay(Scene):
             {
                 "group": self.asteroids,
                 "destroy_method": lambda entity: entity.split(),
+            },
+            {
+                "group": self.enemy_drones,
+                "destroy_method": lambda entity: entity.explode(),
             },
             {
                 "group": self.enemy_ships,
