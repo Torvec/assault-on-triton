@@ -49,7 +49,19 @@ class Start(Scene):
 
         render_text(
             screen=self.game.game_surface,
-            text="ASTEROIDS",
+            text="ASSAULT",
+            font_size=128,
+            pos=(self.game.gs_w // 2, self.game.gs_h // 2 - 304),
+        )
+        render_text(
+            screen=self.game.game_surface,
+            text="ON",
+            font_size=96,
+            pos=(self.game.gs_w // 2, self.game.gs_h // 2 - 224),
+        )
+        render_text(
+            screen=self.game.game_surface,
+            text="TRITON",
             font_size=128,
             pos=(self.game.gs_w // 2, self.game.gs_h // 2 - 128),
         )
