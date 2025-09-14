@@ -3,7 +3,16 @@ import random
 from src.menus import *
 from src.sequence_manager import SequenceManager
 from src.spawn_manager import SpawnManager
-from src.entities import Player, Asteroid, EnemyDrone, EnemyShip, Missile, Shot
+from src.entities import (
+    Player,
+    Asteroid,
+    EnemyDrone,
+    EnemyShip,
+    Missile,
+    Shot,
+    Bomb,
+    Explosion,
+)
 from src.game_play_hud import GamePlayHUD
 from src.render_text import render_text
 
@@ -95,6 +104,8 @@ class GamePlay(Scene):
         self.enemy_ships = pygame.sprite.Group()
         self.missiles = pygame.sprite.Group()
         self.shots = pygame.sprite.Group()
+        self.bombs = pygame.sprite.Group()
+        self.explosions = pygame.sprite.Group()
 
         # Set containers attributes so the sprites automatically get added to the appropriate groups
         Asteroid.containers = (self.asteroids, self.updateable, self.drawable)
@@ -104,6 +115,8 @@ class GamePlay(Scene):
         SpawnManager.containers = self.updateable
         Player.containers = (self.updateable, self.drawable)
         Shot.containers = (self.shots, self.updateable, self.drawable)
+        Bomb.containers = (self.bombs, self.updateable, self.drawable)
+        Explosion.containers = (self.explosions, self.updateable, self.drawable)
 
         self.player = Player(
             self.play_area_rect.width // 2,
@@ -144,6 +157,7 @@ class GamePlay(Scene):
                         self.score.set_multiplier(-1)
                     if self.player.shield <= 0:
                         self.player.lives -= 1
+                        Explosion(self.player.position.x, self.player.position.y, 128, self)
                         self.player.respawn()
                     if self.player.lives <= 0:
                         self.game.set_scene(GameOver(self.game))
@@ -153,6 +167,23 @@ class GamePlay(Scene):
                 for shot in self.shots:
                     if shot.collides_with(entity):
                         shot.kill()
+                        handler["destroy_method"](entity)
+                        self.score.inc_score(1)
+                        self.score.set_multiplier(1)
+
+                # Bomb collision
+                for bomb in self.bombs:
+                    if bomb.collides_with(entity):
+                        Explosion(
+                            bomb.position.x, bomb.position.y, bomb.blast_radius, self
+                        )
+                        bomb.kill()
+                        handler["destroy_method"](entity)
+                        self.score.inc_score(1)
+                        self.score.set_multiplier(1)
+
+                for explosion in self.explosions:
+                    if explosion.collides_with(entity):
                         handler["destroy_method"](entity)
                         self.score.inc_score(1)
                         self.score.set_multiplier(1)

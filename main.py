@@ -6,7 +6,8 @@ def main():
     pygame.init()
     pygame.mixer.init()
     pygame.display.set_caption("Assault On Triton")
-    screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
+    # screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
+    screen = pygame.display.set_mode((1920, 1080))
     try:
         game = Game(screen)
         game.run()

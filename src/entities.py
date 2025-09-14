@@ -72,6 +72,8 @@ class Player(Entity):
         self.shield = 100
         self.invincibleTime = 0
         self.shoot_timer = 0
+        self.bomb_ammo = 3
+        self.bomb_timer = 0
         self.ship_image = pygame.image.load(
             "assets/player_spaceship.png"
         ).convert_alpha()
@@ -95,6 +97,15 @@ class Player(Entity):
         shot_l.velocity = pygame.Vector2(0, -1) * shot_l.speed + self.velocity
         shot_r.velocity = pygame.Vector2(0, -1) * shot_r.speed + self.velocity
         shot_l.sound()
+
+    def release_bomb(self):
+        if self.bomb_ammo <= 0 or self.bomb_timer > 0:
+            return
+        self.bomb_timer = 2.0
+        self.bomb_ammo -= 1
+        bomb = Bomb(self.position.x, self.position.y, self.game_play)
+        bomb.velocity = pygame.Vector2(0, -1) * bomb.speed + self.velocity
+        bomb.sound()
 
     def respawn(self):
         self.invincibleTime = 2
@@ -122,6 +133,8 @@ class Player(Entity):
             self.move(-dt)
         if keys[pygame.K_SPACE] or mouse_btn[0]:
             self.shoot()
+        if keys[pygame.K_e] or mouse_btn[1]:
+            self.release_bomb()
 
     def apply_acceleration(self, dt):
         self.velocity *= 0.99
@@ -136,6 +149,7 @@ class Player(Entity):
         self.handle_boundaries("block")
         self.handle_invincibility(dt)
         self.shoot_timer -= dt
+        self.bomb_timer -= dt
 
     def draw(self, screen):
         super().draw(screen)
@@ -209,7 +223,7 @@ class EnemyDrone(Entity):
 
     def explode(self):
         self.remove_active_targets()
-        # TODO: Add Exposion effect
+        Explosion(self.position.x, self.position.y, 48, self.game_play)
 
     def update(self, dt):
         super().update(dt)
@@ -234,7 +248,7 @@ class EnemyShip(Entity):
 
     def explode(self):
         self.remove_active_targets()
-        # TODO: Add Exposion effect
+        Explosion(self.position.x, self.position.y, 32, self.game_play)
 
     def update(self, dt):
         super().update(dt)
@@ -266,7 +280,7 @@ class Missile(Entity):
 
     def explode(self):
         self.remove_active_targets()
-        # TODO: Needs explosion
+        Explosion(self.position.x, self.position.y, 64, self.game_play)
 
     def track_player(self):
         direction = self.game_play.player.position - self.position
@@ -290,7 +304,7 @@ class Shot(Entity):
         super().__init__(x, y, game_play)
         self.radius = 4
         self.distance_traveled = 0
-        self.max_range = game_play.play_area_rect.height * 0.75
+        self.max_range = game_play.play_area_rect.height
         self.speed = 500
         self.shot_image = pygame.image.load("assets/blaster_shot.png")
         self.sfx = "assets/720118__baggonotes__player_shoot1.wav"
@@ -312,6 +326,67 @@ class Shot(Entity):
         self.position += self.velocity * dt
 
     def draw(self, screen):
-        # pygame.draw.circle(screen, "yellow", self.position, self.radius, 0)
         shot_rect = self.shot_image.get_rect(center=self.position)
         screen.blit(self.shot_image, shot_rect)
+
+
+class Bomb(Entity):
+
+    def __init__(self, x, y, game_play):
+        super().__init__(x, y, game_play)
+        self.radius = 8
+        self.bomb_image = pygame.image.load("assets/e_bomb.png")
+        self.speed = 200
+        self.blast_radius = 256
+        self.distance_traveled = 0
+        self.trigger_distance = game_play.play_area_rect.height * 0.25
+
+    def sound(self):
+        pass  # The launch sound not explosion sound
+
+    def trigger_explosion(
+        self,
+        dt,
+    ):
+        distance_this_frame = self.velocity.length() * dt
+        self.distance_traveled += distance_this_frame
+        if self.distance_traveled >= self.trigger_distance:
+            Explosion(
+                self.position.x, self.position.y, self.blast_radius, self.game_play
+            )
+            self.kill()
+
+    def update(self, dt):
+        super().update(dt)
+        self.trigger_explosion(dt)
+        self.position += self.velocity * dt
+
+    def draw(self, screen):
+        super().draw(screen)
+        bomb_rect = self.bomb_image.get_rect(center=self.position)
+        screen.blit(self.bomb_image, bomb_rect)
+
+
+class Explosion(Entity):
+
+    def __init__(self, x, y, blast_radius, game_play):
+        super().__init__(x, y, game_play)
+        self.radius = 2
+        self.expansion_rate = 192
+        self.blast_radius = blast_radius
+
+    def sound(self):
+        pass
+
+    def update(self, dt):
+        super().update(dt)
+        if self.radius < self.blast_radius:
+            self.radius += self.expansion_rate * dt
+        if self.radius >= self.blast_radius:
+            self.kill()
+
+    def draw(self, screen):
+        super().draw(screen)
+        pygame.draw.circle(
+            screen, "white", (self.position.x, self.position.y), self.radius
+        )
