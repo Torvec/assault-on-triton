@@ -1,19 +1,10 @@
-import pygame
 import random
+import pygame
 from src.menus import *
+from src.game_play_hud import GamePlayHUD
 from src.sequence_manager import SequenceManager
 from src.spawn_manager import SpawnManager
-from src.entities import (
-    Player,
-    Asteroid,
-    EnemyDrone,
-    EnemyShip,
-    Missile,
-    Shot,
-    Bomb,
-    Explosion,
-)
-from src.game_play_hud import GamePlayHUD
+from src.entities import *
 from src.render_text import render_text
 
 
@@ -34,13 +25,15 @@ class Scene:
     def update(self, dt, events=None):
         self.updateable.update(dt)
 
-    def draw(self, screen):
-        screen.fill("grey2")
+    def draw(self, game_surface, sidebar_l_surface, sidebar_r_surface):
+        game_surface.fill("grey4")
+        sidebar_l_surface.fill("black")
+        sidebar_r_surface.fill("black")
         # Draw star field
         for x, y in self.stars:
-            pygame.draw.circle(screen, "grey80", (x, y), 1)
+            pygame.draw.circle(game_surface, "grey70", (x, y), 1)
         for obj in self.drawable:
-            obj.draw(screen)
+            obj.draw(game_surface)
 
 
 class Start(Scene):
@@ -53,42 +46,43 @@ class Start(Scene):
         super().update(dt, events)
         self.start_menu.update(events)
 
-    def draw(self, screen):
-        super().draw(screen)
+    def draw(self, game_surface, sidebar_l_surface, sidebar_r_surface):
+        super().draw(game_surface, sidebar_l_surface, sidebar_r_surface)
 
         render_text(
-            screen=self.game.game_surface,
+            screen=game_surface,
             text="ASSAULT",
             font_size=128,
-            pos=(self.game.gs_w // 2, self.game.gs_h // 2 - 304),
+            pos=(game_surface.get_width() // 2, game_surface.get_height() // 2 - 304),
         )
         render_text(
-            screen=self.game.game_surface,
+            screen=game_surface,
             text="ON",
             font_size=96,
-            pos=(self.game.gs_w // 2, self.game.gs_h // 2 - 224),
+            pos=(game_surface.get_width() // 2, game_surface.get_height() // 2 - 224),
         )
         render_text(
-            screen=self.game.game_surface,
+            screen=game_surface,
             text="TRITON",
             font_size=128,
-            pos=(self.game.gs_w // 2, self.game.gs_h // 2 - 128),
+            pos=(game_surface.get_width() // 2, game_surface.get_height() // 2 - 128),
         )
 
-        self.start_menu.draw(screen)
+        self.start_menu.draw(game_surface)
 
 
 class GamePlay(Scene):
 
     def __init__(self, game):
         super().__init__(game)
-        self.game_play_hud = GamePlayHUD(self)
+        self.elapsed_time = 0
         self.play_area_rect = pygame.Rect(
             0,
-            self.game_play_hud.height,
+            0,
             self.game.gs_w,
-            self.game.gs_h - self.game_play_hud.height,
+            self.game.gs_h,
         )
+        self.game_play_hud = GamePlayHUD(self.game, self)
         self.score = self.game.score_manager
         self.score.score = 0
         self.score.multiplier = 1
@@ -157,7 +151,9 @@ class GamePlay(Scene):
                         self.score.set_multiplier(-1)
                     if self.player.shield <= 0:
                         self.player.lives -= 1
-                        Explosion(self.player.position.x, self.player.position.y, 128, self)
+                        Explosion(
+                            self.player.position.x, self.player.position.y, 128, self
+                        )
                         self.player.respawn()
                     if self.player.lives <= 0:
                         self.game.set_scene(GameOver(self.game))
@@ -198,14 +194,15 @@ class GamePlay(Scene):
         self.pause_menu.update(events)
         if not self.isPaused:
             super().update(dt)
+            self.elapsed_time += dt
             self.handle_collisions()
             self.handle_event_sequence()
             self.score.handle_streak_timer(dt)
 
-    def draw(self, screen):
-        super().draw(screen)
-        self.game_play_hud.draw(screen)
-        self.pause_menu.draw(screen)
+    def draw(self, game_surface, sidebar_l_surface, sidebar_r_surface):
+        super().draw(game_surface, sidebar_l_surface, sidebar_r_surface)
+        self.pause_menu.draw(game_surface)
+        self.game_play_hud.draw(sidebar_l_surface, sidebar_r_surface)
 
 
 class GameOver(Scene):
@@ -220,17 +217,17 @@ class GameOver(Scene):
 
         self.game_over_menu.update(events)
 
-    def draw(self, screen):
-        super().draw(screen)
+    def draw(self, game_surface, sidebar_l_surface, sidebar_r_surface):
+        super().draw(game_surface, sidebar_l_surface, sidebar_r_surface)
 
         render_text(
-            screen=self.game.game_surface,
+            screen=game_surface,
             text="GAME OVER",
             font_size=128,
-            pos=(self.game.gs_w // 2, self.game.gs_h // 2 - 256),
+            pos=(game_surface.get_width() // 2, game_surface.get_height() // 2 - 256),
         )
 
-        self.game_over_menu.draw(screen)
+        self.game_over_menu.draw(game_surface)
 
 
 class Options(Scene):
@@ -245,20 +242,20 @@ class Options(Scene):
             if event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
                 self.game.set_scene(Start(self.game))
 
-    def draw(self, screen):
-        super().draw(screen)
+    def draw(self, game_surface, sidebar_l_surface, sidebar_r_surface):
+        super().draw(game_surface, sidebar_l_surface, sidebar_r_surface)
 
         render_text(
-            screen=self.game.game_surface,
+            screen=game_surface,
             text="OPTIONS",
             font_size=64,
-            pos=(self.game.gs_w // 2, 64),
+            pos=(game_surface.get_width() // 2, 64),
         )
         render_text(
-            screen=self.game.game_surface,
+            screen=game_surface,
             text="scores go here",
             color="grey",
-            pos=(self.game.gs_w // 2, 128),
+            pos=(game_surface.get_width() // 2, 128),
         )
 
 
@@ -274,20 +271,20 @@ class Scoreboard(Scene):
             if event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
                 self.game.set_scene(Start(self.game))
 
-    def draw(self, screen):
-        super().draw(screen)
+    def draw(self, game_surface, sidebar_l_surface, sidebar_r_surface):
+        super().draw(game_surface, sidebar_l_surface, sidebar_r_surface)
 
         render_text(
-            screen=self.game.game_surface,
+            screen=game_surface,
             text="HIGH SCORES",
             font_size=64,
-            pos=(self.game.gs_w // 2, 64),
+            pos=(game_surface.get_width() // 2, 64),
         )
         render_text(
             screen=self.game.game_surface,
             text="scores go here",
             color="grey",
-            pos=(self.game.gs_w // 2, 128),
+            pos=(game_surface.get_width() // 2, 128),
         )
 
 
@@ -303,18 +300,18 @@ class Credits(Scene):
             if event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
                 self.game.set_scene(Start(self.game))
 
-    def draw(self, screen):
-        super().draw(screen)
+    def draw(self, game_surface, sidebar_l_surface, sidebar_r_surface):
+        super().draw(game_surface, sidebar_l_surface, sidebar_r_surface)
 
         render_text(
-            screen=self.game.game_surface,
+            screen=game_surface,
             text="CREDITS",
             font_size=64,
-            pos=(self.game.gs_w // 2, 64),
+            pos=(game_surface.get_width() // 2, 64),
         )
         render_text(
-            screen=self.game.game_surface,
+            screen=game_surface,
             text="Credits go here",
             color="grey",
-            pos=(self.game.gs_w // 2, 128),
+            pos=(game_surface.get_width() // 2, 128),
         )

@@ -4,72 +4,135 @@ from src.render_text import render_text
 
 class GamePlayHUD:
 
-    def __init__(self, game_play):
+    def __init__(self, game, game_play):
+        self.game = game
         self.game_play = game_play
-        self.width = self.game_play.game.gs_w
-        self.height = 96
-        self.game_play_hud_rect = pygame.Rect(
-            0, 0, self.width, self.height
+        self.top_left_rect = pygame.Rect(
+            312, 16, self.game.sidebar_l_surface.get_width() // 2, 128
+        )
+        self.mid_left_rect = pygame.Rect(
+            312,
+            self.game.sidebar_l_surface.get_height() // 2,
+            self.game.sidebar_l_surface.get_width() // 2,
+            192,
+        )
+        self.btm_left_rect = pygame.Rect(
+            312,
+            self.game.sidebar_l_surface.get_height() - 48,
+            self.game.sidebar_l_surface.get_width() // 2,
+            32,
+        )
+        self.top_right_rect = pygame.Rect(
+            16, 16, self.game.sidebar_r_surface.get_width() // 2, 128
+        )
+        self.mid_right_rect = pygame.Rect(
+            16,
+            self.game.sidebar_r_surface.get_height() // 2,
+            self.game.sidebar_r_surface.get_width() // 2,
+            192,
+        )
+        self.btm_right_rect = pygame.Rect(
+            16,
+            self.game.sidebar_r_surface.get_height() - 48,
+            self.game.sidebar_r_surface.get_width() // 2,
+            32,
         )
 
-    def draw(self, screen):
-        pygame.draw.rect(screen, "grey5", self.game_play_hud_rect)
-
-        # SCORE x MULTIPLIER
+    def draw(self, sidebar_l_surface, sidebar_r_surface):
+        pygame.draw.rect(sidebar_l_surface, "grey10", self.top_left_rect)
         render_text(
-            screen=screen,
-            text=f"Score: {self.game_play.score.score}",
+            screen=sidebar_l_surface,
+            text=f"SCORE: {self.game.score_manager.score}",
             font_size=24,
-            color="grey90",
-            pos=(
-                self.game_play_hud_rect.center[0] - 256,
-                self.game_play_hud_rect.center[1] - 24,
-            ),
-            align="midleft"
+            color="#E6D819",
+            pos=(self.top_left_rect.topleft),
+            align="topleft",
         )
         render_text(
-            screen=screen,
-            text=f"Score x{self.game_play.score.multiplier} T-{self.game_play.score.streak_timer:.2f}",
+            screen=sidebar_l_surface,
+            text=f"x{self.game.score_manager.multiplier} T-{self.game.score_manager.streak_timer:.2f}",
             font_size=24,
-            color="grey90",
-            pos=(
-                self.game_play_hud_rect.center[0] - 256,
-                self.game_play_hud_rect.center[1] + 24,
-            ),
+            color="#E6D819",
+            pos=(self.top_left_rect.topright),
+            align="topright",
+        )
+        render_text(
+            screen=sidebar_l_surface,
+            text=f"HI SCORE: {self.game.score_manager.high_score}",
+            font_size=24,
+            color="#E6D819",
+            pos=(self.top_left_rect.midleft),
+            align="midleft",
+        )
+        mins = int(self.game_play.elapsed_time // 60)
+        secs = int(self.game_play.elapsed_time % 60)
+        ms = int((self.game_play.elapsed_time % 1) * 1000)
+        render_text(
+            screen=sidebar_l_surface,
+            text=f"TIME: {mins:02}:{secs:02}:{ms:03}",
+            font_size=24,
+            color="#E6D819",
+            pos=(self.top_left_rect.bottomleft),
+            align="bottomleft",
+        )
+
+        pygame.draw.rect(sidebar_l_surface, "grey10", self.mid_left_rect)
+
+        pygame.draw.rect(sidebar_l_surface, "grey10", self.btm_left_rect)
+        render_text(
+            screen=sidebar_l_surface,
+            text="Objective: Defeat Enemy Waves (PLACEHOLDER)",
+            font_size=16,
+            color="gray80",
+            pos=(self.btm_left_rect.midleft),
             align="midleft",
         )
 
-        # LIVES x SHIELD
+        pygame.draw.rect(sidebar_r_surface, "grey10", self.top_right_rect)
         render_text(
-            screen=screen,
+            screen=sidebar_r_surface,
             text=f"Shield x {self.game_play.player.shield}%",
             font_size=24,
-            color="grey90",
-            pos=(
-                self.game_play_hud_rect.center[0] + 256,
-                self.game_play_hud_rect.center[1] - 24,
-            ),
-            align="midright",
+            color="#E6D819",
+            pos=(self.top_right_rect.topleft),
+            align="topleft",
         )
+
         render_text(
-            screen=screen,
-            text=f"Bombs x {self.game_play.player.bomb_ammo}",
+            screen=sidebar_r_surface,
+            text=f"LIVES x {self.game_play.player.lives}",
             font_size=24,
-            color="grey90",
-            pos=(
-                self.game_play_hud_rect.center[0] + 256,
-                self.game_play_hud_rect.center[1],
-            ),
-            align="midright",
+            color="#E6D819",
+            pos=(self.top_right_rect.midleft),
+            align="midleft",
         )
+
         render_text(
-            screen=screen,
-            text=f"Life x {self.game_play.player.lives}",
+            screen=sidebar_r_surface,
+            text=f"BOMBS x {self.game_play.player.bomb_ammo}",
             font_size=24,
-            color="grey90",
-            pos=(
-                self.game_play_hud_rect.center[0] + 256,
-                self.game_play_hud_rect.center[1] + 24,
-            ),
-            align="midright"
+            color="#E6D819",
+            pos=(self.top_right_rect.center),
+            align="center",
+        )
+
+        render_text(
+            screen=sidebar_r_surface,
+            text=f"PWR (I) (II) (III) (OV)",
+            font_size=24,
+            color="#E6D819",
+            pos=(self.top_right_rect.bottomleft),
+            align="bottomleft",
+        )
+
+        pygame.draw.rect(sidebar_r_surface, "grey10", self.mid_right_rect)
+
+        pygame.draw.rect(sidebar_r_surface, "grey10", self.btm_right_rect)
+        render_text(
+            screen=sidebar_r_surface,
+            text="[Esc] to Pause Game",
+            font_size=16,
+            color="gray80",
+            pos=(self.btm_right_rect.midleft),
+            align="midleft",
         )

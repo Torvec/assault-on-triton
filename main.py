@@ -1,3 +1,4 @@
+import traceback
 import pygame
 from src.game import Game
 
@@ -13,6 +14,7 @@ def main():
         game.run()
     except Exception as e:
         print(f"An error occurred: {e}")
+        traceback.print_exc()
     finally:
         pygame.quit()
 

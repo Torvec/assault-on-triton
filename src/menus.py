@@ -103,7 +103,7 @@ class PauseMenu:
                 0,
                 0,
                 self.screen_w * 0.75,
-                self.screen_h // 4,
+                self.screen_h * 0.3,
             )
             pause_menu_rect.center = (
                 self.screen_w // 2,

@@ -6,7 +6,7 @@ DECREMENT_AMOUNT = 0.1
 class ScoreManager:
     def __init__(self):
         self.score = 0
-        self.high_score = 0
+        self.high_score = 14224100
         self.score_store = ""
         self.streak_timer = STREAK_TIMER_MAX
         self.multiplier = 1
