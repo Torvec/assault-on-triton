@@ -74,6 +74,7 @@ class Player(Entity):
         self.shoot_timer = 0
         self.bomb_ammo = 3
         self.bomb_timer = 0
+        self.power_level = 1
         self.ship_image = pygame.image.load(
             "assets/player_spaceship.png"
         ).convert_alpha()
@@ -90,12 +91,11 @@ class Player(Entity):
         if self.shoot_timer > 0:
             return
         self.shoot_timer = 0.2
-        shot_offset = pygame.Vector2(0, -self.radius)
-        shot_pos = self.position + shot_offset
+        shot_pos = self.position + pygame.Vector2(0, -self.radius)
         shot_l = Shot(shot_pos.x - 8, shot_pos.y, self.game_play)
         shot_r = Shot(shot_pos.x + 8, shot_pos.y, self.game_play)
-        shot_l.velocity = pygame.Vector2(0, -1) * shot_l.speed + self.velocity
-        shot_r.velocity = pygame.Vector2(0, -1) * shot_r.speed + self.velocity
+        shot_l.velocity = pygame.Vector2(0, -1) * shot_l.speed
+        shot_r.velocity = pygame.Vector2(0, -1) * shot_r.speed
         shot_l.sound()
 
     def release_bomb(self):
@@ -104,7 +104,10 @@ class Player(Entity):
         self.bomb_timer = 2.0
         self.bomb_ammo -= 1
         bomb = Bomb(self.position.x, self.position.y, self.game_play)
-        bomb.velocity = pygame.Vector2(0, -1) * bomb.speed + self.velocity
+        forward = pygame.Vector2(0, -1)
+        player_forward_speed = self.velocity.dot(forward)
+        forward_only_speed = max(0, player_forward_speed)
+        bomb.velocity = forward * (forward_only_speed + bomb.speed)
         bomb.sound()
 
     def respawn(self):

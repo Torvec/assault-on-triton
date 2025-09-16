@@ -55,12 +55,14 @@ class Start(Scene):
             font_size=128,
             pos=(game_surface.get_width() // 2, game_surface.get_height() // 2 - 304),
         )
+        
         render_text(
             screen=game_surface,
             text="ON",
             font_size=96,
             pos=(game_surface.get_width() // 2, game_surface.get_height() // 2 - 224),
         )
+
         render_text(
             screen=game_surface,
             text="TRITON",
@@ -251,6 +253,7 @@ class Options(Scene):
             font_size=64,
             pos=(game_surface.get_width() // 2, 64),
         )
+
         render_text(
             screen=game_surface,
             text="scores go here",
@@ -280,6 +283,7 @@ class Scoreboard(Scene):
             font_size=64,
             pos=(game_surface.get_width() // 2, 64),
         )
+
         render_text(
             screen=self.game.game_surface,
             text="scores go here",
@@ -309,6 +313,7 @@ class Credits(Scene):
             font_size=64,
             pos=(game_surface.get_width() // 2, 64),
         )
+
         render_text(
             screen=game_surface,
             text="Credits go here",

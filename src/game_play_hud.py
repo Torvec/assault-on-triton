@@ -40,6 +40,7 @@ class GamePlayHUD:
 
     def draw(self, sidebar_l_surface, sidebar_r_surface):
         pygame.draw.rect(sidebar_l_surface, "grey10", self.top_left_rect)
+
         render_text(
             screen=sidebar_l_surface,
             text=f"SCORE: {self.game.score_manager.score}",
@@ -48,6 +49,7 @@ class GamePlayHUD:
             pos=(self.top_left_rect.topleft),
             align="topleft",
         )
+
         render_text(
             screen=sidebar_l_surface,
             text=f"x{self.game.score_manager.multiplier} T-{self.game.score_manager.streak_timer:.2f}",
@@ -56,6 +58,7 @@ class GamePlayHUD:
             pos=(self.top_left_rect.topright),
             align="topright",
         )
+
         render_text(
             screen=sidebar_l_surface,
             text=f"HI SCORE: {self.game.score_manager.high_score}",
@@ -64,6 +67,7 @@ class GamePlayHUD:
             pos=(self.top_left_rect.midleft),
             align="midleft",
         )
+
         mins = int(self.game_play.elapsed_time // 60)
         secs = int(self.game_play.elapsed_time % 60)
         ms = int((self.game_play.elapsed_time % 1) * 1000)
@@ -116,9 +120,15 @@ class GamePlayHUD:
             align="center",
         )
 
+        power_levels = {
+            1: "( I )",
+            2: "( II )",
+            3: "( III )",
+            4: "( OV )",
+        }
         render_text(
             screen=sidebar_r_surface,
-            text=f"PWR (I) (II) (III) (OV)",
+            text=f"PWR LVL {power_levels[self.game_play.player.power_level]}",
             font_size=24,
             color="#E6D819",
             pos=(self.top_right_rect.bottomleft),
@@ -131,7 +141,7 @@ class GamePlayHUD:
         render_text(
             screen=sidebar_r_surface,
             text="[Esc] to Pause Game",
-            font_size=16,
+            font_size=24,
             color="gray80",
             pos=(self.btm_right_rect.midleft),
             align="midleft",
