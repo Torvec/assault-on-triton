@@ -10,7 +10,6 @@ def render_text(**kwargs):
     align = kwargs.get("align", "center")
     font_name = kwargs.get("font_name", None)
     antialias = kwargs.get("antialias", False)
-
     font = pygame.font.Font(font_name, font_size)
     text_surface = font.render(text, antialias, color)
     text_rect = text_surface.get_rect()
@@ -38,7 +37,7 @@ def render_text(**kwargs):
             raise ValueError(
                 "align must be one of: center, topleft, topright, bottomleft, bottomright, midtop, midbottom, midleft, midright"
             )
-        
+
     screen.blit(text_surface, text_rect)
-    
+
     return text_rect

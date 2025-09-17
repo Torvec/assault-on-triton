@@ -43,6 +43,7 @@ ENEMY_SHIP_IMG_PATH = "assets/enemy_ship.png"
 MISSILE_RADIUS = 10
 MISSILE_SPEED = 200
 MISSILE_HP = 1
+MISSILE_IMG_PATH = "assets/missile.png"
 
 # === Shot Constants ===
 SHOT_RADIUS = 4
@@ -326,7 +327,7 @@ class EnemyShip(Entity):
         self.speed = ENEMY_SHIP_SPEED
         self.hp = ENEMY_SHIP_HP
         self.score_value = self.hp
-        self.enemy_ship_image = pygame.image.load(ENEMY_DRONE_IMG_PATH).convert_alpha()
+        self.enemy_ship_image = pygame.image.load(ENEMY_SHIP_IMG_PATH).convert_alpha()
 
     def explode(self):
         self.remove_active_targets()
@@ -352,16 +353,7 @@ class Missile(Entity):
         self.speed = MISSILE_SPEED
         self.hp = MISSILE_HP
         self.score_value = self.hp
-
-    def shape(self):
-        forward = pygame.Vector2(0, 1).rotate(self.rotation)
-        right = pygame.Vector2(0, 1).rotate(self.rotation + 90) * self.radius // 2
-        points = {
-            "top": self.position + forward * self.radius,
-            "right": self.position - forward * self.radius + right,
-            "left": self.position - forward * self.radius - right,
-        }
-        return list(points.values())
+        self.missile_image = pygame.image.load(MISSILE_IMG_PATH).convert_alpha()
 
     def explode(self):
         self.remove_active_targets()
@@ -380,7 +372,9 @@ class Missile(Entity):
 
     def draw(self, screen):
         super().draw(screen)
-        pygame.draw.polygon(screen, "white", self.shape())
+        rotated_image = pygame.transform.rotate(self.missile_image, -self.rotation)
+        missile_rect = rotated_image.get_rect(center=self.position)
+        screen.blit(rotated_image, missile_rect)
 
 
 class Shot(Entity):
