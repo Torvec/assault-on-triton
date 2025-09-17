@@ -4,6 +4,8 @@ from src.score_manager import ScoreManager
 
 GS_WIDTH = 608
 SB_WIDTH = 656
+SB_R_OFFSET = 1264
+
 
 class Game:
 
@@ -29,7 +31,9 @@ class Game:
             events = pygame.event.get()
 
             self.current_scene.update(self.dt, events)
-            self.current_scene.draw(self.game_surface, self.sidebar_l_surface, self.sidebar_r_surface)
+            self.current_scene.draw(
+                self.game_surface, self.sidebar_l_surface, self.sidebar_r_surface
+            )
 
             for event in events:
                 if event.type == pygame.QUIT:
@@ -51,7 +55,7 @@ class Game:
             )
             self.screen.blit(self.sidebar_l_surface, (0, 0))
             self.screen.blit(self.game_surface, game_surface_rect.topleft)
-            self.screen.blit(self.sidebar_r_surface, (1264, 0))
+            self.screen.blit(self.sidebar_r_surface, (SB_R_OFFSET, 0))
 
             pygame.display.flip()
 

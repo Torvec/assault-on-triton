@@ -140,6 +140,7 @@ class GamePlay(Scene):
             },
         ]
 
+        # ! TODO: This needs to be refactored before it gets WAY out of hand
         for handler in collision_handlers:
             for entity in handler["group"]:
                 # Player collision
