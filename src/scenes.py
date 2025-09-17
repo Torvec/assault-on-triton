@@ -148,6 +148,7 @@ class GamePlay(Scene):
                     and self.player.invincibleTime == 0
                 ):
                     self.player.shield -= 5
+                    self.player.is_hit = True
                     handler["destroy_method"](entity)
                     if self.score.multiplier > 1:
                         self.score.set_multiplier(-1)
@@ -164,27 +165,36 @@ class GamePlay(Scene):
                 # Shot collision
                 for shot in self.shots:
                     if shot.collides_with(entity):
+                        entity.is_hit = True
                         shot.kill()
-                        handler["destroy_method"](entity)
-                        self.score.inc_score(1)
-                        self.score.set_multiplier(1)
+                        entity.hp -= 1
+                        if entity.hp <= 0:
+                            handler["destroy_method"](entity)
+                            self.score.inc_score(entity.score_value)
+                            self.score.set_multiplier(1)
 
                 # Bomb collision
                 for bomb in self.bombs:
                     if bomb.collides_with(entity):
+                        entity.is_hit = True
                         Explosion(
                             bomb.position.x, bomb.position.y, bomb.blast_radius, self
                         )
                         bomb.kill()
-                        handler["destroy_method"](entity)
-                        self.score.inc_score(1)
-                        self.score.set_multiplier(1)
+                        entity.hp -= 1
+                        if entity.hp <= 0:
+                            handler["destroy_method"](entity)
+                            self.score.inc_score(entity.score_value)
+                            self.score.set_multiplier(1)
 
                 for explosion in self.explosions:
                     if explosion.collides_with(entity):
-                        handler["destroy_method"](entity)
-                        self.score.inc_score(1)
-                        self.score.set_multiplier(1)
+                        entity.is_hit = True
+                        entity.hp -= 5
+                        if entity.hp <= 0:
+                            handler["destroy_method"](entity)
+                            self.score.inc_score(entity.score_value)
+                            self.score.set_multiplier(1)
 
     def handle_event_sequence(self):
         if not self.active_targets and not self.active_spawners:

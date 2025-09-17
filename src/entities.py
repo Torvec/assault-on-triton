@@ -16,6 +16,8 @@ class Entity(pygame.sprite.Sprite):
         self.radius = 0
         self.velocity = pygame.Vector2(0, 0)
         self.rotation = 0
+        self.is_hit = False
+        self.hit_timer = 0.1
 
     def collides_with(self, other):
         return self.position.distance_to(other.position) <= self.radius + other.radius
@@ -48,17 +50,30 @@ class Entity(pygame.sprite.Sprite):
         if keys[pygame.K_BACKQUOTE]:
             return not toggle
 
+    def flash_when_hit(self, screen, entity_surface, entity_rect):
+        if self.is_hit:
+            flash = pygame.Surface(entity_surface.get_size(), pygame.SRCALPHA)
+            center = (flash.get_width() // 2, flash.get_height() // 2)
+            pygame.draw.circle(flash, (255, 255, 255, 180), center, self.radius)
+            screen.blit(flash, entity_rect)
+
+    def handle_hit_timer(self, dt):
+        if self.is_hit:
+            self.hit_timer -= dt
+            if self.hit_timer <= 0:
+                self.is_hit = False
+                self.hit_timer = 0.1
+
     def update(self, dt):
         self.handle_boundaries()
         self.show_collision()
-        # pass
+        self.handle_hit_timer(dt)
 
     def draw(self, screen):
         if self.show_collision():
             pygame.draw.circle(
                 screen, "red", self.position, self.radius, 1
             )  # Collision circle
-        pass
 
 
 class Player(Entity):
@@ -158,6 +173,7 @@ class Player(Entity):
         super().draw(screen)
         ship_rect = self.ship_image.get_rect(center=self.position)
         screen.blit(self.ship_image, ship_rect)
+        self.flash_when_hit(screen, self.ship_image, ship_rect)
 
 
 class Asteroid(Entity):
@@ -172,6 +188,8 @@ class Asteroid(Entity):
         self.asteroid_lg = pygame.image.load("assets/asteroid_lg.png").convert_alpha()
         self.asteroid_md = pygame.image.load("assets/asteroid_md.png").convert_alpha()
         self.asteroid_sm = pygame.image.load("assets/asteroid_sm.png").convert_alpha()
+        self.hp = 4
+        self.score_value = self.hp
 
     def split(self):
         self.remove_active_targets()
@@ -220,6 +238,8 @@ class EnemyDrone(Entity):
         super().__init__(x, y, game_play)
         self.radius = 16
         self.speed = 300
+        self.hp = 5
+        self.score_value = self.hp
         self.enemy_drone_img = pygame.image.load(
             "assets/enemy_drone.png"
         ).convert_alpha()
@@ -237,6 +257,7 @@ class EnemyDrone(Entity):
         super().draw(screen)
         drone_rect = self.enemy_drone_img.get_rect(center=self.position)
         screen.blit(self.enemy_drone_img, drone_rect)
+        self.flash_when_hit(screen, self.enemy_drone_img, drone_rect)
 
 
 class EnemyShip(Entity):
@@ -245,6 +266,8 @@ class EnemyShip(Entity):
         super().__init__(x, y, game_play)
         self.radius = 32
         self.speed = 200
+        self.hp = 10
+        self.score_value = self.hp
         self.enemy_ship_image = pygame.image.load(
             "assets/enemy_ship.png"
         ).convert_alpha()
@@ -262,6 +285,7 @@ class EnemyShip(Entity):
         super().draw(screen)
         ship_rect = self.enemy_ship_image.get_rect(center=self.position)
         screen.blit(self.enemy_ship_image, ship_rect)
+        self.flash_when_hit(screen, self.enemy_ship_image, ship_rect)
 
 
 class Missile(Entity):
@@ -270,6 +294,8 @@ class Missile(Entity):
         super().__init__(x, y, game_play)
         self.radius = 10
         self.speed = 200
+        self.hp = 1
+        self.score_value = self.hp
 
     def shape(self):
         forward = pygame.Vector2(0, 1).rotate(self.rotation)
