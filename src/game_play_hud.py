@@ -78,7 +78,7 @@ class GamePlayHUD:
 
         render_text(
             screen=sidebar_l_surface,
-            text=f"x{self.game.score_manager.multiplier} T-{self.game.score_manager.streak_meter_delay_decay_timer:.2f}",
+            text=f"x{self.game.score_manager.multiplier}",
             font_size=24,
             color="#E6D819",
             pos=(self.top_left_rect.topright),
@@ -89,7 +89,7 @@ class GamePlayHUD:
 
         render_text(
             screen=sidebar_l_surface,
-            text=f"HI SCORE: {self.game.score_manager.high_score}",
+            text=f"HI SCORE: {self.game.score_manager.score_store.high_score}",
             font_size=24,
             color="#E6D819",
             pos=(self.top_left_rect.midleft),

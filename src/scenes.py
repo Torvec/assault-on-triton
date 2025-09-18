@@ -86,8 +86,7 @@ class GamePlay(Scene):
         )
         self.game_play_hud = GamePlayHUD(self.game, self)
         self.score = self.game.score_manager
-        self.score.score = 0
-        self.score.multiplier = 1
+        self.score.init_score_manager()
         self.isPaused = False
         self.pause_menu = PauseMenu(self)
         self.sequence_manager = SequenceManager(self)
