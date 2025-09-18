@@ -38,6 +38,32 @@ class GamePlayHUD:
             32,
         )
 
+    def draw_streak_meter(self, surface):
+
+        streak_meter_bar_x = self.top_left_rect.left
+        streak_meter_bar_y = self.top_left_rect.top + 24
+        streak_meter_bar_rect = pygame.Rect(
+            streak_meter_bar_x,
+            streak_meter_bar_y,
+            surface.get_width() // 2,
+            16,
+        )
+        pygame.draw.rect(surface, "grey70", streak_meter_bar_rect, 2)
+
+        percent_filled = (
+            self.game.score_manager.streak_meter
+            / self.game.score_manager.streak_meter_threshold
+        )
+        percent_filled = max(0.0, min(1.0, percent_filled))
+        streak_meter_x = streak_meter_bar_rect.left + 2
+        streak_meter_y = streak_meter_bar_rect.top + 2
+        streak_meter_width = int((surface.get_width() // 2 - 4) * percent_filled)
+        streak_meter_height = 12
+        streak_meter_rect = pygame.Rect(
+            streak_meter_x, streak_meter_y, streak_meter_width, streak_meter_height
+        )
+        pygame.draw.rect(surface, "grey50", streak_meter_rect)
+
     def draw(self, sidebar_l_surface, sidebar_r_surface):
         pygame.draw.rect(sidebar_l_surface, "grey10", self.top_left_rect)
 
@@ -52,12 +78,14 @@ class GamePlayHUD:
 
         render_text(
             screen=sidebar_l_surface,
-            text=f"x{self.game.score_manager.multiplier} T-{self.game.score_manager.streak_timer:.2f}",
+            text=f"x{self.game.score_manager.multiplier} T-{self.game.score_manager.streak_meter_delay_decay_timer:.2f}",
             font_size=24,
             color="#E6D819",
             pos=(self.top_left_rect.topright),
             align="topright",
         )
+
+        self.draw_streak_meter(sidebar_l_surface)
 
         render_text(
             screen=sidebar_l_surface,

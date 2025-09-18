@@ -55,7 +55,7 @@ class Start(Scene):
             font_size=128,
             pos=(game_surface.get_width() // 2, game_surface.get_height() // 2 - 304),
         )
-        
+
         render_text(
             screen=game_surface,
             text="ON",
@@ -148,11 +148,11 @@ class GamePlay(Scene):
                     entity.collides_with(self.player)
                     and self.player.invincibleTime == 0
                 ):
+                    self.player.invincibleTime = 2
                     self.player.shield -= 5
                     self.player.is_hit = True
-                    handler["destroy_method"](entity)
-                    if self.score.multiplier > 1:
-                        self.score.set_multiplier(-1)
+                    entity.hp -= 1
+                    self.score.handle_streak_meter_dec()
                     if self.player.shield <= 0:
                         self.player.lives -= 1
                         Explosion(
@@ -171,31 +171,26 @@ class GamePlay(Scene):
                         entity.hp -= 1
                         if entity.hp <= 0:
                             handler["destroy_method"](entity)
-                            self.score.inc_score(entity.score_value)
-                            self.score.set_multiplier(1)
+                            self.score.handle_score(entity.score_value)
+                            self.score.handle_streak_meter_inc(entity.score_value)
 
                 # Bomb collision
                 for bomb in self.bombs:
                     if bomb.collides_with(entity):
-                        entity.is_hit = True
                         Explosion(
                             bomb.position.x, bomb.position.y, bomb.blast_radius, self
                         )
                         bomb.kill()
-                        entity.hp -= 1
-                        if entity.hp <= 0:
-                            handler["destroy_method"](entity)
-                            self.score.inc_score(entity.score_value)
-                            self.score.set_multiplier(1)
 
+                # Explosion Collision
                 for explosion in self.explosions:
                     if explosion.collides_with(entity):
                         entity.is_hit = True
                         entity.hp -= 5
                         if entity.hp <= 0:
                             handler["destroy_method"](entity)
-                            self.score.inc_score(entity.score_value)
-                            self.score.set_multiplier(1)
+                            self.score.handle_score(entity.score_value)
+                            self.score.handle_streak_meter_inc(entity.score_value)
 
     def handle_event_sequence(self):
         if not self.active_targets and not self.active_spawners:
@@ -210,7 +205,7 @@ class GamePlay(Scene):
             self.elapsed_time += dt
             self.handle_collisions()
             self.handle_event_sequence()
-            self.score.handle_streak_timer(dt)
+            self.score.update_streak_meter_decay(dt)
 
     def draw(self, game_surface, sidebar_l_surface, sidebar_r_surface):
         super().draw(game_surface, sidebar_l_surface, sidebar_r_surface)
