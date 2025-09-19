@@ -2,7 +2,7 @@ import random
 import pygame
 from src.menus import *
 from src.game_play_hud import GamePlayHUD
-from src.sequence_manager import SequenceManager
+from src.event_manager import EventManager
 from src.spawn_manager import SpawnManager
 from src.entities import *
 from src.render_text import render_text
@@ -89,7 +89,7 @@ class GamePlay(Scene):
         self.score.init_score_manager()
         self.isPaused = False
         self.pause_menu = PauseMenu(self)
-        self.sequence_manager = SequenceManager(self)
+        self.sequence_manager = EventManager(self)
         self.active_spawners = set()
         self.active_targets = set()
 
@@ -152,15 +152,21 @@ class GamePlay(Scene):
                     self.player.is_hit = True
                     entity.hp -= 1
                     self.score.handle_streak_meter_dec()
+                    # Check if entity should be destroyed after hitting player
+                    if entity.hp <= 0:
+                        handler["destroy_method"](entity)
+                        self.score.handle_score(entity.score_value)
                     if self.player.shield <= 0:
                         self.player.lives -= 1
                         Explosion(
-                            self.player.position.x, self.player.position.y, 128, self
+                            self.player.position.x,
+                            self.player.position.y,
+                            self.player.blast_radius,
+                            self,
                         )
                         self.player.respawn()
                     if self.player.lives <= 0:
                         self.game.set_scene(GameOver(self.game))
-                        # self.game.set_scene(GamePlay(self.game))
 
                 # Shot collision
                 for shot in self.shots:

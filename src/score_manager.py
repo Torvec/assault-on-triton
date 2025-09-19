@@ -2,10 +2,11 @@ from src.score_store import ScoreStore
 
 
 class ScoreManager:
+    
     def __init__(self):
         self.score_store = ScoreStore()
         self.init_score_manager()
-        
+
     def init_score_manager(self):
         self.score = 0
         self.multiplier = 1
@@ -52,7 +53,9 @@ class ScoreManager:
                 self.streak_meter_delay_decay_timer = 0
 
         # When the delay timer is finished, the streak starts to decay based off of a set amount per frame
-        if self.streak_meter > 0 and self.streak_meter_delay_decay_timer == 0:
+        if (
+            self.streak_meter > 0 or self.multiplier > 1
+        ) and self.streak_meter_delay_decay_timer == 0:
             self.streak_meter -= self.streak_meter_decay_amount * dt
 
             # If the meter goes equal or below 0 and the multiplier is greater than 1 it will decrease the multiplier and handle the threshold as well as set the meter back to 100% to continue decreasing until it hits 0 at multiplier x1
@@ -64,5 +67,3 @@ class ScoreManager:
                     self.streak_meter = self.streak_meter_threshold
                 else:
                     self.streak_meter = 0
-
-    

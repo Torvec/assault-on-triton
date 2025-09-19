@@ -13,51 +13,62 @@ PLAYER_SHOOT_TIMER = 0.2
 PLAYER_BOMB_AMMO = 3
 PLAYER_BOMB_TIMER = 2.0
 PLAYER_POWER_LEVEL = 1
+PLAYER_BLAST_RADIUS = 128
 PLAYER_IMG_PATH = "assets/player_spaceship.png"
 
 # === Asteroid Constants ===
-ASTEROID_RADII = [16, 32, 64]
-ASTEROID_MIN_RADIUS = 16
-ASTEROID_MID_RADIUS = 32
-ASTEROID_MAX_RADIUS = 64
+ASTEROID_SM_RADIUS = 16
+ASTEROID_SM_SPEED = 120
+ASTEROID_SM_HP = 2
+ASTEROID_SM_IMG = "assets/asteroid_sm.png"
+
+ASTEROID_MD_RADIUS = 32
+ASTEROID_MD_SPEED = 100
+ASTEROID_MD_HP = 4
+ASTEROID_MD_IMG = "assets/asteroid_md.png"
+
+ASTEROID_LG_RADIUS = 64
+ASTEROID_LG_SPEED = 80
+ASTEROID_LG_HP = 8
+ASTEROID_LG_IMG = "assets/asteroid_lg.png"
+
 ASTEROID_SPEED_RANGE = (80, 120)
 ASTEROID_ROTATION_SPEED_RANGE = (-90, 90)
-ASTEROID_HP = 4
-ASTEROID_IMG_LG = "assets/asteroid_lg.png"
-ASTEROID_IMG_MD = "assets/asteroid_md.png"
-ASTEROID_IMG_SM = "assets/asteroid_sm.png"
 
 # === EnemyDrone Constants ===
 ENEMY_DRONE_RADIUS = 16
 ENEMY_DRONE_SPEED = 300
 ENEMY_DRONE_HP = 5
+ENEMY_DRONE_BLAST_RADIUS = 32
 ENEMY_DRONE_IMG_PATH = "assets/enemy_drone.png"
 
 # === EnemyShip Constants ===
 ENEMY_SHIP_RADIUS = 32
 ENEMY_SHIP_SPEED = 200
 ENEMY_SHIP_HP = 10
+ENEMY_SHIP_BLAST_RADIUS = 48
 ENEMY_SHIP_IMG_PATH = "assets/enemy_ship.png"
 
 # === Missile Constants ===
 MISSILE_RADIUS = 10
 MISSILE_SPEED = 200
 MISSILE_HP = 1
+MISSILE_BLAST_RADIUS = 64
 MISSILE_IMG_PATH = "assets/missile.png"
 
 # === Shot Constants ===
 SHOT_RADIUS = 4
-SHOT_MAX_RANGE_FACTOR = 1  # Uses play_area_rect.height
+SHOT_RANGE = 256
 SHOT_SPEED = 500
 SHOT_IMG_PATH = "assets/blaster_shot.png"
 SHOT_SFX_PATH = "assets/720118__baggonotes__player_shoot1.wav"
 
 # === Bomb Constants ===
 BOMB_RADIUS = 8
-BOMB_IMG_PATH = "assets/e_bomb.png"
 BOMB_SPEED = 200
 BOMB_BLAST_RADIUS = 256
-BOMB_TRIGGER_DISTANCE_FACTOR = 0.25  # Uses play_area_rect.height
+BOMB_TRIGGER_DISTANCE = 256
+BOMB_IMG_PATH = "assets/e_bomb.png"
 
 # === Explosion Constants ===
 EXPLOSION_INITIAL_RADIUS = 2
@@ -72,6 +83,9 @@ class Entity(pygame.sprite.Sprite):
             super().__init__(self.containers)
         else:
             super().__init__()
+        #
+        if hasattr(self, "img_path") and self.img_path:
+            self.image = pygame.image.load(self.img_path).convert_alpha()
         self.position = pygame.Vector2(x, y)
         self.game_play = game_play
         self.play_area = game_play.play_area_rect
@@ -80,6 +94,7 @@ class Entity(pygame.sprite.Sprite):
         self.rotation = 0
         self.is_hit = False
         self.hit_timer = 0.1
+        self.blast_radius = 0
 
     def collides_with(self, other):
         return self.position.distance_to(other.position) <= self.radius + other.radius
@@ -87,9 +102,9 @@ class Entity(pygame.sprite.Sprite):
     def handle_boundaries(self, action=None):
         edges = {
             "top": self.play_area.top + self.radius,
-            "right": self.play_area.right - self.radius,
+            "right": self.play_area.right - self.radius * 0.25,
             "bottom": self.play_area.bottom - self.radius,
-            "left": self.play_area.left + self.radius,
+            "left": self.play_area.left + self.radius * 0.25,
         }
         if action == "block":
             self.position.x = max(edges["left"], min(self.position.x, edges["right"]))
@@ -105,12 +120,6 @@ class Entity(pygame.sprite.Sprite):
         if self in self.game_play.active_targets:
             self.kill()
             self.game_play.active_targets.remove(self)
-
-    def show_collision(self):
-        keys = pygame.key.get_pressed()
-        toggle = False
-        if keys[pygame.K_BACKQUOTE]:
-            return not toggle
 
     def flash_when_hit(self, screen, entity_surface, entity_rect):
         if self.is_hit:
@@ -128,19 +137,16 @@ class Entity(pygame.sprite.Sprite):
 
     def update(self, dt):
         self.handle_boundaries()
-        self.show_collision()
         self.handle_hit_timer(dt)
 
     def draw(self, screen):
-        if self.show_collision():
-            pygame.draw.circle(
-                screen, "red", self.position, self.radius, 1
-            )  # Collision circle
+        pass
 
 
 class Player(Entity):
 
     def __init__(self, x, y, game_play):
+        self.img_path = PLAYER_IMG_PATH
         super().__init__(x, y, game_play)
         self.radius = PLAYER_RADIUS
         self.acceleration = PLAYER_ACCELERATION
@@ -152,7 +158,7 @@ class Player(Entity):
         self.bomb_ammo = PLAYER_BOMB_AMMO
         self.bomb_timer = 0
         self.power_level = PLAYER_POWER_LEVEL
-        self.ship_image = pygame.image.load(PLAYER_IMG_PATH).convert_alpha()
+        self.blast_radius = PLAYER_BLAST_RADIUS
 
     def move(self, dt):
         forward = pygame.Vector2(0, -1).rotate(self.rotation)
@@ -231,48 +237,19 @@ class Player(Entity):
 
     def draw(self, screen):
         super().draw(screen)
-        ship_rect = self.ship_image.get_rect(center=self.position)
-        screen.blit(self.ship_image, ship_rect)
-        self.flash_when_hit(screen, self.ship_image, ship_rect)
+        ship_rect = self.image.get_rect(center=self.position)
+        screen.blit(self.image, ship_rect)
+        self.flash_when_hit(screen, self.image, ship_rect)
 
 
 class Asteroid(Entity):
 
     def __init__(self, x, y, game_play):
         super().__init__(x, y, game_play)
-        self.radius = random.choice(ASTEROID_RADII)
-        self.min_radius = ASTEROID_MIN_RADIUS
-        self.mid_radius = ASTEROID_MID_RADIUS
-        self.max_radius = ASTEROID_MAX_RADIUS
-        self.speed = random.randint(*ASTEROID_SPEED_RANGE)
         self.rotation_speed = random.uniform(*ASTEROID_ROTATION_SPEED_RANGE)
-        self.asteroid_lg = pygame.image.load(ASTEROID_IMG_LG).convert_alpha()
-        self.asteroid_md = pygame.image.load(ASTEROID_IMG_MD).convert_alpha()
-        self.asteroid_sm = pygame.image.load(ASTEROID_IMG_SM).convert_alpha()
-        self.hp = ASTEROID_HP
-        self.score_value = self.hp
 
     def split(self):
         self.remove_active_targets()
-        if self.radius <= self.min_radius:
-            return
-
-        new_angle = 30
-        new_radius = self.radius // 2
-
-        asteroid_a = Asteroid(
-            self.position.x - new_radius, self.position.y, self.game_play
-        )
-        self.game_play.active_targets.add(asteroid_a)
-        asteroid_a.radius = new_radius
-        asteroid_a.velocity = self.velocity.rotate(new_angle) * 1.2
-
-        asteroid_b = Asteroid(
-            self.position.x + new_radius, self.position.y, self.game_play
-        )
-        self.game_play.active_targets.add(asteroid_b)
-        asteroid_b.radius = new_radius
-        asteroid_b.velocity = self.velocity.rotate(-new_angle) * 1.2
 
     def update(self, dt):
         super().update(dt)
@@ -281,31 +258,90 @@ class Asteroid(Entity):
 
     def draw(self, screen):
         super().draw(screen)
-        if self.radius == self.max_radius:
-            image = self.asteroid_lg
-        elif self.radius == self.mid_radius:
-            image = self.asteroid_md
-        else:
-            image = self.asteroid_sm
-
-        rotated_image = pygame.transform.rotate(image, self.rotation)
+        rotated_image = pygame.transform.rotate(self.image, self.rotation)
         rect = rotated_image.get_rect(center=self.position)
         screen.blit(rotated_image, rect)
+
+
+class AsteroidSmall(Asteroid):
+
+    def __init__(self, x, y, game_play):
+        self.speed = ASTEROID_SM_SPEED
+        self.hp = ASTEROID_SM_HP
+        self.img_path = ASTEROID_SM_IMG
+        super().__init__(x, y, game_play)
+        self.radius = ASTEROID_SM_RADIUS
+        self.score_value = self.hp
+
+
+class AsteroidMedium(Asteroid):
+
+    def __init__(self, x, y, game_play):
+        self.speed = ASTEROID_MD_SPEED
+        self.hp = ASTEROID_MD_HP
+        self.img_path = ASTEROID_MD_IMG
+        super().__init__(x, y, game_play)
+        self.radius = ASTEROID_MD_RADIUS
+        self.score_value = self.hp
+
+    def split(self):
+        self.remove_active_targets()
+        new_angle = 30
+
+        asteroid_a = AsteroidSmall(
+            self.position.x - ASTEROID_SM_RADIUS, self.position.y, self.game_play
+        )
+        self.game_play.active_targets.add(asteroid_a)
+        asteroid_a.velocity = self.velocity.rotate(new_angle) * 1.2
+
+        asteroid_b = AsteroidSmall(
+            self.position.x + ASTEROID_SM_RADIUS, self.position.y, self.game_play
+        )
+        self.game_play.active_targets.add(asteroid_b)
+        asteroid_b.velocity = self.velocity.rotate(-new_angle) * 1.2
+
+
+class AsteroidLarge(Asteroid):
+
+    def __init__(self, x, y, game_play):
+        self.speed = ASTEROID_LG_SPEED
+        self.hp = ASTEROID_LG_HP
+        self.img_path = ASTEROID_LG_IMG
+        super().__init__(x, y, game_play)
+        self.radius = ASTEROID_LG_RADIUS
+        self.score_value = self.hp
+
+    def split(self):
+        self.remove_active_targets()
+        new_angle = 30
+
+        asteroid_a = AsteroidMedium(
+            self.position.x - ASTEROID_MD_RADIUS, self.position.y, self.game_play
+        )
+        self.game_play.active_targets.add(asteroid_a)
+        asteroid_a.velocity = self.velocity.rotate(new_angle) * 1.2
+
+        asteroid_b = AsteroidMedium(
+            self.position.x + ASTEROID_MD_RADIUS, self.position.y, self.game_play
+        )
+        self.game_play.active_targets.add(asteroid_b)
+        asteroid_b.velocity = self.velocity.rotate(-new_angle) * 1.2
 
 
 class EnemyDrone(Entity):
 
     def __init__(self, x, y, game_play):
+        self.img_path = ENEMY_DRONE_IMG_PATH
         super().__init__(x, y, game_play)
         self.radius = ENEMY_DRONE_RADIUS
         self.speed = ENEMY_DRONE_SPEED
         self.hp = ENEMY_DRONE_HP
+        self.blast_radius = ENEMY_DRONE_BLAST_RADIUS
         self.score_value = self.hp
-        self.enemy_drone_img = pygame.image.load(ENEMY_DRONE_IMG_PATH).convert_alpha()
 
     def explode(self):
         self.remove_active_targets()
-        Explosion(self.position.x, self.position.y, 48, self.game_play)
+        Explosion(self.position.x, self.position.y, self.blast_radius, self.game_play)
 
     def update(self, dt):
         super().update(dt)
@@ -314,24 +350,25 @@ class EnemyDrone(Entity):
 
     def draw(self, screen):
         super().draw(screen)
-        drone_rect = self.enemy_drone_img.get_rect(center=self.position)
-        screen.blit(self.enemy_drone_img, drone_rect)
-        self.flash_when_hit(screen, self.enemy_drone_img, drone_rect)
+        drone_rect = self.image.get_rect(center=self.position)
+        screen.blit(self.image, drone_rect)
+        self.flash_when_hit(screen, self.image, drone_rect)
 
 
 class EnemyShip(Entity):
 
     def __init__(self, x, y, game_play):
+        self.img_path = ENEMY_SHIP_IMG_PATH
         super().__init__(x, y, game_play)
         self.radius = ENEMY_SHIP_RADIUS
         self.speed = ENEMY_SHIP_SPEED
         self.hp = ENEMY_SHIP_HP
+        self.blast_radius = ENEMY_SHIP_BLAST_RADIUS
         self.score_value = self.hp
-        self.enemy_ship_image = pygame.image.load(ENEMY_SHIP_IMG_PATH).convert_alpha()
 
     def explode(self):
         self.remove_active_targets()
-        Explosion(self.position.x, self.position.y, 32, self.game_play)
+        Explosion(self.position.x, self.position.y, self.blast_radius, self.game_play)
 
     def update(self, dt):
         super().update(dt)
@@ -340,24 +377,25 @@ class EnemyShip(Entity):
 
     def draw(self, screen):
         super().draw(screen)
-        ship_rect = self.enemy_ship_image.get_rect(center=self.position)
-        screen.blit(self.enemy_ship_image, ship_rect)
-        self.flash_when_hit(screen, self.enemy_ship_image, ship_rect)
+        ship_rect = self.image.get_rect(center=self.position)
+        screen.blit(self.image, ship_rect)
+        self.flash_when_hit(screen, self.image, ship_rect)
 
 
 class Missile(Entity):
 
     def __init__(self, x, y, game_play):
+        self.img_path = MISSILE_IMG_PATH
         super().__init__(x, y, game_play)
         self.radius = MISSILE_RADIUS
         self.speed = MISSILE_SPEED
         self.hp = MISSILE_HP
+        self.blast_radius = MISSILE_BLAST_RADIUS
         self.score_value = self.hp
-        self.missile_image = pygame.image.load(MISSILE_IMG_PATH).convert_alpha()
 
     def explode(self):
         self.remove_active_targets()
-        Explosion(self.position.x, self.position.y, 64, self.game_play)
+        Explosion(self.position.x, self.position.y, self.blast_radius, self.game_play)
 
     def track_player(self):
         direction = self.game_play.player.position - self.position
@@ -372,7 +410,7 @@ class Missile(Entity):
 
     def draw(self, screen):
         super().draw(screen)
-        rotated_image = pygame.transform.rotate(self.missile_image, -self.rotation)
+        rotated_image = pygame.transform.rotate(self.image, -self.rotation)
         missile_rect = rotated_image.get_rect(center=self.position)
         screen.blit(rotated_image, missile_rect)
 
@@ -380,12 +418,12 @@ class Missile(Entity):
 class Shot(Entity):
 
     def __init__(self, x, y, game_play):
+        self.img_path = SHOT_IMG_PATH
         super().__init__(x, y, game_play)
         self.radius = SHOT_RADIUS
         self.distance_traveled = 0
-        self.max_range = game_play.play_area_rect.height
+        self.max_range = SHOT_RANGE
         self.speed = SHOT_SPEED
-        self.shot_image = pygame.image.load(SHOT_IMG_PATH).convert_alpha()
         self.sfx = SHOT_SFX_PATH
 
     def sound(self):
@@ -405,30 +443,25 @@ class Shot(Entity):
         self.position += self.velocity * dt
 
     def draw(self, screen):
-        shot_rect = self.shot_image.get_rect(center=self.position)
-        screen.blit(self.shot_image, shot_rect)
+        shot_rect = self.image.get_rect(center=self.position)
+        screen.blit(self.image, shot_rect)
 
 
 class Bomb(Entity):
 
     def __init__(self, x, y, game_play):
+        self.img_path = BOMB_IMG_PATH
         super().__init__(x, y, game_play)
         self.radius = BOMB_RADIUS
-        self.bomb_image = pygame.image.load(BOMB_IMG_PATH)
         self.speed = BOMB_SPEED
         self.blast_radius = BOMB_BLAST_RADIUS
         self.distance_traveled = 0
-        self.trigger_distance = (
-            game_play.play_area_rect.height * BOMB_TRIGGER_DISTANCE_FACTOR
-        )
+        self.trigger_distance = BOMB_TRIGGER_DISTANCE
 
     def sound(self):
         pass  # The launch sound not explosion sound
 
-    def trigger_explosion(
-        self,
-        dt,
-    ):
+    def trigger_explosion(self, dt):
         distance_this_frame = self.velocity.length() * dt
         self.distance_traveled += distance_this_frame
         if self.distance_traveled >= self.trigger_distance:
@@ -444,8 +477,8 @@ class Bomb(Entity):
 
     def draw(self, screen):
         super().draw(screen)
-        bomb_rect = self.bomb_image.get_rect(center=self.position)
-        screen.blit(self.bomb_image, bomb_rect)
+        bomb_rect = self.image.get_rect(center=self.position)
+        screen.blit(self.image, bomb_rect)
 
 
 class Explosion(Entity):
@@ -453,7 +486,7 @@ class Explosion(Entity):
     def __init__(self, x, y, blast_radius, game_play):
         super().__init__(x, y, game_play)
         self.radius = EXPLOSION_INITIAL_RADIUS
-        self.expansion_rate = EXPLOSION_EXPANSION_RATE
+        self.exp_rate = EXPLOSION_EXPANSION_RATE
         self.blast_radius = blast_radius
 
     def sound(self):
@@ -462,9 +495,9 @@ class Explosion(Entity):
     def update(self, dt):
         super().update(dt)
         if self.radius < self.blast_radius:
-            self.radius += self.expansion_rate * dt
-        if self.radius >= self.blast_radius:
-            self.kill()
+            self.radius += self.exp_rate * dt
+            if self.radius >= self.blast_radius:
+                self.kill()
 
     def draw(self, screen):
         super().draw(screen)
