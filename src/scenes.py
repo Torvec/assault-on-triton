@@ -3,6 +3,7 @@ import pygame
 from src.menus import *
 from src.game_play_hud import GamePlayHUD
 from src.event_manager import EventManager
+from src.event_timeline import TIMELINE
 from src.spawn_manager import SpawnManager
 from src.entities import *
 from src.render_text import render_text
@@ -89,8 +90,7 @@ class GamePlay(Scene):
         self.score.init_score_manager()
         self.isPaused = False
         self.pause_menu = PauseMenu(self)
-        self.sequence_manager = EventManager(self)
-        self.active_spawners = set()
+        self.event_manager = EventManager(self, TIMELINE)
         self.active_targets = set()
 
         # Sprite Groups
@@ -197,19 +197,13 @@ class GamePlay(Scene):
                             self.score.handle_score(entity.score_value)
                             self.score.handle_streak_meter_inc(entity.score_value)
 
-    def handle_event_sequence(self):
-        if not self.active_targets and not self.active_spawners:
-            if self.sequence_manager.event_active:
-                self.sequence_manager.set_current_event()
-            self.sequence_manager.run_sequence()
-
     def update(self, dt, events):
         self.pause_menu.update(events)
         if not self.isPaused:
             super().update(dt)
             self.elapsed_time += dt
             self.handle_collisions()
-            self.handle_event_sequence()
+            self.event_manager.update(dt)
             self.score.update_streak_meter_decay(dt)
 
     def draw(self, game_surface, sidebar_l_surface, sidebar_r_surface):

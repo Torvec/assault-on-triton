@@ -2,40 +2,42 @@ from src.spawn_manager import SpawnManager
 
 
 class EventManager:
-    def __init__(self, game_play):
+
+    def __init__(self, game_play, timeline):
         self.game_play = game_play
-        self.setup_sequence()
+        self.timeline = timeline
+        self.current_time = 0
+        self.current_index = 0
+        self.is_paused = False
 
-    def setup_sequence(self):
-        self.event_sequence = [
-            {
-                "event": 0,
-                "action": [
-                    lambda: SpawnManager(self.game_play, "AsteroidLarge", 10, 1.2),
-                    lambda: SpawnManager(self.game_play, "AsteroidMedium", 10, 1.0),
-                    lambda: SpawnManager(self.game_play, "AsteroidSmall", 10, 0.8),
-                    lambda: SpawnManager(self.game_play, "EnemyShip", 10, 0.8),
-                    lambda: SpawnManager(self.game_play, "EnemyDrone", 16, 0.4),
-                    lambda: SpawnManager(self.game_play, "Missile", 12, 1.0),
-                ],
-            },
-        ]
-        self.current_event = 0
-        self.event_active = False
+    def toggle_pause(self):
+        self.is_paused = not self.is_paused
 
-    def reset_sequence(self):
-        self.setup_sequence()
+    def spawn_enemies(self, type, count, location, formation):
+        spawn_manager = SpawnManager(self.game_play, type, count, location, formation)
+        spawn_manager.spawn_entity()
 
-    def set_current_event(self):
-        self.current_event += 1
-        self.event_active = False
+    def show_message(self, text):
+        print(text)
 
-    def run_sequence(self):
-        if self.event_sequence and self.current_event < len(self.event_sequence):
-            if not self.event_active:
-                current_action = self.event_sequence[self.current_event]
-                for action in current_action["action"]:
-                    action()
-                self.event_active = True
-        else:
+    def update(self, dt):
+        if self.is_paused:
             return
+
+        self.current_time += dt
+
+        while (
+            self.current_index < len(self.timeline)
+            and self.current_time >= self.timeline[self.current_index]["time"]
+        ):
+            event_data = self.timeline[self.current_index]
+            event_name = event_data["event"]
+            params = event_data.get("params", {})
+
+            # Call the appropriate method with parameters
+            if event_name == "spawn_enemies":
+                self.spawn_enemies(**params)
+            elif event_name == "show_message":
+                self.show_message(**params)
+
+            self.current_index += 1
