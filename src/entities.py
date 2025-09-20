@@ -5,7 +5,7 @@ import pygame
 # === Player Constants ===
 PLAYER_RADIUS = 48
 PLAYER_ACCELERATION = 600
-PLAYER_SPEED = 300
+PLAYER_SPEED = 350
 PLAYER_LIVES = 3
 PLAYER_SHIELD = 100
 PLAYER_INVINCIBLE_TIME = 2
@@ -58,7 +58,7 @@ MISSILE_IMG_PATH = "assets/missile.png"
 
 # === Shot Constants ===
 SHOT_RADIUS = 4
-SHOT_RANGE = 256
+SHOT_RANGE = 512
 SHOT_SPEED = 500
 SHOT_IMG_PATH = "assets/blaster_shot.png"
 SHOT_SFX_PATH = "assets/720118__baggonotes__player_shoot1.wav"
@@ -77,6 +77,14 @@ EXPLOSION_EXPANSION_RATE = 192
 
 class Entity(pygame.sprite.Sprite):
 
+    _image_cache = {}
+
+    @classmethod
+    def load_image(cls, img_path):
+        if img_path not in cls._image_cache:
+            cls._image_cache[img_path] = pygame.image.load(img_path).convert_alpha()
+        return cls._image_cache[img_path]
+
     def __init__(self, x, y, game_play):
         # Used to auto add sprites to groups upon creation if a .container attribute is present
         if hasattr(self, "containers"):
@@ -85,7 +93,7 @@ class Entity(pygame.sprite.Sprite):
             super().__init__()
         #
         if hasattr(self, "img_path") and self.img_path:
-            self.image = pygame.image.load(self.img_path).convert_alpha()
+            self.image = self.load_image(self.img_path)
         self.position = pygame.Vector2(x, y)
         self.game_play = game_play
         self.play_area = game_play.play_area_rect
@@ -160,13 +168,17 @@ class Player(Entity):
         self.power_level = PLAYER_POWER_LEVEL
         self.blast_radius = PLAYER_BLAST_RADIUS
 
-    def move(self, dt):
-        forward = pygame.Vector2(0, -1).rotate(self.rotation)
-        self.velocity += forward * self.acceleration * dt
+    def move_up(self, dt):
+        self.velocity.y -= self.acceleration * dt
 
-    def strafe(self, dt):
-        right = pygame.Vector2(1, 0).rotate(self.rotation)
-        self.velocity += right * self.acceleration * dt
+    def move_down(self, dt):
+        self.velocity.y += self.acceleration * dt
+
+    def move_left(self, dt):
+        self.velocity.x -= self.acceleration * dt
+
+    def move_right(self, dt):
+        self.velocity.x += self.acceleration * dt
 
     def shoot(self):
         if self.shoot_timer > 0:
@@ -205,19 +217,18 @@ class Player(Entity):
 
     def controls(self, dt):
         keys = pygame.key.get_pressed()
-        mouse_btn = pygame.mouse.get_pressed()
 
-        if keys[pygame.K_a] or keys[pygame.K_LEFT]:
-            self.strafe(-dt)
-        if keys[pygame.K_d] or keys[pygame.K_RIGHT]:
-            self.strafe(dt)
-        if keys[pygame.K_w] or keys[pygame.K_UP]:
-            self.move(dt)
-        if keys[pygame.K_s] or keys[pygame.K_DOWN]:
-            self.move(-dt)
-        if keys[pygame.K_SPACE] or mouse_btn[0]:
+        if keys[pygame.K_a]:
+            self.move_left(dt)
+        if keys[pygame.K_d]:
+            self.move_right(dt)
+        if keys[pygame.K_w]:
+            self.move_up(dt)
+        if keys[pygame.K_s]:
+            self.move_down(dt)
+        if keys[pygame.K_SPACE]:
             self.shoot()
-        if keys[pygame.K_e] or mouse_btn[1]:
+        if keys[pygame.K_e]:
             self.release_bomb()
 
     def apply_acceleration(self, dt):
@@ -345,7 +356,7 @@ class EnemyDrone(Entity):
 
     def update(self, dt):
         super().update(dt)
-        forward = pygame.Vector2(0, 1).rotate(self.rotation)
+        forward = pygame.Vector2(0, 1)
         self.position += forward * self.speed * dt
 
     def draw(self, screen):
@@ -372,7 +383,7 @@ class EnemyShip(Entity):
 
     def update(self, dt):
         super().update(dt)
-        forward = pygame.Vector2(0, 1).rotate(self.rotation)
+        forward = pygame.Vector2(0, 1)
         self.position += forward * self.speed * dt
 
     def draw(self, screen):
