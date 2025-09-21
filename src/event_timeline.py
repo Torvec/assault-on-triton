@@ -1,5 +1,6 @@
 TIMELINE = [
     {"time": 0, "event": "show_message", "params": {"text": "Mission Start!"}},
+    # ASTEROID FIELD
     {
         "time": 0.3,
         "event": "spawn_enemies",
@@ -100,8 +101,9 @@ TIMELINE = [
             "formation": "single",
         },
     },
+    # ENEMY SHIPS
     {
-        "time": 5.0,
+        "time": 6.0,
         "event": "spawn_enemies",
         "params": {
             "type": "EnemyDrone",
@@ -111,7 +113,7 @@ TIMELINE = [
         },
     },
     {
-        "time": 6.0,
+        "time": 10.0,
         "event": "spawn_enemies",
         "params": {
             "type": "EnemyDrone",
@@ -121,7 +123,7 @@ TIMELINE = [
         },
     },
     {
-        "time": 8.0,
+        "time": 14.0,
         "event": "spawn_enemies",
         "params": {
             "type": "EnemyShip",
@@ -131,13 +133,83 @@ TIMELINE = [
         },
     },
     {
-        "time": 12.0,
+        "time": 18.0,
         "event": "spawn_enemies",
         "params": {
             "type": "EnemyShip",
             "count": 6,
             "location": "center",
             "formation": "reverse_v",
+        },
+    },
+    {
+        "time": 22.0,
+        "event": "spawn_enemies",
+        "params": {
+            "type": "EnemyShip",
+            "count": 6,
+            "location": "left",
+            "formation": "echelon_l",
+        },
+    },
+    {
+        "time": 26.0,
+        "event": "spawn_enemies",
+        "params": {
+            "type": "EnemyShip",
+            "count": 6,
+            "location": "right",
+            "formation": "echelon_r",
+        },
+    },
+    {
+        "time": 30.0,
+        "event": "spawn_enemies",
+        "params": {
+            "type": "EnemyShip",
+            "count": 4,
+            "location": "center",
+            "formation": "diamond",
+        },
+    },
+    {
+        "time": 32.0,
+        "event": "spawn_enemies",
+        "params": {
+            "type": "EnemyDrone",
+            "count": 4,
+            "location": "left",
+            "formation": "diamond",
+        },
+    },
+    {
+        "time": 34.0,
+        "event": "spawn_enemies",
+        "params": {
+            "type": "EnemyDrone",
+            "count": 4,
+            "location": "right",
+            "formation": "diamond",
+        },
+    },
+    {
+        "time": 38.0,
+        "event": "spawn_enemies",
+        "params": {
+            "type": "EnemyShip",
+            "count": 8,
+            "location": "center",
+            "formation": "circle",
+        },
+    },
+    {
+        "time": 42.0,
+        "event": "spawn_enemies",
+        "params": {
+            "type": "EnemyShip",
+            "count": 5,
+            "location": "center",
+            "formation": "x",
         },
     },
 ]

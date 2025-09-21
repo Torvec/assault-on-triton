@@ -2,6 +2,19 @@ import random
 import pygame
 
 
+# === Direction Vector Constants ===
+DIRECTION_UP = pygame.Vector2(0, -1)
+DIRECTION_DOWN = pygame.Vector2(0, 1)
+DIRECTION_LEFT = pygame.Vector2(-1, 0)
+DIRECTION_RIGHT = pygame.Vector2(1, 0)
+DIRECTION_UP_LEFT = pygame.Vector2(-1, -1).normalize()
+DIRECTION_UP_RIGHT = pygame.Vector2(1, -1).normalize()
+DIRECTION_DOWN_LEFT = pygame.Vector2(-1, 1).normalize()
+DIRECTION_DOWN_RIGHT = pygame.Vector2(1, 1).normalize()
+
+# === Entity Constants ===
+HIT_TIMER = 0.1
+
 # === Player Constants ===
 PLAYER_RADIUS = 48
 PLAYER_ACCELERATION = 600
@@ -34,6 +47,9 @@ ASTEROID_LG_IMG = "assets/asteroid_lg.png"
 
 ASTEROID_SPEED_RANGE = (80, 120)
 ASTEROID_ROTATION_SPEED_RANGE = (-90, 90)
+
+ASTEROID_SPLIT_ANGLE = 30
+ASTEROID_SPLIT_VELOCITY_FACTOR = 1.2
 
 # === EnemyDrone Constants ===
 ENEMY_DRONE_RADIUS = 16
@@ -101,7 +117,7 @@ class Entity(pygame.sprite.Sprite):
         self.velocity = pygame.Vector2(0, 0)
         self.rotation = 0
         self.is_hit = False
-        self.hit_timer = 0.1
+        self.hit_timer = HIT_TIMER
         self.blast_radius = 0
 
     def collides_with(self, other):
@@ -141,7 +157,7 @@ class Entity(pygame.sprite.Sprite):
             self.hit_timer -= dt
             if self.hit_timer <= 0:
                 self.is_hit = False
-                self.hit_timer = 0.1
+                self.hit_timer = HIT_TIMER
 
     def update(self, dt):
         self.handle_boundaries()
@@ -184,11 +200,11 @@ class Player(Entity):
         if self.shoot_timer > 0:
             return
         self.shoot_timer = 0.2
-        shot_pos = self.position + pygame.Vector2(0, -self.radius)
+        shot_pos = self.position + DIRECTION_UP * self.radius
         shot_l = Shot(shot_pos.x - 8, shot_pos.y, self.game_play)
         shot_r = Shot(shot_pos.x + 8, shot_pos.y, self.game_play)
-        shot_l.velocity = pygame.Vector2(0, -1) * shot_l.speed
-        shot_r.velocity = pygame.Vector2(0, -1) * shot_r.speed
+        shot_l.velocity = DIRECTION_UP * shot_l.speed
+        shot_r.velocity = DIRECTION_UP * shot_r.speed
         shot_l.sound()
 
     def release_bomb(self):
@@ -197,10 +213,9 @@ class Player(Entity):
         self.bomb_timer = 2.0
         self.bomb_ammo -= 1
         bomb = Bomb(self.position.x, self.position.y, self.game_play)
-        forward = pygame.Vector2(0, -1)
-        player_forward_speed = self.velocity.dot(forward)
+        player_forward_speed = self.velocity.dot(DIRECTION_UP)
         forward_only_speed = max(0, player_forward_speed)
-        bomb.velocity = forward * (forward_only_speed + bomb.speed)
+        bomb.velocity = DIRECTION_UP * (forward_only_speed + bomb.speed)
         bomb.sound()
 
     def respawn(self):
@@ -297,19 +312,23 @@ class AsteroidMedium(Asteroid):
 
     def split(self):
         self.remove_active_targets()
-        new_angle = 30
+        new_angle = ASTEROID_SPLIT_ANGLE
 
         asteroid_a = AsteroidSmall(
             self.position.x - ASTEROID_SM_RADIUS, self.position.y, self.game_play
         )
         self.game_play.active_targets.add(asteroid_a)
-        asteroid_a.velocity = self.velocity.rotate(new_angle) * 1.2
+        asteroid_a.velocity = (
+            self.velocity.rotate(new_angle) * ASTEROID_SPLIT_VELOCITY_FACTOR
+        )
 
         asteroid_b = AsteroidSmall(
             self.position.x + ASTEROID_SM_RADIUS, self.position.y, self.game_play
         )
         self.game_play.active_targets.add(asteroid_b)
-        asteroid_b.velocity = self.velocity.rotate(-new_angle) * 1.2
+        asteroid_b.velocity = (
+            self.velocity.rotate(-new_angle) * ASTEROID_SPLIT_VELOCITY_FACTOR
+        )
 
 
 class AsteroidLarge(Asteroid):
@@ -324,19 +343,23 @@ class AsteroidLarge(Asteroid):
 
     def split(self):
         self.remove_active_targets()
-        new_angle = 30
+        new_angle = ASTEROID_SPLIT_ANGLE
 
         asteroid_a = AsteroidMedium(
             self.position.x - ASTEROID_MD_RADIUS, self.position.y, self.game_play
         )
         self.game_play.active_targets.add(asteroid_a)
-        asteroid_a.velocity = self.velocity.rotate(new_angle) * 1.2
+        asteroid_a.velocity = (
+            self.velocity.rotate(new_angle) * ASTEROID_SPLIT_VELOCITY_FACTOR
+        )
 
         asteroid_b = AsteroidMedium(
             self.position.x + ASTEROID_MD_RADIUS, self.position.y, self.game_play
         )
         self.game_play.active_targets.add(asteroid_b)
-        asteroid_b.velocity = self.velocity.rotate(-new_angle) * 1.2
+        asteroid_b.velocity = (
+            self.velocity.rotate(-new_angle) * ASTEROID_SPLIT_VELOCITY_FACTOR
+        )
 
 
 class EnemyDrone(Entity):
@@ -356,8 +379,7 @@ class EnemyDrone(Entity):
 
     def update(self, dt):
         super().update(dt)
-        forward = pygame.Vector2(0, 1)
-        self.position += forward * self.speed * dt
+        self.position += DIRECTION_DOWN * self.speed * dt
 
     def draw(self, screen):
         super().draw(screen)
@@ -383,8 +405,7 @@ class EnemyShip(Entity):
 
     def update(self, dt):
         super().update(dt)
-        forward = pygame.Vector2(0, 1)
-        self.position += forward * self.speed * dt
+        self.position += DIRECTION_DOWN * self.speed * dt
 
     def draw(self, screen):
         super().draw(screen)
@@ -410,12 +431,11 @@ class Missile(Entity):
 
     def track_player(self):
         direction = self.game_play.player.position - self.position
-        angle = pygame.Vector2(0, 1).angle_to(direction)
-        return angle
+        return DIRECTION_DOWN.angle_to(direction)
 
     def update(self, dt):
         super().update(dt)
-        forward = pygame.Vector2(0, 1).rotate(self.rotation)
+        forward = DIRECTION_DOWN.rotate(self.rotation)
         self.position += forward * self.speed * dt
         self.rotation = self.track_player()
 

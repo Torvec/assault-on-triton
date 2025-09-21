@@ -34,7 +34,6 @@ class EventManager:
             event_name = event_data["event"]
             params = event_data.get("params", {})
 
-            # Call the appropriate method with parameters
             if event_name == "spawn_enemies":
                 self.spawn_enemies(**params)
             elif event_name == "show_message":
