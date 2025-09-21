@@ -100,4 +100,44 @@ TIMELINE = [
             "formation": "single",
         },
     },
+    {
+        "time": 5.0,
+        "event": "spawn_enemies",
+        "params": {
+            "type": "EnemyDrone",
+            "count": 5,
+            "location": "center",
+            "formation": "column",
+        },
+    },
+    {
+        "time": 6.0,
+        "event": "spawn_enemies",
+        "params": {
+            "type": "EnemyDrone",
+            "count": 5,
+            "location": "center",
+            "formation": "wall",
+        },
+    },
+    {
+        "time": 8.0,
+        "event": "spawn_enemies",
+        "params": {
+            "type": "EnemyShip",
+            "count": 6,
+            "location": "center",
+            "formation": "forward_v",
+        },
+    },
+    {
+        "time": 12.0,
+        "event": "spawn_enemies",
+        "params": {
+            "type": "EnemyShip",
+            "count": 6,
+            "location": "center",
+            "formation": "reverse_v",
+        },
+    },
 ]
