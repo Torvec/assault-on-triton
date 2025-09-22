@@ -1,6 +1,13 @@
 import pygame
 from src.scenes.scene import Scene
-from src.scenes.game_play.entities import *
+from src.scenes.game_play.entities.player_ship import Player
+from src.scenes.game_play.entities.shot import Shot
+from src.scenes.game_play.entities.bomb import Bomb
+from src.scenes.game_play.entities.explosion import Explosion
+from src.scenes.game_play.entities.asteroid import Asteroid
+from src.scenes.game_play.entities.enemy_drone import EnemyDrone
+from src.scenes.game_play.entities.enemy_ship import EnemyShip
+from src.scenes.game_play.entities.missile import Missile
 from src.scenes.game_play.event_manager import EventManager
 from src.scenes.game_play.spawn_manager import SpawnManager
 from src.scenes.game_play.score_manager import ScoreManager

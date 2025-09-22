@@ -1,12 +1,13 @@
 import pygame
-from src.scenes.game_play.entities import (
+from src.scenes.game_play.entities.asteroid import (
     AsteroidLarge,
     AsteroidMedium,
     AsteroidSmall,
-    EnemyDrone,
-    EnemyShip,
-    Missile,
 )
+from src.scenes.game_play.entities.enemy_drone import EnemyDrone
+from src.scenes.game_play.entities.enemy_ship import EnemyShip
+from src.scenes.game_play.entities.missile import Missile
+from src.scenes.game_play.entities import entity_formations
 
 
 ENTITY_REGISTRY = {
@@ -16,18 +17,6 @@ ENTITY_REGISTRY = {
     "EnemyDrone": EnemyDrone,
     "EnemyShip": EnemyShip,
     "Missile": Missile,
-}
-
-SPAWN_LOCATIONS = {
-    "left_edge": 0.1,
-    "far_left": 0.2,
-    "left": 0.3,
-    "center_left": 0.4,
-    "center": 0.5,
-    "center_right": 0.6,
-    "right": 0.7,
-    "far_right": 0.8,
-    "right_edge": 0.9,
 }
 
 
@@ -40,143 +29,27 @@ class SpawnManager(pygame.sprite.Sprite):
         self.entity_name = entity_name
         self.count = count
         self.location = location
+        self.spawn_locations = {
+            "left_edge": 0.1,
+            "far_left": 0.2,
+            "left": 0.3,
+            "center_left": 0.4,
+            "center": 0.5,
+            "center_right": 0.6,
+            "right": 0.7,
+            "far_right": 0.8,
+            "right_edge": 0.9,
+        }
         self.formation = formation
-
-    def _single_formation(self, fwd_pos, count, spacing):
-        return [fwd_pos]
-
-    def _wall_formation(self, fwd_pos, count, spacing):
-        positions = []
-
-        for i in range(count):
-            offset_x = (i - count // 2) * spacing
-            positions.append(fwd_pos + pygame.Vector2(offset_x, 0))
-        return positions
-
-    def _column_formation(self, fwd_pos, count, spacing):
-        positions = []
-
-        max_forward_offset = (count // 2) * spacing
-        adjusted_center = pygame.Vector2(fwd_pos.x, fwd_pos.y - max_forward_offset)
-
-        for i in range(count):
-            offset_y = (i - count // 2) * spacing
-            positions.append(adjusted_center + pygame.Vector2(0, offset_y))
-        return positions
-
-    def _echelon_l_formation(self, fwd_pos, count, spacing):
-        positions = []
-
-        max_forward_offset = (count // 2) * spacing * 0.7
-        adjusted_center = pygame.Vector2(fwd_pos.x, fwd_pos.y - max_forward_offset)
-
-        for i in range(count):
-            offset = (i - count // 2) * spacing * 0.7
-            positions.append(adjusted_center + pygame.Vector2(-offset, offset))
-        return positions
-
-    def _echelon_r_formation(self, fwd_pos, count, spacing):
-        positions = []
-
-        max_forward_offset = (count // 2) * spacing * 0.7
-        adjusted_center = pygame.Vector2(fwd_pos.x, fwd_pos.y - max_forward_offset)
-
-        for i in range(count):
-            offset = (i - count // 2) * spacing * 0.7
-            positions.append(adjusted_center + pygame.Vector2(offset, offset))
-        return positions
-
-    def _reverse_v_formation(self, fwd_pos, count, spacing):
-        positions = []
-
-        pairs = (count - 1) // 2
-        max_offset = pairs * spacing * 0.5
-        adjusted_center = pygame.Vector2(fwd_pos.x, fwd_pos.y - max_offset)
-
-        positions.append(adjusted_center)
-
-        for i in range(1, pairs + 1):
-            distance = i * spacing
-            positions.append(
-                adjusted_center + pygame.Vector2(-distance, distance * 0.5)
-            )
-            positions.append(adjusted_center + pygame.Vector2(distance, distance * 0.5))
-
-        if count % 2 == 0:
-            positions.append(adjusted_center + pygame.Vector2(0, spacing * 1.5))
-
-        return positions
-
-    def _forward_v_formation(self, fwd_pos, count, spacing):
-        positions = []
-
-        positions.append(fwd_pos)
-
-        pairs = (count - 1) // 2
-        for i in range(1, pairs + 1):
-            distance = i * spacing
-            positions.append(fwd_pos + pygame.Vector2(-distance, -distance * 0.5))
-            positions.append(fwd_pos + pygame.Vector2(distance, -distance * 0.5))
-
-        if count % 2 == 0:
-            positions.append(fwd_pos + pygame.Vector2(0, -spacing * 1.5))
-
-        return positions
-
-    def _diamond_formation(self, fwd_pos, count, spacing):
-        positions = []
-
-        formation_front = pygame.Vector2(fwd_pos.x, fwd_pos.y - spacing)
-
-        offsets = [
-            pygame.Vector2(0, -spacing),  # Top
-            pygame.Vector2(-spacing, 0),  # Left
-            pygame.Vector2(spacing, 0),  # Right
-            pygame.Vector2(0, spacing),  # Bottom (will be at fwd_pos)
-        ]
-
-        for offset in offsets:
-            positions.append(formation_front + offset)
-
-        return positions
-
-    def _circle_formation(self, fwd_pos, count, spacing):
-        positions = []
-        radius = spacing * 1.5
-        adjusted_center = pygame.Vector2(fwd_pos.x, fwd_pos.y - radius)
-
-        for i in range(count):
-            angle = (i / count) * 360
-            offset = pygame.Vector2(radius, 0).rotate(angle)
-            positions.append(adjusted_center + offset)
-        return positions
-
-    def _x_formation(self, fwd_pos, count, spacing):
-        positions = []
-
-        formation_front = pygame.Vector2(fwd_pos.x, fwd_pos.y - spacing)
-
-        offsets = [
-            pygame.Vector2(-spacing, -spacing),  # Top Left
-            pygame.Vector2(spacing, -spacing),  # Top Right
-            pygame.Vector2(0, 0),  # Center
-            pygame.Vector2(-spacing, spacing),  # Bottom Left
-            pygame.Vector2(spacing, spacing),  # Bottom Right
-        ]
-
-        for offset in offsets:
-            positions.append(formation_front + offset)
-
-        return positions
 
     def calculate_formation_positions(self, fwd_pos, formation, count):
         spacing = 96
-        method_name = f"_{formation}_formation"
-        formation_func = getattr(self, method_name)
-        return formation_func(fwd_pos, count, spacing)
+        formation_fn_name = f"{formation}_formation"
+        formation_fn = getattr(entity_formations, formation_fn_name)
+        return formation_fn(fwd_pos, count, spacing)
 
     def spawn_entity(self):
-        if self.location not in SPAWN_LOCATIONS:
+        if self.location not in self.spawn_locations:
             print(f"Warning: Unknown spawn location '{self.location}'.")
             return
 
@@ -185,7 +58,7 @@ class SpawnManager(pygame.sprite.Sprite):
             return
 
         # Calculate the forward position for the formation
-        x_multiplier = SPAWN_LOCATIONS[self.location]
+        x_multiplier = self.spawn_locations[self.location]
         fwd_pos = pygame.Vector2(
             self.play_area.left + x_multiplier * self.play_area.width,
             self.play_area.top - 64,
