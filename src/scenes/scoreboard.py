@@ -1,5 +1,6 @@
 import pygame
 from src.scenes.scene import Scene
+from src.score_store import ScoreStore
 from src.render_text import render_text
 
 
@@ -7,6 +8,7 @@ class Scoreboard(Scene):
 
     def __init__(self, game):
         super().__init__(game)
+        self.score_store = ScoreStore()
 
     def update(self, dt, events):
         super().update(dt, events)

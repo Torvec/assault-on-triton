@@ -2,12 +2,9 @@ from src.score_store import ScoreStore
 
 
 class ScoreManager:
-    
+
     def __init__(self):
         self.score_store = ScoreStore()
-        self.init_score_manager()
-
-    def init_score_manager(self):
         self.score = 0
         self.multiplier = 1
         self.streak_meter = 0
@@ -67,3 +64,6 @@ class ScoreManager:
                     self.streak_meter = self.streak_meter_threshold
                 else:
                     self.streak_meter = 0
+
+    def store_score(self, score):
+        self.score_store.current_score = score

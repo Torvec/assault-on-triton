@@ -1,5 +1,5 @@
 import pygame
-from src.entities import (
+from src.scenes.game_play.entities import (
     AsteroidLarge,
     AsteroidMedium,
     AsteroidSmall,

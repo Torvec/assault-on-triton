@@ -1,6 +1,7 @@
 import sys
 import pygame
 from src.scenes.scene import Scene
+from src.score_store import ScoreStore
 from src.render_text import render_text
 
 
@@ -8,7 +9,7 @@ class GameOver(Scene):
 
     def __init__(self, game):
         super().__init__(game)
-        self.score = game.score_manager
+        self.score_store = ScoreStore()
 
     def controls(self, events):
         for event in events:
@@ -45,7 +46,7 @@ class GameOver(Scene):
 
         render_text(
             screen=game_surface,
-            text=f"Score: {self.game.score_manager.score}",
+            text=f"Score: {self.score_store.current_score}",
             font_size=64,
             color="white",
             pos=(game_over_menu_rect.midtop[0], game_over_menu_rect.midtop[1] + 36),

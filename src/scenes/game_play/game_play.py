@@ -1,11 +1,12 @@
 import pygame
 from src.scenes.scene import Scene
-from src.entities import *
-from src.event_manager import EventManager
-from src.spawn_manager import SpawnManager
-from src.event_timeline import TIMELINE
-from src.pause_menu import PauseMenu
-from src.game_play_hud import GamePlayHUD
+from src.scenes.game_play.entities import *
+from src.scenes.game_play.event_manager import EventManager
+from src.scenes.game_play.spawn_manager import SpawnManager
+from src.scenes.game_play.score_manager import ScoreManager
+from src.scenes.game_play.event_timeline import TIMELINE
+from src.scenes.game_play.pause_menu import PauseMenu
+from src.scenes.game_play.game_play_hud import GamePlayHUD
 
 
 class GamePlay(Scene):
@@ -20,8 +21,7 @@ class GamePlay(Scene):
             self.game.gs_h,
         )
         self.game_play_hud = GamePlayHUD(self.game, self)
-        self.score = self.game.score_manager
-        self.score.init_score_manager()
+        self.score = ScoreManager()
         self.isPaused = False
         self.pause_menu = PauseMenu(self)
         self.event_manager = EventManager(self, TIMELINE)
@@ -105,6 +105,7 @@ class GamePlay(Scene):
                         )
                         self.player.respawn()
                     if self.player.lives <= 0:
+                        self.score.store_score(self.score.score)
                         self.game.set_scene("GameOver")
 
                 # Shot collision
@@ -148,6 +149,7 @@ class GamePlay(Scene):
         if self.level_complete:
             self.level_end_timer -= dt
             if self.level_end_timer <= 0:
+                self.score.store_score(self.score.score)
                 self.game.set_scene("GameOver")
 
     def update(self, dt, events):

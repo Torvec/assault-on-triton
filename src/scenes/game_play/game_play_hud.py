@@ -1,4 +1,5 @@
 import pygame
+from src.score_store import ScoreStore
 from src.render_text import render_text
 
 
@@ -7,6 +8,7 @@ class GamePlayHUD:
     def __init__(self, game, game_play):
         self.game = game
         self.game_play = game_play
+        self.score_store = ScoreStore()
         self.top_left_rect = pygame.Rect(
             312, 16, self.game.sidebar_l_surface.get_width() // 2, 128
         )
@@ -39,7 +41,6 @@ class GamePlayHUD:
         )
 
     def draw_streak_meter(self, surface):
-
         streak_meter_bar_x = self.top_left_rect.left
         streak_meter_bar_y = self.top_left_rect.top + 24
         streak_meter_bar_rect = pygame.Rect(
@@ -51,8 +52,8 @@ class GamePlayHUD:
         pygame.draw.rect(surface, "grey70", streak_meter_bar_rect, 2)
 
         percent_filled = (
-            self.game.score_manager.streak_meter
-            / self.game.score_manager.streak_meter_threshold
+            self.game_play.score.streak_meter
+            / self.game_play.score.streak_meter_threshold
         )
         percent_filled = max(0.0, min(1.0, percent_filled))
         streak_meter_x = streak_meter_bar_rect.left + 2
@@ -69,7 +70,7 @@ class GamePlayHUD:
 
         render_text(
             screen=sidebar_l_surface,
-            text=f"SCORE: {self.game.score_manager.score}",
+            text=f"SCORE: {self.game_play.score.score}",
             font_size=24,
             color="#E6D819",
             pos=(self.top_left_rect.topleft),
@@ -78,7 +79,7 @@ class GamePlayHUD:
 
         render_text(
             screen=sidebar_l_surface,
-            text=f"x{self.game.score_manager.multiplier}",
+            text=f"x{self.game_play.score.multiplier}",
             font_size=24,
             color="#E6D819",
             pos=(self.top_left_rect.topright),
@@ -89,7 +90,7 @@ class GamePlayHUD:
 
         render_text(
             screen=sidebar_l_surface,
-            text=f"HI SCORE: {self.game.score_manager.score_store.high_score}",
+            text=f"HI SCORE: {self.score_store.high_score}",
             font_size=24,
             color="#E6D819",
             pos=(self.top_left_rect.midleft),

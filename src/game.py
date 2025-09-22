@@ -1,5 +1,4 @@
 import pygame
-from src.score_manager import ScoreManager
 
 GS_WIDTH = 608
 SB_WIDTH = 656
@@ -17,8 +16,8 @@ class Game:
         self.sidebar_r_surface = pygame.Surface((SB_WIDTH, self.screen.get_height()))
         self.clock = pygame.time.Clock()
         self.dt = 0
-        self.score_manager = ScoreManager()
-        self.set_scene("GamePlay")  # Start with GamePlay scene
+        #! self.set_scene("Start") # Will be used when game is ready for release
+        self.set_scene("GamePlay")  # Start with GamePlay scene for development
         self.running = True
 
     def set_scene(self, scene_name):
@@ -28,7 +27,7 @@ class Game:
 
                 self.current_scene = Start(self)
             case "GamePlay":
-                from src.scenes.game_play import GamePlay
+                from src.scenes.game_play.game_play import GamePlay
 
                 self.current_scene = GamePlay(self)
             case "GameOver":
