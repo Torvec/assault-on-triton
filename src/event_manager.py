@@ -20,6 +20,12 @@ class EventManager:
     def show_message(self, text):
         print(text)
 
+    def end_level(self):
+        if len(self.game_play.active_targets) == 0:
+            from src.scenes import GameOver
+
+            self.game_play.game.set_scene(GameOver(self.game_play.game))
+
     def update(self, dt):
         if self.is_paused:
             return
@@ -38,5 +44,7 @@ class EventManager:
                 self.spawn_enemies(**params)
             elif event_name == "show_message":
                 self.show_message(**params)
+            elif event_name == "end_level":
+                self.end_level()
 
             self.current_index += 1

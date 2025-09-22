@@ -206,6 +206,15 @@ class GamePlay(Scene):
             self.event_manager.update(dt)
             self.score.update_streak_meter_decay(dt)
 
+            if len(
+                self.active_targets
+            ) == 0 and self.event_manager.current_index >= len(
+                self.event_manager.timeline
+            ):
+                from src.scenes import GameOver
+
+                self.game.set_scene(GameOver(self.game))
+
     def draw(self, game_surface, sidebar_l_surface, sidebar_r_surface):
         super().draw(game_surface, sidebar_l_surface, sidebar_r_surface)
         self.pause_menu.draw(game_surface)

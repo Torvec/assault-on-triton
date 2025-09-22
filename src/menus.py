@@ -177,7 +177,7 @@ class GameOverMenu:
 
     def draw(self, screen):
         game_over_menu_rect = pygame.Rect(
-            0, 0, self.game.gs_w * 0.75, self.game.gs_h // 4
+            0, 0, self.game.gs_w * 0.75, self.game.gs_h * 0.3
         )
         game_over_menu_rect.center = (self.game.gs_w // 2, self.game.gs_h // 2)
         pygame.draw.rect(screen, "grey4", game_over_menu_rect)
@@ -197,29 +197,29 @@ class GameOverMenu:
             screen=self.game.game_surface,
             text="[Enter] Replay",
             color="grey",
-            pos=(game_over_menu_rect.center[0], game_over_menu_rect.center[1] - 72),
+            pos=(game_over_menu_rect.center[0], game_over_menu_rect.center[1] - 60),
         )
         render_text(
             screen=self.game.game_surface,
             text="[ESC] Main Menu",
             color="grey",
-            pos=(game_over_menu_rect.center[0], game_over_menu_rect.center[1] - 36),
+            pos=(game_over_menu_rect.center[0], game_over_menu_rect.center[1] - 24),
         )
         render_text(
             screen=self.game.game_surface,
             text="[S] Scoreboard",
             color="grey",
-            pos=(game_over_menu_rect.center[0], game_over_menu_rect.center[1]),
+            pos=(game_over_menu_rect.center[0], game_over_menu_rect.center[1] + 12),
         )
         render_text(
             screen=self.game.game_surface,
             text="[C] Credits",
             color="grey",
-            pos=(game_over_menu_rect.center[0], game_over_menu_rect.center[1] + 36),
+            pos=(game_over_menu_rect.center[0], game_over_menu_rect.center[1] + 48),
         )
         render_text(
             screen=self.game.game_surface,
             text="[Q] Quit Game",
             color="grey",
-            pos=(game_over_menu_rect.center[0], game_over_menu_rect.center[1] + 72),
+            pos=(game_over_menu_rect.center[0], game_over_menu_rect.center[1] + 84),
         )
