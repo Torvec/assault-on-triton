@@ -1,5 +1,4 @@
 import pygame
-from src.scenes import GamePlay
 from src.score_manager import ScoreManager
 
 GS_WIDTH = 608
@@ -19,12 +18,37 @@ class Game:
         self.clock = pygame.time.Clock()
         self.dt = 0
         self.score_manager = ScoreManager()
-        #! self.set_scene(Start(self))
-        self.set_scene(GamePlay(self))
+        self.set_scene("GamePlay")  # Start with GamePlay scene
         self.running = True
 
-    def set_scene(self, new_scene):
-        self.current_scene = new_scene
+    def set_scene(self, scene_name):
+        match scene_name:
+            case "Start":
+                from src.scenes.start_menu import Start
+
+                self.current_scene = Start(self)
+            case "GamePlay":
+                from src.scenes.game_play import GamePlay
+
+                self.current_scene = GamePlay(self)
+            case "GameOver":
+                from src.scenes.game_over import GameOver
+
+                self.current_scene = GameOver(self)
+            case "Options":
+                from src.scenes.options_menu import Options
+
+                self.current_scene = Options(self)
+            case "Scoreboard":
+                from src.scenes.scoreboard import Scoreboard
+
+                self.current_scene = Scoreboard(self)
+            case "Credits":
+                from src.scenes.credits import Credits
+
+                self.current_scene = Credits(self)
+            case _:
+                raise ValueError(f"Unknown scene: {scene_name}")
 
     def run(self):
         while self.running:
