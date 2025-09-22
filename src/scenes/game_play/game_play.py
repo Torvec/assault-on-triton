@@ -21,7 +21,7 @@ class GamePlay(Scene):
             self.game.gs_h,
         )
         self.game_play_hud = GamePlayHUD(self.game, self)
-        self.score = ScoreManager()
+        self.score = ScoreManager(self.game.score_store)
         self.isPaused = False
         self.pause_menu = PauseMenu(self)
         self.event_manager = EventManager(self, TIMELINE)

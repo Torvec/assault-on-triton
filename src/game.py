@@ -1,4 +1,5 @@
 import pygame
+from src.score_store import ScoreStore
 
 GS_WIDTH = 608
 SB_WIDTH = 656
@@ -16,6 +17,7 @@ class Game:
         self.sidebar_r_surface = pygame.Surface((SB_WIDTH, self.screen.get_height()))
         self.clock = pygame.time.Clock()
         self.dt = 0
+        self.score_store = ScoreStore()
         #! self.set_scene("Start") # Will be used when game is ready for release
         self.set_scene("GamePlay")  # Start with GamePlay scene for development
         self.running = True

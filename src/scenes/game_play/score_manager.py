@@ -1,10 +1,7 @@
-from src.score_store import ScoreStore
-
-
 class ScoreManager:
 
-    def __init__(self):
-        self.score_store = ScoreStore()
+    def __init__(self, score_store):
+        self.score_store = score_store
         self.score = 0
         self.multiplier = 1
         self.streak_meter = 0
