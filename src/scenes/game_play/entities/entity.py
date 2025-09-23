@@ -18,7 +18,6 @@ class Entity(pygame.sprite.Sprite):
             super().__init__(self.containers)
         else:
             super().__init__()
-        #
         if hasattr(self, "img_path") and self.img_path:
             self.image = self.load_image(self.img_path)
         self.position = pygame.Vector2(x, y)

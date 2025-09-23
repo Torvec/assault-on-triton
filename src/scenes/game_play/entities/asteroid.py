@@ -3,6 +3,7 @@ import pygame
 from src.scenes.game_play.entities.entity import Entity
 from src.scenes.game_play.entities.entity_data import *
 
+
 class Asteroid(Entity):
 
     def __init__(self, x, y, game_play):

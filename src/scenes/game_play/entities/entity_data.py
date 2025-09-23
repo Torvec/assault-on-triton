@@ -80,7 +80,7 @@ SHOT_SFX_PATH = "assets/720118__baggonotes__player_shoot1.wav"
 # === Bomb Constants ===
 BOMB_RADIUS = 8
 BOMB_SPEED = 200
-BOMB_BLAST_RADIUS = 256
+BOMB_BLAST_RADIUS = 384
 BOMB_TRIGGER_DISTANCE = 256
 BOMB_IMG_PATH = "assets/e_bomb.png"
 

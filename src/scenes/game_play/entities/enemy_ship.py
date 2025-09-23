@@ -2,6 +2,7 @@ from src.scenes.game_play.entities.entity import Entity
 from src.scenes.game_play.entities.explosion import Explosion
 from src.scenes.game_play.entities.entity_data import *
 
+
 class EnemyShip(Entity):
 
     def __init__(self, x, y, game_play):
@@ -12,6 +13,8 @@ class EnemyShip(Entity):
         self.hp = ENEMY_SHIP_HP
         self.blast_radius = ENEMY_SHIP_BLAST_RADIUS
         self.score_value = self.hp
+        self.shoot_timer = 0.4
+        self.shot_offset_pos = 4
 
     def explode(self):
         self.remove_active_targets()
@@ -20,6 +23,7 @@ class EnemyShip(Entity):
     def update(self, dt):
         super().update(dt)
         self.position += DIRECTION_DOWN * self.speed * dt
+        self.shoot_timer -= dt
 
     def draw(self, screen):
         super().draw(screen)

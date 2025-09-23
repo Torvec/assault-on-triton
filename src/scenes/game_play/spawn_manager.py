@@ -6,18 +6,9 @@ from src.scenes.game_play.entities.asteroid import (
 )
 from src.scenes.game_play.entities.enemy_drone import EnemyDrone
 from src.scenes.game_play.entities.enemy_ship import EnemyShip
-from src.scenes.game_play.entities.missile import Missile
+
 from src.scenes.game_play.entities import entity_formations
 
-
-ENTITY_REGISTRY = {
-    "AsteroidLarge": AsteroidLarge,
-    "AsteroidMedium": AsteroidMedium,
-    "AsteroidSmall": AsteroidSmall,
-    "EnemyDrone": EnemyDrone,
-    "EnemyShip": EnemyShip,
-    "Missile": Missile,
-}
 
 
 class SpawnManager(pygame.sprite.Sprite):
@@ -40,7 +31,15 @@ class SpawnManager(pygame.sprite.Sprite):
             "far_right": 0.8,
             "right_edge": 0.9,
         }
+        self.entity_dict = {
+            "AsteroidLarge": AsteroidLarge,
+            "AsteroidMedium": AsteroidMedium,
+            "AsteroidSmall": AsteroidSmall,
+            "EnemyDrone": EnemyDrone,
+            "EnemyShip": EnemyShip,
+        }
         self.formation = formation
+
 
     def calculate_formation_positions(self, fwd_pos, formation, count):
         spacing = 96
@@ -49,14 +48,6 @@ class SpawnManager(pygame.sprite.Sprite):
         return formation_fn(fwd_pos, count, spacing)
 
     def spawn_entity(self):
-        if self.location not in self.spawn_locations:
-            print(f"Warning: Unknown spawn location '{self.location}'.")
-            return
-
-        if self.entity_name not in ENTITY_REGISTRY:
-            print(f"Error: Unknown entity type '{self.entity_name}'. Cannot spawn.")
-            return
-
         # Calculate the forward position for the formation
         x_multiplier = self.spawn_locations[self.location]
         fwd_pos = pygame.Vector2(
@@ -70,7 +61,7 @@ class SpawnManager(pygame.sprite.Sprite):
         )
 
         # Spawn an entity at each position
-        entity_class = ENTITY_REGISTRY[self.entity_name]
+        entity_class = self.entity_dict[self.entity_name]
         for position in positions:
             entity = entity_class(position.x, position.y, self.game_play)
             self.game_play.active_targets.add(entity)
