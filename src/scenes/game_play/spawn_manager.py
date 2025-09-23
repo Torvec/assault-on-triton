@@ -6,14 +6,12 @@ from src.scenes.game_play.entities.asteroid import (
 )
 from src.scenes.game_play.entities.enemy_drone import EnemyDrone
 from src.scenes.game_play.entities.enemy_ship import EnemyShip
-
 from src.scenes.game_play.entities import entity_formations
-
 
 
 class SpawnManager(pygame.sprite.Sprite):
 
-    def __init__(self, game_play, entity_name, count, location, formation):
+    def __init__(self, game_play, entity_name, count, location, formation, behaviors):
         pygame.sprite.Sprite.__init__(self, self.containers)
         self.game_play = game_play
         self.play_area = game_play.play_area_rect
@@ -39,7 +37,7 @@ class SpawnManager(pygame.sprite.Sprite):
             "EnemyShip": EnemyShip,
         }
         self.formation = formation
-
+        self.behaviors = behaviors
 
     def calculate_formation_positions(self, fwd_pos, formation, count):
         spacing = 96
@@ -48,12 +46,16 @@ class SpawnManager(pygame.sprite.Sprite):
         return formation_fn(fwd_pos, count, spacing)
 
     def spawn_entity(self):
-        # Calculate the forward position for the formation
-        x_multiplier = self.spawn_locations[self.location]
-        fwd_pos = pygame.Vector2(
-            self.play_area.left + x_multiplier * self.play_area.width,
-            self.play_area.top - 64,
-        )
+        # Support both string location and direct Vector2 position
+        if isinstance(self.location, pygame.Vector2):
+            fwd_pos = self.location
+        else:
+            # Calculate the forward position for the formation
+            x_multiplier = self.spawn_locations[self.location]
+            fwd_pos = pygame.Vector2(
+                self.play_area.left + x_multiplier * self.play_area.width,
+                self.play_area.top - 64,
+            )
 
         # Get all positions for the formation
         positions = self.calculate_formation_positions(
@@ -62,7 +64,9 @@ class SpawnManager(pygame.sprite.Sprite):
 
         # Spawn an entity at each position
         entity_class = self.entity_dict[self.entity_name]
+
         for position in positions:
             entity = entity_class(position.x, position.y, self.game_play)
+            for behavior in self.behaviors:
+                entity.behaviors.append(behavior)
             self.game_play.active_targets.add(entity)
-            entity.velocity = pygame.Vector2(0, 1) * entity.speed

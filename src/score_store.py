@@ -1,9 +1,7 @@
 class ScoreStore:
 
     def __init__(self):
-        self.high_score = (
-            14224100  #! Placeholder until i can retrieve from a file of saved scores
-        )
+        self.high_score = 14224100  #! Placeholder
         self.current_score = 0
 
     def create_score_store(self):

@@ -13,30 +13,37 @@ class EventManager:
     def toggle_pause(self):
         self.is_paused = not self.is_paused
 
-    def spawn_enemies(self, type, count, location, formation):
-        spawn_manager = SpawnManager(self.game_play, type, count, location, formation)
+    def spawn_enemies(self, type, count, location, formation, behaviors):
+        spawn_manager = SpawnManager(
+            self.game_play, type, count, location, formation, behaviors
+        )
         spawn_manager.spawn_entity()
 
     def show_message(self, text):
         print(text)
+
+    def handle_event(self, event):
+        event_name = event["event"]
+        params = event.get("params", {})
+        if event_name == "spawn_enemies":
+            self.spawn_enemies(**params)
+        elif event_name == "show_message":
+            self.show_message(**params)
+        else:
+            print(f"Unknown event type: {event_name}")
+
+    def process_timeline(self):
+        while (
+            self.current_index < len(self.timeline)
+            and self.current_time >= self.timeline[self.current_index]["time"]
+        ):
+            event_data = self.timeline[self.current_index]
+            self.handle_event(event_data)
+            self.current_index += 1
 
     def update(self, dt):
         if self.is_paused:
             return
 
         self.current_time += dt
-
-        while (
-            self.current_index < len(self.timeline)
-            and self.current_time >= self.timeline[self.current_index]["time"]
-        ):
-            event_data = self.timeline[self.current_index]
-            event_name = event_data["event"]
-            params = event_data.get("params", {})
-
-            if event_name == "spawn_enemies":
-                self.spawn_enemies(**params)
-            elif event_name == "show_message":
-                self.show_message(**params)
-
-            self.current_index += 1
+        self.process_timeline()

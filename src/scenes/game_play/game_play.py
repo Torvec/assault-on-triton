@@ -37,7 +37,7 @@ class GamePlay(Scene):
         # Level completion tracking
         self.level_complete = False
         self.level_end_timer = 0
-        self.level_end_delay = 5.0  # 5 seconds delay
+        self.level_end_delay = 3.0
 
         # Sprite Groups
         self.asteroids = pygame.sprite.Group()

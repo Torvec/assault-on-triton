@@ -9,14 +9,54 @@ class Asteroid(Entity):
     def __init__(self, x, y, game_play):
         super().__init__(x, y, game_play)
         self.rotation_speed = random.uniform(*ASTEROID_ROTATION_SPEED_RANGE)
+        self.velocity = DIRECTION_DOWN * self.speed
 
-    def split(self):
+    def split(self, split_into=None):
         self.remove_active_targets()
+        if split_into:
+            split_event_r = {
+                "event": "spawn_enemies",
+                "params": {
+                    "type": split_into,
+                    "count": 1,
+                    "location": self.position,
+                    "formation": "single",
+                    "behaviors": [
+                        {
+                            "action": "move_angled",
+                            "params": {
+                                "angle": ASTEROID_SPLIT_ANGLE,
+                                "velocity_factor": ASTEROID_SPLIT_VELOCITY_FACTOR,
+                            },
+                        },
+                        {"action": "rotate_constantly", "params": {}},
+                    ],
+                },
+            }
+            split_event_l = {
+                "event": "spawn_enemies",
+                "params": {
+                    "type": split_into,
+                    "count": 1,
+                    "location": self.position,
+                    "formation": "single",
+                    "behaviors": [
+                        {
+                            "action": "move_angled",
+                            "params": {
+                                "angle": -ASTEROID_SPLIT_ANGLE,
+                                "velocity_factor": ASTEROID_SPLIT_VELOCITY_FACTOR,
+                            },
+                        },
+                        {"action": "rotate_constantly", "params": {}},
+                    ],
+                },
+            }
+            self.game_play.event_manager.handle_event(split_event_r)
+            self.game_play.event_manager.handle_event(split_event_l)
 
     def update(self, dt):
         super().update(dt)
-        self.position += self.velocity * dt
-        self.rotation += self.rotation_speed * dt
 
     def draw(self, screen):
         super().draw(screen)
@@ -47,24 +87,7 @@ class AsteroidMedium(Asteroid):
         self.score_value = self.hp
 
     def split(self):
-        self.remove_active_targets()
-        new_angle = ASTEROID_SPLIT_ANGLE
-
-        asteroid_a = AsteroidSmall(
-            self.position.x - ASTEROID_SM_RADIUS, self.position.y, self.game_play
-        )
-        self.game_play.active_targets.add(asteroid_a)
-        asteroid_a.velocity = (
-            self.velocity.rotate(new_angle) * ASTEROID_SPLIT_VELOCITY_FACTOR
-        )
-
-        asteroid_b = AsteroidSmall(
-            self.position.x + ASTEROID_SM_RADIUS, self.position.y, self.game_play
-        )
-        self.game_play.active_targets.add(asteroid_b)
-        asteroid_b.velocity = (
-            self.velocity.rotate(-new_angle) * ASTEROID_SPLIT_VELOCITY_FACTOR
-        )
+        super().split("AsteroidSmall")
 
 
 class AsteroidLarge(Asteroid):
@@ -78,21 +101,4 @@ class AsteroidLarge(Asteroid):
         self.score_value = self.hp
 
     def split(self):
-        self.remove_active_targets()
-        new_angle = ASTEROID_SPLIT_ANGLE
-
-        asteroid_a = AsteroidMedium(
-            self.position.x - ASTEROID_MD_RADIUS, self.position.y, self.game_play
-        )
-        self.game_play.active_targets.add(asteroid_a)
-        asteroid_a.velocity = (
-            self.velocity.rotate(new_angle) * ASTEROID_SPLIT_VELOCITY_FACTOR
-        )
-
-        asteroid_b = AsteroidMedium(
-            self.position.x + ASTEROID_MD_RADIUS, self.position.y, self.game_play
-        )
-        self.game_play.active_targets.add(asteroid_b)
-        asteroid_b.velocity = (
-            self.velocity.rotate(-new_angle) * ASTEROID_SPLIT_VELOCITY_FACTOR
-        )
+        super().split("AsteroidMedium")

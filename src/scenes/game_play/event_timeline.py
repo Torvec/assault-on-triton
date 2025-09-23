@@ -9,6 +9,10 @@ TIMELINE = [
             "count": 1,
             "location": "left_edge",
             "formation": "single",
+            "behaviors": [
+                {"action": "move_straight", "params": {}},
+                {"action": "rotate_constantly", "params": {}},
+            ],
         },
     },
     {
@@ -19,6 +23,10 @@ TIMELINE = [
             "count": 1,
             "location": "right",
             "formation": "single",
+            "behaviors": [
+                {"action": "move_straight", "params": {}},
+                {"action": "rotate_constantly", "params": {}},
+            ],
         },
     },
     {
@@ -29,6 +37,10 @@ TIMELINE = [
             "count": 1,
             "location": "left",
             "formation": "single",
+            "behaviors": [
+                {"action": "move_straight", "params": {}},
+                {"action": "rotate_constantly", "params": {}},
+            ],
         },
     },
     {
@@ -39,6 +51,10 @@ TIMELINE = [
             "count": 1,
             "location": "center_left",
             "formation": "single",
+            "behaviors": [
+                {"action": "move_straight", "params": {}},
+                {"action": "rotate_constantly", "params": {}},
+            ],
         },
     },
     {
@@ -49,6 +65,10 @@ TIMELINE = [
             "count": 1,
             "location": "right_edge",
             "formation": "single",
+            "behaviors": [
+                {"action": "move_straight", "params": {}},
+                {"action": "rotate_constantly", "params": {}},
+            ],
         },
     },
     {
@@ -59,6 +79,10 @@ TIMELINE = [
             "count": 1,
             "location": "far_right",
             "formation": "single",
+            "behaviors": [
+                {"action": "move_straight", "params": {}},
+                {"action": "rotate_constantly", "params": {}},
+            ],
         },
     },
     {
@@ -69,6 +93,10 @@ TIMELINE = [
             "count": 1,
             "location": "center",
             "formation": "single",
+            "behaviors": [
+                {"action": "move_straight", "params": {}},
+                {"action": "rotate_constantly", "params": {}},
+            ],
         },
     },
     {
@@ -79,6 +107,10 @@ TIMELINE = [
             "count": 1,
             "location": "far_left",
             "formation": "single",
+            "behaviors": [
+                {"action": "move_straight", "params": {}},
+                {"action": "rotate_constantly", "params": {}},
+            ],
         },
     },
     {
@@ -89,6 +121,10 @@ TIMELINE = [
             "count": 1,
             "location": "center",
             "formation": "single",
+            "behaviors": [
+                {"action": "move_straight", "params": {}},
+                {"action": "rotate_constantly", "params": {}},
+            ],
         },
     },
     {
@@ -99,117 +135,121 @@ TIMELINE = [
             "count": 1,
             "location": "center_right",
             "formation": "single",
+            "behaviors": [
+                {"action": "move_straight", "params": {}},
+                {"action": "rotate_constantly", "params": {}},
+            ],
         },
     },
-    # ENEMY SHIPS
-    {
-        "time": 6.0,
-        "event": "spawn_enemies",
-        "params": {
-            "type": "EnemyDrone",
-            "count": 5,
-            "location": "center",
-            "formation": "column",
-        },
-    },
-    {
-        "time": 10.0,
-        "event": "spawn_enemies",
-        "params": {
-            "type": "EnemyDrone",
-            "count": 5,
-            "location": "center",
-            "formation": "wall",
-        },
-    },
-    {
-        "time": 14.0,
-        "event": "spawn_enemies",
-        "params": {
-            "type": "EnemyShip",
-            "count": 6,
-            "location": "center",
-            "formation": "forward_v",
-        },
-    },
-    {
-        "time": 18.0,
-        "event": "spawn_enemies",
-        "params": {
-            "type": "EnemyShip",
-            "count": 6,
-            "location": "center",
-            "formation": "reverse_v",
-        },
-    },
-    {
-        "time": 22.0,
-        "event": "spawn_enemies",
-        "params": {
-            "type": "EnemyShip",
-            "count": 6,
-            "location": "left",
-            "formation": "echelon_l",
-        },
-    },
-    {
-        "time": 26.0,
-        "event": "spawn_enemies",
-        "params": {
-            "type": "EnemyShip",
-            "count": 6,
-            "location": "right",
-            "formation": "echelon_r",
-        },
-    },
-    {
-        "time": 30.0,
-        "event": "spawn_enemies",
-        "params": {
-            "type": "EnemyShip",
-            "count": 4,
-            "location": "center",
-            "formation": "diamond",
-        },
-    },
-    {
-        "time": 32.0,
-        "event": "spawn_enemies",
-        "params": {
-            "type": "EnemyDrone",
-            "count": 4,
-            "location": "left",
-            "formation": "diamond",
-        },
-    },
-    {
-        "time": 34.0,
-        "event": "spawn_enemies",
-        "params": {
-            "type": "EnemyDrone",
-            "count": 4,
-            "location": "right",
-            "formation": "diamond",
-        },
-    },
-    {
-        "time": 38.0,
-        "event": "spawn_enemies",
-        "params": {
-            "type": "EnemyShip",
-            "count": 8,
-            "location": "center",
-            "formation": "circle",
-        },
-    },
-    {
-        "time": 42.0,
-        "event": "spawn_enemies",
-        "params": {
-            "type": "EnemyShip",
-            "count": 5,
-            "location": "center",
-            "formation": "x",
-        },
-    },
+    # # ENEMY SHIPS
+    # {
+    #     "time": 6.0,
+    #     "event": "spawn_enemies",
+    #     "params": {
+    #         "type": "EnemyDrone",
+    #         "count": 5,
+    #         "location": "center",
+    #         "formation": "column",
+    #     },
+    # },
+    # {
+    #     "time": 10.0,
+    #     "event": "spawn_enemies",
+    #     "params": {
+    #         "type": "EnemyDrone",
+    #         "count": 5,
+    #         "location": "center",
+    #         "formation": "wall",
+    #     },
+    # },
+    # {
+    #     "time": 14.0,
+    #     "event": "spawn_enemies",
+    #     "params": {
+    #         "type": "EnemyShip",
+    #         "count": 6,
+    #         "location": "center",
+    #         "formation": "forward_v",
+    #     },
+    # },
+    # {
+    #     "time": 18.0,
+    #     "event": "spawn_enemies",
+    #     "params": {
+    #         "type": "EnemyShip",
+    #         "count": 6,
+    #         "location": "center",
+    #         "formation": "reverse_v",
+    #     },
+    # },
+    # {
+    #     "time": 22.0,
+    #     "event": "spawn_enemies",
+    #     "params": {
+    #         "type": "EnemyShip",
+    #         "count": 6,
+    #         "location": "left",
+    #         "formation": "echelon_l",
+    #     },
+    # },
+    # {
+    #     "time": 26.0,
+    #     "event": "spawn_enemies",
+    #     "params": {
+    #         "type": "EnemyShip",
+    #         "count": 6,
+    #         "location": "right",
+    #         "formation": "echelon_r",
+    #     },
+    # },
+    # {
+    #     "time": 30.0,
+    #     "event": "spawn_enemies",
+    #     "params": {
+    #         "type": "EnemyShip",
+    #         "count": 4,
+    #         "location": "center",
+    #         "formation": "diamond",
+    #     },
+    # },
+    # {
+    #     "time": 32.0,
+    #     "event": "spawn_enemies",
+    #     "params": {
+    #         "type": "EnemyDrone",
+    #         "count": 4,
+    #         "location": "left",
+    #         "formation": "diamond",
+    #     },
+    # },
+    # {
+    #     "time": 34.0,
+    #     "event": "spawn_enemies",
+    #     "params": {
+    #         "type": "EnemyDrone",
+    #         "count": 4,
+    #         "location": "right",
+    #         "formation": "diamond",
+    #     },
+    # },
+    # {
+    #     "time": 38.0,
+    #     "event": "spawn_enemies",
+    #     "params": {
+    #         "type": "EnemyShip",
+    #         "count": 8,
+    #         "location": "center",
+    #         "formation": "circle",
+    #     },
+    # },
+    # {
+    #     "time": 42.0,
+    #     "event": "spawn_enemies",
+    #     "params": {
+    #         "type": "EnemyShip",
+    #         "count": 5,
+    #         "location": "center",
+    #         "formation": "x",
+    #     },
+    # },
 ]

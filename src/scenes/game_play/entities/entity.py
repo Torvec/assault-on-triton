@@ -1,5 +1,6 @@
 import pygame
 from src.scenes.game_play.entities.entity_data import *
+import src.scenes.game_play.entities.entity_behaviors as entity_behaviors
 
 
 class Entity(pygame.sprite.Sprite):
@@ -29,6 +30,7 @@ class Entity(pygame.sprite.Sprite):
         self.is_hit = False
         self.hit_timer = HIT_TIMER
         self.blast_radius = 0
+        self.behaviors = []
 
     def collides_with(self, other):
         return self.position.distance_to(other.position) <= self.radius + other.radius
@@ -69,9 +71,18 @@ class Entity(pygame.sprite.Sprite):
                 self.is_hit = False
                 self.hit_timer = HIT_TIMER
 
+    def handle_behaviors(self, dt):
+        for behavior_data in self.behaviors:
+            behavior_fn_name = behavior_data["action"]
+            behavior_fn = getattr(entity_behaviors, behavior_fn_name)
+            params = behavior_data.get("params", {})
+            params["dt"] = dt
+            behavior_fn(self, **params)
+
     def update(self, dt):
         self.handle_boundaries()
         self.handle_hit_timer(dt)
+        self.handle_behaviors(dt)
 
     def draw(self, screen):
         pass
