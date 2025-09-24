@@ -5,7 +5,7 @@ from src.scenes.game_play.entities.entity_data import *
 
 class Shot(Entity):
 
-    def __init__(self, x, y, game_play):
+    def __init__(self, x, y, game_play, owner):
         self.img_path = SHOT_IMG_PATH
         super().__init__(x, y, game_play)
         self.radius = SHOT_RADIUS
@@ -13,6 +13,7 @@ class Shot(Entity):
         self.max_range = SHOT_RANGE
         self.speed = SHOT_SPEED
         self.sfx = SHOT_SFX_PATH
+        self.owner = owner
 
     def sound(self):
         self.shoot_sound = pygame.mixer.Sound(self.sfx)

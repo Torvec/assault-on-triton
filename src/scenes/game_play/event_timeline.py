@@ -142,26 +142,34 @@ TIMELINE = [
         },
     },
     # # ENEMY SHIPS
-    # {
-    #     "time": 6.0,
-    #     "event": "spawn_enemies",
-    #     "params": {
-    #         "type": "EnemyDrone",
-    #         "count": 5,
-    #         "location": "center",
-    #         "formation": "column",
-    #     },
-    # },
-    # {
-    #     "time": 10.0,
-    #     "event": "spawn_enemies",
-    #     "params": {
-    #         "type": "EnemyDrone",
-    #         "count": 5,
-    #         "location": "center",
-    #         "formation": "wall",
-    #     },
-    # },
+    {
+        "time": 4.0,
+        "event": "spawn_enemies",
+        "params": {
+            "type": "EnemyDrone",
+            "count": 5,
+            "location": "center",
+            "formation": "column",
+            "behaviors": [
+                {"action": "move_straight", "params": {}},
+                {"action": "shoot", "params": {}},
+            ],
+        },
+    },
+    {
+        "time": 6.0,
+        "event": "spawn_enemies",
+        "params": {
+            "type": "EnemyShip",
+            "count": 5,
+            "location": "center",
+            "formation": "wall",
+            "behaviors": [
+                {"action": "move_straight", "params": {}},
+                {"action": "shoot", "params": {}},
+            ],
+        },
+    },
     # {
     #     "time": 14.0,
     #     "event": "spawn_enemies",

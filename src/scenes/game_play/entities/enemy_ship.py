@@ -13,8 +13,9 @@ class EnemyShip(Entity):
         self.hp = ENEMY_SHIP_HP
         self.blast_radius = ENEMY_SHIP_BLAST_RADIUS
         self.score_value = self.hp
-        self.shoot_timer = 0.4
-        self.shot_offset_pos = 4
+        self.shoot_timer = 0
+        self.shoot_cooldown = ENEMY_SHIP_SHOT_COOLDOWN
+        self.shot_offset_pos = ENEMY_SHIP_SHOT_OFFSET_POS
 
     def explode(self):
         self.remove_active_targets()
@@ -22,7 +23,6 @@ class EnemyShip(Entity):
 
     def update(self, dt):
         super().update(dt)
-        self.position += DIRECTION_DOWN * self.speed * dt
         self.shoot_timer -= dt
 
     def draw(self, screen):

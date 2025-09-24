@@ -1,8 +1,9 @@
-import pygame
+from src.scenes.game_play.entities.entity_data import DIRECTION_DOWN
 
 
 def move_straight(entity, dt):
-    entity.position.y += entity.speed * dt
+    # entity.position.y += entity.speed * dt
+    entity.position += DIRECTION_DOWN * entity.speed * dt
 
 
 def move_angled(entity, dt, **kwargs):
@@ -11,14 +12,33 @@ def move_angled(entity, dt, **kwargs):
 
     # Sets up a flag so that the changing of direction only happens once and not continuously
     if not hasattr(entity, "_angled_velocity_set"):
-        base_velocity = (
-            pygame.Vector2(0, 1) * entity.speed
-        )
+
+        base_velocity = DIRECTION_DOWN * entity.speed
         entity.velocity = base_velocity.rotate(angle) * velocity_factor
         entity._angled_velocity_set = True
-        
+
     entity.position += entity.velocity * dt
 
 
 def rotate_constantly(entity, dt):
     entity.rotation += entity.rotation_speed * dt
+
+
+def shoot(entity, dt, **kwargs):
+    if entity.shoot_timer > 0:
+        return
+
+    entity.shoot_timer = entity.shoot_cooldown
+
+    shot_pos = entity.position + DIRECTION_DOWN * entity.radius
+    from src.scenes.game_play.entities.shot import Shot
+
+    shot_l = Shot(
+        shot_pos.x - entity.shot_offset_pos, shot_pos.y, entity.game_play, entity
+    )
+    shot_r = Shot(
+        shot_pos.x + entity.shot_offset_pos, shot_pos.y, entity.game_play, entity
+    )
+    shot_l.velocity = DIRECTION_DOWN * shot_l.speed
+    shot_r.velocity = DIRECTION_DOWN * shot_r.speed
+    shot_l.sound()

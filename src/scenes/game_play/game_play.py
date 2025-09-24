@@ -117,7 +117,7 @@ class GamePlay(Scene):
 
                 # Shot collision
                 for shot in self.shots:
-                    if shot.collides_with(entity):
+                    if shot.collides_with(entity) and entity is not shot.owner:
                         entity.is_hit = True
                         shot.kill()
                         entity.hp -= 1

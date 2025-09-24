@@ -37,10 +37,10 @@ class Player(Entity):
     def shoot(self):
         if self.shoot_timer > 0:
             return
-        self.shoot_timer = 0.2
+        self.shoot_timer = PLAYER_SHOOT_TIMER
         shot_pos = self.position + DIRECTION_UP * self.radius
-        shot_l = Shot(shot_pos.x - 8, shot_pos.y, self.game_play)
-        shot_r = Shot(shot_pos.x + 8, shot_pos.y, self.game_play)
+        shot_l = Shot(shot_pos.x - PLAYER_SHOT_POS_OFFSET, shot_pos.y, self.game_play, self)
+        shot_r = Shot(shot_pos.x + PLAYER_SHOT_POS_OFFSET, shot_pos.y, self.game_play, self)
         shot_l.velocity = DIRECTION_UP * shot_l.speed
         shot_r.velocity = DIRECTION_UP * shot_r.speed
         shot_l.sound()
