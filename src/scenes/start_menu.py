@@ -53,7 +53,7 @@ class Start(Scene):
         pygame.draw.rect(game_surface, "grey70", menu_rect, width=4, border_radius=24)
 
         render_text(
-            screen=self.game.game_surface,
+            screen=game_surface,
             text="[Enter] PLAY",
             font_size=48,
             color="grey",
@@ -61,25 +61,25 @@ class Start(Scene):
             align="midtop",
         )
         render_text(
-            screen=self.game.game_surface,
+            screen=game_surface,
             text="[O] OPTIONS",
             color="grey",
             pos=(menu_rect.center[0], menu_rect.center[1] - 36),
         )
         render_text(
-            screen=self.game.game_surface,
+            screen=game_surface,
             text="[S] SCORES",
             color="grey",
             pos=(menu_rect.center[0], menu_rect.center[1]),
         )
         render_text(
-            screen=self.game.game_surface,
+            screen=game_surface,
             text="[C] CREDITS",
             color="grey",
             pos=(menu_rect.center[0], menu_rect.center[1] + 36),
         )
         render_text(
-            screen=self.game.game_surface,
+            screen=game_surface,
             text="[Q] QUIT",
             color="grey",
             pos=(menu_rect.center[0], menu_rect.center[1] + 72),

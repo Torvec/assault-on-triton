@@ -2,7 +2,8 @@ import pygame
 from src.score_store import ScoreStore
 
 GS_WIDTH = 608
-SB_WIDTH = 656
+SB_WIDTH = 608
+SB_L_OFFSET = 48
 SB_R_OFFSET = 1264
 
 
@@ -78,7 +79,7 @@ class Game:
             game_surface_rect = self.game_surface.get_rect(
                 center=(self.screen.get_width() // 2, self.screen.get_height() // 2)
             )
-            self.screen.blit(self.sidebar_l_surface, (0, 0))
+            self.screen.blit(self.sidebar_l_surface, (SB_L_OFFSET, 0))
             self.screen.blit(self.game_surface, game_surface_rect.topleft)
             self.screen.blit(self.sidebar_r_surface, (SB_R_OFFSET, 0))
 

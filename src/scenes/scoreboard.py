@@ -26,7 +26,7 @@ class Scoreboard(Scene):
         )
 
         render_text(
-            screen=self.game.game_surface,
+            screen=game_surface,
             text="scores go here",
             color="grey",
             pos=(game_surface.get_width() // 2, 128),
