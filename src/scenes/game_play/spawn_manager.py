@@ -1,12 +1,12 @@
 import pygame
-from src.scenes.game_play.entities.asteroid import (
+from src.entities.asteroid import (
     AsteroidLarge,
     AsteroidMedium,
     AsteroidSmall,
 )
-from src.scenes.game_play.entities.enemy_drone import EnemyDrone
-from src.scenes.game_play.entities.enemy_ship import EnemyShip
-from src.scenes.game_play.entities import entity_formations
+from src.entities.enemy_drone import EnemyDrone
+from src.entities.enemy_ship import EnemyShip
+from src.entities import entity_formations
 
 
 class SpawnManager(pygame.sprite.Sprite):

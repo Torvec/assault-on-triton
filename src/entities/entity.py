@@ -1,6 +1,6 @@
 import pygame
-from src.scenes.game_play.entities.entity_data import *
-import src.scenes.game_play.entities.entity_behaviors as entity_behaviors
+from src.entities.entity_data import *
+import src.entities.entity_behaviors as entity_behaviors
 
 
 class Entity(pygame.sprite.Sprite):

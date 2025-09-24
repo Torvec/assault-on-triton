@@ -1,8 +1,8 @@
 import pygame
-from src.scenes.game_play.entities.entity import Entity
-from src.scenes.game_play.entities.shot import Shot
-from src.scenes.game_play.entities.bomb import Bomb
-from src.scenes.game_play.entities.entity_data import *
+from src.entities.entity import Entity
+from src.entities.shot import Shot
+from src.entities.bomb import Bomb
+from src.entities.entity_data import *
 
 
 class Player(Entity):
@@ -30,6 +30,7 @@ class Player(Entity):
 
     def move_left(self, dt):
         self.velocity.x -= self.acceleration * dt
+        # self.position += DIRECTION_DOWN * self.speed * dt
 
     def move_right(self, dt):
         self.velocity.x += self.acceleration * dt

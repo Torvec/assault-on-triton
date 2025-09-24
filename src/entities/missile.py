@@ -1,7 +1,7 @@
 import pygame
-from src.scenes.game_play.entities.entity import Entity
-from src.scenes.game_play.entities.explosion import Explosion
-from src.scenes.game_play.entities.entity_data import *
+from src.entities.entity import Entity
+from src.entities.explosion import Explosion
+from src.entities.entity_data import *
 
 
 class Missile(Entity):

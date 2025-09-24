@@ -1,4 +1,4 @@
-from src.scenes.game_play.entities.entity_data import DIRECTION_DOWN
+from src.entities.entity_data import DIRECTION_DOWN
 
 
 def move_straight(entity, dt):
@@ -31,7 +31,7 @@ def shoot(entity, dt, **kwargs):
     entity.shoot_timer = entity.shoot_cooldown
 
     shot_pos = entity.position + DIRECTION_DOWN * entity.radius
-    from src.scenes.game_play.entities.shot import Shot
+    from src.entities.shot import Shot
 
     shot_l = Shot(
         shot_pos.x - entity.shot_offset_pos, shot_pos.y, entity.game_play, entity
