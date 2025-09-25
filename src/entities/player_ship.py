@@ -2,6 +2,7 @@ import pygame
 from src.entities.entity import Entity
 from src.entities.shot import Shot
 from src.entities.bomb import Bomb
+from src.entities.explosion import Explosion
 from src.entities.entity_data import *
 
 
@@ -30,7 +31,6 @@ class Player(Entity):
 
     def move_left(self, dt):
         self.velocity.x -= self.acceleration * dt
-        # self.position += DIRECTION_DOWN * self.speed * dt
 
     def move_right(self, dt):
         self.velocity.x += self.acceleration * dt
@@ -63,11 +63,26 @@ class Player(Entity):
         self.position.y = self.game_play.play_area_rect.height - 100
         self.shield = 100
 
+    def handle_hit(self, damage_amount):
+        self.shield -= damage_amount
+        self.invincibleTime = 2
+        self.is_hit = True
+
     def handle_invincibility(self, dt):
         if self.invincibleTime > 0:
             self.invincibleTime -= dt
         if self.invincibleTime < 0:
             self.invincibleTime = 0
+
+    def handle_death(self):
+        self.lives -= 1
+        Explosion(
+            self.position.x,
+            self.position.y,
+            self.blast_radius,
+            self,
+        )
+        self.respawn()
 
     def controls(self, dt):
         keys = pygame.key.get_pressed()

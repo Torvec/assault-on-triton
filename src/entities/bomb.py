@@ -16,18 +16,21 @@ class Bomb(Entity):
     def sound(self):
         pass  # The launch sound not explosion sound
 
-    def trigger_explosion(self, dt):
+    def check_trigger_distance(self, dt):
         distance_this_frame = self.velocity.length() * dt
         self.distance_traveled += distance_this_frame
         if self.distance_traveled >= self.trigger_distance:
-            Explosion(
-                self.position.x, self.position.y, self.blast_radius, self.game_play
-            )
-            self.kill()
+            self.explode()
+    
+    def explode(self):
+        Explosion(
+            self.position.x, self.position.y, self.blast_radius, self.game_play
+        )
+        self.kill()
 
     def update(self, dt):
         super().update(dt)
-        self.trigger_explosion(dt)
+        self.check_trigger_distance(dt)
         self.position += self.velocity * dt
 
     def draw(self, screen):
