@@ -11,6 +11,7 @@ from src.entities.missile import Missile
 from src.scenes.game_play.event_manager import EventManager
 from src.scenes.game_play.spawn_manager import SpawnManager
 from src.scenes.game_play.score_manager import ScoreManager
+from src.scenes.game_play.collision_manager import CollisionManager
 from src.scenes.game_play.event_timeline import TIMELINE
 from src.scenes.game_play.pause_menu import PauseMenu
 from src.scenes.game_play.game_play_hud import GamePlayHUD
@@ -65,84 +66,8 @@ class GamePlay(Scene):
             self,
         )
 
-    def handle_collisions(self):
-        collision_handlers = [
-            {
-                "group": self.asteroids,
-                "destroy_method": lambda entity: entity.split(),
-            },
-            {
-                "group": self.enemy_drones,
-                "destroy_method": lambda entity: entity.explode(),
-            },
-            {
-                "group": self.enemy_ships,
-                "destroy_method": lambda entity: entity.explode(),
-            },
-            {
-                "group": self.missiles,
-                "destroy_method": lambda entity: entity.explode(),
-            },
-        ]
-
-        # ! TODO: This needs to be refactored before it gets WAY out of hand
-        for handler in collision_handlers:
-            for entity in handler["group"]:
-                # Player collision
-                if (
-                    entity.collides_with(self.player)
-                    and self.player.invincibleTime == 0
-                ):
-                    self.player.invincibleTime = 2
-                    self.player.shield -= 5
-                    self.player.is_hit = True
-                    entity.hp -= 1
-                    self.score.handle_streak_meter_dec()
-                    # Check if entity should be destroyed after hitting player
-                    if entity.hp <= 0:
-                        handler["destroy_method"](entity)
-                        self.score.handle_score(entity.score_value)
-                    if self.player.shield <= 0:
-                        self.player.lives -= 1
-                        Explosion(
-                            self.player.position.x,
-                            self.player.position.y,
-                            self.player.blast_radius,
-                            self,
-                        )
-                        self.player.respawn()
-                    if self.player.lives <= 0:
-                        self.score.store_score(self.score.score)
-                        self.game.set_scene("GameOver")
-
-                # Shot collision
-                for shot in self.shots:
-                    if shot.collides_with(entity) and entity is not shot.owner:
-                        entity.is_hit = True
-                        shot.kill()
-                        entity.hp -= 1
-                        if entity.hp <= 0:
-                            handler["destroy_method"](entity)
-                            self.score.handle_score(entity.score_value)
-                            self.score.handle_streak_meter_inc(entity.score_value)
-
-                # Bomb collision
-                for bomb in self.bombs:
-                    if bomb.collides_with(entity):
-                        Explosion(
-                            bomb.position.x, bomb.position.y, bomb.blast_radius, self
-                        )
-                        bomb.kill()
-
-                # Explosion Collision
-                for explosion in self.explosions:
-                    if explosion.collides_with(entity):
-                        entity.is_hit = True
-                        entity.hp -= 5
-                        if entity.hp <= 0:
-                            handler["destroy_method"](entity)
-                            self.score.handle_score(entity.score_value)
-                            self.score.handle_streak_meter_inc(entity.score_value)
+        # Has to go after every sprite is loaded so they can be accessed
+        self.collision_manager = CollisionManager(self)
 
     def handle_level_complete(self, dt):
         if (
@@ -164,7 +89,7 @@ class GamePlay(Scene):
         if not self.isPaused:
             super().update(dt)
             self.elapsed_time += dt
-            self.handle_collisions()
+            self.collision_manager.handle_all_collisions()
             self.event_manager.update(dt)
             self.score.update_streak_meter_decay(dt)
             self.handle_level_complete(dt)
