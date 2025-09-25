@@ -3,25 +3,39 @@ from src.entities.entity import Entity
 from src.entities.shot import Shot
 from src.entities.bomb import Bomb
 from src.entities.explosion import Explosion
-from src.entities.entity_data import *
 
 
 class Player(Entity):
 
+    RADIUS = 48
+    BASE_ACCELERATION = 600
+    BASE_SPEED = 350
+    BASE_LIVES = 3
+    BASE_HP = 100
+    INVINCIBLE_DURATION = 2
+    BASE_SHOOT_COOLDOWN = 0.2
+    SHOT_POS_OFFSET = 8
+    BASE_BOMB_AMMO = 3
+    BOMB_RELEASE_COOLDOWN = 2.0
+    BASE_POWER_LEVEL = 1
+    DEATH_BLAST_RADIUS = 128
+    VELOCITY_DECAY = 0.99
+    IMG_PATH = "assets/player_spaceship.png"
+
     def __init__(self, x, y, game_play):
-        self.img_path = PLAYER_IMG_PATH
+        self.img_path = self.IMG_PATH
         super().__init__(x, y, game_play)
-        self.radius = PLAYER_RADIUS
-        self.acceleration = PLAYER_ACCELERATION
-        self.speed = PLAYER_SPEED
-        self.lives = PLAYER_LIVES
-        self.shield = PLAYER_SHIELD
+        self.radius = self.RADIUS
+        self.acceleration = self.BASE_ACCELERATION
+        self.speed = self.BASE_SPEED
+        self.lives = self.BASE_LIVES
+        self.hp = self.BASE_HP
         self.invincibleTime = 0
         self.shoot_timer = 0
-        self.bomb_ammo = PLAYER_BOMB_AMMO
+        self.bomb_ammo = self.BASE_BOMB_AMMO
         self.bomb_timer = 0
-        self.power_level = PLAYER_POWER_LEVEL
-        self.blast_radius = PLAYER_BLAST_RADIUS
+        self.power_level = self.BASE_POWER_LEVEL
+        self.blast_radius = self.DEATH_BLAST_RADIUS
 
     def move_up(self, dt):
         self.velocity.y -= self.acceleration * dt
@@ -38,34 +52,38 @@ class Player(Entity):
     def shoot(self):
         if self.shoot_timer > 0:
             return
-        self.shoot_timer = PLAYER_SHOOT_TIMER
-        shot_pos = self.position + DIRECTION_UP * self.radius
-        shot_l = Shot(shot_pos.x - PLAYER_SHOT_POS_OFFSET, shot_pos.y, self.game_play, self)
-        shot_r = Shot(shot_pos.x + PLAYER_SHOT_POS_OFFSET, shot_pos.y, self.game_play, self)
-        shot_l.velocity = DIRECTION_UP * shot_l.speed
-        shot_r.velocity = DIRECTION_UP * shot_r.speed
+        self.shoot_timer = self.BASE_SHOOT_COOLDOWN
+        shot_pos = self.position + self.DIRECTION_UP * self.radius
+        shot_l = Shot(
+            shot_pos.x - self.SHOT_POS_OFFSET, shot_pos.y, self.game_play, self
+        )
+        shot_r = Shot(
+            shot_pos.x + self.SHOT_POS_OFFSET, shot_pos.y, self.game_play, self
+        )
+        shot_l.velocity = self.DIRECTION_UP * shot_l.speed
+        shot_r.velocity = self.DIRECTION_UP * shot_r.speed
         shot_l.sound()
 
     def release_bomb(self):
         if self.bomb_ammo <= 0 or self.bomb_timer > 0:
             return
-        self.bomb_timer = 2.0
+        self.bomb_timer = self.BOMB_RELEASE_COOLDOWN
         self.bomb_ammo -= 1
         bomb = Bomb(self.position.x, self.position.y, self.game_play)
-        player_forward_speed = self.velocity.dot(DIRECTION_UP)
+        player_forward_speed = self.velocity.dot(self.DIRECTION_UP)
         forward_only_speed = max(0, player_forward_speed)
-        bomb.velocity = DIRECTION_UP * (forward_only_speed + bomb.speed)
+        bomb.velocity = self.DIRECTION_UP * (forward_only_speed + bomb.speed)
         bomb.sound()
 
     def respawn(self):
-        self.invincibleTime = 2
+        self.invincibleTime = self.INVINCIBLE_DURATION
         self.position.x = self.game_play.play_area_rect.width // 2
         self.position.y = self.game_play.play_area_rect.height - 100
-        self.shield = 100
+        self.hp = self.BASE_HP
 
     def handle_hit(self, damage_amount):
-        self.shield -= damage_amount
-        self.invincibleTime = 2
+        self.hp -= damage_amount
+        self.invincibleTime = self.INVINCIBLE_DURATION
         self.is_hit = True
 
     def handle_invincibility(self, dt):
@@ -101,7 +119,7 @@ class Player(Entity):
             self.release_bomb()
 
     def apply_acceleration(self, dt):
-        self.velocity *= 0.99
+        self.velocity *= self.VELOCITY_DECAY
         if self.velocity.length() > self.speed:
             self.velocity.scale_to_length(self.speed)
         self.position += self.velocity * dt

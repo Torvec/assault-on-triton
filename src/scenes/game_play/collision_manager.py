@@ -45,7 +45,7 @@ class CollisionManager:
                     self.handle_entity_hit(entity, 1)
                     self.game_play.score.handle_streak_meter_dec()
                     self.handle_entity_destroyed(entity, handler, add_to_score=False)
-                    if self.game_play.player.shield <= 0:
+                    if self.game_play.player.hp <= 0:
                         self.game_play.player.handle_death()
                     if self.game_play.player.lives <= 0:
                         self.game_play.score.store_score(self.game_play.score.score)

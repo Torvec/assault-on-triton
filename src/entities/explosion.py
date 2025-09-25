@@ -1,14 +1,16 @@
 import pygame
 from src.entities.entity import Entity
-from src.entities.entity_data import *
 
 
 class Explosion(Entity):
 
+    INITIAL_RADIUS = 2
+    EXPANSION_RATE = 192
+
     def __init__(self, x, y, blast_radius, game_play):
         super().__init__(x, y, game_play)
-        self.radius = EXPLOSION_INITIAL_RADIUS
-        self.exp_rate = EXPLOSION_EXPANSION_RATE
+        self.radius = self.INITIAL_RADIUS
+        self.exp_rate = self.EXPANSION_RATE
         self.blast_radius = blast_radius
 
     def sound(self):

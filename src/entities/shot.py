@@ -1,18 +1,23 @@
 import pygame
 from src.entities.entity import Entity
-from src.entities.entity_data import *
 
 
 class Shot(Entity):
 
+    RADIUS = 4
+    RANGE = 512
+    SPEED = 500
+    IMG_PATH = "assets/blaster_shot.png"
+    SFX_PATH = "assets/720118__baggonotes__player_shoot1.wav"
+
     def __init__(self, x, y, game_play, owner):
-        self.img_path = SHOT_IMG_PATH
+        self.img_path = self.IMG_PATH
         super().__init__(x, y, game_play)
-        self.radius = SHOT_RADIUS
+        self.radius = self.RADIUS
         self.distance_traveled = 0
-        self.max_range = SHOT_RANGE
-        self.speed = SHOT_SPEED
-        self.sfx = SHOT_SFX_PATH
+        self.max_range = self.RANGE
+        self.speed = self.SPEED
+        self.sfx = self.SFX_PATH
         self.owner = owner
 
     def sound(self):

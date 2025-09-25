@@ -1,21 +1,28 @@
 from src.entities.entity import Entity
 from src.entities.explosion import Explosion
-from src.entities.entity_data import *
 
 
 class EnemyShip(Entity):
 
+    RADIUS = 32
+    SPEED = 200
+    HP = 6
+    SHOT_COOLDOWN = 0.4
+    SHOT_OFFSET_POS = 4
+    DEATH_BLAST_RADIUS = 48
+    IMG_PATH = "assets/enemy_ship.png"
+
     def __init__(self, x, y, game_play):
-        self.img_path = ENEMY_SHIP_IMG_PATH
+        self.img_path = self.IMG_PATH
         super().__init__(x, y, game_play)
-        self.radius = ENEMY_SHIP_RADIUS
-        self.speed = ENEMY_SHIP_SPEED
-        self.hp = ENEMY_SHIP_HP
-        self.blast_radius = ENEMY_SHIP_BLAST_RADIUS
+        self.radius = self.RADIUS
+        self.speed = self.SPEED
+        self.hp = self.HP
+        self.blast_radius = self.DEATH_BLAST_RADIUS
         self.score_value = self.hp
         self.shoot_timer = 0
-        self.shoot_cooldown = ENEMY_SHIP_SHOT_COOLDOWN
-        self.shot_offset_pos = ENEMY_SHIP_SHOT_OFFSET_POS
+        self.shoot_cooldown = self.SHOT_COOLDOWN
+        self.shot_offset_pos = self.SHOT_OFFSET_POS
 
     def explode(self):
         self.remove_active_targets()

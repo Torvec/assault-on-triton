@@ -1,9 +1,19 @@
 import pygame
-from src.entities.entity_data import *
 import src.entities.entity_behaviors as entity_behaviors
 
 
 class Entity(pygame.sprite.Sprite):
+
+    DIRECTION_UP = pygame.Vector2(0, -1)
+    DIRECTION_DOWN = pygame.Vector2(0, 1)
+    DIRECTION_LEFT = pygame.Vector2(-1, 0)
+    DIRECTION_RIGHT = pygame.Vector2(1, 0)
+    DIRECTION_UP_LEFT = pygame.Vector2(-1, -1).normalize()
+    DIRECTION_UP_RIGHT = pygame.Vector2(1, -1).normalize()
+    DIRECTION_DOWN_LEFT = pygame.Vector2(-1, 1).normalize()
+    DIRECTION_DOWN_RIGHT = pygame.Vector2(1, 1).normalize()
+
+    HIT_TIMER = 0.1
 
     _image_cache = {}
 
@@ -28,7 +38,7 @@ class Entity(pygame.sprite.Sprite):
         self.velocity = pygame.Vector2(0, 0)
         self.rotation = 0
         self.is_hit = False
-        self.hit_timer = HIT_TIMER
+        self.hit_timer = self.HIT_TIMER
         self.blast_radius = 0
         self.behaviors = []
 
@@ -69,7 +79,7 @@ class Entity(pygame.sprite.Sprite):
             self.hit_timer -= dt
             if self.hit_timer <= 0:
                 self.is_hit = False
-                self.hit_timer = HIT_TIMER
+                self.hit_timer = self.HIT_TIMER
 
     def handle_behaviors(self, dt):
         for behavior_data in self.behaviors:

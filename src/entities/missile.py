@@ -1,18 +1,23 @@
 import pygame
 from src.entities.entity import Entity
 from src.entities.explosion import Explosion
-from src.entities.entity_data import *
 
 
 class Missile(Entity):
 
+    RADIUS = 10
+    SPEED = 200
+    HP = 1
+    BLAST_RADIUS = 64
+    IMG_PATH = "assets/missile.png"
+
     def __init__(self, x, y, game_play):
-        self.img_path = MISSILE_IMG_PATH
+        self.img_path = self.IMG_PATH
         super().__init__(x, y, game_play)
-        self.radius = MISSILE_RADIUS
-        self.speed = MISSILE_SPEED
-        self.hp = MISSILE_HP
-        self.blast_radius = MISSILE_BLAST_RADIUS
+        self.radius = self.RADIUS
+        self.speed = self.SPEED
+        self.hp = self.HP
+        self.blast_radius = self.BLAST_RADIUS
         self.score_value = self.hp
 
     def explode(self):
@@ -21,11 +26,11 @@ class Missile(Entity):
 
     def track_player(self):
         direction = self.game_play.player.position - self.position
-        return DIRECTION_DOWN.angle_to(direction)
+        return self.DIRECTION_DOWN.angle_to(direction)
 
     def update(self, dt):
         super().update(dt)
-        forward = DIRECTION_DOWN.rotate(self.rotation)
+        forward = self.DIRECTION_DOWN.rotate(self.rotation)
         self.position += forward * self.speed * dt
         self.rotation = self.track_player()
 

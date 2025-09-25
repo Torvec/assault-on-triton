@@ -1,17 +1,23 @@
 from src.entities.entity import Entity
 from src.entities.explosion import Explosion
-from src.entities.entity_data import *
+
 
 class Bomb(Entity):
 
+    RADIUS = 8
+    SPEED = 200
+    BLAST_RADIUS = 384
+    TRIGGER_DISTANCE = 256
+    IMG_PATH = "assets/e_bomb.png"
+
     def __init__(self, x, y, game_play):
-        self.img_path = BOMB_IMG_PATH
+        self.img_path = self.IMG_PATH
         super().__init__(x, y, game_play)
-        self.radius = BOMB_RADIUS
-        self.speed = BOMB_SPEED
-        self.blast_radius = BOMB_BLAST_RADIUS
+        self.radius = self.RADIUS
+        self.speed = self.SPEED
+        self.blast_radius = self.BLAST_RADIUS
         self.distance_traveled = 0
-        self.trigger_distance = BOMB_TRIGGER_DISTANCE
+        self.trigger_distance = self.TRIGGER_DISTANCE
 
     def sound(self):
         pass  # The launch sound not explosion sound
@@ -21,11 +27,9 @@ class Bomb(Entity):
         self.distance_traveled += distance_this_frame
         if self.distance_traveled >= self.trigger_distance:
             self.explode()
-    
+
     def explode(self):
-        Explosion(
-            self.position.x, self.position.y, self.blast_radius, self.game_play
-        )
+        Explosion(self.position.x, self.position.y, self.blast_radius, self.game_play)
         self.kill()
 
     def update(self, dt):

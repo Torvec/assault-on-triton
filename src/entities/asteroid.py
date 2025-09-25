@@ -1,23 +1,46 @@
 import random
 import pygame
 from src.entities.entity import Entity
-from src.entities.entity_data import *
 
 
 class Asteroid(Entity):
 
-    def __init__(self, x, y, game_play):
-        super().__init__(x, y, game_play)
-        self.rotation_speed = random.uniform(*ASTEROID_ROTATION_SPEED_RANGE)
-        self.velocity = DIRECTION_DOWN * self.speed
+    ROTATION_SPEED_RANGE = (-90, 90)
+    SPLIT_ANGLE = 30
+    SPLIT_VELOCITY_FACTOR = 1.2
 
-    def split(self, split_into=None):
+    # Default values (subclasses override)
+    RADIUS = 32
+    SPEED = 100
+    HP = 4
+    IMG_PATH = "assets/asteroid_md.png"
+    SPLITS_INTO = None
+
+    def __init__(self, x, y, game_play):
+        self.img_path = self.IMG_PATH
+        super().__init__(x, y, game_play)
+        self.radius = self.RADIUS
+        self.speed = self.SPEED
+        self.hp = self.HP
+        self.score_value = self.hp
+        self.rotation_speed = random.uniform(*self.ROTATION_SPEED_RANGE)
+        self.velocity = self.DIRECTION_DOWN * self.speed
+
+    def split(self):
         self.remove_active_targets()
-        if split_into:
-            split_event_r = {
+
+        if not self.SPLITS_INTO:
+            return
+
+        # Get the class name for the event system
+        split_into_classname = self.SPLITS_INTO.__name__
+
+        # Create split events (right and left)
+        for angle in [self.SPLIT_ANGLE, -self.SPLIT_ANGLE]:
+            split_event = {
                 "event": "spawn_enemies",
                 "params": {
-                    "type": split_into,
+                    "type": split_into_classname,
                     "count": 1,
                     "location": self.position,
                     "formation": "single",
@@ -25,35 +48,15 @@ class Asteroid(Entity):
                         {
                             "action": "move_angled",
                             "params": {
-                                "angle": ASTEROID_SPLIT_ANGLE,
-                                "velocity_factor": ASTEROID_SPLIT_VELOCITY_FACTOR,
+                                "angle": angle,
+                                "velocity_factor": self.SPLIT_VELOCITY_FACTOR,
                             },
                         },
                         {"action": "rotate_constantly", "params": {}},
                     ],
                 },
             }
-            split_event_l = {
-                "event": "spawn_enemies",
-                "params": {
-                    "type": split_into,
-                    "count": 1,
-                    "location": self.position,
-                    "formation": "single",
-                    "behaviors": [
-                        {
-                            "action": "move_angled",
-                            "params": {
-                                "angle": -ASTEROID_SPLIT_ANGLE,
-                                "velocity_factor": ASTEROID_SPLIT_VELOCITY_FACTOR,
-                            },
-                        },
-                        {"action": "rotate_constantly", "params": {}},
-                    ],
-                },
-            }
-            self.game_play.event_manager.handle_event(split_event_r)
-            self.game_play.event_manager.handle_event(split_event_l)
+            self.game_play.event_manager.handle_event(split_event)
 
     def update(self, dt):
         super().update(dt)
@@ -67,38 +70,26 @@ class Asteroid(Entity):
 
 class AsteroidSmall(Asteroid):
 
-    def __init__(self, x, y, game_play):
-        self.speed = ASTEROID_SM_SPEED
-        self.hp = ASTEROID_SM_HP
-        self.img_path = ASTEROID_SM_IMG
-        super().__init__(x, y, game_play)
-        self.radius = ASTEROID_SM_RADIUS
-        self.score_value = self.hp
+    RADIUS = 16
+    SPEED = 120
+    HP = 2
+    IMG_PATH = "assets/asteroid_sm.png"
+    SPLITS_INTO = None
 
 
 class AsteroidMedium(Asteroid):
 
-    def __init__(self, x, y, game_play):
-        self.speed = ASTEROID_MD_SPEED
-        self.hp = ASTEROID_MD_HP
-        self.img_path = ASTEROID_MD_IMG
-        super().__init__(x, y, game_play)
-        self.radius = ASTEROID_MD_RADIUS
-        self.score_value = self.hp
-
-    def split(self):
-        super().split("AsteroidSmall")
+    RADIUS = 32
+    SPEED = 100
+    HP = 4
+    IMG_PATH = "assets/asteroid_md.png"
+    SPLITS_INTO = AsteroidSmall
 
 
 class AsteroidLarge(Asteroid):
 
-    def __init__(self, x, y, game_play):
-        self.speed = ASTEROID_LG_SPEED
-        self.hp = ASTEROID_LG_HP
-        self.img_path = ASTEROID_LG_IMG
-        super().__init__(x, y, game_play)
-        self.radius = ASTEROID_LG_RADIUS
-        self.score_value = self.hp
-
-    def split(self):
-        super().split("AsteroidMedium")
+    RADIUS = 64
+    SPEED = 80
+    HP = 6
+    IMG_PATH = "assets/asteroid_lg.png"
+    SPLITS_INTO = AsteroidMedium

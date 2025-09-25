@@ -223,16 +223,16 @@ class GamePlayHUD:
         )
 
     def draw_top_right(self, sidebar, rect):
-        """Player stats: shield, lives, bombs, power level."""
+        """Player stats: HP, lives, bombs, power level."""
         self._draw_section_bg(sidebar, rect)
 
         content_rect = self._get_padded_rect(rect)
         player = self.game_play.player
 
-        # Shield
+        # HP
         render_text(
             screen=sidebar,
-            text=f"Shield x {player.shield}%",
+            text=f"HP x {player.hp}%",
             font_size=self.FONTS["lg"],
             color=self.COLORS["primary"],
             pos=content_rect.topleft,

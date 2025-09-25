@@ -1,9 +1,5 @@
-from src.entities.entity_data import DIRECTION_DOWN
-
-
 def move_straight(entity, dt):
-    # entity.position.y += entity.speed * dt
-    entity.position += DIRECTION_DOWN * entity.speed * dt
+    entity.position += entity.DIRECTION_DOWN * entity.speed * dt
 
 
 def move_angled(entity, dt, **kwargs):
@@ -13,7 +9,7 @@ def move_angled(entity, dt, **kwargs):
     # Sets up a flag so that the changing of direction only happens once and not continuously
     if not hasattr(entity, "_angled_velocity_set"):
 
-        base_velocity = DIRECTION_DOWN * entity.speed
+        base_velocity = entity.DIRECTION_DOWN * entity.speed
         entity.velocity = base_velocity.rotate(angle) * velocity_factor
         entity._angled_velocity_set = True
 
@@ -30,7 +26,7 @@ def shoot(entity, dt, **kwargs):
 
     entity.shoot_timer = entity.shoot_cooldown
 
-    shot_pos = entity.position + DIRECTION_DOWN * entity.radius
+    shot_pos = entity.position + entity.DIRECTION_DOWN * entity.radius
     from src.entities.shot import Shot
 
     shot_l = Shot(
@@ -39,6 +35,6 @@ def shoot(entity, dt, **kwargs):
     shot_r = Shot(
         shot_pos.x + entity.shot_offset_pos, shot_pos.y, entity.game_play, entity
     )
-    shot_l.velocity = DIRECTION_DOWN * shot_l.speed
-    shot_r.velocity = DIRECTION_DOWN * shot_r.speed
+    shot_l.velocity = entity.DIRECTION_DOWN * shot_l.speed
+    shot_r.velocity = entity.DIRECTION_DOWN * shot_r.speed
     shot_l.sound()
