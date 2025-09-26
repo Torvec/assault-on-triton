@@ -1,19 +1,18 @@
 import pygame
-from src.entities.entity import Entity
+from src.entities.projectile import ExplosiveProjectile
 from src.entities.explosion import Explosion
 
 
-class Missile(Entity):
-
+class Missile(ExplosiveProjectile):
     RADIUS = 10
     SPEED = 200
     HP = 1
     BLAST_RADIUS = 64
     IMG_PATH = "assets/missile.png"
 
-    def __init__(self, x, y, game_play):
+    def __init__(self, x, y, game_play, owner):
         self.img_path = self.IMG_PATH
-        super().__init__(x, y, game_play)
+        super().__init__(x, y, game_play, owner)
         self.radius = self.RADIUS
         self.speed = self.SPEED
         self.hp = self.HP
@@ -22,7 +21,13 @@ class Missile(Entity):
 
     def explode(self):
         self.remove_active_targets()
-        Explosion(self.position.x, self.position.y, self.blast_radius, self.game_play)
+        Explosion(
+            self.position.x,
+            self.position.y,
+            self.game_play,
+            self.blast_radius,
+            self.owner,
+        )
 
     def track_player(self):
         direction = self.game_play.player.position - self.position

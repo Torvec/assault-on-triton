@@ -1,5 +1,6 @@
 import pygame
 import src.entities.entity_behaviors as entity_behaviors
+from src.entities.entity_layer_flags import LAYER_NEUTRAL
 
 
 class Entity(pygame.sprite.Sprite):
@@ -15,6 +16,9 @@ class Entity(pygame.sprite.Sprite):
 
     HIT_TIMER = 0.1
 
+    layer = LAYER_NEUTRAL
+    mask = 0
+
     _image_cache = {}
 
     @classmethod
@@ -24,15 +28,18 @@ class Entity(pygame.sprite.Sprite):
         return cls._image_cache[img_path]
 
     def __init__(self, x, y, game_play):
-        # Used to auto add sprites to groups upon creation if a .container attribute is present
+        # Auto adds sprites to groups upon creation if a .container attribute is present
         if hasattr(self, "containers"):
             super().__init__(self.containers)
         else:
             super().__init__()
+        # Image cache check so images only get loaded once instead of every time an entity is spawned
         if hasattr(self, "img_path") and self.img_path:
             self.image = self.load_image(self.img_path)
+        # Init Parameters
         self.position = pygame.Vector2(x, y)
         self.game_play = game_play
+        # Instance Attributes for all entities
         self.play_area = game_play.play_area_rect
         self.radius = 0
         self.velocity = pygame.Vector2(0, 0)

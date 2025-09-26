@@ -1,8 +1,8 @@
 import pygame
-from src.entities.entity import Entity
+from src.entities.projectile import Projectile
 
 
-class Shot(Entity):
+class Shot(Projectile):
 
     RADIUS = 4
     RANGE = 512
@@ -12,13 +12,13 @@ class Shot(Entity):
 
     def __init__(self, x, y, game_play, owner):
         self.img_path = self.IMG_PATH
-        super().__init__(x, y, game_play)
+        super().__init__(x, y, game_play, owner)
+
         self.radius = self.RADIUS
         self.distance_traveled = 0
         self.max_range = self.RANGE
         self.speed = self.SPEED
         self.sfx = self.SFX_PATH
-        self.owner = owner
 
     def sound(self):
         self.shoot_sound = pygame.mixer.Sound(self.sfx)

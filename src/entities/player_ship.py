@@ -3,9 +3,28 @@ from src.entities.entity import Entity
 from src.entities.shot import Shot
 from src.entities.bomb import Bomb
 from src.entities.explosion import Explosion
+from src.entities.entity_layer_flags import (
+    LAYER_PLAYER,
+    LAYER_ENEMY,
+    LAYER_PROJECTILE,
+    LAYER_EXPLOSIVE_PROJECTILE,
+    LAYER_EXPLOSION,
+    LAYER_NEUTRAL,
+    LAYER_PICKUP,
+)
 
 
 class Player(Entity):
+
+    layer = LAYER_PLAYER
+    mask = (
+        LAYER_ENEMY
+        | LAYER_PROJECTILE
+        | LAYER_EXPLOSIVE_PROJECTILE
+        | LAYER_EXPLOSION
+        | LAYER_NEUTRAL
+        | LAYER_PICKUP
+    )
 
     RADIUS = 48
     BASE_ACCELERATION = 600
@@ -69,7 +88,7 @@ class Player(Entity):
             return
         self.bomb_timer = self.BOMB_RELEASE_COOLDOWN
         self.bomb_ammo -= 1
-        bomb = Bomb(self.position.x, self.position.y, self.game_play)
+        bomb = Bomb(self.position.x, self.position.y, self.game_play, self)
         player_forward_speed = self.velocity.dot(self.DIRECTION_UP)
         forward_only_speed = max(0, player_forward_speed)
         bomb.velocity = self.DIRECTION_UP * (forward_only_speed + bomb.speed)

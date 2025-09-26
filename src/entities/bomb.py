@@ -1,18 +1,18 @@
-from src.entities.entity import Entity
+from src.entities.projectile import ExplosiveProjectile
 from src.entities.explosion import Explosion
 
 
-class Bomb(Entity):
-
+class Bomb(ExplosiveProjectile):
+    
     RADIUS = 8
     SPEED = 200
     BLAST_RADIUS = 384
     TRIGGER_DISTANCE = 256
     IMG_PATH = "assets/e_bomb.png"
 
-    def __init__(self, x, y, game_play):
+    def __init__(self, x, y, game_play, owner):
         self.img_path = self.IMG_PATH
-        super().__init__(x, y, game_play)
+        super().__init__(x, y, game_play, owner)
         self.radius = self.RADIUS
         self.speed = self.SPEED
         self.blast_radius = self.BLAST_RADIUS
@@ -29,7 +29,13 @@ class Bomb(Entity):
             self.explode()
 
     def explode(self):
-        Explosion(self.position.x, self.position.y, self.blast_radius, self.game_play)
+        Explosion(
+            self.position.x,
+            self.position.y,
+            self.game_play,
+            self.blast_radius,
+            self.owner,
+        )
         self.kill()
 
     def update(self, dt):

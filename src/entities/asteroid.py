@@ -1,9 +1,28 @@
 import random
 import pygame
 from src.entities.entity import Entity
-
+from src.entities.entity_layer_flags import (
+    LAYER_PLAYER,
+    LAYER_ENEMY,
+    LAYER_ALLY,
+    LAYER_NEUTRAL,
+    LAYER_PROJECTILE,
+    LAYER_EXPLOSIVE_PROJECTILE,
+    LAYER_EXPLOSION,
+)
 
 class Asteroid(Entity):
+    
+    layer = LAYER_NEUTRAL
+    mask = (
+        LAYER_PLAYER
+        | LAYER_ENEMY
+        | LAYER_ALLY
+        | LAYER_PROJECTILE
+        | LAYER_EXPLOSIVE_PROJECTILE
+        | LAYER_EXPLOSION
+        | LAYER_NEUTRAL
+    )
 
     ROTATION_SPEED_RANGE = (-90, 90)
     SPLIT_ANGLE = 30
