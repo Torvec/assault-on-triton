@@ -2,27 +2,21 @@ import random
 import pygame
 from src.entities.entity import Entity
 from src.entities.entity_layer_flags import (
-    LAYER_PLAYER,
-    LAYER_ENEMY,
-    LAYER_ALLY,
-    LAYER_NEUTRAL,
-    LAYER_PROJECTILE,
-    LAYER_EXPLOSIVE_PROJECTILE,
-    LAYER_EXPLOSION,
+    PLAYER,
+    ENEMY,
+    ALLY,
+    NEUTRAL,
+    PROJECTILE,
+    EXPLOSIVE,
+    EXPLOSION,
 )
+from src.entities.entity_directions import DIRECTION_DOWN
+
 
 class Asteroid(Entity):
-    
-    layer = LAYER_NEUTRAL
-    mask = (
-        LAYER_PLAYER
-        | LAYER_ENEMY
-        | LAYER_ALLY
-        | LAYER_PROJECTILE
-        | LAYER_EXPLOSIVE_PROJECTILE
-        | LAYER_EXPLOSION
-        | LAYER_NEUTRAL
-    )
+
+    layer = NEUTRAL
+    mask = PLAYER | ENEMY | ALLY | PROJECTILE | EXPLOSIVE | EXPLOSION | NEUTRAL
 
     ROTATION_SPEED_RANGE = (-90, 90)
     SPLIT_ANGLE = 30
@@ -43,7 +37,7 @@ class Asteroid(Entity):
         self.hp = self.HP
         self.score_value = self.hp
         self.rotation_speed = random.uniform(*self.ROTATION_SPEED_RANGE)
-        self.velocity = self.DIRECTION_DOWN * self.speed
+        self.velocity = DIRECTION_DOWN * self.speed
 
     def split(self):
         self.remove_active_targets()

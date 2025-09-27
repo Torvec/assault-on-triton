@@ -1,13 +1,4 @@
-from src.entities.entity_layer_flags import (
-    LAYER_PLAYER,
-    LAYER_ENEMY,
-    LAYER_ALLY,
-    LAYER_NEUTRAL,
-    LAYER_PROJECTILE,
-    LAYER_EXPLOSIVE_PROJECTILE,
-    LAYER_EXPLOSION,
-    LAYER_PICKUP,
-)
+from src.entities.entity_layer_flags import *
 
 
 class CollisionManager:
@@ -23,54 +14,38 @@ class CollisionManager:
             self.game_play.explosions,
         ]
         self.destroy_methods = {
-            LAYER_NEUTRAL: lambda entity: (
+            NEUTRAL: lambda entity: (
                 entity.split() if hasattr(entity, "split") else entity.kill()
             ),
-            LAYER_ENEMY: lambda entity: (
+            ENEMY: lambda entity: (
                 entity.explode() if hasattr(entity, "explode") else entity.kill()
             ),
-            LAYER_EXPLOSIVE_PROJECTILE: lambda entity: (
+            EXPLOSIVE: lambda entity: (
                 entity.explode() if hasattr(entity, "explode") else entity.kill()
             ),
         }
+
+        # Use frozenset for collision layer pairs so that (A, B) and (B, A) map to the same handler.
+        # This ensures symmetric collision handling regardless of entity order.
+        # If a tuple or set were used, you'd need to add both (A, B) and (B, A) for every case.
         self.collision_handlers = {
-            frozenset({LAYER_PLAYER, LAYER_ENEMY}): self._handle_player_vs_hostile,
-            frozenset({LAYER_PLAYER, LAYER_NEUTRAL}): self._handle_player_vs_hostile,
+            frozenset({PLAYER, ENEMY}): self._handle_player_vs_hostile,
+            frozenset({PLAYER, NEUTRAL}): self._handle_player_vs_hostile,
+            frozenset({PLAYER, PROJECTILE}): self._handle_projectile_vs_player,
+            frozenset({PLAYER, EXPLOSIVE}): self._handle_explosive_projectile_vs_player,
+            frozenset({PLAYER, EXPLOSION}): self._handle_explosion_vs_player,
+            frozenset({PLAYER, PICKUP}): self._handle_player_vs_pickup,
+            frozenset({PROJECTILE, ENEMY}): self._handle_projectile_vs_target,
+            frozenset({PROJECTILE, NEUTRAL}): self._handle_projectile_vs_target,
+            frozenset({PROJECTILE, EXPLOSIVE}): self._handle_projectile_vs_explosive,
+            frozenset({EXPLOSIVE, ENEMY}): self._handle_explosive_projectile_vs_target,
             frozenset(
-                {LAYER_PLAYER, LAYER_PROJECTILE}
-            ): self._handle_projectile_vs_player,
-            frozenset(
-                {LAYER_PLAYER, LAYER_EXPLOSIVE_PROJECTILE}
-            ): self._handle_explosive_projectile_vs_player,
-            frozenset(
-                {LAYER_PLAYER, LAYER_EXPLOSION}
-            ): self._handle_explosion_vs_player,
-            frozenset({LAYER_PLAYER, LAYER_PICKUP}): self._handle_player_vs_pickup,
-            frozenset(
-                {LAYER_PROJECTILE, LAYER_ENEMY}
-            ): self._handle_projectile_vs_target,
-            frozenset(
-                {LAYER_PROJECTILE, LAYER_NEUTRAL}
-            ): self._handle_projectile_vs_target,
-            frozenset(
-                {LAYER_PROJECTILE, LAYER_EXPLOSIVE_PROJECTILE}
-            ): self._handle_projectile_vs_explosive,
-            frozenset(
-                {LAYER_EXPLOSIVE_PROJECTILE, LAYER_ENEMY}
+                {EXPLOSIVE, NEUTRAL}
             ): self._handle_explosive_projectile_vs_target,
-            frozenset(
-                {LAYER_EXPLOSIVE_PROJECTILE, LAYER_NEUTRAL}
-            ): self._handle_explosive_projectile_vs_target,
-            frozenset(
-                {LAYER_EXPLOSIVE_PROJECTILE, LAYER_ALLY}
-            ): self._handle_explosive_projectile_vs_target,
-            frozenset({LAYER_EXPLOSION, LAYER_ENEMY}): self._handle_explosion_vs_entity,
-            frozenset(
-                {LAYER_EXPLOSION, LAYER_NEUTRAL}
-            ): self._handle_explosion_vs_entity,
-            frozenset(
-                {LAYER_EXPLOSION, LAYER_EXPLOSIVE_PROJECTILE}
-            ): self._handle_explosion_vs_explosive,
+            frozenset({EXPLOSIVE, ALLY}): self._handle_explosive_projectile_vs_target,
+            frozenset({EXPLOSION, ENEMY}): self._handle_explosion_vs_entity,
+            frozenset({EXPLOSION, NEUTRAL}): self._handle_explosion_vs_entity,
+            frozenset({EXPLOSION, EXPLOSIVE}): self._handle_explosion_vs_explosive,
         }
 
     def can_collide(self, entity_a, entity_b):
@@ -102,6 +77,9 @@ class CollisionManager:
 
     # === HANDLER FUNCTIONS ===
 
+    # _split_pair ensures that the entity with the specified layer is always returned first.
+    # This makes handler code simpler and more predictable, so you can always refer to the first
+    # return value as the 'main' entity (e.g., player, projectile, etc.) regardless of argument order.
     def _split_pair(self, entity_a, entity_b, layer):
         return (entity_a, entity_b) if entity_a.layer == layer else (entity_b, entity_a)
 
@@ -131,17 +109,17 @@ class CollisionManager:
         else:
             target.kill()
 
-        if source and source.layer == LAYER_PLAYER and hasattr(target, "score_value"):
+        if source and source.layer == PLAYER and hasattr(target, "score_value"):
             self.game_play.score.handle_score(target.score_value)
             self.game_play.score.handle_streak_meter_inc(target.score_value)
 
     def _handle_player_vs_hostile(self, entity_a, entity_b):
-        player, hostile = self._split_pair(entity_a, entity_b, LAYER_PLAYER)
+        player, hostile = self._split_pair(entity_a, entity_b, PLAYER)
         self._apply_damage_to_player(player, 1)
         self._damage_entity(hostile, 1)
 
     def _handle_projectile_vs_player(self, entity_a, entity_b):
-        projectile, player = self._split_pair(entity_a, entity_b, LAYER_PROJECTILE)
+        projectile, player = self._split_pair(entity_a, entity_b, PROJECTILE)
         owner = getattr(projectile, "owner", None)
         if owner is player:
             return
@@ -149,28 +127,24 @@ class CollisionManager:
         self._apply_damage_to_player(player, 1)
 
     def _handle_projectile_vs_target(self, entity_a, entity_b):
-        projectile, target = self._split_pair(entity_a, entity_b, LAYER_PROJECTILE)
+        projectile, target = self._split_pair(entity_a, entity_b, PROJECTILE)
         owner = getattr(projectile, "owner", None)
         if owner is target:
             return
         projectile.kill()
-        if target.layer == LAYER_EXPLOSIVE_PROJECTILE:
+        if target.layer == EXPLOSIVE:
             if hasattr(target, "hp"):
                 self._damage_entity(target, 1, source=owner)
             else:
                 target.explode()
-                if (
-                    owner
-                    and owner.layer == LAYER_PLAYER
-                    and hasattr(target, "score_value")
-                ):
+                if owner and owner.layer == PLAYER and hasattr(target, "score_value"):
                     self.game_play.score.handle_score(target.score_value)
                     self.game_play.score.handle_streak_meter_inc(target.score_value)
             return
         self._damage_entity(target, 1, source=owner)
 
     def _handle_projectile_vs_explosive(self, entity_a, entity_b):
-        projectile, explosive = self._split_pair(entity_a, entity_b, LAYER_PROJECTILE)
+        projectile, explosive = self._split_pair(entity_a, entity_b, PROJECTILE)
         owner = getattr(projectile, "owner", None)
         if owner is explosive:
             return
@@ -179,48 +153,40 @@ class CollisionManager:
             self._damage_entity(explosive, 1, source=owner)
         else:
             explosive.explode()
-            if (
-                owner
-                and owner.layer == LAYER_PLAYER
-                and hasattr(explosive, "score_value")
-            ):
+            if owner and owner.layer == PLAYER and hasattr(explosive, "score_value"):
                 self.game_play.score.handle_score(explosive.score_value)
                 self.game_play.score.handle_streak_meter_inc(explosive.score_value)
 
     def _handle_explosive_projectile_vs_player(self, entity_a, entity_b):
-        explosive, player = self._split_pair(
-            entity_a, entity_b, LAYER_EXPLOSIVE_PROJECTILE
-        )
+        explosive, player = self._split_pair(entity_a, entity_b, EXPLOSIVE)
         owner = getattr(explosive, "owner", None)
         explosive.explode()
 
     def _handle_explosive_projectile_vs_target(self, entity_a, entity_b):
-        explosive, target = self._split_pair(
-            entity_a, entity_b, LAYER_EXPLOSIVE_PROJECTILE
-        )
+        explosive, target = self._split_pair(entity_a, entity_b, EXPLOSIVE)
         owner = getattr(explosive, "owner", None)
         if owner is target:
             return
         explosive.explode()
 
     def _handle_explosion_vs_player(self, entity_a, entity_b):
-        explosion, player = self._split_pair(entity_a, entity_b, LAYER_EXPLOSION)
+        explosion, player = self._split_pair(entity_a, entity_b, EXPLOSION)
         owner = getattr(explosion, "owner", None)
         if owner is player:
             return
         self._apply_damage_to_player(player, 5)
 
     def _handle_explosion_vs_entity(self, entity_a, entity_b):
-        explosion, target = self._split_pair(entity_a, entity_b, LAYER_EXPLOSION)
+        explosion, target = self._split_pair(entity_a, entity_b, EXPLOSION)
         owner = getattr(explosion, "owner", None)
         self._damage_entity(target, 5, source=owner)
 
     def _handle_explosion_vs_explosive(self, entity_a, entity_b):
-        explosion, explosive = self._split_pair(entity_a, entity_b, LAYER_EXPLOSION)
+        explosion, explosive = self._split_pair(entity_a, entity_b, EXPLOSION)
         explosive.explode()
 
     def _handle_player_vs_pickup(self, entity_a, entity_b):
-        player, pickup = self._split_pair(entity_a, entity_b, LAYER_PLAYER)
+        player, pickup = self._split_pair(entity_a, entity_b, PLAYER)
         if hasattr(pickup, "apply"):
             pickup.apply(player)
         pickup.kill()

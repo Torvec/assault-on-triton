@@ -3,7 +3,7 @@ from src.entities.explosion import Explosion
 
 
 class Bomb(ExplosiveProjectile):
-    
+
     RADIUS = 8
     SPEED = 200
     BLAST_RADIUS = 384

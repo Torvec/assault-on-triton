@@ -4,27 +4,21 @@ from src.entities.shot import Shot
 from src.entities.bomb import Bomb
 from src.entities.explosion import Explosion
 from src.entities.entity_layer_flags import (
-    LAYER_PLAYER,
-    LAYER_ENEMY,
-    LAYER_PROJECTILE,
-    LAYER_EXPLOSIVE_PROJECTILE,
-    LAYER_EXPLOSION,
-    LAYER_NEUTRAL,
-    LAYER_PICKUP,
+    PLAYER,
+    ENEMY,
+    PROJECTILE,
+    EXPLOSIVE,
+    EXPLOSION,
+    NEUTRAL,
+    PICKUP,
 )
+from src.entities.entity_directions import DIRECTION_UP
 
 
 class Player(Entity):
 
-    layer = LAYER_PLAYER
-    mask = (
-        LAYER_ENEMY
-        | LAYER_PROJECTILE
-        | LAYER_EXPLOSIVE_PROJECTILE
-        | LAYER_EXPLOSION
-        | LAYER_NEUTRAL
-        | LAYER_PICKUP
-    )
+    layer = PLAYER
+    mask = ENEMY | PROJECTILE | EXPLOSIVE | EXPLOSION | NEUTRAL | PICKUP
 
     RADIUS = 48
     BASE_ACCELERATION = 600
@@ -72,15 +66,15 @@ class Player(Entity):
         if self.shoot_timer > 0:
             return
         self.shoot_timer = self.BASE_SHOOT_COOLDOWN
-        shot_pos = self.position + self.DIRECTION_UP * self.radius
+        shot_pos = self.position + DIRECTION_UP * self.radius
         shot_l = Shot(
             shot_pos.x - self.SHOT_POS_OFFSET, shot_pos.y, self.game_play, self
         )
         shot_r = Shot(
             shot_pos.x + self.SHOT_POS_OFFSET, shot_pos.y, self.game_play, self
         )
-        shot_l.velocity = self.DIRECTION_UP * shot_l.speed
-        shot_r.velocity = self.DIRECTION_UP * shot_r.speed
+        shot_l.velocity = DIRECTION_UP * shot_l.speed
+        shot_r.velocity = DIRECTION_UP * shot_r.speed
         shot_l.sound()
 
     def release_bomb(self):
@@ -89,9 +83,9 @@ class Player(Entity):
         self.bomb_timer = self.BOMB_RELEASE_COOLDOWN
         self.bomb_ammo -= 1
         bomb = Bomb(self.position.x, self.position.y, self.game_play, self)
-        player_forward_speed = self.velocity.dot(self.DIRECTION_UP)
+        player_forward_speed = self.velocity.dot(DIRECTION_UP)
         forward_only_speed = max(0, player_forward_speed)
-        bomb.velocity = self.DIRECTION_UP * (forward_only_speed + bomb.speed)
+        bomb.velocity = DIRECTION_UP * (forward_only_speed + bomb.speed)
         bomb.sound()
 
     def respawn(self):

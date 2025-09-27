@@ -1,22 +1,13 @@
 import pygame
 import src.entities.entity_behaviors as entity_behaviors
-from src.entities.entity_layer_flags import LAYER_NEUTRAL
+from src.entities.entity_layer_flags import NEUTRAL
 
 
 class Entity(pygame.sprite.Sprite):
 
-    DIRECTION_UP = pygame.Vector2(0, -1)
-    DIRECTION_DOWN = pygame.Vector2(0, 1)
-    DIRECTION_LEFT = pygame.Vector2(-1, 0)
-    DIRECTION_RIGHT = pygame.Vector2(1, 0)
-    DIRECTION_UP_LEFT = pygame.Vector2(-1, -1).normalize()
-    DIRECTION_UP_RIGHT = pygame.Vector2(1, -1).normalize()
-    DIRECTION_DOWN_LEFT = pygame.Vector2(-1, 1).normalize()
-    DIRECTION_DOWN_RIGHT = pygame.Vector2(1, 1).normalize()
-
     HIT_TIMER = 0.1
 
-    layer = LAYER_NEUTRAL
+    layer = NEUTRAL
     mask = 0
 
     _image_cache = {}

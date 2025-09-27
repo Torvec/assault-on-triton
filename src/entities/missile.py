@@ -1,6 +1,7 @@
 import pygame
 from src.entities.projectile import ExplosiveProjectile
 from src.entities.explosion import Explosion
+from src.entities.entity_directions import DIRECTION_DOWN
 
 
 class Missile(ExplosiveProjectile):
@@ -31,11 +32,11 @@ class Missile(ExplosiveProjectile):
 
     def track_player(self):
         direction = self.game_play.player.position - self.position
-        return self.DIRECTION_DOWN.angle_to(direction)
+        return DIRECTION_DOWN.angle_to(direction)
 
     def update(self, dt):
         super().update(dt)
-        forward = self.DIRECTION_DOWN.rotate(self.rotation)
+        forward = DIRECTION_DOWN.rotate(self.rotation)
         self.position += forward * self.speed * dt
         self.rotation = self.track_player()
 

@@ -1,27 +1,20 @@
 from src.entities.entity import Entity
 from src.entities.explosion import Explosion
 from src.entities.entity_layer_flags import (
-    LAYER_PLAYER,
-    LAYER_ENEMY,
-    LAYER_ALLY,
-    LAYER_NEUTRAL,
-    LAYER_PROJECTILE,
-    LAYER_EXPLOSIVE_PROJECTILE,
-    LAYER_EXPLOSION,
+    PLAYER,
+    ENEMY,
+    ALLY,
+    NEUTRAL,
+    PROJECTILE,
+    EXPLOSIVE,
+    EXPLOSION,
 )
 
 
 class EnemyDrone(Entity):
 
-    layer = LAYER_ENEMY
-    mask = (
-        LAYER_PLAYER
-        | LAYER_ALLY
-        | LAYER_PROJECTILE
-        | LAYER_EXPLOSIVE_PROJECTILE
-        | LAYER_EXPLOSION
-        | LAYER_NEUTRAL
-    )
+    layer = ENEMY
+    mask = PLAYER | ALLY | PROJECTILE | EXPLOSIVE | EXPLOSION | NEUTRAL
 
     RADIUS = 16
     SPEED = 300
