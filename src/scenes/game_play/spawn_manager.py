@@ -6,6 +6,13 @@ from src.entities.asteroid import (
 )
 from src.entities.enemy_drone import EnemyDrone
 from src.entities.enemy_ship import EnemyShip
+from src.entities.pickup import (
+    HealthPickup,
+    ExtraLifePickup,
+    PowerLevelPickup,
+    OverdrivePickup,
+    BombAmmoPickup,
+)
 from src.entities import entity_formations
 
 
@@ -35,6 +42,11 @@ class SpawnManager(pygame.sprite.Sprite):
             "AsteroidSmall": AsteroidSmall,
             "EnemyDrone": EnemyDrone,
             "EnemyShip": EnemyShip,
+            "HealthPickup": HealthPickup,
+            "ExtraLifePickup": ExtraLifePickup,
+            "PowerLevelPickup": PowerLevelPickup,
+            "OverdrivePickup": OverdrivePickup,
+            "BombAmmoPickup": BombAmmoPickup,
         }
         self.formation = formation
         self.behaviors = behaviors

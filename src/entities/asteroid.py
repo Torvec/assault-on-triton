@@ -51,7 +51,7 @@ class Asteroid(Entity):
         # Create split events (right and left)
         for angle in [self.SPLIT_ANGLE, -self.SPLIT_ANGLE]:
             split_event = {
-                "event": "spawn_enemies",
+                "event": "spawn_entities",
                 "params": {
                     "type": split_into_classname,
                     "count": 1,

@@ -12,6 +12,7 @@ class CollisionManager:
             self.game_play.shots,
             self.game_play.bombs,
             self.game_play.explosions,
+            self.game_play.pickups,
         ]
         self.destroy_methods = {
             NEUTRAL: lambda entity: (

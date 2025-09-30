@@ -8,6 +8,7 @@ from src.entities.asteroid import Asteroid
 from src.entities.enemy_drone import EnemyDrone
 from src.entities.enemy_ship import EnemyShip
 from src.entities.missile import Missile
+from src.entities.pickup import Pickup
 from src.scenes.game_play.event_manager import EventManager
 from src.scenes.game_play.spawn_manager import SpawnManager
 from src.scenes.game_play.score_manager import ScoreManager
@@ -48,6 +49,7 @@ class GamePlay(Scene):
         self.shots = pygame.sprite.Group()
         self.bombs = pygame.sprite.Group()
         self.explosions = pygame.sprite.Group()
+        self.pickups = pygame.sprite.Group()
 
         # Set containers attributes so the sprites automatically get added to the appropriate groups
         Asteroid.containers = (self.asteroids, self.updateable, self.drawable)
@@ -59,6 +61,7 @@ class GamePlay(Scene):
         Shot.containers = (self.shots, self.updateable, self.drawable)
         Bomb.containers = (self.bombs, self.updateable, self.drawable)
         Explosion.containers = (self.explosions, self.updateable, self.drawable)
+        Pickup.containers = (self.pickups, self.updateable, self.drawable)
 
         self.player = Player(
             self.play_area_rect.width // 2,

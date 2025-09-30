@@ -13,7 +13,7 @@ class EventManager:
     def toggle_pause(self):
         self.is_paused = not self.is_paused
 
-    def spawn_enemies(self, type, count, location, formation, behaviors):
+    def spawn_entities(self, type, count, location, formation, behaviors):
         spawn_manager = SpawnManager(
             self.game_play, type, count, location, formation, behaviors
         )
@@ -25,8 +25,8 @@ class EventManager:
     def handle_event(self, event):
         event_name = event["event"]
         params = event.get("params", {})
-        if event_name == "spawn_enemies":
-            self.spawn_enemies(**params)
+        if event_name == "spawn_entities":
+            self.spawn_entities(**params)
         elif event_name == "show_message":
             self.show_message(**params)
         else:
