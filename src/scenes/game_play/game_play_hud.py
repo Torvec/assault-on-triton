@@ -167,14 +167,14 @@ class GamePlayHUD:
         self._draw_streak_meter(sidebar, content_rect)
 
         # High score
-        # render_text(
-        #     screen=sidebar,
-        #     text=f"HI SCORE: {self.game.score_store.high_score:,}",
-        #     font_size=self.FONTS["lg"],
-        #     color=self.COLORS["primary"],
-        #     pos=content_rect.midleft,
-        #     align="midleft",
-        # )
+        render_text(
+            screen=sidebar,
+            text=f"HI SCORE: {self.game.score_store.high_score:,}",
+            font_size=self.FONTS["lg"],
+            color=self.COLORS["primary"],
+            pos=content_rect.bottomleft,
+            align="bottomleft",
+        )
 
         # Time
         # render_text(

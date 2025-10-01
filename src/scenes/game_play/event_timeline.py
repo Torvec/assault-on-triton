@@ -301,7 +301,7 @@ TIMELINE = [
         "time": 20.0,
         "event": "spawn_entities",
         "params": {
-            "type": "BombAmmoPickup",
+            "type": "InvulnerabilityPickup",
             "count": 1,
             "location": "center",
             "formation": "single",

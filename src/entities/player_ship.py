@@ -23,14 +23,23 @@ class Player(Entity):
     RADIUS = 48
     BASE_ACCELERATION = 600
     BASE_SPEED = 350
-    BASE_LIVES = 3
+    BASE_LIVES = 1
+    MAX_LIVES = 3
     BASE_HP = 100
     INVINCIBLE_DURATION = 2
-    BASE_SHOOT_COOLDOWN = 0.2
+    INVULNERABLE_DURATION = 30
+    OVERDRIVE_DURATION = 30
+    OVERDRIVE_SHOT_POS_OFFSET = 20
+    OVERDRIVE_SHOOT_COOLDOWN = 0.1
+    LVL1_SHOOT_COOLDOWN = 0.2
+    LVL2_SHOOT_COOLDOWN = 0.1625
+    LVL3_SHOOT_COOLDOWN = 0.125
     SHOT_POS_OFFSET = 8
     BASE_BOMB_AMMO = 3
+    MAX_BOMB_AMMO = 6
     BOMB_RELEASE_COOLDOWN = 2.0
     BASE_POWER_LEVEL = 1
+    MAX_POWER_LEVEL = 3
     DEATH_BLAST_RADIUS = 128
     VELOCITY_DECAY = 0.99
     IMG_PATH = "assets/player_spaceship.png"
@@ -44,6 +53,7 @@ class Player(Entity):
         self.lives = self.BASE_LIVES
         self.hp = self.BASE_HP
         self.invincibleTime = 0
+        self.overdriveTime = 0
         self.shoot_timer = 0
         self.bomb_ammo = self.BASE_BOMB_AMMO
         self.bomb_timer = 0
@@ -65,7 +75,13 @@ class Player(Entity):
     def shoot(self):
         if self.shoot_timer > 0:
             return
-        self.shoot_timer = self.BASE_SHOOT_COOLDOWN
+        fire_rate = {
+            1: self.LVL1_SHOOT_COOLDOWN,
+            2: self.LVL2_SHOOT_COOLDOWN,
+            3: self.LVL3_SHOOT_COOLDOWN,
+            4: self.OVERDRIVE_SHOOT_COOLDOWN,
+        }
+        self.shoot_timer = fire_rate[self.power_level]
         shot_pos = self.position + DIRECTION_UP * self.radius
         shot_l = Shot(
             shot_pos.x - self.SHOT_POS_OFFSET, shot_pos.y, self.game_play, self
@@ -73,6 +89,21 @@ class Player(Entity):
         shot_r = Shot(
             shot_pos.x + self.SHOT_POS_OFFSET, shot_pos.y, self.game_play, self
         )
+        if self.overdriveTime > 0:
+            shot_l2 = Shot(
+                shot_pos.x - self.OVERDRIVE_SHOT_POS_OFFSET,
+                shot_pos.y,
+                self.game_play,
+                self,
+            )
+            shot_r2 = Shot(
+                shot_pos.x + self.OVERDRIVE_SHOT_POS_OFFSET,
+                shot_pos.y,
+                self.game_play,
+                self,
+            )
+            shot_l2.velocity = DIRECTION_UP * shot_l.speed
+            shot_r2.velocity = DIRECTION_UP * shot_r.speed
         shot_l.velocity = DIRECTION_UP * shot_l.speed
         shot_r.velocity = DIRECTION_UP * shot_r.speed
         shot_l.sound()
@@ -100,10 +131,18 @@ class Player(Entity):
         self.is_hit = True
 
     def handle_invincibility(self, dt):
+        """Handles invincibility frames when hit and invulnerability powerup timer"""
         if self.invincibleTime > 0:
             self.invincibleTime -= dt
         if self.invincibleTime < 0:
             self.invincibleTime = 0
+
+    def handle_overdrive(self, dt):
+        if self.overdriveTime > 0:
+            self.overdriveTime -= dt
+        if self.overdriveTime < 0:
+            self.overdriveTime = 0
+            self.power_level -= 1
 
     def handle_death(self):
         self.lives -= 1
@@ -143,6 +182,7 @@ class Player(Entity):
         self.apply_acceleration(dt)
         self.handle_boundaries("block")
         self.handle_invincibility(dt)
+        self.handle_overdrive(dt)
         self.shoot_timer -= dt
         self.bomb_timer -= dt
 

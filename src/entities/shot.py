@@ -39,3 +39,10 @@ class Shot(Projectile):
     def draw(self, screen):
         shot_rect = self.image.get_rect(center=self.position)
         screen.blit(self.image, shot_rect)
+
+
+class PlayerShot(Shot):
+    pass
+
+class EnemyShot(Shot):
+    pass

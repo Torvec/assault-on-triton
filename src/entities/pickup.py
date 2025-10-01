@@ -7,7 +7,7 @@ class Pickup(Entity):
     layer = PICKUP
     mask = PLAYER
 
-    RADIUS = 12
+    RADIUS = 16
     SPEED = 150
 
     def __init__(self, x, y, game_play):
@@ -30,6 +30,7 @@ class Pickup(Entity):
 class HealthPickup(Pickup):
 
     IMG_PATH = "assets/health_pickup.png"
+    HP_AMOUNT = 25
 
     def __init__(self, x, y, game_play):
         self.img_path = self.IMG_PATH
@@ -37,9 +38,9 @@ class HealthPickup(Pickup):
 
     def apply(self, player):
         if player.hp >= 75:
-            player.hp = 100
+            player.hp = player.BASE_HP
         else:
-            player.hp += 25
+            player.hp += self.HP_AMOUNT
         super().apply(player)
 
     def update(self, dt):
@@ -59,7 +60,7 @@ class ExtraLifePickup(Pickup):
 
     def apply(self, player):
         score_amount = 100
-        if player.lives < 3:
+        if player.lives < player.MAX_LIVES:
             player.lives += 1
         else:
             self.game_play.score.score += score_amount
@@ -83,7 +84,7 @@ class PowerLevelPickup(Pickup):
 
     def apply(self, player):
         score_amount = 100
-        if player.power_level < 3:
+        if player.power_level < player.MAX_POWER_LEVEL:
             player.power_level += 1
         else:
             self.game_play.score.score += score_amount
@@ -107,9 +108,8 @@ class OverdrivePickup(Pickup):
 
     def apply(self, player):
         player.power_level = 4
+        player.overdriveTime = player.OVERDRIVE_DURATION
         super().apply(player)
-
-    # TODO: Needs to be on a timer (30 secs?) and when that timer is up the power level will return to whatever it was before the pickup was activated
 
     def update(self, dt):
         super().update(dt)
@@ -128,11 +128,30 @@ class BombAmmoPickup(Pickup):
 
     def apply(self, player):
         score_amount = 100
-        if player.bomb_ammo < 5:
+        if player.bomb_ammo < player.MAX_BOMB_AMMO:
             player.bomb_ammo += 1
         else:
             self.game_play.score.score += score_amount
             self.game_play.score.handle_streak_meter_inc(score_amount)
+        super().apply(player)
+
+    def update(self, dt):
+        super().update(dt)
+
+    def draw(self, screen):
+        super().draw(screen)
+
+
+class InvulnerabilityPickup(Pickup):
+
+    IMG_PATH = "assets/invulnerable_pickup.png"
+
+    def __init__(self, x, y, game_play):
+        self.img_path = self.IMG_PATH
+        super().__init__(x, y, game_play)
+
+    def apply(self, player):
+        player.invincibleTime = player.INVULNERABLE_DURATION
         super().apply(player)
 
     def update(self, dt):

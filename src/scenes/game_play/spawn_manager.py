@@ -12,6 +12,7 @@ from src.entities.pickup import (
     PowerLevelPickup,
     OverdrivePickup,
     BombAmmoPickup,
+    InvulnerabilityPickup,
 )
 from src.entities import entity_formations
 
@@ -47,6 +48,7 @@ class SpawnManager(pygame.sprite.Sprite):
             "PowerLevelPickup": PowerLevelPickup,
             "OverdrivePickup": OverdrivePickup,
             "BombAmmoPickup": BombAmmoPickup,
+            "InvulnerabilityPickup": InvulnerabilityPickup,
         }
         self.formation = formation
         self.behaviors = behaviors
