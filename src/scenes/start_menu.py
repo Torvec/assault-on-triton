@@ -28,21 +28,27 @@ class Start(Scene):
         render_text(
             screen=game_surface,
             text="ASSAULT",
-            font_size=128,
+            font_name="zendots",
+            font_size=96,
+            antialias=True,
             pos=(game_surface.get_width() // 2, game_surface.get_height() // 2 - 304),
         )
 
         render_text(
             screen=game_surface,
             text="ON",
-            font_size=96,
+            font_name="zendots",
+            font_size=64,
+            antialias=True,
             pos=(game_surface.get_width() // 2, game_surface.get_height() // 2 - 224),
         )
 
         render_text(
             screen=game_surface,
             text="TRITON",
-            font_size=128,
+            font_name="zendots",
+            font_size=96,
+            antialias=True,
             pos=(game_surface.get_width() // 2, game_surface.get_height() // 2 - 128),
         )
 
@@ -55,32 +61,36 @@ class Start(Scene):
         render_text(
             screen=game_surface,
             text="[Enter] PLAY",
-            font_size=48,
+            font_name="spacegrotesk_semibold",
             color="grey",
-            pos=(menu_rect.midtop[0], menu_rect.midtop[1] + 48),
+            pos=(menu_rect.midtop[0], menu_rect.midtop[1] + 24),
             align="midtop",
         )
         render_text(
             screen=game_surface,
             text="[O] OPTIONS",
+            font_name="spacegrotesk_semibold",
             color="grey",
             pos=(menu_rect.center[0], menu_rect.center[1] - 36),
         )
         render_text(
             screen=game_surface,
             text="[S] SCORES",
+            font_name="spacegrotesk_semibold",
             color="grey",
             pos=(menu_rect.center[0], menu_rect.center[1]),
         )
         render_text(
             screen=game_surface,
             text="[C] CREDITS",
+            font_name="spacegrotesk_semibold",
             color="grey",
             pos=(menu_rect.center[0], menu_rect.center[1] + 36),
         )
         render_text(
             screen=game_surface,
             text="[Q] QUIT",
+            font_name="spacegrotesk_semibold",
             color="grey",
             pos=(menu_rect.center[0], menu_rect.center[1] + 72),
         )

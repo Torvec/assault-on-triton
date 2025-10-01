@@ -10,33 +10,40 @@ def render_text(**kwargs):
     align = kwargs.get("align", "center")
     font_name = kwargs.get("font_name", None)
     antialias = kwargs.get("antialias", False)
-    font = pygame.font.Font(font_name, font_size)
+
+    font_map = {
+        None: None,
+        "spacegrotesk_bold": "assets/spacegrotesk_bold.ttf",
+        "spacegrotesk_light": "assets/spacegrotesk_light.ttf",
+        "spacegrotesk_medium": "assets/spacegrotesk_medium.ttf",
+        "spacegrotesk_regular": "assets/spacegrotesk_regular.ttf",
+        "spacegrotesk_semibold": "assets/spacegrotesk_semibold.ttf",
+        "zendots": "assets/zendots_regular.ttf",
+    }
+    if font_name in font_map:
+        font_path = font_map[font_name]
+    else:
+        raise ValueError(f"Unknown font_name '{font_name}'.")
+
+    font = pygame.font.Font(font_path, font_size)
     text_surface = font.render(text, antialias, color)
     text_rect = text_surface.get_rect()
 
-    match align:
-        case "center":
-            text_rect.center = pos
-        case "topleft":
-            text_rect.topleft = pos
-        case "topright":
-            text_rect.topright = pos
-        case "bottomleft":
-            text_rect.bottomleft = pos
-        case "bottomright":
-            text_rect.bottomright = pos
-        case "midtop":
-            text_rect.midtop = pos
-        case "midbottom":
-            text_rect.midbottom = pos
-        case "midleft":
-            text_rect.midleft = pos
-        case "midright":
-            text_rect.midright = pos
-        case _:
-            raise ValueError(
-                "align must be one of: center, topleft, topright, bottomleft, bottomright, midtop, midbottom, midleft, midright"
-            )
+    align_map = {
+        "center": "center",
+        "topleft": "topleft",
+        "topright": "topright",
+        "bottomleft": "bottomleft",
+        "bottomright": "bottomright",
+        "midtop": "midtop",
+        "midbottom": "midbottom",
+        "midleft": "midleft",
+        "midright": "midright",
+    }
+    if align in align_map:
+        setattr(text_rect, align_map[align], pos)
+    else:
+        raise ValueError(f"align must be one of: {', '.join(align_map.keys())}")
 
     screen.blit(text_surface, text_rect)
 
