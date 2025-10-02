@@ -5,20 +5,16 @@ from src.entities.projectile import Projectile
 class Shot(Projectile):
 
     RADIUS = 4
-    RANGE = 512
-    SPEED = 500
-    IMG_PATH = "assets/blaster_shot.png"
-    SFX_PATH = "assets/720118__baggonotes__player_shoot1.wav"
 
     def __init__(self, x, y, game_play, owner):
-        self.img_path = self.IMG_PATH
         super().__init__(x, y, game_play, owner)
 
         self.radius = self.RADIUS
         self.distance_traveled = 0
-        self.max_range = self.RANGE
-        self.speed = self.SPEED
-        self.sfx = self.SFX_PATH
+        self.max_range = 0
+        self.speed = 0
+        self.damage = 1
+        self.sfx = None
 
     def sound(self):
         self.shoot_sound = pygame.mixer.Sound(self.sfx)
@@ -42,7 +38,59 @@ class Shot(Projectile):
 
 
 class PlayerShot(Shot):
-    pass
+
+    shot_levels = {
+        1: {
+            "range": 512,
+            "speed": 500,
+            "damage": 1,
+            "img_path": "assets/player_shot_lv1.png",
+            "sfx": "assets/720118__baggonotes__player_shoot1.wav",
+        },
+        2: {
+            "range": 768,
+            "speed": 600,
+            "damage": 2,
+            "img_path": "assets/player_shot_lv2.png",
+            "sfx": "assets/720118__baggonotes__player_shoot1.wav",
+        },
+        3: {
+            "range": 1024,
+            "speed": 700,
+            "damage": 4,
+            "img_path": "assets/player_shot_lv3.png",
+            "sfx": "assets/720118__baggonotes__player_shoot1.wav",
+        },
+        4: {
+            "range": 1024,
+            "speed": 1000,
+            "damage": 8,
+            "img_path": "assets/player_shot_ov.png",
+            "sfx": "assets/720118__baggonotes__player_shoot1.wav",
+        },
+    }
+
+    def __init__(self, x, y, game_play, owner, power_level):
+        self.img_path = self.shot_levels[power_level]["img_path"]
+        super().__init__(x, y, game_play, owner)
+        self.max_range = self.shot_levels[power_level]["range"]
+        self.speed = self.shot_levels[power_level]["speed"]
+        self.damage = self.shot_levels[power_level]["damage"]
+        self.sfx = self.shot_levels[power_level]["sfx"]
+
 
 class EnemyShot(Shot):
-    pass
+
+    RANGE = 512
+    SPEED = 500
+    DAMAGE = 2
+    IMG_PATH = "assets/enemy_shot.png"
+    SFX_PATH = "assets/720118__baggonotes__player_shoot1.wav"
+
+    def __init__(self, x, y, game_play, owner):
+        self.img_path = self.IMG_PATH
+        super().__init__(x, y, game_play, owner)
+        self.max_range = self.RANGE
+        self.speed = self.SPEED
+        self.damage = self.DAMAGE
+        self.sfx = self.SFX_PATH

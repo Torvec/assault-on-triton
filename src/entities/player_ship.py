@@ -1,6 +1,6 @@
 import pygame
 from src.entities.entity import Entity
-from src.entities.shot import Shot
+from src.entities.shot import PlayerShot
 from src.entities.bomb import Bomb
 from src.entities.explosion import Explosion
 from src.entities.entity_layer_flags import (
@@ -83,24 +83,34 @@ class Player(Entity):
         }
         self.shoot_timer = fire_rate[self.power_level]
         shot_pos = self.position + DIRECTION_UP * self.radius
-        shot_l = Shot(
-            shot_pos.x - self.SHOT_POS_OFFSET, shot_pos.y, self.game_play, self
+        shot_l = PlayerShot(
+            shot_pos.x - self.SHOT_POS_OFFSET,
+            shot_pos.y,
+            self.game_play,
+            self,
+            self.power_level,
         )
-        shot_r = Shot(
-            shot_pos.x + self.SHOT_POS_OFFSET, shot_pos.y, self.game_play, self
+        shot_r = PlayerShot(
+            shot_pos.x + self.SHOT_POS_OFFSET,
+            shot_pos.y,
+            self.game_play,
+            self,
+            self.power_level,
         )
         if self.overdriveTime > 0:
-            shot_l2 = Shot(
+            shot_l2 = PlayerShot(
                 shot_pos.x - self.OVERDRIVE_SHOT_POS_OFFSET,
                 shot_pos.y,
                 self.game_play,
                 self,
+                self.power_level,
             )
-            shot_r2 = Shot(
+            shot_r2 = PlayerShot(
                 shot_pos.x + self.OVERDRIVE_SHOT_POS_OFFSET,
                 shot_pos.y,
                 self.game_play,
                 self,
+                self.power_level,
             )
             shot_l2.velocity = DIRECTION_UP * shot_l.speed
             shot_r2.velocity = DIRECTION_UP * shot_r.speed

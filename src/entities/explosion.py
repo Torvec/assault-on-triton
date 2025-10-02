@@ -16,6 +16,7 @@ class Explosion(Entity):
 
     INITIAL_RADIUS = 2
     EXPANSION_RATE = 256
+    DAMAGE = 5
 
     def __init__(self, x, y, game_play, blast_radius, owner):
         super().__init__(x, y, game_play)
@@ -23,6 +24,7 @@ class Explosion(Entity):
         self.owner = owner
         self.radius = self.INITIAL_RADIUS
         self.exp_rate = self.EXPANSION_RATE
+        self.damage = self.DAMAGE
 
     @property
     def mask(self):

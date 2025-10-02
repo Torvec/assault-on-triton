@@ -30,12 +30,12 @@ def shoot(entity, dt, **kwargs):
     entity.shoot_timer = entity.shoot_cooldown
 
     shot_pos = entity.position + DIRECTION_DOWN * entity.radius
-    from src.entities.shot import Shot
+    from src.entities.shot import EnemyShot
 
-    shot_l = Shot(
+    shot_l = EnemyShot(
         shot_pos.x - entity.shot_offset_pos, shot_pos.y, entity.game_play, entity
     )
-    shot_r = Shot(
+    shot_r = EnemyShot(
         shot_pos.x + entity.shot_offset_pos, shot_pos.y, entity.game_play, entity
     )
     shot_l.velocity = DIRECTION_DOWN * shot_l.speed

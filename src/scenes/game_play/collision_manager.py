@@ -125,7 +125,7 @@ class CollisionManager:
         if owner is player:
             return
         projectile.kill()
-        self._apply_damage_to_player(player, 1)
+        self._apply_damage_to_player(player, projectile.damage)
 
     def _handle_projectile_vs_target(self, entity_a, entity_b):
         projectile, target = self._split_pair(entity_a, entity_b, PROJECTILE)
@@ -135,14 +135,14 @@ class CollisionManager:
         projectile.kill()
         if target.layer == EXPLOSIVE:
             if hasattr(target, "hp"):
-                self._damage_entity(target, 1, source=owner)
+                self._damage_entity(target, projectile.damage, source=owner)
             else:
                 target.explode()
                 if owner and owner.layer == PLAYER and hasattr(target, "score_value"):
                     self.game_play.score.handle_score(target.score_value)
                     self.game_play.score.handle_streak_meter_inc(target.score_value)
             return
-        self._damage_entity(target, 1, source=owner)
+        self._damage_entity(target, projectile.damage, source=owner)
 
     def _handle_projectile_vs_explosive(self, entity_a, entity_b):
         projectile, explosive = self._split_pair(entity_a, entity_b, PROJECTILE)
@@ -151,7 +151,7 @@ class CollisionManager:
             return
         projectile.kill()
         if hasattr(explosive, "hp"):
-            self._damage_entity(explosive, 1, source=owner)
+            self._damage_entity(explosive, projectile.damage, source=owner)
         else:
             explosive.explode()
             if owner and owner.layer == PLAYER and hasattr(explosive, "score_value"):
@@ -175,12 +175,12 @@ class CollisionManager:
         owner = getattr(explosion, "owner", None)
         if owner is player:
             return
-        self._apply_damage_to_player(player, 5)
+        self._apply_damage_to_player(player, explosion.damage)
 
     def _handle_explosion_vs_entity(self, entity_a, entity_b):
         explosion, target = self._split_pair(entity_a, entity_b, EXPLOSION)
         owner = getattr(explosion, "owner", None)
-        self._damage_entity(target, 5, source=owner)
+        self._damage_entity(target, explosion.damage, source=owner)
 
     def _handle_explosion_vs_explosive(self, entity_a, entity_b):
         explosion, explosive = self._split_pair(entity_a, entity_b, EXPLOSION)
