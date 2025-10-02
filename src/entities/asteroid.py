@@ -22,7 +22,6 @@ class Asteroid(Entity):
     SPLIT_ANGLE = 30
     SPLIT_VELOCITY_FACTOR = 1.2
 
-    # Default values (subclasses override)
     RADIUS = 32
     SPEED = 100
     HP = 4
@@ -45,7 +44,6 @@ class Asteroid(Entity):
         if not self.SPLITS_INTO:
             return
 
-        # Get the class name for the event system
         split_into_classname = self.SPLITS_INTO.__name__
 
         # Create split events (right and left)
