@@ -42,7 +42,7 @@ class Shot(Projectile):
 class PlayerShot(Shot):
 
     def __init__(self, x, y, game_play, owner, power_level):
-        self.config = PROJECTILES["player_shots"][power_level]
+        self.config = PROJECTILES["player_shot"][power_level]
         if power_level == 4:
             image_key = "player_shot_ov"
         else:

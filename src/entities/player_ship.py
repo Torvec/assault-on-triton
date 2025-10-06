@@ -1,7 +1,7 @@
 import pygame
 from src.entities.entity import Entity
 from src.entities.shot import PlayerShot
-from src.entities.bomb import Bomb
+from src.entities.bomb import PlayerBomb
 from src.entities.explosion import Explosion
 from src.entities.entity_layer_flags import (
     PLAYER,
@@ -98,7 +98,7 @@ class Player(Entity):
             return
         self.bomb_timer = self.config["bomb_cooldown"]
         self.bomb_ammo -= 1
-        bomb = Bomb(self.position.x, self.position.y, self.game_play, self)
+        bomb = PlayerBomb(self.position.x, self.position.y, self.game_play, self)
         player_forward_speed = self.velocity.dot(DIRECTION_UP)
         forward_only_speed = max(0, player_forward_speed)
         bomb.velocity = DIRECTION_UP * (forward_only_speed + bomb.speed)

@@ -62,7 +62,7 @@ ENEMIES = {
 
 # Projectile Configuration
 PROJECTILES = {
-    "player_shots": {
+    "player_shot": {
         1: {"range": 512, "speed": 500, "damage": 1},
         2: {"range": 768, "speed": 600, "damage": 2},
         3: {"range": 1024, "speed": 700, "damage": 4},
@@ -73,7 +73,13 @@ PROJECTILES = {
         "speed": 500,
         "damage": 2,
     },
-    "bomb": {
+    "player_bomb": {
+        "radius": 8,
+        "speed": 200,
+        "blast_radius": {1: 128, 2: 256, 3: 384, 4: 512},
+        "trigger_distance": 256,
+    },
+    "enemy_bomb": {
         "radius": 8,
         "speed": 200,
         "blast_radius": 384,
