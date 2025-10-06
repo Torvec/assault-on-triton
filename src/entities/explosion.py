@@ -8,23 +8,21 @@ from src.entities.entity_layer_flags import (
     EXPLOSIVE,
     EXPLOSION,
 )
+from src.config.settings import EXPLOSIONS
 
 
 class Explosion(Entity):
 
     layer = EXPLOSION
 
-    INITIAL_RADIUS = 2
-    EXPANSION_RATE = 256
-    DAMAGE = 5
-
     def __init__(self, x, y, game_play, blast_radius, owner):
+        self.config = EXPLOSIONS
         super().__init__(x, y, game_play)
         self.blast_radius = blast_radius
         self.owner = owner
-        self.radius = self.INITIAL_RADIUS
-        self.exp_rate = self.EXPANSION_RATE
-        self.damage = self.DAMAGE
+        self.radius = self.config["initial_radius"]
+        self.exp_rate = self.config["expansion_rate"]
+        self.damage = self.config["damage"]
 
     @property
     def mask(self):

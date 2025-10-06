@@ -1,12 +1,16 @@
+from src.config.settings import SCORING
+
+
 class ScoreManager:
 
     def __init__(self, score_store):
+        self.config = SCORING
         self.score_store = score_store
         self.score = 0
-        self.multiplier = 1
-        self.streak_meter = 0
-        self.streak_meter_threshold = 10
-        self.streak_meter_decay_amount = 1
+        self.multiplier = self.config["initial_multiplier"]
+        self.streak_meter = self.config["initial_streak_meter"]
+        self.streak_meter_threshold = self.config["streak_threshold_base"]
+        self.streak_meter_decay_amount = self.config["streak_decay_base"]
         self.streak_meter_delay_decay_timer = 0
 
     def handle_score(self, amount):
@@ -14,7 +18,7 @@ class ScoreManager:
             self.score += amount
         else:
             self.score += amount * self.multiplier
-            self.streak_meter_delay_decay_timer = 3
+            self.streak_meter_delay_decay_timer = self.config["streak_delay"]
 
     def handle_streak_meter_inc(self, amount):
         self.streak_meter += amount

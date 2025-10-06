@@ -9,6 +9,8 @@ from src.entities.entity_layer_flags import (
     EXPLOSIVE,
     EXPLOSION,
 )
+from src.config.settings import ENEMIES
+from src.config.assets import IMAGES
 
 
 class EnemyShip(Entity):
@@ -16,25 +18,18 @@ class EnemyShip(Entity):
     layer = ENEMY
     mask = PLAYER | ALLY | PROJECTILE | EXPLOSIVE | EXPLOSION | NEUTRAL
 
-    RADIUS = 32
-    SPEED = 200
-    HP = 6
-    SHOT_COOLDOWN = 0.4
-    SHOT_OFFSET_POS = 4
-    DEATH_BLAST_RADIUS = 48
-    IMG_PATH = "assets/enemy_ship.png"
-
     def __init__(self, x, y, game_play):
-        self.img_path = self.IMG_PATH
+        self.config = ENEMIES["ship"]
+        self.img_path = IMAGES["enemy_ship"]
         super().__init__(x, y, game_play)
-        self.radius = self.RADIUS
-        self.speed = self.SPEED
-        self.hp = self.HP
-        self.blast_radius = self.DEATH_BLAST_RADIUS
+        self.radius = self.config["radius"]
+        self.speed = self.config["speed"]
+        self.hp = self.config["hp"]
+        self.blast_radius = self.config["blast_radius"]
         self.score_value = self.hp
         self.shoot_timer = 0
-        self.shoot_cooldown = self.SHOT_COOLDOWN
-        self.shot_offset_pos = self.SHOT_OFFSET_POS
+        self.shoot_cooldown = self.config["shot_cooldown"]
+        self.shot_offset_pos = self.config["shot_offset"]
 
     def explode(self):
         self.remove_active_targets()

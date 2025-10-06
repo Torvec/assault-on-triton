@@ -2,22 +2,20 @@ import pygame
 from src.entities.projectile import ExplosiveProjectile
 from src.entities.explosion import Explosion
 from src.entities.entity_directions import DIRECTION_DOWN
+from src.config.settings import PROJECTILES
+from src.config.assets import IMAGES
 
 
 class Missile(ExplosiveProjectile):
-    RADIUS = 10
-    SPEED = 200
-    HP = 1
-    BLAST_RADIUS = 64
-    IMG_PATH = "assets/missile.png"
 
     def __init__(self, x, y, game_play, owner):
-        self.img_path = self.IMG_PATH
+        self.config = PROJECTILES["missile"]
+        self.img_path = IMAGES["missile"]
         super().__init__(x, y, game_play, owner)
-        self.radius = self.RADIUS
-        self.speed = self.SPEED
-        self.hp = self.HP
-        self.blast_radius = self.BLAST_RADIUS
+        self.radius = self.config["radius"]
+        self.speed = self.config["speed"]
+        self.hp = self.config["hp"]
+        self.blast_radius = self.config["blast_radius"]
         self.score_value = self.hp
 
     def explode(self):

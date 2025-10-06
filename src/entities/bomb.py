@@ -1,23 +1,20 @@
 from src.entities.projectile import ExplosiveProjectile
 from src.entities.explosion import Explosion
+from src.config.settings import PROJECTILES
+from src.config.assets import IMAGES
 
 
 class Bomb(ExplosiveProjectile):
 
-    RADIUS = 8
-    SPEED = 200
-    BLAST_RADIUS = 384
-    TRIGGER_DISTANCE = 256
-    IMG_PATH = "assets/e_bomb.png"
-
     def __init__(self, x, y, game_play, owner):
-        self.img_path = self.IMG_PATH
+        self.config = PROJECTILES["bomb"]
+        self.img_path = IMAGES["bomb"]
         super().__init__(x, y, game_play, owner)
-        self.radius = self.RADIUS
-        self.speed = self.SPEED
-        self.blast_radius = self.BLAST_RADIUS
+        self.radius = self.config["radius"]
+        self.speed = self.config["speed"]
+        self.blast_radius = self.config["blast_radius"]
         self.distance_traveled = 0
-        self.trigger_distance = self.TRIGGER_DISTANCE
+        self.trigger_distance = self.config["trigger_distance"]
 
     def sound(self):
         pass  # The launch sound not explosion sound

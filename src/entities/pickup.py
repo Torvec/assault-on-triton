@@ -1,5 +1,7 @@
 from src.entities.entity import Entity
 from src.entities.entity_layer_flags import PICKUP, PLAYER
+from src.config.settings import PICKUPS, PLAYER as PLAYER_CONFIG
+from src.config.assets import IMAGES
 
 
 class Pickup(Entity):
@@ -7,13 +9,13 @@ class Pickup(Entity):
     layer = PICKUP
     mask = PLAYER
 
-    RADIUS = 16
-    SPEED = 150
-
     def __init__(self, x, y, game_play):
         super().__init__(x, y, game_play)
-        self.radius = self.RADIUS
-        self.speed = self.SPEED
+        # Default pickup values - subclasses will override pickup_type
+        pickup_type = getattr(self, "pickup_type", "health")
+        config = PICKUPS.get(pickup_type, PICKUPS["health"])
+        self.radius = config["radius"]
+        self.speed = config["speed"]
 
     def apply(self, player):
         self.remove_active_targets()
@@ -29,18 +31,19 @@ class Pickup(Entity):
 
 class HealthPickup(Pickup):
 
-    IMG_PATH = "assets/health_pickup.png"
-    HP_AMOUNT = 25
+    pickup_type = "health"
 
     def __init__(self, x, y, game_play):
-        self.img_path = self.IMG_PATH
+        self.img_path = IMAGES["health_pickup"]
+        self.player_config = PLAYER_CONFIG
         super().__init__(x, y, game_play)
+        self.heal_amount = PICKUPS["health"]["heal_amount"]
 
     def apply(self, player):
         if player.hp >= 75:
-            player.hp = player.BASE_HP
+            player.hp = self.player_config["base_hp"]
         else:
-            player.hp += self.HP_AMOUNT
+            player.hp += self.heal_amount
         super().apply(player)
 
     def update(self, dt):
@@ -52,19 +55,20 @@ class HealthPickup(Pickup):
 
 class ExtraLifePickup(Pickup):
 
-    IMG_PATH = "assets/life_pickup.png"
+    pickup_type = "life"
 
     def __init__(self, x, y, game_play):
-        self.img_path = self.IMG_PATH
+        self.img_path = IMAGES["life_pickup"]
+        self.player_config = PLAYER_CONFIG
         super().__init__(x, y, game_play)
+        self.fallback_score = PICKUPS["life"]["fallback_score"]
 
     def apply(self, player):
-        score_amount = 100
-        if player.lives < player.MAX_LIVES:
+        if player.lives < self.player_config["max_lives"]:
             player.lives += 1
         else:
-            self.game_play.score.score += score_amount
-            self.game_play.score.handle_streak_meter_inc(score_amount)
+            self.game_play.score.score += self.fallback_score
+            self.game_play.score.handle_streak_meter_inc(self.fallback_score)
         super().apply(player)
 
     def update(self, dt):
@@ -76,19 +80,20 @@ class ExtraLifePickup(Pickup):
 
 class PowerLevelPickup(Pickup):
 
-    IMG_PATH = "assets/power_pickup.png"
+    pickup_type = "power"
 
     def __init__(self, x, y, game_play):
-        self.img_path = self.IMG_PATH
+        self.img_path = IMAGES["power_pickup"]
+        self.player_config = PLAYER_CONFIG
         super().__init__(x, y, game_play)
+        self.fallback_score = PICKUPS["power"]["fallback_score"]
 
     def apply(self, player):
-        score_amount = 100
-        if player.power_level < player.MAX_POWER_LEVEL:
+        if player.power_level < self.player_config["max_power_level"]:
             player.power_level += 1
         else:
-            self.game_play.score.score += score_amount
-            self.game_play.score.handle_streak_meter_inc(score_amount)
+            self.game_play.score.score += self.fallback_score
+            self.game_play.score.handle_streak_meter_inc(self.fallback_score)
         super().apply(player)
 
     def update(self, dt):
@@ -100,15 +105,14 @@ class PowerLevelPickup(Pickup):
 
 class OverdrivePickup(Pickup):
 
-    IMG_PATH = "assets/overdrive_pickup.png"
-
     def __init__(self, x, y, game_play):
-        self.img_path = self.IMG_PATH
+        self.img_path = IMAGES["overdrive_pickup"]
+        self.player_config = PLAYER_CONFIG
         super().__init__(x, y, game_play)
 
     def apply(self, player):
         player.power_level = 4
-        player.overdriveTime = player.OVERDRIVE_DURATION
+        player.overdriveTime = self.player_config["overdrive_duration"]
         super().apply(player)
 
     def update(self, dt):
@@ -120,19 +124,20 @@ class OverdrivePickup(Pickup):
 
 class BombAmmoPickup(Pickup):
 
-    IMG_PATH = "assets/bomb_pickup.png"
+    pickup_type = "bomb"
 
     def __init__(self, x, y, game_play):
-        self.img_path = self.IMG_PATH
+        self.img_path = IMAGES["bomb_pickup"]
+        self.player_config = PLAYER_CONFIG
         super().__init__(x, y, game_play)
+        self.fallback_score = PICKUPS["bomb"]["fallback_score"]
 
     def apply(self, player):
-        score_amount = 100
-        if player.bomb_ammo < player.MAX_BOMB_AMMO:
+        if player.bomb_ammo < self.player_config["max_bomb_ammo"]:
             player.bomb_ammo += 1
         else:
-            self.game_play.score.score += score_amount
-            self.game_play.score.handle_streak_meter_inc(score_amount)
+            self.game_play.score.score += self.fallback_score
+            self.game_play.score.handle_streak_meter_inc(self.fallback_score)
         super().apply(player)
 
     def update(self, dt):
@@ -144,14 +149,13 @@ class BombAmmoPickup(Pickup):
 
 class InvulnerabilityPickup(Pickup):
 
-    IMG_PATH = "assets/invulnerable_pickup.png"
-
     def __init__(self, x, y, game_play):
-        self.img_path = self.IMG_PATH
+        self.img_path = IMAGES["invulnerable_pickup"]
+        self.player_config = PLAYER_CONFIG
         super().__init__(x, y, game_play)
 
     def apply(self, player):
-        player.invincibleTime = player.INVULNERABLE_DURATION
+        player.invincibleTime = self.player_config["invulnerable_duration"]
         super().apply(player)
 
     def update(self, dt):
