@@ -2,7 +2,7 @@ import random
 import pygame
 
 
-class Scene:
+class Screen:
 
     def __init__(self, game):
         self.game = game

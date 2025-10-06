@@ -1,9 +1,9 @@
 import pygame
-from src.scenes.scene import Scene
-from src.render_text import render_text
+from src.screen import Screen
+from src.utils.render_text import render_text
 
 
-class Credits(Scene):
+class Credits(Screen):
 
     def __init__(self, game):
         super().__init__(game)

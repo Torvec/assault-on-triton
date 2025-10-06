@@ -1,5 +1,5 @@
 import pygame
-from src.scenes.scene import Scene
+from src.screen import Screen
 from src.entities.player_ship import Player
 from src.entities.shot import Shot
 from src.entities.bomb import Bomb
@@ -9,16 +9,16 @@ from src.entities.enemy_drone import EnemyDrone
 from src.entities.enemy_ship import EnemyShip
 from src.entities.missile import Missile
 from src.entities.pickup import Pickup
-from src.scenes.game_play.event_manager import EventManager
-from src.scenes.game_play.spawn_manager import SpawnManager
-from src.scenes.game_play.score_manager import ScoreManager
-from src.scenes.game_play.collision_manager import CollisionManager
-from src.scenes.game_play.event_timeline import TIMELINE
-from src.scenes.game_play.pause_menu import PauseMenu
-from src.scenes.game_play.game_play_hud import GamePlayHUD
+from src.gameplay.event_manager import EventManager
+from src.gameplay.spawn_manager import SpawnManager
+from src.gameplay.score_manager import ScoreManager
+from src.gameplay.collision_manager import CollisionManager
+from src.gameplay.event_timeline import TIMELINE
+from src.gameplay.pause_menu import PauseMenu
+from src.gameplay.game_play_hud import GamePlayHUD
 
 
-class GamePlay(Scene):
+class GamePlay(Screen):
 
     def __init__(self, game):
         super().__init__(game)

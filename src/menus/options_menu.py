@@ -1,9 +1,9 @@
 import pygame
-from src.scenes.scene import Scene
-from src.render_text import render_text
+from src.screen import Screen
+from src.utils.render_text import render_text
 
 
-class Scoreboard(Scene):
+class Options(Screen):
 
     def __init__(self, game):
         super().__init__(game)
@@ -20,7 +20,7 @@ class Scoreboard(Scene):
 
         render_text(
             screen=game_surface,
-            text="HIGH SCORES",
+            text="OPTIONS",
             font_size=64,
             pos=(game_surface.get_width() // 2, 64),
         )

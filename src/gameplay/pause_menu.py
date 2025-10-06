@@ -1,6 +1,6 @@
 import sys
 import pygame
-from src.render_text import render_text
+from src.utils.render_text import render_text
 
 
 class PauseMenu:

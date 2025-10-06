@@ -1,4 +1,4 @@
-from src.scenes.game_play.spawn_manager import SpawnManager
+from src.gameplay.spawn_manager import SpawnManager
 
 
 class EventManager:

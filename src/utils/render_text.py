@@ -1,4 +1,5 @@
 import pygame
+from src.config.assets import FONTS
 
 
 def render_text(
@@ -12,19 +13,14 @@ def render_text(
     antialias=False,
 ):
 
-    font_map = {
-        None: None,
-        "spacegrotesk_bold": "assets/spacegrotesk_bold.ttf",
-        "spacegrotesk_light": "assets/spacegrotesk_light.ttf",
-        "spacegrotesk_medium": "assets/spacegrotesk_medium.ttf",
-        "spacegrotesk_regular": "assets/spacegrotesk_regular.ttf",
-        "spacegrotesk_semibold": "assets/spacegrotesk_semibold.ttf",
-        "zendots": "assets/zendots_regular.ttf",
-    }
-    if font_name in font_map:
-        font_path = font_map[font_name]
+    if font_name is None:
+        font_path = None
+    elif font_name in FONTS:
+        font_path = FONTS[font_name]
     else:
-        raise ValueError(f"Unknown font_name '{font_name}'.")
+        raise ValueError(
+            f"Unknown font_name '{font_name}'. Available fonts: {', '.join(FONTS.keys())}"
+        )
 
     font = pygame.font.Font(font_path, font_size)
     text_surface = font.render(text, antialias, color)
