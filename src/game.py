@@ -22,8 +22,7 @@ class Game:
         self.clock = pygame.time.Clock()
         self.dt = 0
         self.score_store = ScoreStore()
-        #! self.set_scene("Start") # Will be used when game is ready for release
-        self.set_scene("GamePlay")  # Start with GamePlay scene for development
+        self.set_scene("Start")
         self.running = True
 
     def set_scene(self, scene_name):

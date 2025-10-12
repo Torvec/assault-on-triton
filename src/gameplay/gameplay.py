@@ -1,3 +1,4 @@
+import random
 import pygame
 from src.screen import Screen
 # Entities
@@ -32,6 +33,13 @@ class GamePlay(Screen):
             self.game.gs_w,
             self.game.gs_h,
         )
+        self.starfield = [
+            (
+                random.randint(0, self.game.gs_w),
+                random.randint(0, self.game.gs_h),
+            )
+            for _ in range(150)
+        ]
         self.game_play_hud = GamePlayHUD(self.game, self)
         self.score = ScoreManager(self.game.score_store)
         self.isPaused = False
@@ -104,3 +112,5 @@ class GamePlay(Screen):
         super().draw(game_surface, sidebar_l_surface, sidebar_r_surface)
         self.pause_menu.draw(game_surface)
         self.game_play_hud.draw(sidebar_l_surface, sidebar_r_surface)
+        for x, y in self.starfield:
+            pygame.draw.circle(game_surface, "grey70", (x, y), 1)
