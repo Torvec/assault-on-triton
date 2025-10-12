@@ -33,7 +33,7 @@ class Game:
 
                 self.current_scene = Start(self)
             case "GamePlay":
-                from src.gameplay.game_play import GamePlay
+                from src.gameplay.gameplay import GamePlay
 
                 self.current_scene = GamePlay(self)
             case "GameOver":

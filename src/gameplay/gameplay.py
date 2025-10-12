@@ -1,5 +1,6 @@
 import pygame
 from src.screen import Screen
+# Entities
 from src.entities.player_ship import Player
 from src.entities.shot import Shot
 from src.entities.bomb import Bomb
@@ -9,13 +10,15 @@ from src.entities.enemy_drone import EnemyDrone
 from src.entities.enemy_ship import EnemyShip
 from src.entities.missile import Missile
 from src.entities.pickup import Pickup
+# Managers
 from src.gameplay.event_manager import EventManager
 from src.gameplay.spawn_manager import SpawnManager
 from src.gameplay.score_manager import ScoreManager
 from src.gameplay.collision_manager import CollisionManager
 from src.gameplay.event_timeline import TIMELINE
+# UI
 from src.gameplay.pause_menu import PauseMenu
-from src.gameplay.game_play_hud import GamePlayHUD
+from src.gameplay.gameplay_hud import GamePlayHUD
 
 
 class GamePlay(Screen):
