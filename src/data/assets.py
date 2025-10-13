@@ -1,9 +1,3 @@
-"""
-Asset path definitions for the game.
-Centralizes all asset paths for easy maintenance.
-"""
-
-# Image Assets
 IMAGES = {
     # Player
     "player_ship": "assets/entities/player_spaceship.png",
@@ -37,12 +31,10 @@ IMAGES = {
     "planet_two": "assets/backgrounds/planet_two.png",
 }
 
-# Audio Assets
 SOUNDS = {
     "player_shoot": "assets/sounds/720118__baggonotes__player_shoot1.wav",
 }
 
-# Font Assets
 FONTS = {
     "spacegrotesk_bold": "assets/fonts/spacegrotesk_bold.ttf",
     "spacegrotesk_light": "assets/fonts/spacegrotesk_light.ttf",

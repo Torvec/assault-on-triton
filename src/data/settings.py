@@ -1,8 +1,3 @@
-"""
-Game configuration constants and settings.
-Centralizes all game parameters for easy tweaking and balancing.
-"""
-
 # Display Settings
 DISPLAY = {
     "game_surface_width": 608,
