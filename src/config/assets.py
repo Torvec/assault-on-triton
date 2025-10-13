@@ -32,6 +32,8 @@ IMAGES = {
     "invulnerable_pickup": "assets/entities/invulnerable_pickup.png",
     # UI
     "shield": "assets/entities/shield.png",
+    # Backgrounds
+    "planet": "assets/backgrounds/planet.png",
 }
 
 # Audio Assets

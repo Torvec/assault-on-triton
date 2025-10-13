@@ -1,6 +1,7 @@
-import random
 import pygame
+
 from src.screen import Screen
+
 # Entities
 from src.entities.player_ship import Player
 from src.entities.shot import Shot
@@ -11,15 +12,20 @@ from src.entities.enemy_drone import EnemyDrone
 from src.entities.enemy_ship import EnemyShip
 from src.entities.missile import Missile
 from src.entities.pickup import Pickup
+
 # Managers
 from src.gameplay.event_manager import EventManager
 from src.gameplay.spawn_manager import SpawnManager
 from src.gameplay.score_manager import ScoreManager
 from src.gameplay.collision_manager import CollisionManager
 from src.gameplay.event_timeline import TIMELINE
+
 # UI
 from src.gameplay.pause_menu import PauseMenu
 from src.gameplay.gameplay_hud import GamePlayHUD
+
+# Backgrounds
+from src.backgrounds.background import StarField, Planet
 
 
 class GamePlay(Screen):
@@ -33,19 +39,14 @@ class GamePlay(Screen):
             self.game.gs_w,
             self.game.gs_h,
         )
-        self.starfield = [
-            (
-                random.randint(0, self.game.gs_w),
-                random.randint(0, self.game.gs_h),
-            )
-            for _ in range(150)
-        ]
         self.game_play_hud = GamePlayHUD(self.game, self)
         self.score = ScoreManager(self.game.score_store)
         self.isPaused = False
         self.pause_menu = PauseMenu(self)
         self.event_manager = EventManager(self, TIMELINE)
         self.active_targets = set()
+        self.background = StarField(0, 0, self.game)
+        self.background_2 = Planet(256, self.game.gs_h - 196, self.game)
 
         # Level completion tracking
         self.level_complete = False
@@ -112,5 +113,3 @@ class GamePlay(Screen):
         super().draw(game_surface, sidebar_l_surface, sidebar_r_surface)
         self.pause_menu.draw(game_surface)
         self.game_play_hud.draw(sidebar_l_surface, sidebar_r_surface)
-        for x, y in self.starfield:
-            pygame.draw.circle(game_surface, "grey70", (x, y), 1)
