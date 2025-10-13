@@ -49,10 +49,10 @@ class Planet(Background):
         super().__init__(x, y, game)
         self.image = pygame.image.load("assets/backgrounds/planet.png")
         self.scroll_speed = 8
-        self.current_width = self.image.get_width()
-        self.current_height = self.image.get_height()
+        self.current_width = self.image.get_width() * 4
+        self.current_height = self.image.get_height() * 4
         self.scale_to_size = 16
-        self.shrink_rate = 5
+        self.shrink_rate = 10
 
     def update(self, dt):
         super().update(dt)
@@ -62,8 +62,36 @@ class Planet(Background):
         ):
             self.current_width -= self.shrink_rate * dt
             self.current_height -= self.shrink_rate * dt
-            self.current_width = max(self.current_width, self.scale_to_size)
-            self.current_height = max(self.current_height, self.scale_to_size)
+        direction = pygame.Vector2(0, 1)
+        self.position += direction * self.scroll_speed * dt
+
+    def draw(self, game_surface):
+        super().draw(game_surface)
+        scaled_image = pygame.transform.scale(
+            self.image, (self.current_width, self.current_height)
+        )
+        planet_rect = scaled_image.get_rect(center=self.position)
+        game_surface.blit(scaled_image, planet_rect)
+
+
+class PlanetTwo(Background):
+    def __init__(self, x, y, game):
+        super().__init__(x, y, game)
+        self.image = pygame.image.load("assets/backgrounds/planet_two.png")
+        self.scroll_speed = 2
+        self.current_width = 2
+        self.current_height = 2
+        self.scale_to_size = 1024
+        self.growth_rate = 10
+
+    def update(self, dt):
+        super().update(dt)
+        if (
+            self.current_width < self.scale_to_size
+            and self.current_height < self.scale_to_size
+        ):
+            self.current_width += self.growth_rate * dt
+            self.current_height += self.growth_rate * dt
         direction = pygame.Vector2(0, 1)
         self.position += direction * self.scroll_speed * dt
 

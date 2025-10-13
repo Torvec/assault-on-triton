@@ -25,7 +25,7 @@ from src.gameplay.pause_menu import PauseMenu
 from src.gameplay.gameplay_hud import GamePlayHUD
 
 # Backgrounds
-from src.backgrounds.background import StarField, Planet
+from src.backgrounds.background import StarField, Planet, PlanetTwo
 
 
 class GamePlay(Screen):
@@ -47,6 +47,7 @@ class GamePlay(Screen):
         self.active_targets = set()
         self.background = StarField(0, 0, self.game)
         self.background_2 = Planet(256, self.game.gs_h - 196, self.game)
+        self.background_3 = PlanetTwo(self.game.gs_w // 2, 0, self.game)
 
         # Level completion tracking
         self.level_complete = False
