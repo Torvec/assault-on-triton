@@ -1,5 +1,6 @@
 import random
 import pygame
+from src.data.assets import IMAGES
 
 
 class Background:
@@ -47,7 +48,7 @@ class Planet(Background):
 
     def __init__(self, x, y, game):
         super().__init__(x, y, game)
-        self.image = pygame.image.load("assets/backgrounds/planet.png")
+        self.image = pygame.image.load(IMAGES["planet"])
         self.scroll_speed = 8
         self.current_width = self.image.get_width() * 4
         self.current_height = self.image.get_height() * 4
@@ -77,7 +78,7 @@ class Planet(Background):
 class PlanetTwo(Background):
     def __init__(self, x, y, game):
         super().__init__(x, y, game)
-        self.image = pygame.image.load("assets/backgrounds/planet_two.png")
+        self.image = pygame.image.load(IMAGES["planet_two"])
         self.scroll_speed = 2
         self.current_width = 2
         self.current_height = 2

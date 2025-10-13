@@ -34,6 +34,7 @@ IMAGES = {
     "shield": "assets/entities/shield.png",
     # Backgrounds
     "planet": "assets/backgrounds/planet.png",
+    "planet_two": "assets/backgrounds/planet_two.png",
 }
 
 # Audio Assets

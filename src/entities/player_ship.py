@@ -13,8 +13,8 @@ from src.entities.entity_layer_flags import (
     PICKUP,
 )
 from src.entities.entity_directions import DIRECTION_UP
-from src.config.settings import PLAYER as PLAYER_CONFIG
-from src.config.assets import IMAGES
+from src.data.settings import PLAYER as PLAYER_DATA
+from src.data.assets import IMAGES
 
 
 class Player(Entity):
@@ -23,23 +23,23 @@ class Player(Entity):
     mask = ENEMY | PROJECTILE | EXPLOSIVE | EXPLOSION | NEUTRAL | PICKUP
 
     def __init__(self, x, y, game_play):
-        self.config = PLAYER_CONFIG
+        self.data = PLAYER_DATA
         self.img_path = IMAGES["player_ship"]
         super().__init__(x, y, game_play)
-        # Load configuration values
-        self.radius = self.config["radius"]
-        self.acceleration = self.config["base_acceleration"]
-        self.speed = self.config["base_speed"]
-        self.lives = self.config["base_lives"]
-        self.hp = self.config["base_hp"]
-        self.blast_radius = self.config["death_blast_radius"]
-        # Initialize dynamic attributes
+
+        self.radius = self.data["radius"]
+        self.acceleration = self.data["base_acceleration"]
+        self.speed = self.data["base_speed"]
+        self.lives = self.data["base_lives"]
+        self.hp = self.data["base_hp"]
+        self.blast_radius = self.data["death_blast_radius"]
+
         self.invincibleTime = 0
         self.overdriveTime = 0
         self.shoot_timer = 0
-        self.bomb_ammo = self.config["base_bomb_ammo"]
+        self.bomb_ammo = self.data["base_bomb_ammo"]
         self.bomb_timer = 0
-        self.power_level = self.config["base_power_level"]
+        self.power_level = self.data["base_power_level"]
 
     def move_up(self, dt):
         self.velocity.y -= self.acceleration * dt
@@ -56,17 +56,17 @@ class Player(Entity):
     def shoot(self):
         if self.shoot_timer > 0:
             return
-        self.shoot_timer = self.config["fire_rates"][self.power_level]
+        self.shoot_timer = self.data["fire_rates"][self.power_level]
         shot_pos = self.position + DIRECTION_UP * self.radius
         shot_l = PlayerShot(
-            shot_pos.x - self.config["shot_offset"],
+            shot_pos.x - self.data["shot_offset"],
             shot_pos.y,
             self.game_play,
             self,
             self.power_level,
         )
         shot_r = PlayerShot(
-            shot_pos.x + self.config["shot_offset"],
+            shot_pos.x + self.data["shot_offset"],
             shot_pos.y,
             self.game_play,
             self,
@@ -74,14 +74,14 @@ class Player(Entity):
         )
         if self.overdriveTime > 0:
             shot_l2 = PlayerShot(
-                shot_pos.x - self.config["overdrive_shot_offset"],
+                shot_pos.x - self.data["overdrive_shot_offset"],
                 shot_pos.y,
                 self.game_play,
                 self,
                 self.power_level,
             )
             shot_r2 = PlayerShot(
-                shot_pos.x + self.config["overdrive_shot_offset"],
+                shot_pos.x + self.data["overdrive_shot_offset"],
                 shot_pos.y,
                 self.game_play,
                 self,
@@ -96,7 +96,7 @@ class Player(Entity):
     def release_bomb(self):
         if self.bomb_ammo <= 0 or self.bomb_timer > 0:
             return
-        self.bomb_timer = self.config["bomb_cooldown"]
+        self.bomb_timer = self.data["bomb_cooldown"]
         self.bomb_ammo -= 1
         bomb = PlayerBomb(self.position.x, self.position.y, self.game_play, self)
         player_forward_speed = self.velocity.dot(DIRECTION_UP)
@@ -105,14 +105,14 @@ class Player(Entity):
         bomb.sound()
 
     def respawn(self):
-        self.invincibleTime = self.config["invincible_duration"]
+        self.invincibleTime = self.data["invincible_duration"]
         self.position.x = self.game_play.play_area_rect.width // 2
         self.position.y = self.game_play.play_area_rect.height - 100
-        self.hp = self.config["base_hp"]
+        self.hp = self.data["base_hp"]
 
     def handle_hit(self, damage_amount):
         self.hp -= damage_amount
-        self.invincibleTime = self.config["invincible_duration"]
+        self.invincibleTime = self.data["invincible_duration"]
         self.is_hit = True
 
     def handle_invincibility(self, dt):
@@ -156,7 +156,7 @@ class Player(Entity):
             self.release_bomb()
 
     def apply_acceleration(self, dt):
-        self.velocity *= self.config["velocity_decay"]
+        self.velocity *= self.data["velocity_decay"]
         if self.velocity.length() > self.speed:
             self.velocity.scale_to_length(self.speed)
         self.position += self.velocity * dt

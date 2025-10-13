@@ -18,7 +18,7 @@ from src.gameplay.event_manager import EventManager
 from src.gameplay.spawn_manager import SpawnManager
 from src.gameplay.score_manager import ScoreManager
 from src.gameplay.collision_manager import CollisionManager
-from src.gameplay.event_timeline import TIMELINE
+from src.data.event_timeline import TIMELINE
 
 # UI
 from src.gameplay.pause_menu import PauseMenu
@@ -47,12 +47,12 @@ class GamePlay(Screen):
         self.active_targets = set()
         self.background = StarField(0, 0, self.game)
         self.background_2 = Planet(256, self.game.gs_h - 196, self.game)
-        self.background_3 = PlanetTwo(self.game.gs_w // 2, 0, self.game)
+        self.background_3 = PlanetTwo(self.game.gs_w // 2, -128, self.game)
 
         # Level completion tracking
         self.level_complete = False
         self.level_end_timer = 0
-        self.level_end_delay = 3.0
+        self.level_end_delay = 10.0
 
         # Sprite Groups
         self.asteroids = pygame.sprite.Group()

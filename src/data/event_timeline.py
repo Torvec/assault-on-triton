@@ -1,8 +1,7 @@
 TIMELINE = [
     {"time": 0, "event": "show_message", "params": {"text": "Mission Start!"}},
-    # ASTEROID FIELD
     {
-        "time": 0.3,
+        "time": 1.3,
         "event": "spawn_entities",
         "params": {
             "type": "AsteroidLarge",
@@ -16,7 +15,7 @@ TIMELINE = [
         },
     },
     {
-        "time": 0.7,
+        "time": 2.7,
         "event": "spawn_entities",
         "params": {
             "type": "AsteroidMedium",
@@ -30,7 +29,7 @@ TIMELINE = [
         },
     },
     {
-        "time": 0.9,
+        "time": 3.9,
         "event": "spawn_entities",
         "params": {
             "type": "AsteroidSmall",
@@ -44,7 +43,7 @@ TIMELINE = [
         },
     },
     {
-        "time": 1.2,
+        "time": 4.2,
         "event": "spawn_entities",
         "params": {
             "type": "AsteroidSmall",
@@ -58,7 +57,7 @@ TIMELINE = [
         },
     },
     {
-        "time": 1.5,
+        "time": 5.5,
         "event": "spawn_entities",
         "params": {
             "type": "AsteroidMedium",
@@ -72,7 +71,7 @@ TIMELINE = [
         },
     },
     {
-        "time": 1.8,
+        "time": 6.8,
         "event": "spawn_entities",
         "params": {
             "type": "AsteroidLarge",
@@ -86,7 +85,7 @@ TIMELINE = [
         },
     },
     {
-        "time": 2.1,
+        "time": 7.1,
         "event": "spawn_entities",
         "params": {
             "type": "AsteroidMedium",
@@ -100,7 +99,7 @@ TIMELINE = [
         },
     },
     {
-        "time": 2.4,
+        "time": 8.4,
         "event": "spawn_entities",
         "params": {
             "type": "AsteroidSmall",
@@ -114,7 +113,7 @@ TIMELINE = [
         },
     },
     {
-        "time": 2.6,
+        "time": 9.6,
         "event": "spawn_entities",
         "params": {
             "type": "AsteroidLarge",
@@ -128,7 +127,7 @@ TIMELINE = [
         },
     },
     {
-        "time": 2.9,
+        "time": 10.9,
         "event": "spawn_entities",
         "params": {
             "type": "AsteroidLarge",
@@ -141,23 +140,21 @@ TIMELINE = [
             ],
         },
     },
-    # PICKUP
     {
-        "time": 3.0,
+        "time": 12.0,
         "event": "spawn_entities",
         "params": {
-            "type": "HealthPickup",
+            "type": "PowerLevelPickup",
             "count": 1,
-            "location": "center",
+            "location": "right",
             "formation": "single",
             "behaviors": [
                 {"action": "move_straight", "params": {}},
             ],
         },
     },
-    # ENEMY SHIPS
     {
-        "time": 4.0,
+        "time": 16.5,
         "event": "spawn_entities",
         "params": {
             "type": "EnemyDrone",
@@ -170,22 +167,36 @@ TIMELINE = [
             ],
         },
     },
-    # PICKUP
     {
-        "time": 5.0,
+        "time": 23.6,
         "event": "spawn_entities",
         "params": {
-            "type": "ExtraLifePickup",
-            "count": 1,
+            "type": "EnemyDrone",
+            "count": 5,
             "location": "center",
-            "formation": "single",
+            "formation": "wall",
             "behaviors": [
                 {"action": "move_straight", "params": {}},
+                {"action": "shoot", "params": {}},
             ],
         },
     },
     {
-        "time": 6.0,
+        "time": 28.1,
+        "event": "spawn_entities",
+        "params": {
+            "type": "EnemyShip",
+            "count": 5,
+            "location": "center",
+            "formation": "column",
+            "behaviors": [
+                {"action": "move_straight", "params": {}},
+                {"action": "shoot", "params": {}},
+            ],
+        },
+    },
+    {
+        "time": 33.3,
         "event": "spawn_entities",
         "params": {
             "type": "EnemyShip",
@@ -198,64 +209,8 @@ TIMELINE = [
             ],
         },
     },
-    # PICKUP
     {
-        "time": 7.0,
-        "event": "spawn_entities",
-        "params": {
-            "type": "PowerLevelPickup",
-            "count": 1,
-            "location": "center",
-            "formation": "single",
-            "behaviors": [
-                {"action": "move_straight", "params": {}},
-            ],
-        },
-    },
-    # PICKUP
-    {
-        "time": 9.0,
-        "event": "spawn_entities",
-        "params": {
-            "type": "PowerLevelPickup",
-            "count": 1,
-            "location": "center",
-            "formation": "single",
-            "behaviors": [
-                {"action": "move_straight", "params": {}},
-            ],
-        },
-    },
-    # PICKUP
-    {
-        "time": 11.0,
-        "event": "spawn_entities",
-        "params": {
-            "type": "PowerLevelPickup",
-            "count": 1,
-            "location": "center",
-            "formation": "single",
-            "behaviors": [
-                {"action": "move_straight", "params": {}},
-            ],
-        },
-    },
-    # PICKUP
-    {
-        "time": 13.0,
-        "event": "spawn_entities",
-        "params": {
-            "type": "PowerLevelPickup",
-            "count": 1,
-            "location": "center",
-            "formation": "single",
-            "behaviors": [
-                {"action": "move_straight", "params": {}},
-            ],
-        },
-    },
-    {
-        "time": 14.0,
+        "time": 38.6,
         "event": "spawn_entities",
         "params": {
             "type": "EnemyShip",
@@ -268,22 +223,8 @@ TIMELINE = [
             ],
         },
     },
-    # PICKUP
     {
-        "time": 6.0,
-        "event": "spawn_entities",
-        "params": {
-            "type": "OverdrivePickup",
-            "count": 1,
-            "location": "center",
-            "formation": "single",
-            "behaviors": [
-                {"action": "move_straight", "params": {}},
-            ],
-        },
-    },
-    {
-        "time": 18.0,
+        "time": 44.3,
         "event": "spawn_entities",
         "params": {
             "type": "EnemyShip",
@@ -296,22 +237,8 @@ TIMELINE = [
             ],
         },
     },
-    # PICKUP
     {
-        "time": 20.0,
-        "event": "spawn_entities",
-        "params": {
-            "type": "InvulnerabilityPickup",
-            "count": 1,
-            "location": "center",
-            "formation": "single",
-            "behaviors": [
-                {"action": "move_straight", "params": {}},
-            ],
-        },
-    },
-    {
-        "time": 22.0,
+        "time": 50.4,
         "event": "spawn_entities",
         "params": {
             "type": "EnemyShip",
@@ -324,22 +251,8 @@ TIMELINE = [
             ],
         },
     },
-    # PICKUP
     {
-        "time": 24.0,
-        "event": "spawn_entities",
-        "params": {
-            "type": "BombAmmoPickup",
-            "count": 1,
-            "location": "center",
-            "formation": "single",
-            "behaviors": [
-                {"action": "move_straight", "params": {}},
-            ],
-        },
-    },
-    {
-        "time": 26.0,
+        "time": 55.4,
         "event": "spawn_entities",
         "params": {
             "type": "EnemyShip",
@@ -352,22 +265,8 @@ TIMELINE = [
             ],
         },
     },
-    # PICKUP
     {
-        "time": 28.0,
-        "event": "spawn_entities",
-        "params": {
-            "type": "BombAmmoPickup",
-            "count": 1,
-            "location": "center",
-            "formation": "single",
-            "behaviors": [
-                {"action": "move_straight", "params": {}},
-            ],
-        },
-    },
-    {
-        "time": 30.0,
+        "time": 59.8,
         "event": "spawn_entities",
         "params": {
             "type": "EnemyShip",
@@ -380,14 +279,13 @@ TIMELINE = [
             ],
         },
     },
-    # PICKUP
     {
-        "time": 31.0,
+        "time": 61.0,
         "event": "spawn_entities",
         "params": {
-            "type": "BombAmmoPickup",
+            "type": "PowerLevelPickup",
             "count": 1,
-            "location": "center",
+            "location": "left",
             "formation": "single",
             "behaviors": [
                 {"action": "move_straight", "params": {}},
@@ -395,7 +293,7 @@ TIMELINE = [
         },
     },
     {
-        "time": 32.0,
+        "time": 65.7,
         "event": "spawn_entities",
         "params": {
             "type": "EnemyDrone",
@@ -409,7 +307,7 @@ TIMELINE = [
         },
     },
     {
-        "time": 34.0,
+        "time": 69.4,
         "event": "spawn_entities",
         "params": {
             "type": "EnemyDrone",
@@ -422,22 +320,8 @@ TIMELINE = [
             ],
         },
     },
-    # PICKUP
     {
-        "time": 36.0,
-        "event": "spawn_entities",
-        "params": {
-            "type": "BombAmmoPickup",
-            "count": 1,
-            "location": "center",
-            "formation": "single",
-            "behaviors": [
-                {"action": "move_straight", "params": {}},
-            ],
-        },
-    },
-    {
-        "time": 38.0,
+        "time": 74.8,
         "event": "spawn_entities",
         "params": {
             "type": "EnemyShip",
@@ -451,7 +335,7 @@ TIMELINE = [
         },
     },
     {
-        "time": 42.0,
+        "time": 79.5,
         "event": "spawn_entities",
         "params": {
             "type": "EnemyShip",
@@ -465,3 +349,83 @@ TIMELINE = [
         },
     },
 ]
+
+
+# {
+#     "time": 14.0,
+#     "event": "spawn_entities",
+#     "params": {
+#         "type": "ExtraLifePickup",
+#         "count": 1,
+#         "location": "center",
+#         "formation": "single",
+#         "behaviors": [
+#             {"action": "move_straight", "params": {}},
+#         ],
+#     },
+# },
+# {
+#     "time": 11.0,
+#     "event": "spawn_entities",
+#     "params": {
+#         "type": "HealthPickup",
+#         "count": 1,
+#         "location": "center",
+#         "formation": "single",
+#         "behaviors": [
+#             {"action": "move_straight", "params": {}},
+#         ],
+#     },
+# },
+#     {
+#     "time": 49.0,
+#     "event": "spawn_entities",
+#     "params": {
+#         "type": "BombAmmoPickup",
+#         "count": 1,
+#         "location": "center",
+#         "formation": "single",
+#         "behaviors": [
+#             {"action": "move_straight", "params": {}},
+#         ],
+#     },
+# },
+# {
+#     "time": 19.0,
+#     "event": "spawn_entities",
+#     "params": {
+#         "type": "PowerLevelPickup",
+#         "count": 1,
+#         "location": "center",
+#         "formation": "single",
+#         "behaviors": [
+#             {"action": "move_straight", "params": {}},
+#         ],
+#     },
+# },
+# {
+#     "time": 30.0,
+#     "event": "spawn_entities",
+#     "params": {
+#         "type": "InvulnerabilityPickup",
+#         "count": 1,
+#         "location": "center",
+#         "formation": "single",
+#         "behaviors": [
+#             {"action": "move_straight", "params": {}},
+#         ],
+#     },
+# },
+# {
+#     "time": 25.0,
+#     "event": "spawn_entities",
+#     "params": {
+#         "type": "OverdrivePickup",
+#         "count": 1,
+#         "location": "center",
+#         "formation": "single",
+#         "behaviors": [
+#             {"action": "move_straight", "params": {}},
+#         ],
+#     },
+# },

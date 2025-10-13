@@ -1,23 +1,23 @@
 import pygame
 from src.score_store import ScoreStore
-from src.config.settings import DISPLAY
+from src.data.settings import DISPLAY
 
 
 class Game:
 
     def __init__(self, screen):
-        self.config = DISPLAY
+        self.data = DISPLAY
         self.screen = screen
         self.sidebar_l_surface = pygame.Surface(
-            (self.config["sidebar_width"], self.screen.get_height())
+            (self.data["sidebar_width"], self.screen.get_height())
         )
         self.game_surface = pygame.Surface(
-            (self.config["game_surface_width"], self.screen.get_height())
+            (self.data["game_surface_width"], self.screen.get_height())
         )
         self.gs_w = self.game_surface.get_width()
         self.gs_h = self.game_surface.get_height()
         self.sidebar_r_surface = pygame.Surface(
-            (self.config["sidebar_width"], self.screen.get_height())
+            (self.data["sidebar_width"], self.screen.get_height())
         )
         self.clock = pygame.time.Clock()
         self.dt = 0
@@ -82,15 +82,15 @@ class Game:
                 center=(self.screen.get_width() // 2, self.screen.get_height() // 2)
             )
             self.screen.blit(
-                self.sidebar_l_surface, (self.config["sidebar_left_offset"], 0)
+                self.sidebar_l_surface, (self.data["sidebar_left_offset"], 0)
             )
             self.screen.blit(self.game_surface, game_surface_rect.topleft)
             self.screen.blit(
-                self.sidebar_r_surface, (self.config["sidebar_right_offset"], 0)
+                self.sidebar_r_surface, (self.data["sidebar_right_offset"], 0)
             )
 
             pygame.display.flip()
 
-            self.dt = self.clock.tick(self.config["target_fps"]) / 1000
+            self.dt = self.clock.tick(self.data["target_fps"]) / 1000
 
         pygame.quit()  # * Note: Doesn't need sys.exit() after this because it is the end of the file and nothing is running

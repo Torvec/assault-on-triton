@@ -11,8 +11,8 @@ from src.entities.entity_layer_flags import (
     EXPLOSION,
 )
 from src.entities.entity_directions import DIRECTION_DOWN
-from src.config.settings import ASTEROIDS
-from src.config.assets import IMAGES
+from src.data.settings import ASTEROIDS
+from src.data.assets import IMAGES
 
 
 class Asteroid(Entity):
@@ -21,18 +21,18 @@ class Asteroid(Entity):
     mask = PLAYER | ENEMY | ALLY | PROJECTILE | EXPLOSIVE | EXPLOSION | NEUTRAL
 
     def __init__(self, x, y, game_play, asteroid_size="medium"):
-        # Get config based on size parameter
-        self.config = ASTEROIDS[asteroid_size]
+        # Get data based on size parameter
+        self.data = ASTEROIDS[asteroid_size]
         self.img_path = IMAGES[f"asteroid_{asteroid_size}"]
         super().__init__(x, y, game_play)
-        self.radius = self.config["radius"]
-        self.speed = self.config["speed"]
-        self.hp = self.config["hp"]
+        self.radius = self.data["radius"]
+        self.speed = self.data["speed"]
+        self.hp = self.data["hp"]
         self.score_value = self.hp
         self.rotation_speed = random.uniform(*ASTEROIDS["rotation_speed_range"])
         self.velocity = DIRECTION_DOWN * self.speed
-        # Set splits_into based on config
-        splits_into_name = self.config.get("splits_into")
+        # Set splits_into based on data
+        splits_into_name = self.data.get("splits_into")
         if splits_into_name:
             # This will be set by subclasses to the actual class
             self.SPLITS_INTO = None

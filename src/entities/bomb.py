@@ -1,7 +1,7 @@
 from src.entities.projectile import ExplosiveProjectile
 from src.entities.explosion import Explosion
-from src.config.settings import PROJECTILES
-from src.config.assets import IMAGES
+from src.data.settings import PROJECTILES
+from src.data.assets import IMAGES
 
 
 class Bomb(ExplosiveProjectile):
@@ -47,22 +47,22 @@ class Bomb(ExplosiveProjectile):
 class PlayerBomb(Bomb):
 
     def __init__(self, x, y, game_play, owner):
-        self.config = PROJECTILES["player_bomb"]
+        self.data = PROJECTILES["player_bomb"]
         self.img_path = IMAGES["bomb"]
         super().__init__(x, y, game_play, owner)
-        self.radius = self.config["radius"]
-        self.speed = self.config["speed"]
-        self.blast_radius = self.config["blast_radius"][owner.power_level]
-        self.trigger_distance = self.config["trigger_distance"]
+        self.radius = self.data["radius"]
+        self.speed = self.data["speed"]
+        self.blast_radius = self.data["blast_radius"][owner.power_level]
+        self.trigger_distance = self.data["trigger_distance"]
 
 
 class EnemyBomb(Bomb):
 
     def __init__(self, x, y, game_play, owner):
-        self.config = PROJECTILES["enemy_bomb"]
+        self.data = PROJECTILES["enemy_bomb"]
         self.img_path = IMAGES["bomb"]
         super().__init__(x, y, game_play, owner)
-        self.radius = self.config["radius"]
-        self.speed = self.config["speed"]
-        self.blast_radius = self.config["blast_radius"]
-        self.trigger_distance = self.config["trigger_distance"]
+        self.radius = self.data["radius"]
+        self.speed = self.data["speed"]
+        self.blast_radius = self.data["blast_radius"]
+        self.trigger_distance = self.data["trigger_distance"]

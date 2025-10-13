@@ -1,7 +1,7 @@
 import pygame
 from src.entities.projectile import Projectile
-from src.config.settings import PROJECTILES
-from src.config.assets import IMAGES, SOUNDS
+from src.data.settings import PROJECTILES
+from src.data.assets import IMAGES, SOUNDS
 
 
 class Shot(Projectile):
@@ -42,26 +42,26 @@ class Shot(Projectile):
 class PlayerShot(Shot):
 
     def __init__(self, x, y, game_play, owner, power_level):
-        self.config = PROJECTILES["player_shot"][power_level]
+        self.data = PROJECTILES["player_shot"][power_level]
         if power_level == 4:
             image_key = "player_shot_ov"
         else:
             image_key = f"player_shot_lv{power_level}"
         self.img_path = IMAGES[image_key]
         super().__init__(x, y, game_play, owner)
-        self.max_range = self.config["range"]
-        self.speed = self.config["speed"]
-        self.damage = self.config["damage"]
+        self.max_range = self.data["range"]
+        self.speed = self.data["speed"]
+        self.damage = self.data["damage"]
         self.sfx = SOUNDS["player_shoot"]
 
 
 class EnemyShot(Shot):
 
     def __init__(self, x, y, game_play, owner):
-        self.config = PROJECTILES["enemy_shot"]
+        self.data = PROJECTILES["enemy_shot"]
         self.img_path = IMAGES["enemy_shot"]
         super().__init__(x, y, game_play, owner)
-        self.max_range = self.config["range"]
-        self.speed = self.config["speed"]
-        self.damage = self.config["damage"]
+        self.max_range = self.data["range"]
+        self.speed = self.data["speed"]
+        self.damage = self.data["damage"]
         self.sfx = SOUNDS["player_shoot"]
