@@ -26,7 +26,11 @@ class Shot(Projectile):
     def handle_max_range(self, dt):
         distance_this_frame = self.velocity.length() * dt
         self.distance_traveled += distance_this_frame
-        if self.distance_traveled >= self.max_range:
+        if (
+            self.distance_traveled >= self.max_range
+            or self.position.y < 0
+            or self.position.y > self.game_play.play_area_rect.height
+        ):
             self.kill()
 
     def update(self, dt):

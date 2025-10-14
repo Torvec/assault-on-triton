@@ -58,40 +58,57 @@ class Player(Entity):
             return
         self.shoot_timer = self.data["fire_rates"][self.power_level]
         shot_pos = self.position + DIRECTION_UP * self.radius
-        shot_l = PlayerShot(
-            shot_pos.x - self.data["shot_offset"],
+        shot_l1 = PlayerShot(
+            shot_pos.x - self.data["primary_shot_offset"],
             shot_pos.y,
             self.game_play,
             self,
             self.power_level,
         )
-        shot_r = PlayerShot(
-            shot_pos.x + self.data["shot_offset"],
+        shot_r1 = PlayerShot(
+            shot_pos.x + self.data["primary_shot_offset"],
             shot_pos.y,
             self.game_play,
             self,
             self.power_level,
         )
-        if self.overdriveTime > 0:
+        shot_l1.velocity = DIRECTION_UP * shot_l1.speed
+        shot_r1.velocity = DIRECTION_UP * shot_r1.speed
+        if self.power_level > 2:
             shot_l2 = PlayerShot(
-                shot_pos.x - self.data["overdrive_shot_offset"],
+                shot_pos.x - self.data["secondary_shot_offset"],
                 shot_pos.y,
                 self.game_play,
                 self,
                 self.power_level,
             )
             shot_r2 = PlayerShot(
-                shot_pos.x + self.data["overdrive_shot_offset"],
+                shot_pos.x + self.data["secondary_shot_offset"],
                 shot_pos.y,
                 self.game_play,
                 self,
                 self.power_level,
             )
-            shot_l2.velocity = DIRECTION_UP * shot_l.speed
-            shot_r2.velocity = DIRECTION_UP * shot_r.speed
-        shot_l.velocity = DIRECTION_UP * shot_l.speed
-        shot_r.velocity = DIRECTION_UP * shot_r.speed
-        shot_l.sound()
+            shot_l2.velocity = DIRECTION_UP * shot_l1.speed
+            shot_r2.velocity = DIRECTION_UP * shot_r1.speed
+        if self.power_level > 3:
+            shot_l3 = PlayerShot(
+                shot_pos.x - self.data["tertiary_shot_offset"],
+                shot_pos.y + 32,
+                self.game_play,
+                self,
+                self.power_level,
+            )
+            shot_r3 = PlayerShot(
+                shot_pos.x + self.data["tertiary_shot_offset"],
+                shot_pos.y + 32,
+                self.game_play,
+                self,
+                self.power_level,
+            )
+            shot_l3.velocity = DIRECTION_UP * shot_l1.speed
+            shot_r3.velocity = DIRECTION_UP * shot_r1.speed
+        shot_l1.sound()
 
     def release_bomb(self):
         if self.bomb_ammo <= 0 or self.bomb_timer > 0:
@@ -116,7 +133,6 @@ class Player(Entity):
         self.is_hit = True
 
     def handle_invincibility(self, dt):
-        """Handles invincibility frames when hit and invulnerability powerup timer"""
         if self.invincibleTime > 0:
             self.invincibleTime -= dt
         if self.invincibleTime < 0:

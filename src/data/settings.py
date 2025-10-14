@@ -1,4 +1,3 @@
-# Display Settings
 DISPLAY = {
     "game_surface_width": 608,
     "sidebar_width": 608,
@@ -7,7 +6,6 @@ DISPLAY = {
     "target_fps": 60,
 }
 
-# Player Configuration
 PLAYER = {
     "radius": 48,
     "base_acceleration": 600,
@@ -18,8 +16,9 @@ PLAYER = {
     "invincible_duration": 2,
     "invulnerable_duration": 30,
     "overdrive_duration": 30,
-    "shot_offset": 8,
-    "overdrive_shot_offset": 20,
+    "primary_shot_offset": 8,
+    "secondary_shot_offset": 20,
+    "tertiary_shot_offset": 24,
     "base_bomb_ammo": 3,
     "max_bomb_ammo": 6,
     "bomb_cooldown": 2.0,
@@ -29,13 +28,12 @@ PLAYER = {
     "velocity_decay": 0.99,
     "fire_rates": {
         1: 0.2,
-        2: 0.1625,
-        3: 0.125,
-        4: 0.1,  # overdrive
+        2: 0.175,
+        3: 0.15,
+        4: 0.125,  # overdrive
     },
 }
 
-# Enemy Configuration
 ENEMIES = {
     "drone": {
         "radius": 16,
@@ -48,25 +46,24 @@ ENEMIES = {
     "ship": {
         "radius": 32,
         "speed": 200,
-        "hp": 6,
+        "hp": 8,
         "shot_cooldown": 0.4,
         "shot_offset": 4,
         "blast_radius": 48,
     },
 }
 
-# Projectile Configuration
 PROJECTILES = {
     "player_shot": {
         1: {"range": 512, "speed": 500, "damage": 1},
         2: {"range": 768, "speed": 600, "damage": 2},
         3: {"range": 1024, "speed": 700, "damage": 4},
-        4: {"range": 1024, "speed": 1000, "damage": 8},
+        4: {"range": 1024, "speed": 800, "damage": 6},
     },
     "enemy_shot": {
         "range": 512,
         "speed": 500,
-        "damage": 2,
+        "damage": 4,
     },
     "player_bomb": {
         "radius": 8,
@@ -88,7 +85,6 @@ PROJECTILES = {
     },
 }
 
-# Asteroid Configuration
 ASTEROIDS = {
     "small": {
         "radius": 16,
@@ -113,7 +109,6 @@ ASTEROIDS = {
     "split_velocity_factor": 1.2,
 }
 
-# Pickup Configuration
 PICKUPS = {
     "health": {
         "radius": 16,
@@ -137,21 +132,18 @@ PICKUPS = {
     },
 }
 
-# Explosion Configuration
 EXPLOSIONS = {
     "initial_radius": 2,
     "expansion_rate": 256,
     "damage": 5,
 }
 
-# Audio Configuration
 AUDIO = {
     "master_volume": 1.0,
     "sfx_volume": 0.5,
     "music_volume": 0.7,
 }
 
-# Game Balance
 SCORING = {
     "streak_threshold_base": 10,
     "streak_decay_base": 1,
@@ -160,7 +152,6 @@ SCORING = {
     "initial_streak_meter": 0,
 }
 
-# UI Configuration
 UI = {
     "hud_padding": 16,
     "hud_inner_padding": 16,
