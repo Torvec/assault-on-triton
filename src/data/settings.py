@@ -23,14 +23,15 @@ PLAYER = {
     "max_bomb_ammo": 6,
     "bomb_cooldown": 2.0,
     "base_power_level": 1,
-    "max_power_level": 3,
+    "max_power_level": 4,
     "death_blast_radius": 128,
     "velocity_decay": 0.99,
     "fire_rates": {
         1: 0.2,
-        2: 0.175,
-        3: 0.15,
-        4: 0.125,  # overdrive
+        2: 0.18,
+        3: 0.16,
+        4: 0.14,
+        5: 0.12, # overdrive 
     },
 }
 
@@ -59,6 +60,7 @@ PROJECTILES = {
         2: {"range": 768, "speed": 600, "damage": 2},
         3: {"range": 1024, "speed": 700, "damage": 4},
         4: {"range": 1024, "speed": 800, "damage": 6},
+        5: {"range": 1024, "speed": 1000, "damage": 8},
     },
     "enemy_shot": {
         "range": 512,

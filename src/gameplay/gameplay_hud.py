@@ -5,7 +5,7 @@ from src.data.settings import UI
 
 class GamePlayHUD:
 
-    POWER_LEVELS = {1: "( I )", 2: "( II )", 3: "( III )", 4: "( OV )"}
+    POWER_LEVELS = {1: "( I )", 2: "( II )", 3: "( III )", 4: "( IV )", 5: "( OV )"}
 
     def __init__(self, game, game_play):
         self.data = UI

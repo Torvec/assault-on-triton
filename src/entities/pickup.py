@@ -111,7 +111,7 @@ class OverdrivePickup(Pickup):
         super().__init__(x, y, game_play)
 
     def apply(self, player):
-        player.power_level = 4
+        player.power_level = 5
         player.overdriveTime = self.player_data["overdrive_duration"]
         super().apply(player)
 

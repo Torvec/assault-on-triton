@@ -47,7 +47,7 @@ class PlayerShot(Shot):
 
     def __init__(self, x, y, game_play, owner, power_level):
         self.data = PROJECTILES["player_shot"][power_level]
-        if power_level == 4:
+        if power_level == 5:
             image_key = "player_shot_ov"
         else:
             image_key = f"player_shot_lv{power_level}"

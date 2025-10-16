@@ -1,61 +1,98 @@
 """
+EVENT OUTLINE, SUMMARY
 
-INTRO CUTSCENE
-
-Player sprite flying through atmosphere
-Hero and Commander have dialogue about incoming asteroids/meteors
-Player ship sprite enters space (can see the edge of the planet) -> End cutscene
-
-"""
-# Mission Start text shows up for 3 seconds then disappears
-# Various individual asteroids of different sizes come from different spawn points
-# Player gets a power level up pickup
-# Enemy drones attack for multiple waves
-# Player gets a bomb ammo pickup
-# Enemy ships attack for multiple waves
-# Player gets another power level up pickup
-# Multiple mixed waves of enemy ships and drones attack
-# Player gets another bomb ammo pickup
-
-"""
-
-MID-BOSS SEQUENCE
-
-Starts with a cutscene with dialogue between the hero and commander about an incoming vessel
-The battle cruiser enters the screen and the enemy commander has dialogue with the hero -> End cutscene
-
-Player has to destroy all turrets on battle cruiser and then the main cannon to destroy it for good
-There will also be enemy drones and ships attacking as well
-
-"""
-
-
-# Once destroyed the player will get another power level pickup and bomb ammo pickups
-# Various waves of enemy ships and drones along with destroyer class and gunships attack
-# Just before the boss encounter an overdrive pickup will be dropped and the player will face off against many more enemies and asteroids back to back until the boss appears
-
-"""
-
-BOSS SEQUENCE
-
-Starts with a cutscene of the hero and commander having dialogue about a massive object incoming and then it appears on screen -> end cutscene
-
-A massive space base/battleship disguised as a planetoid, uses asteroids to protect itself and various turrets to attack
-Need to destroy all turrets and destroy the rock layer covering the battleship in order to expose weakpoints
-Enemy drones and ships will attack as well during the fight
-Boss health bar doesn't appear until core exposed
-
-"""
-
-"""
-
-OUTRO CUTSCENE
-
-The hero and commander will have dialogue about the mission success and that they have detected more enemies incoming
-Mission Complete shows on screen
-Score and Time shows on screen 
-To be continued shows on screen
+1) Intro Sequence -> Cutscene -> Mission Start Message =>
+2) Enemy Wave Sequence 1 -> Asteroids -> Power Level Pickup -> Drones -> Ships -> Bomb ammo pickup -> Drones, Ships -> Power Level Up + Bomb ammo pickups =>
+3) Mid-boss sequence -> Cutscene -> mid-boss fight -> Cutscene -> Checkpoint Reached -> Power Level Up, bomb ammo pickup =>
+4) Enemy Wave Sequence 2 -> Destroyers, Drones -> Destroyers, Ships -> Gunships -> Overdrive pickup -> Destroyers, Drones, ships, gunships, asteroids =>
+5) Level boss Sequence -> Cutscene -> Level boss fight -> Cutscene =>
+6) Outro Sequence -> Cutscene -> Mission Complete message -> Score and Time Message -> To Be Continued Message =>
 Back to main menu
+"""
+
+"""
+EVENT OUTLINE, DETAILS
+
+1) Intro Sequence
+
+    # Cutscene Level Intro:Start
+        - Player ship sprite is flying through the atmosphere
+        - Background consists of clouds moving by fast
+        - Hero and Commander dialogue:
+        - Player ship breaks through clouds and the edge of the planet can be seen and is slowly scrolling downward
+        - Can also see a debris ring around the planet
+    # Cutscene Level Intro:End
+
+    - Mission Start Message displays (3 seconds)
+
+2) Enemy Wave Sequence 1
+
+    - Asteroids Wave
+    - Power Level Up pickup *** Pwr Lvl 2 ***
+    - Drones Wave
+    - Bomb ammo pickup
+    - Ships Wave
+    - Bomb ammo pickup
+    - Drone + Ships wave
+    - Power Level Up + Bomb Ammo pickups *** Pwr Lvl 3 ***
+
+3) Mid-Boss Sequence
+
+    # Cutscene Mid-Boss Intro:Start
+        - Hero and Commander dialogue
+        - Hero and Enemy Captain dialogue
+        - Enemy Battlecruiser enters screen
+    # Cutscene Mid-Boss Intro:End
+
+    - Player has to destroy turrets and other weakpoints before destroying the main cannon/core
+    - Player also has to deal with enemy drones and ships attacking as well
+
+    # Cutscene Mid-Boss Defeat:Start
+        - Hero and Enemy Captain dialogue
+        - Battle cruiser blows up
+    # Cutscene Mid-Boss Defeat:End
+
+    - Power Level Up and bomb ammo pickups *** Pwr Lvl 4 ***
+
+### CHECKPOINT ###
+
+4) Enemy Wave Sequence 2
+
+    - Destroyers + Drones wave
+    - Destroyers + Ships wave
+    - Bomb ammo pickup
+    - Gunships wave
+    - Overdrive pickup
+    - Destroyers + Gunships + Ships + Drones + Asteroids wave
+
+5) Level Boss Sequence
+
+    # Cutscene Boss Intro:Start
+        - Hero and Commander dialogue
+        - Space base/battle station disguised as planetoid enters screen
+        - 
+    # Cutscene Boss Intro:End
+
+    - Player has to destroy the outer shell of the station which is covered in asteroids as well as destroy the turrets
+    - Player will be attacked by drones, ships, and gunships also
+    - When the outer layers are destroyed the boss' health bar appears and the main cannon will be used along with more turrets
+
+    # Cutscene Boss Defeat:Start
+        - Battle station explodes
+    # Cutscene Boss Defeat:End
+
+6) Outro Sequence
+
+    # Cutscene Start
+        - Hero and Commander Dialogue
+    # Cutscene End
+
+    - Mission Complete message
+    - Score and Time display
+    - To be continued message
+    - Press ENTER to go to main menu
+
+- Back to Main Menu
 
 """
 
