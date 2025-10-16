@@ -1,3 +1,64 @@
+"""
+
+INTRO CUTSCENE
+
+Player sprite flying through atmosphere
+Hero and Commander have dialogue about incoming asteroids/meteors
+Player ship sprite enters space (can see the edge of the planet) -> End cutscene
+
+"""
+# Mission Start text shows up for 3 seconds then disappears
+# Various individual asteroids of different sizes come from different spawn points
+# Player gets a power level up pickup
+# Enemy drones attack for multiple waves
+# Player gets a bomb ammo pickup
+# Enemy ships attack for multiple waves
+# Player gets another power level up pickup
+# Multiple mixed waves of enemy ships and drones attack
+# Player gets another bomb ammo pickup
+
+"""
+
+MID-BOSS SEQUENCE
+
+Starts with a cutscene with dialogue between the hero and commander about an incoming vessel
+The battle cruiser enters the screen and the enemy commander has dialogue with the hero -> End cutscene
+
+Player has to destroy all turrets on battle cruiser and then the main cannon to destroy it for good
+There will also be enemy drones and ships attacking as well
+
+"""
+
+
+# Once destroyed the player will get another power level pickup and bomb ammo pickups
+# Various waves of enemy ships and drones along with destroyer class and gunships attack
+# Just before the boss encounter an overdrive pickup will be dropped and the player will face off against many more enemies and asteroids back to back until the boss appears
+
+"""
+
+BOSS SEQUENCE
+
+Starts with a cutscene of the hero and commander having dialogue about a massive object incoming and then it appears on screen -> end cutscene
+
+A massive space base/battleship disguised as a planetoid, uses asteroids to protect itself and various turrets to attack
+Need to destroy all turrets and destroy the rock layer covering the battleship in order to expose weakpoints
+Enemy drones and ships will attack as well during the fight
+Boss health bar doesn't appear until core exposed
+
+"""
+
+"""
+
+OUTRO CUTSCENE
+
+The hero and commander will have dialogue about the mission success and that they have detected more enemies incoming
+Mission Complete shows on screen
+Score and Time shows on screen 
+To be continued shows on screen
+Back to main menu
+
+"""
+
 TIMELINE = [
     {"time": 0, "event": "show_message", "params": {"text": "Mission Start!"}},
     {
