@@ -1,14 +1,14 @@
 import pygame
 import src.entities.entity_behaviors as entity_behaviors
-from src.entities.entity_layer_flags import NEUTRAL
+# from src.entities.entity_layer_flags import NEUTRAL
 
 
 class Entity(pygame.sprite.Sprite):
 
     HIT_TIMER = 0.1
 
-    layer = NEUTRAL
-    mask = 0
+    # layer = NEUTRAL
+    # mask = 0
 
     _image_cache = {}
 

@@ -1,13 +1,14 @@
 from src.entities.entity import Entity
-from src.entities.entity_layer_flags import PICKUP, PLAYER
-from src.data.settings import PICKUPS, PLAYER as PLAYER_DATA
+
+# from src.entities.entity_layer_flags import PICKUP, PLAYER
+from src.data.settings import PICKUPS, PLAYER
 from src.data.assets import IMAGES
 
 
 class Pickup(Entity):
 
-    layer = PICKUP
-    mask = PLAYER
+    # layer = PICKUP
+    # mask = PLAYER
 
     def __init__(self, x, y, game_play):
         super().__init__(x, y, game_play)
@@ -35,7 +36,7 @@ class HealthPickup(Pickup):
 
     def __init__(self, x, y, game_play):
         self.img_path = IMAGES["health_pickup"]
-        self.player_data = PLAYER_DATA
+        self.player_data = PLAYER
         super().__init__(x, y, game_play)
         self.heal_amount = PICKUPS["health"]["heal_amount"]
 
@@ -59,7 +60,7 @@ class ExtraLifePickup(Pickup):
 
     def __init__(self, x, y, game_play):
         self.img_path = IMAGES["life_pickup"]
-        self.player_data = PLAYER_DATA
+        self.player_data = PLAYER
         super().__init__(x, y, game_play)
         self.fallback_score = PICKUPS["life"]["fallback_score"]
 
@@ -84,7 +85,7 @@ class PowerLevelPickup(Pickup):
 
     def __init__(self, x, y, game_play):
         self.img_path = IMAGES["power_pickup"]
-        self.player_data = PLAYER_DATA
+        self.player_data = PLAYER
         super().__init__(x, y, game_play)
         self.fallback_score = PICKUPS["power"]["fallback_score"]
 
@@ -107,7 +108,7 @@ class OverdrivePickup(Pickup):
 
     def __init__(self, x, y, game_play):
         self.img_path = IMAGES["overdrive_pickup"]
-        self.player_data = PLAYER_DATA
+        self.player_data = PLAYER
         super().__init__(x, y, game_play)
 
     def apply(self, player):
@@ -128,7 +129,7 @@ class BombAmmoPickup(Pickup):
 
     def __init__(self, x, y, game_play):
         self.img_path = IMAGES["bomb_pickup"]
-        self.player_data = PLAYER_DATA
+        self.player_data = PLAYER
         super().__init__(x, y, game_play)
         self.fallback_score = PICKUPS["bomb"]["fallback_score"]
 
@@ -151,7 +152,7 @@ class InvulnerabilityPickup(Pickup):
 
     def __init__(self, x, y, game_play):
         self.img_path = IMAGES["invulnerable_pickup"]
-        self.player_data = PLAYER_DATA
+        self.player_data = PLAYER
         super().__init__(x, y, game_play)
 
     def apply(self, player):

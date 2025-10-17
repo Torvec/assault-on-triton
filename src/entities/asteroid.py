@@ -1,15 +1,15 @@
 import random
 import pygame
 from src.entities.entity import Entity
-from src.entities.entity_layer_flags import (
-    PLAYER,
-    ENEMY,
-    ALLY,
-    NEUTRAL,
-    PROJECTILE,
-    EXPLOSIVE,
-    EXPLOSION,
-)
+# from src.entities.entity_layer_flags import (
+#     PLAYER,
+#     ENEMY,
+#     ALLY,
+#     NEUTRAL,
+#     PROJECTILE,
+#     EXPLOSIVE,
+#     EXPLOSION,
+# )
 from src.entities.entity_directions import DIRECTION_DOWN
 from src.data.settings import ASTEROIDS
 from src.data.assets import IMAGES
@@ -17,8 +17,8 @@ from src.data.assets import IMAGES
 
 class Asteroid(Entity):
 
-    layer = NEUTRAL
-    mask = PLAYER | ENEMY | ALLY | PROJECTILE | EXPLOSIVE | EXPLOSION | NEUTRAL
+    # layer = NEUTRAL
+    # mask = PLAYER | ENEMY | ALLY | PROJECTILE | EXPLOSIVE | EXPLOSION | NEUTRAL
 
     def __init__(self, x, y, game_play, asteroid_size="medium"):
         # Get data based on size parameter

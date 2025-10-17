@@ -1,22 +1,22 @@
 from src.entities.entity import Entity
 from src.entities.explosion import Explosion
-from src.entities.entity_layer_flags import (
-    PLAYER,
-    ENEMY,
-    ALLY,
-    NEUTRAL,
-    PROJECTILE,
-    EXPLOSIVE,
-    EXPLOSION,
-)
+# from src.entities.entity_layer_flags import (
+#     PLAYER,
+#     ENEMY,
+#     ALLY,
+#     NEUTRAL,
+#     PROJECTILE,
+#     EXPLOSIVE,
+#     EXPLOSION,
+# )
 from src.data.settings import ENEMIES
 from src.data.assets import IMAGES
 
 
 class EnemyDrone(Entity):
 
-    layer = ENEMY
-    mask = PLAYER | ALLY | PROJECTILE | EXPLOSIVE | EXPLOSION | NEUTRAL
+    # layer = ENEMY
+    # mask = PLAYER | ALLY | PROJECTILE | EXPLOSIVE | EXPLOSION | NEUTRAL
 
     def __init__(self, x, y, game_play):
         self.data = ENEMIES["drone"]

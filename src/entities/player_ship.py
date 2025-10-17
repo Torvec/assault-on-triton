@@ -3,27 +3,27 @@ from src.entities.entity import Entity
 from src.entities.shot import PlayerShot
 from src.entities.bomb import PlayerBomb
 from src.entities.explosion import Explosion
-from src.entities.entity_layer_flags import (
-    PLAYER,
-    ENEMY,
-    PROJECTILE,
-    EXPLOSIVE,
-    EXPLOSION,
-    NEUTRAL,
-    PICKUP,
-)
+# from src.entities.entity_layer_flags import (
+#     PLAYER,
+#     ENEMY,
+#     PROJECTILE,
+#     EXPLOSIVE,
+#     EXPLOSION,
+#     NEUTRAL,
+#     PICKUP,
+# )
 from src.entities.entity_directions import DIRECTION_UP
-from src.data.settings import PLAYER as PLAYER_DATA
+from src.data.settings import PLAYER
 from src.data.assets import IMAGES
 
 
 class Player(Entity):
 
-    layer = PLAYER
-    mask = ENEMY | PROJECTILE | EXPLOSIVE | EXPLOSION | NEUTRAL | PICKUP
+    # layer = PLAYER
+    # mask = ENEMY | PROJECTILE | EXPLOSIVE | EXPLOSION | NEUTRAL | PICKUP
 
     def __init__(self, x, y, game_play):
-        self.data = PLAYER_DATA
+        self.data = PLAYER
         self.img_path = IMAGES["player_ship"]
         super().__init__(x, y, game_play)
 

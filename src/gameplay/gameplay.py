@@ -45,6 +45,7 @@ class GamePlay(Screen):
         self.pause_menu = PauseMenu(self)
         self.event_manager = EventManager(self, TIMELINE)
         self.active_targets = set()
+        # ! Need a better way to handle background layers, this is kind of shit
         self.background = StarField(0, 0, self.game)
         self.background_2 = Planet(256, self.game.gs_h - 196, self.game)
         self.background_3 = PlanetTwo(self.game.gs_w // 2, -128, self.game)

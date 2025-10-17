@@ -1,20 +1,20 @@
 import pygame
 from src.entities.entity import Entity
-from src.entities.entity_layer_flags import (
-    PLAYER,
-    ENEMY,
-    ALLY,
-    NEUTRAL,
-    EXPLOSIVE,
-    EXPLOSION,
-)
+# from src.entities.entity_layer_flags import (
+#     PLAYER,
+#     ENEMY,
+#     ALLY,
+#     NEUTRAL,
+#     EXPLOSIVE,
+#     EXPLOSION,
+# )
 from src.data.settings import EXPLOSIONS
 from src.data.assets import IMAGES
 
 
 class Explosion(Entity):
 
-    layer = EXPLOSION
+    # layer = EXPLOSION
 
     def __init__(self, x, y, game_play, blast_radius, owner):
         self.data = EXPLOSIONS
@@ -26,14 +26,14 @@ class Explosion(Entity):
         self.exp_rate = self.data["expansion_rate"]
         self.damage = self.data["damage"]
 
-    @property
-    def mask(self):
-        if self.owner.layer == PLAYER:
-            return ENEMY | EXPLOSIVE | NEUTRAL
-        elif self.owner.layer == ENEMY:
-            return PLAYER | ALLY | NEUTRAL | EXPLOSIVE
-        elif self.owner.layer == ALLY:
-            return ENEMY | NEUTRAL | EXPLOSIVE
+    # @property
+    # def mask(self):
+    #     if self.owner.layer == PLAYER:
+    #         return ENEMY | EXPLOSIVE | NEUTRAL
+    #     elif self.owner.layer == ENEMY:
+    #         return PLAYER | ALLY | NEUTRAL | EXPLOSIVE
+    #     elif self.owner.layer == ALLY:
+    #         return ENEMY | NEUTRAL | EXPLOSIVE
 
     def sound(self):
         pass
