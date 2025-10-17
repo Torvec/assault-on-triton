@@ -24,12 +24,18 @@ class Entity(pygame.sprite.Sprite):
             super().__init__(self.containers)
         else:
             super().__init__()
+
         # Image cache check so images only get loaded once instead of every time an entity is spawned
         if hasattr(self, "img_path") and self.img_path:
             self.image = self.load_image(self.img_path)
+
         # Init Parameters
         self.position = pygame.Vector2(x, y)
         self.game_play = game_play
+
+        self.sprite_rect = self.image.get_rect()
+        self.img_mask = pygame.mask.from_surface(self.image)
+
         # Instance Attributes for all entities
         self.play_area = game_play.play_area_rect
         self.radius = 0

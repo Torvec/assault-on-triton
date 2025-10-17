@@ -9,6 +9,7 @@ from src.entities.entity_layer_flags import (
     EXPLOSION,
 )
 from src.data.settings import EXPLOSIONS
+from src.data.assets import IMAGES
 
 
 class Explosion(Entity):
@@ -17,6 +18,7 @@ class Explosion(Entity):
 
     def __init__(self, x, y, game_play, blast_radius, owner):
         self.data = EXPLOSIONS
+        self.img_path = IMAGES["explosion"]
         super().__init__(x, y, game_play)
         self.blast_radius = blast_radius
         self.owner = owner
@@ -45,6 +47,8 @@ class Explosion(Entity):
 
     def draw(self, screen):
         super().draw(screen)
-        pygame.draw.circle(
-            screen, "white", (self.position.x, self.position.y), self.radius
+        scaled_image = pygame.transform.scale(
+            self.image, (self.radius * 2, self.radius * 2)
         )
+        explosion_rect = scaled_image.get_rect(center=self.position)
+        screen.blit(scaled_image, explosion_rect)

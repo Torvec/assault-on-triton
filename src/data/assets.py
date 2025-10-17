@@ -24,6 +24,8 @@ IMAGES = {
     "overdrive_pickup": "assets/entities/pickup_overdrive.png",
     "bomb_pickup": "assets/entities/pickup_bomb_ammo.png",
     "invulnerable_pickup": "assets/entities/pickup_invincibility.png",
+    # Explosions
+    "explosion": "assets/entities/explosion.png",
     # UI
     "shield": "assets/entities/shield.png",
     # Backgrounds
