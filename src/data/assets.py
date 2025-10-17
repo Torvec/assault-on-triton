@@ -17,6 +17,7 @@ IMAGES = {
     "asteroid_small": "assets/entities/asteroid_sm.png",
     "asteroid_medium": "assets/entities/asteroid_md.png",
     "asteroid_large": "assets/entities/asteroid_lg.png",
+    "asteroid_xl": "assets/entities/asteroid_xl.png",
     # Pickups
     "health_pickup": "assets/entities/pickup_health.png",
     "life_pickup": "assets/entities/pickup_life_up.png",

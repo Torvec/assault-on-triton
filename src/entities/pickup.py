@@ -1,21 +1,14 @@
 from src.entities.entity import Entity
-
-# from src.entities.entity_layer_flags import PICKUP, PLAYER
 from src.data.settings import PICKUPS, PLAYER
 from src.data.assets import IMAGES
 
 
 class Pickup(Entity):
 
-    # layer = PICKUP
-    # mask = PLAYER
-
     def __init__(self, x, y, game_play):
         super().__init__(x, y, game_play)
-        # Default pickup values - subclasses will override pickup_type
         pickup_type = getattr(self, "pickup_type", "health")
         data = PICKUPS.get(pickup_type, PICKUPS["health"])
-        self.radius = data["radius"]
         self.speed = data["speed"]
 
     def apply(self, player):
@@ -26,8 +19,7 @@ class Pickup(Entity):
 
     def draw(self, screen):
         super().draw(screen)
-        pickup_rect = self.image.get_rect(center=self.position)
-        screen.blit(self.image, pickup_rect)
+        screen.blit(self.image, self.rect)
 
 
 class HealthPickup(Pickup):

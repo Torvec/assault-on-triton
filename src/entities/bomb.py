@@ -9,13 +9,13 @@ class Bomb(ExplosiveProjectile):
     def __init__(self, x, y, game_play, owner):
         super().__init__(x, y, game_play, owner)
         self.distance_traveled = 0
-        self.radius = 0
         self.speed = 0
         self.blast_radius = 0
         self.trigger_distance = 0
 
     def sound(self):
-        pass  # The launch sound not explosion sound
+        #! TODO: get sound effect for releasing bomb
+        pass
 
     def check_trigger_distance(self, dt):
         distance_this_frame = self.velocity.length() * dt
@@ -40,8 +40,7 @@ class Bomb(ExplosiveProjectile):
 
     def draw(self, screen):
         super().draw(screen)
-        bomb_rect = self.image.get_rect(center=self.position)
-        screen.blit(self.image, bomb_rect)
+        screen.blit(self.image, self.rect)
 
 
 class PlayerBomb(Bomb):
@@ -50,7 +49,6 @@ class PlayerBomb(Bomb):
         self.data = PROJECTILES["player_bomb"]
         self.img_path = IMAGES["bomb"]
         super().__init__(x, y, game_play, owner)
-        self.radius = self.data["radius"]
         self.speed = self.data["speed"]
         self.blast_radius = self.data["blast_radius"][owner.power_level]
         self.trigger_distance = self.data["trigger_distance"]
@@ -62,7 +60,6 @@ class EnemyBomb(Bomb):
         self.data = PROJECTILES["enemy_bomb"]
         self.img_path = IMAGES["bomb"]
         super().__init__(x, y, game_play, owner)
-        self.radius = self.data["radius"]
         self.speed = self.data["speed"]
         self.blast_radius = self.data["blast_radius"]
         self.trigger_distance = self.data["trigger_distance"]

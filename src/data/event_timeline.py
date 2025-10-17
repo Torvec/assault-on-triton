@@ -239,6 +239,34 @@ TIMELINE = [
         },
     },
     {
+        "time": 11.5,
+        "event": "spawn_entities",
+        "params": {
+            "type": "AsteroidXL",
+            "count": 1,
+            "location": "right",
+            "formation": "single",
+            "behaviors": [
+                {"action": "move_straight", "params": {}},
+                {"action": "rotate_constantly", "params": {}},
+            ],
+        },
+    },
+    {
+        "time": 11.6,
+        "event": "spawn_entities",
+        "params": {
+            "type": "AsteroidXL",
+            "count": 1,
+            "location": "left",
+            "formation": "single",
+            "behaviors": [
+                {"action": "move_straight", "params": {}},
+                {"action": "rotate_constantly", "params": {}},
+            ],
+        },
+    },
+    {
         "time": 12.0,
         "event": "spawn_entities",
         "params": {

@@ -56,6 +56,7 @@ class GamePlay(Screen):
         self.level_end_delay = 10.0
 
         # Sprite Groups
+        self.player_group = pygame.sprite.GroupSingle()
         self.asteroids = pygame.sprite.Group()
         self.enemy_drones = pygame.sprite.Group()
         self.enemy_ships = pygame.sprite.Group()
@@ -106,7 +107,7 @@ class GamePlay(Screen):
         if not self.isPaused:
             super().update(dt)
             self.elapsed_time += dt
-            self.collision_manager.handle_all_collisions()
+            self.collision_manager.update()
             self.event_manager.update(dt)
             self.score.update_streak_meter_decay(dt)
             self.handle_level_complete(dt)

@@ -6,16 +6,13 @@ from src.data.assets import IMAGES, SOUNDS
 
 class Shot(Projectile):
 
-    RADIUS = 4
-
     def __init__(self, x, y, game_play, owner):
         super().__init__(x, y, game_play, owner)
 
-        self.radius = self.RADIUS
         self.distance_traveled = 0
         self.max_range = 0
         self.speed = 0
-        self.damage = 1
+        self.damage = 0
         self.sfx = None
 
     def sound(self):
@@ -39,8 +36,8 @@ class Shot(Projectile):
         self.position += self.velocity * dt
 
     def draw(self, screen):
-        shot_rect = self.image.get_rect(center=self.position)
-        screen.blit(self.image, shot_rect)
+        super().draw(screen)
+        screen.blit(self.image, self.rect)
 
 
 class PlayerShot(Shot):

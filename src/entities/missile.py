@@ -12,7 +12,6 @@ class Missile(ExplosiveProjectile):
         self.data = PROJECTILES["missile"]
         self.img_path = IMAGES["missile"]
         super().__init__(x, y, game_play, owner)
-        self.radius = self.data["radius"]
         self.speed = self.data["speed"]
         self.hp = self.data["hp"]
         self.blast_radius = self.data["blast_radius"]
@@ -41,5 +40,4 @@ class Missile(ExplosiveProjectile):
     def draw(self, screen):
         super().draw(screen)
         rotated_image = pygame.transform.rotate(self.image, -self.rotation)
-        missile_rect = rotated_image.get_rect(center=self.position)
-        screen.blit(rotated_image, missile_rect)
+        screen.blit(rotated_image, self.rect)

@@ -1,28 +1,15 @@
 from src.entities.entity import Entity
 from src.entities.explosion import Explosion
-# from src.entities.entity_layer_flags import (
-#     PLAYER,
-#     ENEMY,
-#     ALLY,
-#     NEUTRAL,
-#     PROJECTILE,
-#     EXPLOSIVE,
-#     EXPLOSION,
-# )
 from src.data.settings import ENEMIES
 from src.data.assets import IMAGES
 
 
 class EnemyShip(Entity):
 
-    # layer = ENEMY
-    # mask = PLAYER | ALLY | PROJECTILE | EXPLOSIVE | EXPLOSION | NEUTRAL
-
     def __init__(self, x, y, game_play):
         self.data = ENEMIES["ship"]
         self.img_path = IMAGES["enemy_ship"]
         super().__init__(x, y, game_play)
-        self.radius = self.data["radius"]
         self.speed = self.data["speed"]
         self.hp = self.data["hp"]
         self.blast_radius = self.data["blast_radius"]
@@ -43,6 +30,5 @@ class EnemyShip(Entity):
 
     def draw(self, screen):
         super().draw(screen)
-        ship_rect = self.image.get_rect(center=self.position)
-        screen.blit(self.image, ship_rect)
-        self.flash_when_hit(screen, self.image, ship_rect)
+        screen.blit(self.image, self.rect)
+        self.flash_when_hit(screen, self.image, self.rect)

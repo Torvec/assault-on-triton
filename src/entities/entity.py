@@ -1,14 +1,10 @@
 import pygame
 import src.entities.entity_behaviors as entity_behaviors
-# from src.entities.entity_layer_flags import NEUTRAL
 
 
 class Entity(pygame.sprite.Sprite):
 
     HIT_TIMER = 0.1
-
-    # layer = NEUTRAL
-    # mask = 0
 
     _image_cache = {}
 
@@ -26,19 +22,21 @@ class Entity(pygame.sprite.Sprite):
             super().__init__()
 
         # Image cache check so images only get loaded once instead of every time an entity is spawned
-        if hasattr(self, "img_path") and self.img_path:
+        if getattr(self, "img_path", None):
             self.image = self.load_image(self.img_path)
+        else:
+            self.image = pygame.Surface((1, 1), pygame.SRCALPHA)
 
         # Init Parameters
         self.position = pygame.Vector2(x, y)
         self.game_play = game_play
 
-        self.sprite_rect = self.image.get_rect()
+        self.rect = self.image.get_rect()
+        self.rect.center = (self.position.x, self.position.y)
         self.img_mask = pygame.mask.from_surface(self.image)
 
         # Instance Attributes for all entities
         self.play_area = game_play.play_area_rect
-        self.radius = 0
         self.velocity = pygame.Vector2(0, 0)
         self.rotation = 0
         self.is_hit = False
@@ -46,23 +44,28 @@ class Entity(pygame.sprite.Sprite):
         self.blast_radius = 0
         self.behaviors = []
 
-    def collides_with(self, other):
-        return self.position.distance_to(other.position) <= self.radius + other.radius
+    def collides_with(self, other_group):
+        if pygame.sprite.spritecollide(self, other_group, False):
+            print("Rect Collision")
+            if pygame.sprite.spritecollide(
+                self, other_group, False, pygame.sprite.collide_mask
+            ):
+                print("Mask Collision")
 
     def handle_boundaries(self, action=None):
         edges = {
-            "top": self.play_area.top + self.radius,
-            "right": self.play_area.right - self.radius * 0.25,
-            "bottom": self.play_area.bottom - self.radius,
-            "left": self.play_area.left + self.radius * 0.25,
+            "top": self.play_area.top + self.rect.height // 2,
+            "right": self.play_area.right - self.rect.width // 2,
+            "bottom": self.play_area.bottom - self.rect.height // 2,
+            "left": self.play_area.left + self.rect.width // 2,
         }
         if action == "block":
             self.position.x = max(edges["left"], min(self.position.x, edges["right"]))
             self.position.y = max(edges["top"], min(self.position.y, edges["bottom"]))
-        if action == None and (
-            self.position.x + self.radius < self.play_area.left
-            or self.position.x - self.radius > self.play_area.right
-            or self.position.y - self.radius > self.play_area.bottom
+        elif action is None and (
+            self.position.x + self.rect.width // 2 < self.play_area.left
+            or self.position.x - self.rect.width // 2 > self.play_area.right
+            or self.position.y - self.rect.height // 2 > self.play_area.bottom
         ):
             self.remove_active_targets()
 
@@ -75,7 +78,9 @@ class Entity(pygame.sprite.Sprite):
         if self.is_hit:
             flash = pygame.Surface(entity_surface.get_size(), pygame.SRCALPHA)
             center = (flash.get_width() // 2, flash.get_height() // 2)
-            pygame.draw.circle(flash, (255, 255, 255, 180), center, self.radius)
+            pygame.draw.circle(
+                flash, (255, 255, 255, 180), center, self.rect.width // 2
+            )
             screen.blit(flash, entity_rect)
 
     def handle_hit_timer(self, dt):
@@ -94,9 +99,10 @@ class Entity(pygame.sprite.Sprite):
             behavior_fn(self, **params)
 
     def update(self, dt):
+        self.rect.center = (self.position.x, self.position.y)
         self.handle_boundaries()
         self.handle_hit_timer(dt)
         self.handle_behaviors(dt)
 
     def draw(self, screen):
-        pass
+        pygame.draw.rect(screen, "white", self.rect, 1)

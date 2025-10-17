@@ -1,5 +1,6 @@
 import pygame
 from src.entities.asteroid import (
+    AsteroidExtraLarge,
     AsteroidLarge,
     AsteroidMedium,
     AsteroidSmall,
@@ -38,6 +39,7 @@ class SpawnManager(pygame.sprite.Sprite):
             "right_edge": 0.9,
         }
         self.entity_dict = {
+            "AsteroidXL": AsteroidExtraLarge,
             "AsteroidLarge": AsteroidLarge,
             "AsteroidMedium": AsteroidMedium,
             "AsteroidSmall": AsteroidSmall,
@@ -68,7 +70,7 @@ class SpawnManager(pygame.sprite.Sprite):
             x_multiplier = self.spawn_locations[self.location]
             fwd_pos = pygame.Vector2(
                 self.play_area.left + x_multiplier * self.play_area.width,
-                self.play_area.top - 64,
+                self.play_area.top - 128,
             )
 
         # Get all positions for the formation

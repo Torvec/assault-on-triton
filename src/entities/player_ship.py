@@ -3,15 +3,6 @@ from src.entities.entity import Entity
 from src.entities.shot import PlayerShot
 from src.entities.bomb import PlayerBomb
 from src.entities.explosion import Explosion
-# from src.entities.entity_layer_flags import (
-#     PLAYER,
-#     ENEMY,
-#     PROJECTILE,
-#     EXPLOSIVE,
-#     EXPLOSION,
-#     NEUTRAL,
-#     PICKUP,
-# )
 from src.entities.entity_directions import DIRECTION_UP
 from src.data.settings import PLAYER
 from src.data.assets import IMAGES
@@ -19,15 +10,11 @@ from src.data.assets import IMAGES
 
 class Player(Entity):
 
-    # layer = PLAYER
-    # mask = ENEMY | PROJECTILE | EXPLOSIVE | EXPLOSION | NEUTRAL | PICKUP
-
     def __init__(self, x, y, game_play):
         self.data = PLAYER
         self.img_path = IMAGES["player_ship"]
         super().__init__(x, y, game_play)
 
-        self.radius = self.data["radius"]
         self.acceleration = self.data["base_acceleration"]
         self.speed = self.data["base_speed"]
         self.lives = self.data["base_lives"]
@@ -57,7 +44,7 @@ class Player(Entity):
         if self.shoot_timer > 0:
             return
         self.shoot_timer = self.data["fire_rates"][self.power_level]
-        shot_pos = self.position + DIRECTION_UP * self.radius
+        shot_pos = self.position + DIRECTION_UP * self.rect.height // 2
         shot_l1 = PlayerShot(
             shot_pos.x - self.data["primary_shot_offset"],
             shot_pos.y,
@@ -189,6 +176,5 @@ class Player(Entity):
 
     def draw(self, screen):
         super().draw(screen)
-        ship_rect = self.image.get_rect(center=self.position)
-        screen.blit(self.image, ship_rect)
-        self.flash_when_hit(screen, self.image, ship_rect)
+        screen.blit(self.image, self.rect)
+        self.flash_when_hit(screen, self.image, self.rect)
