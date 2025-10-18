@@ -15,7 +15,6 @@ from src.entities.pickup import Pickup
 
 # Managers
 from src.gameplay.event_manager import EventManager
-from src.gameplay.spawn_manager import SpawnManager
 from src.gameplay.score_manager import ScoreManager
 from src.gameplay.collision_manager import CollisionManager
 from src.data.event_timeline import TIMELINE
@@ -45,7 +44,7 @@ class GamePlay(Screen):
         self.pause_menu = PauseMenu(self)
         self.event_manager = EventManager(self, TIMELINE)
         self.active_targets = set()
-        # ! Need a better way to handle background layers, this is kind of shit
+        #! Need a better way to handle background layers, this is kind of shit
         self.background = StarField(0, 0, self.game)
         self.background_2 = Planet(256, self.game.gs_h - 196, self.game)
         self.background_3 = PlanetTwo(self.game.gs_w // 2, -128, self.game)
@@ -71,8 +70,7 @@ class GamePlay(Screen):
         EnemyDrone.containers = (self.enemy_drones, self.updateable, self.drawable)
         EnemyShip.containers = (self.enemy_ships, self.updateable, self.drawable)
         Missile.containers = (self.missiles, self.updateable, self.drawable)
-        SpawnManager.containers = self.updateable
-        Player.containers = (self.updateable, self.drawable)
+        Player.containers = (self.player_group, self.updateable, self.drawable)
         Shot.containers = (self.shots, self.updateable, self.drawable)
         Bomb.containers = (self.bombs, self.updateable, self.drawable)
         Explosion.containers = (self.explosions, self.updateable, self.drawable)

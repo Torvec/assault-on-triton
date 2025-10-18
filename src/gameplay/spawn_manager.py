@@ -18,10 +18,9 @@ from src.entities.pickup import (
 from src.entities import entity_formations
 
 
-class SpawnManager(pygame.sprite.Sprite):
+class SpawnManager:
 
     def __init__(self, game_play, entity_name, count, location, formation, behaviors):
-        pygame.sprite.Sprite.__init__(self, self.containers)
         self.game_play = game_play
         self.play_area = game_play.play_area_rect
         self.entity_name = entity_name

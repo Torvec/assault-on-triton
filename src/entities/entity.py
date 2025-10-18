@@ -24,8 +24,8 @@ class Entity(pygame.sprite.Sprite):
         # Image cache check so images only get loaded once instead of every time an entity is spawned
         if getattr(self, "img_path", None):
             self.image = self.load_image(self.img_path)
-        else:
-            self.image = pygame.Surface((1, 1), pygame.SRCALPHA)
+        # else:
+        #     self.image = pygame.Surface((1, 1), pygame.SRCALPHA)
 
         # Init Parameters
         self.position = pygame.Vector2(x, y)
@@ -33,7 +33,8 @@ class Entity(pygame.sprite.Sprite):
 
         self.rect = self.image.get_rect()
         self.rect.center = (self.position.x, self.position.y)
-        self.img_mask = pygame.mask.from_surface(self.image)
+        self.mask = pygame.mask.from_surface(self.image)
+        self.mask_surface = self.mask.to_surface()
 
         # Instance Attributes for all entities
         self.play_area = game_play.play_area_rect
@@ -45,12 +46,15 @@ class Entity(pygame.sprite.Sprite):
         self.behaviors = []
 
     def collides_with(self, other_group):
+        """
+        Checks for rect collision first, then mask collision for per pixel detection
+        """
         if pygame.sprite.spritecollide(self, other_group, False):
-            print("Rect Collision")
             if pygame.sprite.spritecollide(
                 self, other_group, False, pygame.sprite.collide_mask
             ):
-                print("Mask Collision")
+                return True
+        return False
 
     def handle_boundaries(self, action=None):
         edges = {
@@ -76,6 +80,7 @@ class Entity(pygame.sprite.Sprite):
 
     def flash_when_hit(self, screen, entity_surface, entity_rect):
         if self.is_hit:
+            #! screen.blit(self.mask_surface, (self.position.x, self.position.y))
             flash = pygame.Surface(entity_surface.get_size(), pygame.SRCALPHA)
             center = (flash.get_width() // 2, flash.get_height() // 2)
             pygame.draw.circle(

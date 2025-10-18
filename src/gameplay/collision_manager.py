@@ -12,6 +12,15 @@ class CollisionManager:
             "explosions": self.game_play.explosions,
             "pickups": self.game_play.pickups,
         }
-    
+
+
     def update(self):
-        pass
+        player = self.sprite_groups["player"].sprite
+        if not player:
+            return
+
+        player.collides_with(self.sprite_groups["asteroids"])
+        player.collides_with(self.sprite_groups["enemy_drones"])
+        player.collides_with(self.sprite_groups["enemy_ships"])
+        player.collides_with(self.sprite_groups["pickups"])
+ 
