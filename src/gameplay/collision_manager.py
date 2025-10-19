@@ -81,7 +81,6 @@ class CollisionManager:
             if shot_v_colliders:
                 for collider in shot_v_colliders:
                     #! collider takes damage
-                    print("player shot collided")
                     shot.kill()
         """
         Enemy Shots v Player / Enemy Shots v Neutral / Enemy Shots v Player Bombs

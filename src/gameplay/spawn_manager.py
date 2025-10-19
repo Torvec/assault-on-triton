@@ -5,8 +5,7 @@ from src.entities.asteroid import (
     AsteroidMedium,
     AsteroidSmall,
 )
-from src.entities.enemy_drone import EnemyDrone
-from src.entities.enemy_ship import EnemyShip
+from src.entities.enemy import EnemyDrone, EnemyShip
 from src.entities.pickup import (
     HealthPickup,
     ExtraLifePickup,

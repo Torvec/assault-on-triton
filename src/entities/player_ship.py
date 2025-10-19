@@ -1,7 +1,6 @@
 import pygame
 from src.entities.entity import Entity
-from src.entities.shot import PlayerShot
-from src.entities.bomb import PlayerBomb
+from src.entities.projectile import PlayerShot, PlayerBomb
 from src.entities.explosion import Explosion
 from src.entities.entity_directions import DIRECTION_UP
 from src.data.settings import PLAYER

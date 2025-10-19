@@ -4,13 +4,10 @@ from src.screen import Screen
 
 # Entities
 from src.entities.player_ship import Player
-from src.entities.shot import Shot
-from src.entities.bomb import Bomb
+from src.entities.projectile import Shot, Bomb, Missile
 from src.entities.explosion import Explosion
 from src.entities.asteroid import Asteroid
-from src.entities.enemy_drone import EnemyDrone
-from src.entities.enemy_ship import EnemyShip
-from src.entities.missile import Missile
+from src.entities.enemy import EnemyDrone, EnemyShip
 from src.entities.pickup import Pickup
 
 # Managers
