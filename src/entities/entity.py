@@ -46,15 +46,14 @@ class Entity(pygame.sprite.Sprite):
         self.behaviors = []
 
     def collides_with(self, other_group):
-        """
-        Checks for rect collision first, then mask collision for per pixel detection
-        """
-        if pygame.sprite.spritecollide(self, other_group, False):
-            if pygame.sprite.spritecollide(
+        rect_collisions = pygame.sprite.spritecollide(self, other_group, False)
+        if rect_collisions:
+            mask_collisions = pygame.sprite.spritecollide(
                 self, other_group, False, pygame.sprite.collide_mask
-            ):
-                return True
-        return False
+            )
+            if mask_collisions:
+                return mask_collisions
+        return []
 
     def handle_boundaries(self, action=None):
         edges = {
