@@ -5,8 +5,6 @@ from src.data.settings import UI
 
 class GamePlayHUD:
 
-    POWER_LEVELS = {1: "( I )", 2: "( II )", 3: "( III )", 4: "( IV )", 5: "( OV )"}
-
     def __init__(self, game, game_play):
         self.data = UI
         self.game = game
@@ -112,11 +110,11 @@ class GamePlayHUD:
             )
             pygame.draw.rect(surface, self.data["colors"]["meter_fill"], fill_rect)
 
-    # def _format_time(self, elapsed_time):
-    #     mins = int(elapsed_time // 60)
-    #     secs = int(elapsed_time % 60)
-    #     ms = int((elapsed_time % 1) * 1000)
-    #     return f"T-{mins:02}:{secs:02}:{ms:03}"
+    def _format_time(self, elapsed_time):
+        mins = int(elapsed_time // 60)
+        secs = int(elapsed_time % 60)
+        ms = int((elapsed_time % 1) * 1000)
+        return f"T-{mins:02}:{secs:02}:{ms:03}"
 
     def draw_top_left(self, sidebar, rect):
         """Score, multiplier, high score, time."""
@@ -239,7 +237,7 @@ class GamePlayHUD:
         )
 
         # Power Level
-        power_display = self.POWER_LEVELS.get(player.power_level, "( ? )")
+        power_display = self.data["power_levels"].get(player.power_level, "( ? )")
         render_text(
             screen=sidebar,
             text=f"PWR LVL {power_display}",

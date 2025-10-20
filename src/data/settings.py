@@ -2,6 +2,7 @@ DISPLAY = {
     "game_surface_width": 608,
     "sidebar_width": 608,
     "sidebar_left_offset": 48,
+    "game_surface_offset": 48 + 608,
     "sidebar_right_offset": 1264,
     "target_fps": 60,
 }
@@ -135,4 +136,5 @@ UI = {
         "meter_border": "grey70",
         "meter_fill": "grey50",
     },
+    "power_levels": {1: "( I )", 2: "( II )", 3: "( III )", 4: "( IV )", 5: "( OV )"},
 }

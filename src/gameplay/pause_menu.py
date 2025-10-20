@@ -5,74 +5,62 @@ from src.utils.render_text import render_text
 
 class PauseMenu:
 
+    menu_title = "Game Paused"
+    menu_items = [
+        "[ESC] Resume",
+        "[1] Restart",
+        "[2] Main Menu",
+        "[Q] QUIT",
+    ]
+
     def __init__(self, game_play):
         self.game_play = game_play
-        self.screen_w = game_play.game.gs_w
-        self.screen_h = game_play.game.gs_h
 
-    def controls(self, events):
+    def update(self, events):
         for event in events:
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_ESCAPE:
                     self.game_play.isPaused = not self.game_play.isPaused
                 if self.game_play.isPaused:
-                    if event.key == pygame.K_1:
-                        self.game_play.game.set_scene("GamePlay")
-                    if event.key == pygame.K_2:
-                        self.game_play.game.set_scene("Start")
-                    if event.key == pygame.K_q:
-                        pygame.quit()
-                        sys.exit()
+                    match event.key:
+                        case pygame.K_1:
+                            self.game_play.game.set_scene("GamePlay")
+                        case pygame.K_2:
+                            self.game_play.game.set_scene("Start")
+                        case pygame.K_q:
+                            pygame.quit()
+                            sys.exit()
 
-    def draw_menu(self, screen):
-        pause_menu_rect = pygame.Rect(
-            0,
-            0,
-            self.screen_w * 0.75,
-            self.screen_h * 0.3,
-        )
-        pause_menu_rect.center = (
-            self.screen_w // 2,
-            self.screen_h // 2,
-        )
-        pygame.draw.rect(screen, "grey4", pause_menu_rect)
-        pygame.draw.rect(screen, "grey70", pause_menu_rect, width=4, border_radius=24)
-
-        render_text(
-            screen=screen,
-            text="GAME PAUSED",
-            font_size=64,
-            pos=(pause_menu_rect.midtop[0], pause_menu_rect.midtop[1] + 64),
-            align="midtop",
-        )
-        render_text(
-            screen=screen,
-            text="[ESC] Resume",
-            color="grey",
-            pos=(pause_menu_rect.center[0], pause_menu_rect.center[1] - 36),
-        )
-        render_text(
-            screen=screen,
-            text="[1] Restart",
-            color="grey",
-            pos=(pause_menu_rect.center[0], pause_menu_rect.center[1]),
-        )
-        render_text(
-            screen=screen,
-            text="[2] Main Menu",
-            color="grey",
-            pos=(pause_menu_rect.center[0], pause_menu_rect.center[1] + 36),
-        )
-        render_text(
-            screen=screen,
-            text="[Q] QUIT",
-            color="grey",
-            pos=(pause_menu_rect.center[0], pause_menu_rect.center[1] + 72),
-        )
-
-    def update(self, events):
-        self.controls(events)
-
-    def draw(self, screen):
+    def draw(self, game_surface):
         if self.game_play.isPaused:
-            self.draw_menu(screen)
+            pause_menu_rect = pygame.Rect(
+                0,
+                0,
+                game_surface.get_width() * 0.75,
+                game_surface.get_height() * 0.3,
+            )
+            pause_menu_rect.center = game_surface.get_rect().center
+            pygame.draw.rect(game_surface, "grey4", pause_menu_rect, border_radius=24)
+            pygame.draw.rect(
+                game_surface, "grey70", pause_menu_rect, width=4, border_radius=24
+            )
+
+            render_text(
+                screen=game_surface,
+                text=self.menu_title,
+                font_size=64,
+                pos=(pause_menu_rect.midtop[0], pause_menu_rect.midtop[1] + 8),
+                align="midtop",
+            )
+            for i, item in enumerate(self.menu_items):
+                render_text(
+                    screen=game_surface,
+                    text=item,
+                    font_name="spacegrotesk_semibold",
+                    color="grey",
+                    pos=(
+                        pause_menu_rect.midtop[0],
+                        pause_menu_rect.midtop[1] + 64 + (i * 48),
+                    ),
+                    align="midtop",
+                )

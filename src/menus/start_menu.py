@@ -6,32 +6,43 @@ from src.utils.render_text import render_text
 
 class Start(Screen):
 
+    menu_items = [
+        "[Enter] PLAY",
+        "[O] OPTIONS",
+        "[S] SCORES",
+        "[C] CREDITS",
+        "[Q] QUIT",
+    ]
+
     def __init__(self, game):
         super().__init__(game)
 
-    def controls(self, events):
+    def update(self, dt, events):
+        super().update(dt, events)
         for event in events:
             if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_RETURN:
-                    self.game.set_scene("GamePlay")
-                if event.key == pygame.K_o:
-                    self.game.set_scene("Options")
-                if event.key == pygame.K_s:
-                    self.game.set_scene("Scoreboard")
-                if event.key == pygame.K_c:
-                    self.game.set_scene("Credits")
-                if event.key == pygame.K_q:
-                    pygame.quit()
-                    sys.exit()
+                match event.key:
+                    case pygame.K_RETURN:
+                        self.game.set_scene("GamePlay")
+                    case pygame.K_o:
+                        self.game.set_scene("Options")
+                    case pygame.K_s:
+                        self.game.set_scene("Scoreboard")
+                    case pygame.K_c:
+                        self.game.set_scene("Credits")
+                    case pygame.K_q:
+                        pygame.quit()
+                        sys.exit()
 
-    def draw_title(self, game_surface):
+    def draw(self, game_surface, sidebar_l_surface, sidebar_r_surface):
+        super().draw(game_surface, sidebar_l_surface, sidebar_r_surface)
         render_text(
             screen=game_surface,
             text="ASSAULT",
             font_name="zendots",
             font_size=96,
             antialias=True,
-            pos=(game_surface.get_width() // 2, game_surface.get_height() // 2 - 304),
+            pos=(game_surface.get_width() * 0.5, game_surface.get_height() * 0.5 - 304),
         )
 
         render_text(
@@ -40,7 +51,7 @@ class Start(Screen):
             font_name="zendots",
             font_size=64,
             antialias=True,
-            pos=(game_surface.get_width() // 2, game_surface.get_height() // 2 - 224),
+            pos=(game_surface.get_width() * 0.5, game_surface.get_height() * 0.5 - 224),
         )
 
         render_text(
@@ -49,57 +60,22 @@ class Start(Screen):
             font_name="zendots",
             font_size=96,
             antialias=True,
-            pos=(game_surface.get_width() // 2, game_surface.get_height() // 2 - 128),
+            pos=(game_surface.get_width() * 0.5, game_surface.get_height() * 0.5 - 128),
         )
-
-    def draw_menu(self, game_surface):
-        menu_rect = pygame.Rect(0, 0, self.game.gs_w * 0.75, self.game.gs_h // 4)
-        menu_rect.center = (self.game.gs_w // 2, self.game.gs_h // 2 + 128)
-        pygame.draw.rect(game_surface, "grey4", menu_rect)
+        menu_rect = pygame.Rect(
+            0, 0, game_surface.get_width() * 0.75, game_surface.get_height() * 0.25
+        )
+        menu_rect.center = game_surface.get_rect().center
+        menu_rect.y += 128
+        pygame.draw.rect(game_surface, "grey4", menu_rect, border_radius=24)
         pygame.draw.rect(game_surface, "grey70", menu_rect, width=4, border_radius=24)
 
-        render_text(
-            screen=game_surface,
-            text="[Enter] PLAY",
-            font_name="spacegrotesk_semibold",
-            color="grey",
-            pos=(menu_rect.midtop[0], menu_rect.midtop[1] + 24),
-            align="midtop",
-        )
-        render_text(
-            screen=game_surface,
-            text="[O] OPTIONS",
-            font_name="spacegrotesk_semibold",
-            color="grey",
-            pos=(menu_rect.center[0], menu_rect.center[1] - 36),
-        )
-        render_text(
-            screen=game_surface,
-            text="[S] SCORES",
-            font_name="spacegrotesk_semibold",
-            color="grey",
-            pos=(menu_rect.center[0], menu_rect.center[1]),
-        )
-        render_text(
-            screen=game_surface,
-            text="[C] CREDITS",
-            font_name="spacegrotesk_semibold",
-            color="grey",
-            pos=(menu_rect.center[0], menu_rect.center[1] + 36),
-        )
-        render_text(
-            screen=game_surface,
-            text="[Q] QUIT",
-            font_name="spacegrotesk_semibold",
-            color="grey",
-            pos=(menu_rect.center[0], menu_rect.center[1] + 72),
-        )
-
-    def update(self, dt, events):
-        super().update(dt, events)
-        self.controls(events)
-
-    def draw(self, game_surface, sidebar_l_surface, sidebar_r_surface):
-        super().draw(game_surface, sidebar_l_surface, sidebar_r_surface)
-        self.draw_title(game_surface)
-        self.draw_menu(game_surface)
+        for i, item in enumerate(self.menu_items):
+            render_text(
+                screen=game_surface,
+                text=item,
+                font_name="spacegrotesk_semibold",
+                color="grey",
+                pos=(menu_rect.midtop[0], menu_rect.midtop[1] + i * 48),
+                align="midtop",
+            )

@@ -32,8 +32,8 @@ class GamePlay(Screen):
         self.play_area_rect = pygame.Rect(
             0,
             0,
-            self.game.gs_w,
-            self.game.gs_h,
+            self.game.game_surface.get_width(),
+            self.game.game_surface.get_height(),
         )
         self.game_play_hud = GamePlayHUD(self.game, self)
         self.score = ScoreManager(self.game.score_store)
@@ -42,8 +42,8 @@ class GamePlay(Screen):
         self.event_manager = EventManager(self, TIMELINE)
         #! Need a better way to handle background layers, this is kind of shit
         self.background = StarField(0, 0, self.game)
-        self.background_2 = Planet(256, self.game.gs_h - 196, self.game)
-        self.background_3 = PlanetTwo(self.game.gs_w // 2, -128, self.game)
+        self.background_2 = Planet(256, self.play_area_rect.bottom - 196, self.game)
+        self.background_3 = PlanetTwo(self.play_area_rect.midtop, -512, self.game)
 
         # Level completion tracking
         self.level_complete = False

@@ -24,8 +24,11 @@ class StarField(Background):
         self.scroll_speed = 4
         self.stars = [
             (
-                random.randint(0, self.game.gs_w),
-                random.randint(-self.game.gs_h, self.game.gs_h),
+                random.randint(0, self.game.game_surface.get_width()),
+                random.randint(
+                    -self.game.game_surface.get_width(),
+                    self.game.game_surface.get_height(),
+                ),
                 random.randint(1, 3),
             )
             for _ in range(200)
@@ -83,7 +86,7 @@ class PlanetTwo(Background):
         self.current_width = 2
         self.current_height = 2
         self.scale_to_size = 1024
-        self.growth_rate = 10
+        self.growth_rate = 4
 
     def update(self, dt):
         super().update(dt)

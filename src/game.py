@@ -8,17 +8,17 @@ class Game:
     def __init__(self, screen):
         self.data = DISPLAY
         self.screen = screen
+
         self.sidebar_l_surface = pygame.Surface(
             (self.data["sidebar_width"], self.screen.get_height())
         )
         self.game_surface = pygame.Surface(
             (self.data["game_surface_width"], self.screen.get_height())
         )
-        self.gs_w = self.game_surface.get_width()
-        self.gs_h = self.game_surface.get_height()
         self.sidebar_r_surface = pygame.Surface(
             (self.data["sidebar_width"], self.screen.get_height())
         )
+
         self.clock = pygame.time.Clock()
         self.dt = 0
         self.score_store = ScoreStore()
@@ -78,13 +78,10 @@ class Game:
             # self.screen.fill("black")
             # self.screen.blit(scaled_game_surface, game_surface_rect.topleft)
 
-            game_surface_rect = self.game_surface.get_rect(
-                center=(self.screen.get_width() // 2, self.screen.get_height() // 2)
-            )
             self.screen.blit(
                 self.sidebar_l_surface, (self.data["sidebar_left_offset"], 0)
             )
-            self.screen.blit(self.game_surface, game_surface_rect.topleft)
+            self.screen.blit(self.game_surface, (self.data["game_surface_offset"], 0))
             self.screen.blit(
                 self.sidebar_r_surface, (self.data["sidebar_right_offset"], 0)
             )
@@ -93,4 +90,4 @@ class Game:
 
             self.dt = self.clock.tick(self.data["target_fps"]) / 1000
 
-        pygame.quit()  # * Note: Doesn't need sys.exit() after this because it is the end of the file and nothing is running
+        pygame.quit()
