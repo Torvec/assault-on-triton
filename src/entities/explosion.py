@@ -20,6 +20,20 @@ class Explosion(Entity):
         #! TODO: Get sound effect for explosion
         pass
 
+    def collides_with(self, other_group):
+        """Use circular collision detection for explosions"""
+        collisions = []
+        current_radius = self.init_radius
+
+        for sprite in other_group:
+            distance = self.position.distance_to(sprite.position)
+            sprite_radius = sprite.rect.width // 2
+
+            if distance <= current_radius + sprite_radius:
+                collisions.append(sprite)
+
+        return collisions
+
     def update(self, dt):
         super().update(dt)
         if self.init_radius < self.blast_radius:

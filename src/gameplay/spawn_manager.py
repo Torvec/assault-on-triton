@@ -83,4 +83,3 @@ class SpawnManager:
             entity = entity_class(position.x, position.y, self.game_play)
             for behavior in self.behaviors:
                 entity.behaviors.append(behavior)
-            self.game_play.active_targets.add(entity)

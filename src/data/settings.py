@@ -15,7 +15,7 @@ PLAYER = {
     "base_hp": 100,
     "invincible_duration": 2,
     "invulnerable_duration": 30,
-    "overdrive_duration": 30,
+    "overdrive_duration": 20,
     "primary_shot_offset": 8,
     "secondary_shot_offset": 20,
     "tertiary_shot_offset": 24,
@@ -39,7 +39,7 @@ ENEMIES = {
     "drone": {
         "radius": 16,
         "speed": 300,
-        "hp": 3,
+        "hp": 4,
         "shot_cooldown": 0.6,
         "shot_offset": 4,
         "blast_radius": 32,
@@ -62,20 +62,25 @@ PROJECTILES = {
         4: {"range": 1024, "speed": 800, "damage": 6},
         5: {"range": 1024, "speed": 1000, "damage": 8},
     },
-    "enemy_shot": {"range": 512, "speed": 500, "damage": 4},
+    "enemy_shot": {"range": 512, "speed": 500, "damage": 2},
     "player_bomb": {
         "radius": 8,
         "speed": 200,
-        "blast_radius": {1: 128, 2: 256, 3: 384, 4: 512},
         "trigger_distance": 256,
+        "blast_radius": {1: 192, 2: 256, 3: 384, 4: 512},
     },
     "enemy_bomb": {
         "radius": 8,
         "speed": 200,
-        "blast_radius": 384,
         "trigger_distance": 256,
+        "blast_radius": 384,
     },
-    "missile": {"radius": 10, "speed": 200, "hp": 1, "blast_radius": 64},
+    "enemy_missile": {
+        "radius": 10,
+        "speed": 200,
+        "trigger_distance": 256,
+        "blast_radius": 64,
+    },
 }
 
 ASTEROIDS = {
@@ -95,7 +100,7 @@ PICKUPS = {
     "life": {"radius": 16, "speed": 150, "fallback_score": 100},
 }
 
-EXPLOSIONS = {"initial_radius": 2, "expansion_rate": 256, "damage": 5}
+EXPLOSIONS = {"initial_radius": 4, "expansion_rate": 256, "damage": 5}
 
 AUDIO = {"master_volume": 1.0, "sfx_volume": 0.5, "music_volume": 0.7}
 

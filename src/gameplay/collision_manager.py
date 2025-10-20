@@ -13,29 +13,24 @@ class CollisionManager:
             "pickups": self.game_play.pickups,
         }
         self.player = self.sprite_groups["player"].sprite
+
+    def update(self):
         self.hostiles = [
             *self.sprite_groups["asteroids"],
             *self.sprite_groups["enemy_drones"],
             *self.sprite_groups["enemy_ships"],
         ]
-
-    def update(self):
-        """
-        Player v Neutral / Player v Enemy Drones / Player v Enemy Ships / Player v Pickups
-        """
         if self.hostiles:
             player_v_hostiles = self.player.collides_with(self.hostiles)
             if player_v_hostiles:
                 for hostile in player_v_hostiles:
-                    #! player takes damage
-                    #! hostile takes damage
-                    pass
+                    self.player.take_damage(1)
+                    hostile.take_damage(1)
         if self.sprite_groups["pickups"]:
             player_v_pickups = self.player.collides_with(self.sprite_groups["pickups"])
             if player_v_pickups:
                 for pickup in player_v_pickups:
-                    #! Apply pickup function to player
-                    pickup.kill()
+                    pickup.apply()
         if not any(
             [
                 self.sprite_groups["shots"],
@@ -45,9 +40,6 @@ class CollisionManager:
             ]
         ):
             return
-        """
-        Entity groups based on owner attribute, for early filtering
-        """
         player_shots = [
             e for e in self.sprite_groups["shots"] if e.owner == self.player
         ]
@@ -68,88 +60,49 @@ class CollisionManager:
         enemy_explosions = [
             e for e in self.sprite_groups["explosions"] if e.owner != self.player
         ]
-        """
-        Player Shots v Neutral / Player Shots v Enemies / Player Shots v Enemy Bombs / Player Shots v Enemy Missiles
-        """
         for shot in player_shots:
-            colliders = [
-                *self.hostiles,
-                *enemy_bombs,
-                *enemy_missiles,
-            ]
-            shot_v_colliders = shot.collides_with(colliders)
-            if shot_v_colliders:
-                for collider in shot_v_colliders:
-                    #! collider takes damage
+            shot_v_hostiles = shot.collides_with(self.hostiles)
+            if shot_v_hostiles:
+                for hostile in shot_v_hostiles:
+                    hostile.take_damage(shot.damage)
                     shot.kill()
-        """
-        Enemy Shots v Player / Enemy Shots v Neutral / Enemy Shots v Player Bombs
-        """
         for shot in enemy_shots:
-            colliders = [
-                self.player,
-                *self.sprite_groups["asteroids"],
-                *player_bombs,
-                *player_missiles,
-            ]
-            shot_v_colliders = shot.collides_with(colliders)
-            if shot_v_colliders:
-                for collider in shot_v_colliders:
-                    #! collider takes damage
+            shot_v_player = shot.collides_with([self.player])
+            if shot_v_player:
+                for collider in shot_v_player:
+                    collider.take_damage(shot.damage)
                     shot.kill()
-        """
-        Player Bombs v Neutral / Player Bombs v Enemy Drones / Player Bombs v Enemy Ships
-        """
         for bomb in player_bombs:
-            if bomb.collides_with(self.hostiles):
-                #! bomb takes damage -> explodes
-                pass
-        """
-        Enemy Bombs v Player / Enemy Bombs v Neutral / Enemy Bombs v Player Bombs
-        """
-        for bomb in enemy_bombs:
-            colliders = [self.player, *self.sprite_groups["asteroids"], *player_bombs]
-            if bomb.collides_with(colliders):
-                #! bomb takes damage -> explodes
-                pass
-        """
-        Enemy Missiles v Player / Enemy Missiles v Asteroids / Enemy Missiles v Player Bombs
-        """
-        for missile in enemy_missiles:
-            colliders = [
-                self.player,
-                *self.sprite_groups["asteroids"],
-                *player_bombs,
-            ]
-            if missile.collides_with(colliders):
-                #! missile takes damage -> explodes
-                pass
-        """
-        Player Explosion v Neutral / Player Explosion v Enemy Drones / Player Explosion v Enemy Ship / Player Explosion v Enemy Missiles / Player Explosion v Enemy Bombs
-        """
-        for explosion in player_explosions:
             colliders = [
                 *self.hostiles,
+                *enemy_shots,
                 *enemy_bombs,
                 *enemy_missiles,
+                *enemy_explosions,
             ]
-            explosion_v_colliders = explosion.collides_with(colliders)
-            if explosion_v_colliders:
-                for collider in explosion_v_colliders:
-                    #! collider takes damage
-                    pass
-        """
-        Enemy Explosion v Player / Enemy Explosion v Neutral / Enemy Explosion v Player Missiles / Enemy Explosion v Player Bombs
-        """
-        for explosion in enemy_explosions:
+            if bomb.collides_with(colliders):
+                bomb.explode()
+        for bomb in enemy_bombs:
             colliders = [
                 self.player,
-                *self.sprite_groups["asteroids"],
-                *player_missiles,
+                *player_shots,
                 *player_bombs,
+                *player_missiles,
+                *player_explosions,
             ]
-            explosion_v_colliders = explosion.collides_with(colliders)
-            if explosion_v_colliders:
-                for collider in explosion_v_colliders:
-                    #! collider takes damage
-                    pass
+            if bomb.collides_with(colliders):
+                bomb.explode()
+        for missile in enemy_missiles:
+            colliders = [self.player, *player_bombs, *player_explosions]
+            if missile.collides_with(colliders):
+                missile.explode()
+        for explosion in player_explosions:
+            explosion_v_hostiles = explosion.collides_with(self.hostiles)
+            if explosion_v_hostiles:
+                for hostile in explosion_v_hostiles:
+                    hostile.take_damage(explosion.damage)
+        for explosion in enemy_explosions:
+            explosion_v_player = explosion.collides_with([self.player])
+            if explosion_v_player:
+                for collider in explosion_v_player:
+                    collider.take_damage(explosion.damage)

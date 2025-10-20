@@ -7,12 +7,13 @@ class Pickup(Entity):
 
     def __init__(self, x, y, game_play):
         super().__init__(x, y, game_play)
+        self.player = self.game_play.player
         pickup_type = getattr(self, "pickup_type", "health")
         data = PICKUPS.get(pickup_type, PICKUPS["health"])
         self.speed = data["speed"]
 
-    def apply(self, player):
-        self.remove_active_targets()
+    def apply(self):
+        pass
 
     def update(self, dt):
         super().update(dt)
@@ -32,12 +33,12 @@ class HealthPickup(Pickup):
         super().__init__(x, y, game_play)
         self.heal_amount = PICKUPS["health"]["heal_amount"]
 
-    def apply(self, player):
-        if player.hp >= 75:
-            player.hp = self.player_data["base_hp"]
+    def apply(self):
+        if self.player.hp >= 75:
+            self.player.hp = self.player_data["base_hp"]
         else:
-            player.hp += self.heal_amount
-        super().apply(player)
+            self.player.hp += self.heal_amount
+        self.kill()
 
     def update(self, dt):
         super().update(dt)
@@ -56,13 +57,13 @@ class ExtraLifePickup(Pickup):
         super().__init__(x, y, game_play)
         self.fallback_score = PICKUPS["life"]["fallback_score"]
 
-    def apply(self, player):
-        if player.lives < self.player_data["max_lives"]:
-            player.lives += 1
+    def apply(self):
+        if self.player.lives < self.player_data["max_lives"]:
+            self.player.lives += 1
         else:
-            self.game_play.score.score += self.fallback_score
+            self.game_play.score.handle_score(self.fallback_score)
             self.game_play.score.handle_streak_meter_inc(self.fallback_score)
-        super().apply(player)
+        self.kill()
 
     def update(self, dt):
         super().update(dt)
@@ -81,13 +82,13 @@ class PowerLevelPickup(Pickup):
         super().__init__(x, y, game_play)
         self.fallback_score = PICKUPS["power"]["fallback_score"]
 
-    def apply(self, player):
-        if player.power_level < self.player_data["max_power_level"]:
-            player.power_level += 1
+    def apply(self):
+        if self.player.power_level < self.player_data["max_power_level"]:
+            self.player.power_level += 1
         else:
-            self.game_play.score.score += self.fallback_score
+            self.game_play.score.handle_score(self.fallback_score)
             self.game_play.score.handle_streak_meter_inc(self.fallback_score)
-        super().apply(player)
+        self.kill()
 
     def update(self, dt):
         super().update(dt)
@@ -103,10 +104,10 @@ class OverdrivePickup(Pickup):
         self.player_data = PLAYER
         super().__init__(x, y, game_play)
 
-    def apply(self, player):
-        player.power_level = 5
-        player.overdriveTime = self.player_data["overdrive_duration"]
-        super().apply(player)
+    def apply(self):
+        self.player.power_level = 5
+        self.player.overdriveTime = self.player_data["overdrive_duration"]
+        self.kill()
 
     def update(self, dt):
         super().update(dt)
@@ -125,13 +126,13 @@ class BombAmmoPickup(Pickup):
         super().__init__(x, y, game_play)
         self.fallback_score = PICKUPS["bomb"]["fallback_score"]
 
-    def apply(self, player):
-        if player.bomb_ammo < self.player_data["max_bomb_ammo"]:
-            player.bomb_ammo += 1
+    def apply(self):
+        if self.player.bomb_ammo < self.player_data["max_bomb_ammo"]:
+            self.player.bomb_ammo += 1
         else:
-            self.game_play.score.score += self.fallback_score
+            self.game_play.score.handle_score(self.fallback_score)
             self.game_play.score.handle_streak_meter_inc(self.fallback_score)
-        super().apply(player)
+        self.kill()
 
     def update(self, dt):
         super().update(dt)
@@ -147,9 +148,9 @@ class InvulnerabilityPickup(Pickup):
         self.player_data = PLAYER
         super().__init__(x, y, game_play)
 
-    def apply(self, player):
-        player.invincibleTime = self.player_data["invulnerable_duration"]
-        super().apply(player)
+    def apply(self):
+        self.player.invincibleTime = self.player_data["invulnerable_duration"]
+        self.kill()
 
     def update(self, dt):
         super().update(dt)

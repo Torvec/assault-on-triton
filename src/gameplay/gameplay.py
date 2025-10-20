@@ -40,7 +40,6 @@ class GamePlay(Screen):
         self.isPaused = False
         self.pause_menu = PauseMenu(self)
         self.event_manager = EventManager(self, TIMELINE)
-        self.active_targets = set()
         #! Need a better way to handle background layers, this is kind of shit
         self.background = StarField(0, 0, self.game)
         self.background_2 = Planet(256, self.game.gs_h - 196, self.game)
@@ -82,9 +81,17 @@ class GamePlay(Screen):
         # Has to go after every sprite is loaded so they can be accessed
         self.collision_manager = CollisionManager(self)
 
+    def handle_game_over(self):
+        if self.player.lives < 1:
+            self.score.store_score(self.score.score)
+            self.game.set_scene("GameOver")
+
     def handle_level_complete(self, dt):
+        hostile_count = (
+            len(self.asteroids) + len(self.enemy_drones) + len(self.enemy_ships)
+        )
         if (
-            len(self.active_targets) == 0
+            hostile_count == 0
             and self.event_manager.current_index >= len(self.event_manager.timeline)
             and not self.level_complete
         ):
@@ -105,6 +112,7 @@ class GamePlay(Screen):
             self.collision_manager.update()
             self.event_manager.update(dt)
             self.score.update_streak_meter_decay(dt)
+            self.handle_game_over()
             self.handle_level_complete(dt)
 
     def draw(self, game_surface, sidebar_l_surface, sidebar_r_surface):

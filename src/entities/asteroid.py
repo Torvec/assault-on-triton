@@ -23,8 +23,15 @@ class Asteroid(Entity):
         else:
             self.SPLITS_INTO = None
 
+    def take_damage(self, amount):
+        self.hp -= amount
+        if self.hp <= 0:
+            self.game_play.score.handle_score(self.score_value)
+            self.game_play.score.handle_streak_meter_inc(self.score_value)
+            self.split()
+
     def split(self):
-        self.remove_active_targets()
+        self.kill()
 
         if not self.SPLITS_INTO:
             return

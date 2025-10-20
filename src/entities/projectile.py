@@ -40,8 +40,8 @@ class Shot(Projectile):
         self.distance_traveled += distance_this_frame
         if (
             self.distance_traveled >= self.max_range
-            or self.position.y < 0
-            or self.position.y > self.game_play.play_area_rect.height
+            or self.rect.bottom < 0
+            or self.rect.top > self.game_play.play_area_rect.height
         ):
             self.kill()
 
@@ -88,31 +88,8 @@ class ExplosiveProjectile(Entity):
     def __init__(self, x, y, game_play, owner):
         super().__init__(x, y, game_play)
         self.owner = owner
-        self.blast_radius = 0
-
-    def explode(self):
-        self.remove_active_targets()
-        Explosion(self.position.x, self.position.y, self.blast_radius, self.game_play)
-
-    def update(self, dt):
-        super().update(dt)
-
-    def draw(self, screen):
-        super().draw(screen)
-
-
-class Bomb(ExplosiveProjectile):
-
-    def __init__(self, x, y, game_play, owner):
-        super().__init__(x, y, game_play, owner)
-        self.distance_traveled = 0
-        self.speed = 0
-        self.blast_radius = 0
         self.trigger_distance = 0
-
-    def sound(self):
-        #! TODO: get sound effect for releasing bomb
-        pass
+        self.blast_radius = 0
 
     def check_trigger_distance(self, dt):
         distance_this_frame = self.velocity.length() * dt
@@ -132,6 +109,25 @@ class Bomb(ExplosiveProjectile):
 
     def update(self, dt):
         super().update(dt)
+
+    def draw(self, screen):
+        super().draw(screen)
+
+
+class Bomb(ExplosiveProjectile):
+
+    def __init__(self, x, y, game_play, owner):
+        super().__init__(x, y, game_play, owner)
+        self.distance_traveled = 0
+        self.speed = 0
+        self.blast_radius = 0
+
+    def sound(self):
+        #! TODO: get sound effect for releasing bomb
+        pass
+
+    def update(self, dt):
+        super().update(dt)
         self.check_trigger_distance(dt)
         self.position += self.velocity * dt
 
@@ -144,44 +140,33 @@ class PlayerBomb(Bomb):
 
     def __init__(self, x, y, game_play, owner):
         self.data = PROJECTILES["player_bomb"]
-        self.img_path = IMAGES["bomb"]
+        self.img_path = IMAGES["player_bomb"]
         super().__init__(x, y, game_play, owner)
         self.speed = self.data["speed"]
-        self.blast_radius = self.data["blast_radius"][owner.power_level]
         self.trigger_distance = self.data["trigger_distance"]
+        self.blast_radius = self.data["blast_radius"][owner.power_level]
 
 
 class EnemyBomb(Bomb):
 
     def __init__(self, x, y, game_play, owner):
         self.data = PROJECTILES["enemy_bomb"]
-        self.img_path = IMAGES["bomb"]
+        self.img_path = IMAGES["enemy_bomb"]
         super().__init__(x, y, game_play, owner)
         self.speed = self.data["speed"]
-        self.blast_radius = self.data["blast_radius"]
         self.trigger_distance = self.data["trigger_distance"]
+        self.blast_radius = self.data["blast_radius"]
 
 
 class Missile(ExplosiveProjectile):
 
     def __init__(self, x, y, game_play, owner):
-        self.data = PROJECTILES["missile"]
-        self.img_path = IMAGES["missile"]
+        self.data = PROJECTILES["enemy_missile"]
+        self.img_path = IMAGES["enemy_missile"]
         super().__init__(x, y, game_play, owner)
         self.speed = self.data["speed"]
-        self.hp = self.data["hp"]
+        self.trigger_distance = self.data["trigger_distance"]
         self.blast_radius = self.data["blast_radius"]
-        self.score_value = self.hp
-
-    def explode(self):
-        self.remove_active_targets()
-        Explosion(
-            self.position.x,
-            self.position.y,
-            self.game_play,
-            self.blast_radius,
-            self.owner,
-        )
 
     def track_player(self):
         direction = self.game_play.player.position - self.position

@@ -1,23 +1,24 @@
 IMAGES = {
     # Player
     "player_ship": "assets/entities/player_spaceship.png",
-    "player_shot_lv1": "assets/entities/player_shot_lv1.png",
-    "player_shot_lv2": "assets/entities/player_shot_lv2.png",
-    "player_shot_lv3": "assets/entities/player_shot_lv3.png",
-    "player_shot_lv4": "assets/entities/player_shot_lv4.png",
-    "player_shot_ov": "assets/entities/player_shot_ov.png",
-    # Enemies
-    "enemy_drone": "assets/entities/enemy_drone.png",
-    "enemy_ship": "assets/entities/enemy_ship.png",
-    "enemy_shot": "assets/entities/enemy_shot.png",
-    # Projectiles
-    "missile": "assets/entities/missile.png",
-    "bomb": "assets/entities/e_bomb.png",
     # Asteroids
     "asteroid_small": "assets/entities/asteroid_sm.png",
     "asteroid_medium": "assets/entities/asteroid_md.png",
     "asteroid_large": "assets/entities/asteroid_lg.png",
     "asteroid_xl": "assets/entities/asteroid_xl.png",
+    # Enemies
+    "enemy_drone": "assets/entities/enemy_drone.png",
+    "enemy_ship": "assets/entities/enemy_ship.png",
+    # Projectiles
+    "player_shot_lv1": "assets/entities/player_shot_lv1.png",
+    "player_shot_lv2": "assets/entities/player_shot_lv2.png",
+    "player_shot_lv3": "assets/entities/player_shot_lv3.png",
+    "player_shot_lv4": "assets/entities/player_shot_lv4.png",
+    "player_shot_ov": "assets/entities/player_shot_ov.png",
+    "player_bomb": "assets/entities/player_bomb.png",
+    "enemy_shot": "assets/entities/enemy_shot.png",
+    "enemy_bomb": "assets/entities/enemy_bomb.png",
+    "enemy_missile": "assets/entities/enemy_missile.png",
     # Pickups
     "health_pickup": "assets/entities/pickup_health.png",
     "life_pickup": "assets/entities/pickup_life_up.png",
@@ -27,8 +28,6 @@ IMAGES = {
     "invulnerable_pickup": "assets/entities/pickup_invincibility.png",
     # Explosions
     "explosion": "assets/entities/explosion.png",
-    # UI
-    "shield": "assets/entities/shield.png",
     # Backgrounds
     "planet": "assets/backgrounds/planet.png",
     "planet_two": "assets/backgrounds/planet_two.png",

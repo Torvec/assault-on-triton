@@ -27,18 +27,6 @@ class Player(Entity):
         self.bomb_timer = 0
         self.power_level = self.data["base_power_level"]
 
-    def move_up(self, dt):
-        self.velocity.y -= self.acceleration * dt
-
-    def move_down(self, dt):
-        self.velocity.y += self.acceleration * dt
-
-    def move_left(self, dt):
-        self.velocity.x -= self.acceleration * dt
-
-    def move_right(self, dt):
-        self.velocity.x += self.acceleration * dt
-
     def shoot(self):
         if self.shoot_timer > 0:
             return
@@ -107,14 +95,25 @@ class Player(Entity):
         bomb.velocity = DIRECTION_UP * (forward_only_speed + bomb.speed)
         bomb.sound()
 
-    def respawn(self):
-        self.invincibleTime = self.data["invincible_duration"]
-        self.position.x = self.game_play.play_area_rect.width // 2
-        self.position.y = self.game_play.play_area_rect.height - 100
-        self.hp = self.data["base_hp"]
+    def handle_overdrive(self, dt):
+        if self.overdriveTime > 0:
+            self.overdriveTime -= dt
+        if self.overdriveTime < 0:
+            self.overdriveTime = 0
+            self.power_level -= 1
 
-    def handle_hit(self, damage_amount):
-        self.hp -= damage_amount
+    def take_damage(self, amount):
+        if self.invincibleTime > 0:
+            return
+        self.game_play.score.handle_streak_meter_dec()
+        self.hp -= amount
+        if self.hp <= 0:
+            self.lives -= 1
+            self.explode()
+            if self.lives <= 0:
+                return
+            else:
+                self.respawn()
         self.invincibleTime = self.data["invincible_duration"]
         self.is_hit = True
 
@@ -124,34 +123,33 @@ class Player(Entity):
         if self.invincibleTime < 0:
             self.invincibleTime = 0
 
-    def handle_overdrive(self, dt):
-        if self.overdriveTime > 0:
-            self.overdriveTime -= dt
-        if self.overdriveTime < 0:
-            self.overdriveTime = 0
-            self.power_level -= 1
-
-    def handle_death(self):
-        self.lives -= 1
+    def explode(self):
         Explosion(
             self.position.x,
             self.position.y,
+            self.game_play,
             self.blast_radius,
             self,
         )
-        self.respawn()
+        self.kill()
+
+    def respawn(self):
+        self.invincibleTime = self.data["invincible_duration"]
+        self.position.x = self.game_play.play_area_rect.width // 2
+        self.position.y = self.game_play.play_area_rect.height - 100
+        self.hp = self.data["base_hp"]
 
     def controls(self, dt):
         keys = pygame.key.get_pressed()
 
         if keys[pygame.K_a]:
-            self.move_left(dt)
+            self.velocity.x -= self.acceleration * dt
         if keys[pygame.K_d]:
-            self.move_right(dt)
+            self.velocity.x += self.acceleration * dt
         if keys[pygame.K_w]:
-            self.move_up(dt)
+            self.velocity.y -= self.acceleration * dt
         if keys[pygame.K_s]:
-            self.move_down(dt)
+            self.velocity.y += self.acceleration * dt
         if keys[pygame.K_SPACE]:
             self.shoot()
         if keys[pygame.K_e]:

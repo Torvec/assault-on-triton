@@ -15,7 +15,7 @@ class Entity(pygame.sprite.Sprite):
         return cls._image_cache[img_path]
 
     def __init__(self, x, y, game_play):
-        # Auto adds sprites to groups upon creation if a .container attribute is present
+        # Auto adds sprites to groups upon creation if a container attribute is present
         if hasattr(self, "containers"):
             super().__init__(self.containers)
         else:
@@ -24,8 +24,6 @@ class Entity(pygame.sprite.Sprite):
         # Image cache check so images only get loaded once instead of every time an entity is spawned
         if getattr(self, "img_path", None):
             self.image = self.load_image(self.img_path)
-        # else:
-        #     self.image = pygame.Surface((1, 1), pygame.SRCALPHA)
 
         # Init Parameters
         self.position = pygame.Vector2(x, y)
@@ -56,26 +54,24 @@ class Entity(pygame.sprite.Sprite):
         return []
 
     def handle_boundaries(self, action=None):
-        edges = {
-            "top": self.play_area.top + self.rect.height // 2,
-            "right": self.play_area.right - self.rect.width // 2,
-            "bottom": self.play_area.bottom - self.rect.height // 2,
-            "left": self.play_area.left + self.rect.width // 2,
-        }
         if action == "block":
-            self.position.x = max(edges["left"], min(self.position.x, edges["right"]))
-            self.position.y = max(edges["top"], min(self.position.y, edges["bottom"]))
+            self.position.x = max(
+                self.play_area.left + self.rect.width // 2,
+                min(self.position.x, self.play_area.right - self.rect.width // 2),
+            )
+            self.position.y = max(
+                self.play_area.top + self.rect.height // 2,
+                min(self.position.y, self.play_area.bottom - self.rect.height // 2),
+            )
         elif action is None and (
-            self.position.x + self.rect.width // 2 < self.play_area.left
-            or self.position.x - self.rect.width // 2 > self.play_area.right
-            or self.position.y - self.rect.height // 2 > self.play_area.bottom
+            self.rect.right < self.play_area.left
+            or self.rect.left > self.play_area.right
+            or self.rect.top > self.play_area.bottom
         ):
-            self.remove_active_targets()
-
-    def remove_active_targets(self):
-        if self in self.game_play.active_targets:
             self.kill()
-            self.game_play.active_targets.remove(self)
+
+    def take_damage(self, amount):
+        pass
 
     def flash_when_hit(self, screen, entity_surface, entity_rect):
         if self.is_hit:
@@ -109,4 +105,5 @@ class Entity(pygame.sprite.Sprite):
         self.handle_behaviors(dt)
 
     def draw(self, screen):
-        pygame.draw.rect(screen, "white", self.rect, 1)
+        # pygame.draw.rect(screen, "white", self.rect, 1)
+        pass

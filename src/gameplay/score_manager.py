@@ -37,7 +37,7 @@ class ScoreManager:
         if num < 0:
             self.streak_meter_threshold /= self.multiplier
             self.streak_meter_decay_amount /= self.multiplier
-            self.multiplier += num
+            self.multiplier = max(1, self.multiplier + num)
         else:
             self.multiplier += num
             self.streak_meter_threshold *= self.multiplier
