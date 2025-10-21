@@ -50,8 +50,5 @@ class EventManager:
             self.current_index += 1
 
     def update(self, dt):
-        if self.is_paused:
-            return
-
         self.current_time += dt
         self.process_timeline()

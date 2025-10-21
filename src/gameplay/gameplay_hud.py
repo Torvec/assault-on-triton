@@ -110,10 +110,10 @@ class GamePlayHUD:
             )
             pygame.draw.rect(surface, self.data["colors"]["meter_fill"], fill_rect)
 
-    def _format_time(self, elapsed_time):
-        mins = int(elapsed_time // 60)
-        secs = int(elapsed_time % 60)
-        ms = int((elapsed_time % 1) * 1000)
+    def _format_time(self, game_timer):
+        mins = int(game_timer // 60)
+        secs = int(game_timer % 60)
+        ms = int((game_timer % 1) * 1000)
         return f"T-{mins:02}:{secs:02}:{ms:03}"
 
     def draw_top_left(self, sidebar, rect):
@@ -153,15 +153,15 @@ class GamePlayHUD:
             align="bottomleft",
         )
 
-        # Time
-        # render_text(
-        #     screen=sidebar,
-        #     text=self._format_time(self.game_play.elapsed_time),
-        #     font_size=self.FONTS["lg"],
-        #     color=self.COLORS["primary"],
-        #     pos=content_rect.bottomleft,
-        #     align="bottomleft",
-        # )
+        #! Time
+        #! render_text(
+        #!     screen=sidebar,
+        #!     text=self._format_time(self.game_play.game_timer),
+        #!     font_size=self.FONTS["lg"],
+        #!     color=self.COLORS["primary"],
+        #!     pos=content_rect.bottomleft,
+        #!     align="bottomleft",
+        #! )
 
     def draw_mid_left(self, sidebar, rect):
         """Hero (aka the player) dialogue box."""

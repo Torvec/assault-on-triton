@@ -6,8 +6,7 @@ from src.screen import Screen
 from src.entities.player_ship import Player
 from src.entities.projectile import Shot, Bomb, Missile
 from src.entities.explosion import Explosion
-from src.entities.asteroid import Asteroid
-from src.entities.enemy import EnemyDrone, EnemyShip
+from src.entities.enemy import Asteroid, EnemyDrone, EnemyShip
 from src.entities.pickup import Pickup
 
 # Managers
@@ -28,7 +27,7 @@ class GamePlay(Screen):
 
     def __init__(self, game):
         super().__init__(game)
-        self.elapsed_time = 0
+        self.game_timer = 0
         self.play_area_rect = pygame.Rect(
             0,
             0,
@@ -78,7 +77,6 @@ class GamePlay(Screen):
             self,
         )
 
-        # Has to go after every sprite is loaded so they can be accessed
         self.collision_manager = CollisionManager(self)
 
     def handle_game_over(self):
@@ -108,9 +106,9 @@ class GamePlay(Screen):
         self.pause_menu.update(events)
         if not self.isPaused:
             super().update(dt)
-            self.elapsed_time += dt
-            self.collision_manager.update()
+            self.game_timer += dt
             self.event_manager.update(dt)
+            self.collision_manager.update()
             self.score.update_streak_meter_decay(dt)
             self.handle_game_over()
             self.handle_level_complete(dt)

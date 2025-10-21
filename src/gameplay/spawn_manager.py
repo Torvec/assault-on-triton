@@ -1,11 +1,12 @@
 import pygame
-from src.entities.asteroid import (
-    AsteroidExtraLarge,
-    AsteroidLarge,
-    AsteroidMedium,
-    AsteroidSmall,
+from src.entities.enemy import (
+    AsteroidXL,
+    AsteroidLG,
+    AsteroidMD,
+    AsteroidSM,
+    EnemyDrone,
+    EnemyShip,
 )
-from src.entities.enemy import EnemyDrone, EnemyShip
 from src.entities.pickup import (
     HealthPickup,
     ExtraLifePickup,
@@ -19,37 +20,39 @@ from src.entities import entity_formations
 
 class SpawnManager:
 
+    spawn_locations = {
+        "left_edge": 0.1,
+        "far_left": 0.2,
+        "left": 0.3,
+        "center_left": 0.4,
+        "center": 0.5,
+        "center_right": 0.6,
+        "right": 0.7,
+        "far_right": 0.8,
+        "right_edge": 0.9,
+    }
+
+    entities = {
+        "asteroid_xl": AsteroidXL,
+        "asteroid_lg": AsteroidLG,
+        "asteroid_md": AsteroidMD,
+        "asteroid_sm": AsteroidSM,
+        "enemy_drone": EnemyDrone,
+        "enemy_ship": EnemyShip,
+        "health_pickup": HealthPickup,
+        "extra_life_pickup": ExtraLifePickup,
+        "power_level_pickup": PowerLevelPickup,
+        "overdrive_pickup": OverdrivePickup,
+        "bomb_ammo_pickup": BombAmmoPickup,
+        "invulnerability_pickup": InvulnerabilityPickup,
+    }
+
     def __init__(self, game_play, entity_name, count, location, formation, behaviors):
         self.game_play = game_play
         self.play_area = game_play.play_area_rect
         self.entity_name = entity_name
         self.count = count
         self.location = location
-        self.spawn_locations = {
-            "left_edge": 0.1,
-            "far_left": 0.2,
-            "left": 0.3,
-            "center_left": 0.4,
-            "center": 0.5,
-            "center_right": 0.6,
-            "right": 0.7,
-            "far_right": 0.8,
-            "right_edge": 0.9,
-        }
-        self.entity_dict = {
-            "AsteroidXL": AsteroidExtraLarge,
-            "AsteroidLarge": AsteroidLarge,
-            "AsteroidMedium": AsteroidMedium,
-            "AsteroidSmall": AsteroidSmall,
-            "EnemyDrone": EnemyDrone,
-            "EnemyShip": EnemyShip,
-            "HealthPickup": HealthPickup,
-            "ExtraLifePickup": ExtraLifePickup,
-            "PowerLevelPickup": PowerLevelPickup,
-            "OverdrivePickup": OverdrivePickup,
-            "BombAmmoPickup": BombAmmoPickup,
-            "InvulnerabilityPickup": InvulnerabilityPickup,
-        }
         self.formation = formation
         self.behaviors = behaviors
 
@@ -77,7 +80,7 @@ class SpawnManager:
         )
 
         # Spawn an entity at each position
-        entity_class = self.entity_dict[self.entity_name]
+        entity_class = self.entities[self.entity_name]
 
         for position in positions:
             entity = entity_class(position.x, position.y, self.game_play)

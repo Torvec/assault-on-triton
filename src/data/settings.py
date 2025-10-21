@@ -37,7 +37,16 @@ PLAYER = {
 }
 
 ENEMIES = {
-    "drone": {
+    "asteroid": {
+        "sm": {"speed": 120, "hp": 2, "splits_into": None},
+        "md": {"speed": 100, "hp": 4, "splits_into": "sm"},
+        "lg": {"speed": 80, "hp": 6, "splits_into": "md"},
+        "xl": {"speed": 60, "hp": 12, "splits_into": "lg"},
+        "rotation_speed_range": (-90, 90),
+        "split_angle": 30,
+        "split_velocity_factor": 1.2,
+    },
+    "enemy_drone": {
         "radius": 16,
         "speed": 300,
         "hp": 4,
@@ -45,7 +54,7 @@ ENEMIES = {
         "shot_offset": 4,
         "blast_radius": 32,
     },
-    "ship": {
+    "enemy_ship": {
         "radius": 32,
         "speed": 200,
         "hp": 8,
@@ -84,15 +93,6 @@ PROJECTILES = {
     },
 }
 
-ASTEROIDS = {
-    "small": {"radius": 16, "speed": 120, "hp": 2, "splits_into": None},
-    "medium": {"radius": 32, "speed": 100, "hp": 4, "splits_into": "small"},
-    "large": {"radius": 64, "speed": 80, "hp": 6, "splits_into": "medium"},
-    "xl": {"radius": 128, "speed": 60, "hp": 12, "splits_into": "large"},
-    "rotation_speed_range": (-90, 90),
-    "split_angle": 30,
-    "split_velocity_factor": 1.2,
-}
 
 PICKUPS = {
     "health": {"radius": 16, "speed": 150, "heal_amount": 25},

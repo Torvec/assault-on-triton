@@ -4,7 +4,7 @@ TIMELINE = [
         "time": 1.3,
         "event": "spawn_entities",
         "params": {
-            "type": "AsteroidLarge",
+            "type": "asteroid_lg",
             "count": 1,
             "location": "left_edge",
             "formation": "single",
@@ -18,7 +18,7 @@ TIMELINE = [
         "time": 2.7,
         "event": "spawn_entities",
         "params": {
-            "type": "AsteroidMedium",
+            "type": "asteroid_md",
             "count": 1,
             "location": "right",
             "formation": "single",
@@ -32,7 +32,7 @@ TIMELINE = [
         "time": 3.9,
         "event": "spawn_entities",
         "params": {
-            "type": "AsteroidSmall",
+            "type": "asteroid_sm",
             "count": 1,
             "location": "left",
             "formation": "single",
@@ -46,7 +46,7 @@ TIMELINE = [
         "time": 4.2,
         "event": "spawn_entities",
         "params": {
-            "type": "AsteroidSmall",
+            "type": "asteroid_sm",
             "count": 1,
             "location": "center_left",
             "formation": "single",
@@ -60,7 +60,7 @@ TIMELINE = [
         "time": 5.5,
         "event": "spawn_entities",
         "params": {
-            "type": "AsteroidMedium",
+            "type": "asteroid_md",
             "count": 1,
             "location": "right_edge",
             "formation": "single",
@@ -74,7 +74,7 @@ TIMELINE = [
         "time": 6.8,
         "event": "spawn_entities",
         "params": {
-            "type": "AsteroidLarge",
+            "type": "asteroid_lg",
             "count": 1,
             "location": "far_right",
             "formation": "single",
@@ -88,7 +88,7 @@ TIMELINE = [
         "time": 7.1,
         "event": "spawn_entities",
         "params": {
-            "type": "AsteroidMedium",
+            "type": "asteroid_md",
             "count": 1,
             "location": "center",
             "formation": "single",
@@ -102,7 +102,7 @@ TIMELINE = [
         "time": 8.4,
         "event": "spawn_entities",
         "params": {
-            "type": "AsteroidSmall",
+            "type": "asteroid_sm",
             "count": 1,
             "location": "far_left",
             "formation": "single",
@@ -116,7 +116,7 @@ TIMELINE = [
         "time": 9.6,
         "event": "spawn_entities",
         "params": {
-            "type": "AsteroidLarge",
+            "type": "asteroid_lg",
             "count": 1,
             "location": "center",
             "formation": "single",
@@ -130,7 +130,7 @@ TIMELINE = [
         "time": 10.9,
         "event": "spawn_entities",
         "params": {
-            "type": "AsteroidLarge",
+            "type": "asteroid_lg",
             "count": 1,
             "location": "center_right",
             "formation": "single",
@@ -144,7 +144,7 @@ TIMELINE = [
         "time": 11.5,
         "event": "spawn_entities",
         "params": {
-            "type": "AsteroidXL",
+            "type": "asteroid_xl",
             "count": 1,
             "location": "right",
             "formation": "single",
@@ -158,7 +158,7 @@ TIMELINE = [
         "time": 11.6,
         "event": "spawn_entities",
         "params": {
-            "type": "AsteroidXL",
+            "type": "asteroid_xl",
             "count": 1,
             "location": "left",
             "formation": "single",
@@ -172,7 +172,7 @@ TIMELINE = [
         "time": 12.0,
         "event": "spawn_entities",
         "params": {
-            "type": "PowerLevelPickup",
+            "type": "power_level_pickup",
             "count": 1,
             "location": "right",
             "formation": "single",
@@ -185,7 +185,7 @@ TIMELINE = [
         "time": 16.5,
         "event": "spawn_entities",
         "params": {
-            "type": "EnemyDrone",
+            "type": "enemy_drone",
             "count": 5,
             "location": "center",
             "formation": "column",
@@ -199,7 +199,7 @@ TIMELINE = [
         "time": 23.6,
         "event": "spawn_entities",
         "params": {
-            "type": "EnemyDrone",
+            "type": "enemy_drone",
             "count": 5,
             "location": "center",
             "formation": "wall",
@@ -213,7 +213,7 @@ TIMELINE = [
         "time": 28.1,
         "event": "spawn_entities",
         "params": {
-            "type": "EnemyShip",
+            "type": "enemy_ship",
             "count": 5,
             "location": "center",
             "formation": "column",
@@ -227,7 +227,7 @@ TIMELINE = [
         "time": 33.3,
         "event": "spawn_entities",
         "params": {
-            "type": "EnemyShip",
+            "type": "enemy_ship",
             "count": 5,
             "location": "center",
             "formation": "wall",
@@ -241,7 +241,7 @@ TIMELINE = [
         "time": 38.6,
         "event": "spawn_entities",
         "params": {
-            "type": "EnemyShip",
+            "type": "enemy_ship",
             "count": 6,
             "location": "center",
             "formation": "forward_v",
@@ -255,7 +255,7 @@ TIMELINE = [
         "time": 44.3,
         "event": "spawn_entities",
         "params": {
-            "type": "EnemyShip",
+            "type": "enemy_ship",
             "count": 6,
             "location": "center",
             "formation": "reverse_v",
@@ -269,7 +269,7 @@ TIMELINE = [
         "time": 50.4,
         "event": "spawn_entities",
         "params": {
-            "type": "EnemyShip",
+            "type": "enemy_ship",
             "count": 6,
             "location": "left",
             "formation": "echelon_l",
@@ -283,7 +283,7 @@ TIMELINE = [
         "time": 55.4,
         "event": "spawn_entities",
         "params": {
-            "type": "EnemyShip",
+            "type": "enemy_ship",
             "count": 6,
             "location": "right",
             "formation": "echelon_r",
@@ -297,7 +297,7 @@ TIMELINE = [
         "time": 59.8,
         "event": "spawn_entities",
         "params": {
-            "type": "EnemyShip",
+            "type": "enemy_ship",
             "count": 4,
             "location": "center",
             "formation": "diamond",
@@ -311,7 +311,7 @@ TIMELINE = [
         "time": 61.0,
         "event": "spawn_entities",
         "params": {
-            "type": "PowerLevelPickup",
+            "type": "power_level_pickup",
             "count": 1,
             "location": "left",
             "formation": "single",
@@ -324,7 +324,7 @@ TIMELINE = [
         "time": 65.7,
         "event": "spawn_entities",
         "params": {
-            "type": "EnemyDrone",
+            "type": "enemy_drone",
             "count": 4,
             "location": "left",
             "formation": "diamond",
@@ -338,7 +338,7 @@ TIMELINE = [
         "time": 69.4,
         "event": "spawn_entities",
         "params": {
-            "type": "EnemyDrone",
+            "type": "enemy_drone",
             "count": 4,
             "location": "right",
             "formation": "diamond",
@@ -352,7 +352,7 @@ TIMELINE = [
         "time": 74.8,
         "event": "spawn_entities",
         "params": {
-            "type": "EnemyShip",
+            "type": "enemy_ship",
             "count": 8,
             "location": "center",
             "formation": "circle",
@@ -366,7 +366,7 @@ TIMELINE = [
         "time": 79.5,
         "event": "spawn_entities",
         "params": {
-            "type": "EnemyShip",
+            "type": "enemy_ship",
             "count": 5,
             "location": "center",
             "formation": "x",
@@ -383,7 +383,7 @@ TIMELINE = [
 #     "time": 14.0,
 #     "event": "spawn_entities",
 #     "params": {
-#         "type": "ExtraLifePickup",
+#         "type": "extra_life_pickup",
 #         "count": 1,
 #         "location": "center",
 #         "formation": "single",
@@ -396,7 +396,7 @@ TIMELINE = [
 #     "time": 11.0,
 #     "event": "spawn_entities",
 #     "params": {
-#         "type": "HealthPickup",
+#         "type": "health_pickup",
 #         "count": 1,
 #         "location": "center",
 #         "formation": "single",
@@ -409,7 +409,7 @@ TIMELINE = [
 #     "time": 49.0,
 #     "event": "spawn_entities",
 #     "params": {
-#         "type": "BombAmmoPickup",
+#         "type": "bomb_ammo_pickup",
 #         "count": 1,
 #         "location": "center",
 #         "formation": "single",
@@ -422,7 +422,7 @@ TIMELINE = [
 #     "time": 19.0,
 #     "event": "spawn_entities",
 #     "params": {
-#         "type": "PowerLevelPickup",
+#         "type": "power_level_pickup",
 #         "count": 1,
 #         "location": "center",
 #         "formation": "single",
@@ -435,7 +435,7 @@ TIMELINE = [
 #     "time": 30.0,
 #     "event": "spawn_entities",
 #     "params": {
-#         "type": "InvulnerabilityPickup",
+#         "type": "invulnerability_pickup",
 #         "count": 1,
 #         "location": "center",
 #         "formation": "single",
@@ -448,7 +448,7 @@ TIMELINE = [
 #     "time": 25.0,
 #     "event": "spawn_entities",
 #     "params": {
-#         "type": "OverdrivePickup",
+#         "type": "overdrive_pickup",
 #         "count": 1,
 #         "location": "center",
 #         "formation": "single",

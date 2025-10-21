@@ -1,12 +1,11 @@
 IMAGES = {
     # Player
     "player_ship": "assets/entities/player_spaceship.png",
-    # Asteroids
-    "asteroid_small": "assets/entities/asteroid_sm.png",
-    "asteroid_medium": "assets/entities/asteroid_md.png",
-    "asteroid_large": "assets/entities/asteroid_lg.png",
-    "asteroid_xl": "assets/entities/asteroid_xl.png",
     # Enemies
+    "asteroid_sm": "assets/entities/asteroid_sm.png",
+    "asteroid_md": "assets/entities/asteroid_md.png",
+    "asteroid_lg": "assets/entities/asteroid_lg.png",
+    "asteroid_xl": "assets/entities/asteroid_xl.png",
     "enemy_drone": "assets/entities/enemy_drone.png",
     "enemy_ship": "assets/entities/enemy_ship.png",
     # Projectiles
