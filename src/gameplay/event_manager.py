@@ -1,4 +1,5 @@
 from src.gameplay.spawn_manager import SpawnManager
+from src.gameplay.cutscene_manager import CutsceneManager
 
 
 class EventManager:
@@ -19,18 +20,25 @@ class EventManager:
         )
         spawn_manager.spawn_entity()
 
+    def start_cutscene(self):
+        cutscene_manager = CutsceneManager()
+        cutscene_manager.enter_cutscene()
+
     def show_message(self, text):
         print(text)
 
     def handle_event(self, event):
         event_name = event["event"]
         params = event.get("params", {})
-        if event_name == "spawn_entities":
-            self.spawn_entities(**params)
-        elif event_name == "show_message":
-            self.show_message(**params)
-        else:
-            print(f"Unknown event type: {event_name}")
+        match event_name:
+            case "spawn_entities":
+                self.spawn_entities(**params)
+            case "start_cutscene":
+                self.start_cutscene(**params)
+            case "show_message":
+                self.show_message(**params)
+            case _:
+                print(f"Unknown event type: {event_name}")
 
     def process_timeline(self):
         while (
