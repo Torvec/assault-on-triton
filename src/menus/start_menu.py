@@ -75,7 +75,8 @@ class Start(Screen):
                 screen=game_surface,
                 text=item,
                 font_name="spacegrotesk_semibold",
+                font_size=32,
                 color="grey",
-                pos=(menu_rect.midtop[0], menu_rect.midtop[1] + i * 48),
+                pos=(menu_rect.midtop[0], menu_rect.midtop[1] + 8 + (i * 48)),
                 align="midtop",
             )

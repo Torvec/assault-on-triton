@@ -20,14 +20,16 @@ class Options(Screen):
 
         render_text(
             screen=game_surface,
-            text="OPTIONS",
-            font_size=64,
-            pos=(game_surface.get_width() // 2, 64),
+            text="Options",
+            font_name="zendots",
+            font_size=48,
+            pos=(game_surface.get_width() * 0.5, 64),
         )
 
         render_text(
             screen=game_surface,
             text="scores go here",
+            font_size=32,
             color="grey",
-            pos=(game_surface.get_width() // 2, 128),
+            pos=(game_surface.get_width() * 0.5, 128),
         )

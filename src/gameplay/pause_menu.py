@@ -5,7 +5,7 @@ from src.utils.render_text import render_text
 
 class PauseMenu:
 
-    menu_title = "Game Paused"
+    menu_title = "Paused"
     menu_items = [
         "[ESC] Resume",
         "[1] Restart",
@@ -48,7 +48,8 @@ class PauseMenu:
             render_text(
                 screen=game_surface,
                 text=self.menu_title,
-                font_size=64,
+                font_name="zendots",
+                font_size=48,
                 pos=(pause_menu_rect.midtop[0], pause_menu_rect.midtop[1] + 8),
                 align="midtop",
             )
@@ -57,6 +58,7 @@ class PauseMenu:
                     screen=game_surface,
                     text=item,
                     font_name="spacegrotesk_semibold",
+                    font_size=32,
                     color="grey",
                     pos=(
                         pause_menu_rect.midtop[0],

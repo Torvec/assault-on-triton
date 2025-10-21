@@ -54,7 +54,8 @@ class GameOver(Screen):
         render_text(
             screen=game_surface,
             text=f"Score: {self.game.score_store.current_score}",
-            font_size=64,
+            font_name="zendots",
+            font_size=48,
             color="white",
             pos=(game_over_menu_rect.midtop[0], game_over_menu_rect.midtop[1] + 8),
             align="midtop",
@@ -64,10 +65,11 @@ class GameOver(Screen):
                 screen=game_surface,
                 text=item,
                 font_name="spacegrotesk_semibold",
+                font_size=32,
                 color="grey",
                 pos=(
                     game_over_menu_rect.midtop[0],
-                    game_over_menu_rect.midtop[1] + i * 48,
+                    game_over_menu_rect.midtop[1] + 64 + (i * 48),
                 ),
                 align="midtop",
             )
