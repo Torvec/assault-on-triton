@@ -40,7 +40,8 @@ class GameOver(Screen):
         render_text(
             screen=game_surface,
             text=self.menu_title,
-            font_size=128,
+            font_name="zendots",
+            font_size=64,
             pos=(game_surface.get_width() * 0.5, game_surface.get_height() * 0.5 - 256),
         )
         game_over_menu_rect = pygame.Rect(
@@ -54,7 +55,7 @@ class GameOver(Screen):
         render_text(
             screen=game_surface,
             text=f"Score: {self.game.score_store.current_score}",
-            font_name="zendots",
+            font_name="spacegrotesk_semibold",
             font_size=48,
             color="white",
             pos=(game_over_menu_rect.midtop[0], game_over_menu_rect.midtop[1] + 8),
