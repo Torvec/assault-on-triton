@@ -117,7 +117,7 @@ UI = {
     "hud_padding": 16,
     "hud_inner_padding": 16,
     "hud_top_section_height": 128,
-    "hud_mid_section_height": 192,
+    "hud_mid_section_height": 256,
     "hud_bottom_section_height": 48,
     "hud_meter_height": 16,
     "hud_meter_y_offset": 24,

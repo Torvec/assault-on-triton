@@ -44,7 +44,6 @@ class Start(Screen):
             antialias=True,
             pos=(game_surface.get_width() * 0.5, game_surface.get_height() * 0.5 - 304),
         )
-
         render_text(
             screen=game_surface,
             text="ON",
@@ -53,7 +52,6 @@ class Start(Screen):
             antialias=True,
             pos=(game_surface.get_width() * 0.5, game_surface.get_height() * 0.5 - 224),
         )
-
         render_text(
             screen=game_surface,
             text="TRITON",
@@ -69,7 +67,6 @@ class Start(Screen):
         menu_rect.y += 128
         pygame.draw.rect(game_surface, "grey4", menu_rect, border_radius=24)
         pygame.draw.rect(game_surface, "grey70", menu_rect, width=4, border_radius=24)
-
         for i, item in enumerate(self.menu_items):
             render_text(
                 screen=game_surface,

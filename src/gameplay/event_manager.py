@@ -6,21 +6,41 @@ class EventManager:
     def __init__(self, game_play, timeline):
         self.game_play = game_play
         self.timeline = timeline
-        self.current_time = 0
-        self.current_index = 0
-        self.is_paused = False
-
-    def toggle_pause(self):
-        self.is_paused = not self.is_paused
+        self.timeline_time = 0
+        self.timeline_index = 0
+        self.timeline_time_paused = False
 
     def spawn_entities(self, type, count, location, formation, behaviors):
-        spawn_manager = SpawnManager(
+        spawner = SpawnManager(
             self.game_play, type, count, location, formation, behaviors
         )
-        spawn_manager.spawn_entity()
+        spawner.spawn_entity()
 
     def show_message(self, text):
         print(text)
+
+    def show_dialogue(self, dialogue_id):
+        self.game_play.game_play_hud.display_dialogue(dialogue_id)
+
+    def show_objective(self, objective_id):
+        self.game_play.game_play_hud.display_objective(objective_id)
+
+    def control_player(self):
+        # Disable controls
+        # Take control of player
+        # Move player to desired location
+        # etc.
+        pass
+
+    def pause_event_timeline(self):
+        self.timeline_time_paused = True
+        print("Timeline timer is paused")
+        print(self.timeline_time_paused)
+
+    def resume_event_timeline(self):
+        self.timeline_time_paused = False
+        print("Timeline timer resumed")
+        print(self.timeline_time_paused)
 
     def handle_event(self, event):
         event_name = event["event"]
@@ -30,18 +50,29 @@ class EventManager:
                 self.spawn_entities(**params)
             case "show_message":
                 self.show_message(**params)
+            case "show_dialogue":
+                self.show_dialogue(**params)
+            case "show_objective":
+                self.show_objective(**params)
+            case "control_player":
+                self.control_player(**params)
+            case "pause_timeline":
+                self.pause_event_timeline(**params)
+            case "resume_timeline":
+                self.resume_event_timeline(**params)
             case _:
                 print(f"Unknown event type: {event_name}")
 
     def process_timeline(self):
         while (
-            self.current_index < len(self.timeline)
-            and self.current_time >= self.timeline[self.current_index]["time"]
+            self.timeline_index < len(self.timeline)
+            and self.timeline_time >= self.timeline[self.timeline_index]["time"]
         ):
-            event_data = self.timeline[self.current_index]
-            self.handle_event(event_data)
-            self.current_index += 1
+            current_event = self.timeline[self.timeline_index]
+            self.handle_event(current_event)
+            self.timeline_index += 1
 
     def update(self, dt):
-        self.current_time += dt
-        self.process_timeline()
+        if not self.timeline_time_paused:
+            self.timeline_time += dt
+            self.process_timeline()

@@ -20,8 +20,8 @@ class PauseMenu:
         for event in events:
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_ESCAPE:
-                    self.game_play.isPaused = not self.game_play.isPaused
-                if self.game_play.isPaused:
+                    self.game_play.is_paused = not self.game_play.is_paused
+                if self.game_play.is_paused:
                     match event.key:
                         case pygame.K_1:
                             self.game_play.game.set_scene("GamePlay")
@@ -32,7 +32,7 @@ class PauseMenu:
                             sys.exit()
 
     def draw(self, game_surface):
-        if self.game_play.isPaused:
+        if self.game_play.is_paused:
             pause_menu_rect = pygame.Rect(
                 0,
                 0,
@@ -44,7 +44,6 @@ class PauseMenu:
             pygame.draw.rect(
                 game_surface, "grey70", pause_menu_rect, width=4, border_radius=24
             )
-
             render_text(
                 screen=game_surface,
                 text=self.menu_title,

@@ -36,7 +36,7 @@ class GamePlay(Screen):
         )
         self.game_play_hud = GamePlayHUD(self.game, self)
         self.score = ScoreManager(self.game.score_store)
-        self.isPaused = False
+        self.is_paused = False
         self.pause_menu = PauseMenu(self)
         self.event_manager = EventManager(self, TIMELINE)
         #! Need a better way to handle background layers, this is kind of shit
@@ -90,7 +90,7 @@ class GamePlay(Screen):
         )
         if (
             hostile_count == 0
-            and self.event_manager.current_index >= len(self.event_manager.timeline)
+            and self.event_manager.timeline_index >= len(self.event_manager.timeline)
             and not self.level_complete
         ):
             self.level_complete = True
@@ -104,7 +104,7 @@ class GamePlay(Screen):
 
     def update(self, dt, events):
         self.pause_menu.update(events)
-        if not self.isPaused:
+        if not self.is_paused:
             super().update(dt)
             self.game_timer += dt
             self.event_manager.update(dt)
