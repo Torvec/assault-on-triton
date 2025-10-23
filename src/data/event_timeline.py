@@ -10,11 +10,11 @@ TIMELINE = [
         "params": {"dialogue_id": "dialogue_2"},
     },
     {
-        "time": 5,
+        "time": 6,
         "event": "show_dialogue",
         "params": {"dialogue_id": "dialogue_3"},
     },
-    {"time": 7, "event": "show_message", "params": {"text": "Mission Start!"}},
+    {"time": 9, "event": "show_message", "params": {"text": "Mission Start!"}},
     # {"time": 0, "event": "pause_timeline", "params": {}},
     # {"time": 1, "event": "resume_timeline", "params": {}},
     # {

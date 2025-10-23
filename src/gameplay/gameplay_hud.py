@@ -1,20 +1,7 @@
 import pygame
 from src.utils.render_text import render_text
 from src.data.settings import UI
-from src.data.dialogue import SCRIPTED, DYNAMIC
-
-"""
-
-6 rects total
-3 rects on either side of the game_surface
-All the same width (game_surface width / 2)
-Height is variable
-Position derived from hud surface using get rect()
-- 2 top rects = topleft and topright
-- 2 middle rects = midleft and midright
-- 2 bottom rects = bottomleft and bottomright
-
-"""
+from src.data.dialogue import SCRIPTED
 
 
 class GamePlayHUD:
@@ -22,14 +9,17 @@ class GamePlayHUD:
     def __init__(self, game, game_play):
         self.game = game
         self.game_play = game_play
+        self.current_speaker = None
+        self.current_dialogue = None
+        self.dialogue_timer = 0
+        self.dialogue_location = None
 
     def display_dialogue(self, dialogue_id):
         dialogue = SCRIPTED[dialogue_id]
         self.current_speaker = dialogue["speaker"]
-        self.current_text = dialogue["text"]
+        self.current_dialogue = dialogue["text"]
         self.dialogue_timer = dialogue["timer"]
-        self.location = dialogue["location"]
-        # self.portrait = dialogue["portrait"]
+        self.dialogue_location = dialogue["location"]
 
     def display_objective(self, objective_id):
         pass
@@ -76,7 +66,7 @@ class GamePlayHUD:
         top_left_rect = pygame.Rect(
             0,
             0,
-            self.game.sidebar_l_surface.get_width() * 0.5,
+            sidebar.get_width() * 0.5,
             UI["hud_top_section_height"],
         )
         top_left_rect.topleft = sidebar.get_rect().midtop
@@ -128,7 +118,7 @@ class GamePlayHUD:
         mid_left_rect = pygame.Rect(
             0,
             0,
-            self.game.sidebar_l_surface.get_width() * 0.5,
+            sidebar.get_width() * 0.5,
             UI["hud_mid_section_height"],
         )
         mid_left_rect.midleft = sidebar.get_rect().center
@@ -140,29 +130,30 @@ class GamePlayHUD:
             mid_left_rect.width - UI["hud_inner_padding"] * 2,
             mid_left_rect.height - UI["hud_inner_padding"] * 2,
         )
-        # render_text(
-        #     screen=sidebar,
-        #     text="[ Hero Profile Pic ]",
-        #     font_size=UI["font_sizes"]["medium"],
-        #     color=UI["colors"]["secondary"],
-        #     pos=content_rect.midtop,
-        #     align="center",
-        # )
-        render_text(
-            screen=sidebar,
-            text="[ Hero Dialogue ]",
-            font_size=UI["font_sizes"]["medium"],
-            color=UI["colors"]["secondary"],
-            pos=content_rect.center,
-            align="center",
-        )
+        if self.dialogue_location == "left":
+            render_text(
+                screen=sidebar,
+                text=self.current_speaker,
+                font_size=UI["font_sizes"]["medium"],
+                color=UI["colors"]["secondary"],
+                pos=content_rect.topleft,
+                align="topleft",
+            )
+            render_text(
+                screen=sidebar,
+                text=self.current_dialogue,
+                font_size=UI["font_sizes"]["medium"],
+                color=UI["colors"]["secondary"],
+                pos=content_rect.bottomleft,
+                align="bottomleft",
+            )
 
     def draw_btm_left(self, sidebar):
         """Objective display."""
         btm_left_rect = pygame.Rect(
             0,
             0,
-            self.game.sidebar_l_surface.get_width() * 0.5,
+            sidebar.get_width() * 0.5,
             UI["hud_bottom_section_height"],
         )
         btm_left_rect.bottomleft = sidebar.get_rect().midbottom
@@ -189,7 +180,7 @@ class GamePlayHUD:
         top_right_rect = pygame.Rect(
             0,
             0,
-            self.game.sidebar_r_surface.get_width() * 0.5,
+            sidebar.get_width() * 0.5,
             UI["hud_top_section_height"],
         )
         top_right_rect.topleft = sidebar.get_rect().topleft
@@ -243,7 +234,7 @@ class GamePlayHUD:
         mid_right_rect = pygame.Rect(
             0,
             0,
-            self.game.sidebar_r_surface.get_width() * 0.5,
+            sidebar.get_width() * 0.5,
             UI["hud_mid_section_height"],
         )
         mid_right_rect.midleft = sidebar.get_rect().midleft
@@ -255,29 +246,30 @@ class GamePlayHUD:
             mid_right_rect.width - UI["hud_inner_padding"] * 2,
             mid_right_rect.height - UI["hud_inner_padding"] * 2,
         )
-        # render_text(
-        #     screen=sidebar,
-        #     text="[ Enemy/Ally Profile Pic ]",
-        #     font_size=UI["font_sizes"]["medium"],
-        #     color=UI["colors"]["secondary"],
-        #     pos=content_rect.midtop,
-        #     align="center",
-        # )
-        render_text(
-            screen=sidebar,
-            text="[ Enemy/Ally Dialogue ]",
-            font_size=UI["font_sizes"]["medium"],
-            color=UI["colors"]["secondary"],
-            pos=content_rect.center,
-            align="center",
-        )
+        if self.dialogue_location == "right":
+            render_text(
+                screen=sidebar,
+                text=self.current_speaker,
+                font_size=UI["font_sizes"]["medium"],
+                color=UI["colors"]["secondary"],
+                pos=content_rect.topleft,
+                align="topleft",
+            )
+            render_text(
+                screen=sidebar,
+                text=self.current_dialogue,
+                font_size=UI["font_sizes"]["medium"],
+                color=UI["colors"]["secondary"],
+                pos=content_rect.bottomleft,
+                align="bottomleft",
+            )
 
     def draw_btm_right(self, sidebar):
         """Hints"""
         btm_right_rect = pygame.Rect(
             0,
             0,
-            self.game.sidebar_r_surface.get_width() * 0.5,
+            sidebar.get_width() * 0.5,
             UI["hud_bottom_section_height"],
         )
         btm_right_rect.bottomleft = sidebar.get_rect().bottomleft
@@ -302,9 +294,10 @@ class GamePlayHUD:
     def update(self, dt):
         if self.dialogue_timer > 0:
             self.dialogue_timer -= dt
-        else:
-            self.current_speaker = None
-            self.current_text = None
+            if self.dialogue_timer <= 0:
+                self.current_speaker = None
+                self.current_text = None
+                self.dialogue_location = None
 
     def draw(self, sidebar_l_surface, sidebar_r_surface):
         self.draw_top_left(sidebar_l_surface)

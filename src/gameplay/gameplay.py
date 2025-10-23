@@ -110,6 +110,7 @@ class GamePlay(Screen):
             self.event_manager.update(dt)
             self.collision_manager.update()
             self.score.update_streak_meter_decay(dt)
+            self.game_play_hud.update(dt)
             self.handle_game_over()
             self.handle_level_complete(dt)
 

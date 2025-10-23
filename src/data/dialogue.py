@@ -15,14 +15,14 @@ SCRIPTED = {
         "speaker": "Hero",
         "portrait": "",
         "text": "On it, Commander!",
-        "timer": 2,
+        "timer": 3,
         "location": "left",
     },
     "dialogue_3": {
         "speaker": "commander",
         "portrait": "",
         "text": "Good Luck out there!",
-        "timer": 2,
+        "timer": 3,
         "location": "right",
     },
 }
