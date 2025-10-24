@@ -30,6 +30,9 @@ IMAGES = {
     # Backgrounds
     "planet": "assets/backgrounds/planet.png",
     "planet_two": "assets/backgrounds/planet_two.png",
+    # Portraits
+    "hero_portrait": "assets/portraits/hero_portrait.png",
+    "commander_portrait": "assets/portraits/commander_portrait.png",
 }
 
 SOUNDS = {

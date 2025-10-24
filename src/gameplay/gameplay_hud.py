@@ -17,6 +17,7 @@ class GamePlayHUD:
     def display_dialogue(self, dialogue_id):
         dialogue = SCRIPTED[dialogue_id]
         self.current_speaker = dialogue["speaker"]
+        self.current_portrait = dialogue["portrait"]
         self.current_dialogue = dialogue["text"]
         self.dialogue_timer = dialogue["timer"]
         self.dialogue_location = dialogue["location"]
@@ -131,18 +132,22 @@ class GamePlayHUD:
             mid_left_rect.height - UI["hud_inner_padding"] * 2,
         )
         if self.dialogue_location == "left":
+            portrait = pygame.image.load(self.current_portrait)
+            portrait_rect = pygame.Rect(0, 0, 128, 128)
+            portrait_rect.midtop = content_rect.midtop
+            sidebar.blit(portrait, portrait_rect)
             render_text(
                 screen=sidebar,
                 text=self.current_speaker,
-                font_size=UI["font_sizes"]["medium"],
+                font_size=UI["font_sizes"]["large"],
                 color=UI["colors"]["secondary"],
-                pos=content_rect.topleft,
-                align="topleft",
+                pos=(content_rect.center[0], content_rect.center[1] + 32),
+                align="midtop",
             )
             render_text(
                 screen=sidebar,
                 text=self.current_dialogue,
-                font_size=UI["font_sizes"]["medium"],
+                font_size=UI["font_sizes"]["large"],
                 color=UI["colors"]["secondary"],
                 pos=content_rect.bottomleft,
                 align="bottomleft",
@@ -247,18 +252,22 @@ class GamePlayHUD:
             mid_right_rect.height - UI["hud_inner_padding"] * 2,
         )
         if self.dialogue_location == "right":
+            portrait = pygame.image.load(self.current_portrait)
+            portrait_rect = pygame.Rect(0, 0, 128, 128)
+            portrait_rect.midtop = content_rect.midtop
+            sidebar.blit(portrait, portrait_rect)
             render_text(
                 screen=sidebar,
                 text=self.current_speaker,
-                font_size=UI["font_sizes"]["medium"],
+                font_size=UI["font_sizes"]["large"],
                 color=UI["colors"]["secondary"],
-                pos=content_rect.topleft,
-                align="topleft",
+                pos=(content_rect.center[0], content_rect.center[1] + 32),
+                align="midtop",
             )
             render_text(
                 screen=sidebar,
                 text=self.current_dialogue,
-                font_size=UI["font_sizes"]["medium"],
+                font_size=UI["font_sizes"]["large"],
                 color=UI["colors"]["secondary"],
                 pos=content_rect.bottomleft,
                 align="bottomleft",

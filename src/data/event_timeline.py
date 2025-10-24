@@ -2,19 +2,24 @@ TIMELINE = [
     {
         "time": 0,
         "event": "show_dialogue",
-        "params": {"dialogue_id": "dialogue_1"},
+        "params": {"dialogue_id": "intro_1_1"},
     },
     {
         "time": 3,
         "event": "show_dialogue",
-        "params": {"dialogue_id": "dialogue_2"},
+        "params": {"dialogue_id": "intro_1_2"},
     },
     {
         "time": 6,
         "event": "show_dialogue",
-        "params": {"dialogue_id": "dialogue_3"},
+        "params": {"dialogue_id": "intro_1_3"},
     },
-    {"time": 9, "event": "show_message", "params": {"text": "Mission Start!"}},
+    {
+        "time": 9,
+        "event": "show_dialogue",
+        "params": {"dialogue_id": "intro_1_4"},
+    },
+    {"time": 12, "event": "show_message", "params": {"text": "Mission Start!"}},
     # {"time": 0, "event": "pause_timeline", "params": {}},
     # {"time": 1, "event": "resume_timeline", "params": {}},
     # {
