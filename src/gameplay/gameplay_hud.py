@@ -2,6 +2,7 @@ import pygame
 from src.utils.render_text import render_text
 from src.data.settings import UI
 from src.data.dialogue import SCRIPTED
+from src.data.messages import MESSAGES
 
 
 class GamePlayHUD:
@@ -13,6 +14,8 @@ class GamePlayHUD:
         self.current_dialogue = None
         self.dialogue_timer = 0
         self.dialogue_location = None
+        self.current_message = None
+        self.message_timer = 0
 
     def display_dialogue(self, dialogue_id):
         dialogue = SCRIPTED[dialogue_id]
@@ -29,6 +32,17 @@ class GamePlayHUD:
                 self.current_speaker = None
                 self.current_text = None
                 self.dialogue_location = None
+
+    def display_message(self, message_id):
+        self.current_message = MESSAGES[message_id]["text"]
+        self.message_timer = MESSAGES[message_id]["timer"]
+
+    def handle_message_timer(self, dt):
+        if self.message_timer > 0:
+            self.message_timer -= dt
+            if self.message_timer <= 0:
+                self.current_message = None
+                self.message_timer = 0
 
     def draw_streak_meter(self, surface, rect):
         meter_y = rect.top + UI["hud_meter_y_offset"]
@@ -167,6 +181,18 @@ class GamePlayHUD:
             align="midleft",
         )
 
+    def draw_on_game_surface(self, game_surface):
+        if self.current_message:
+            render_text(
+                screen=game_surface,
+                text=self.current_message,
+                font_name="zendots",
+                font_size=48,
+                color="yellow",
+                pos=game_surface.get_rect().center,
+                align="center",
+            )
+
     def draw_top_right(self, sidebar):
         """Player stats: HP, lives, bombs, power level."""
         top_right_rect = pygame.Rect(
@@ -290,11 +316,14 @@ class GamePlayHUD:
 
     def update(self, dt):
         self.handle_dialogue_timer(dt)
+        self.handle_message_timer(dt)
 
-    def draw(self, sidebar_l_surface, sidebar_r_surface):
+    def draw(self, sidebar_l_surface, game_surface, sidebar_r_surface):
         self.draw_top_left(sidebar_l_surface)
         self.draw_mid_left(sidebar_l_surface)
         self.draw_btm_left(sidebar_l_surface)
+
+        self.draw_on_game_surface(game_surface)
 
         self.draw_top_right(sidebar_r_surface)
         self.draw_mid_right(sidebar_r_surface)

@@ -17,7 +17,7 @@ class EventManager:
         spawner.spawn_entity()
 
     def show_message(self, message_id):
-        self.game_play.display_message(message_id)
+        self.game_play.game_play_hud.display_message(message_id)
 
     def show_dialogue(self, dialogue_id):
         self.game_play.game_play_hud.display_dialogue(dialogue_id)

@@ -16,12 +16,10 @@ from src.gameplay.collision_manager import CollisionManager
 
 # Data
 from src.data.event_timeline import TIMELINE
-from src.data.messages import MESSAGES
 
 # UI
 from src.gameplay.pause_menu import PauseMenu
 from src.gameplay.gameplay_hud import GamePlayHUD
-from src.utils.render_text import render_text
 
 # Backgrounds
 from src.backgrounds.background import StarField, Planet, PlanetTwo
@@ -47,8 +45,6 @@ class GamePlay(Screen):
         self.background = StarField(0, 0, self.game)
         self.background_2 = Planet(256, self.play_area_rect.bottom - 196, self.game)
         self.background_3 = PlanetTwo(self.play_area_rect.midtop, -512, self.game)
-        self.current_message = None
-        self.message_timer = 0
 
         # Level completion tracking
         self.level_complete = False
@@ -108,17 +104,6 @@ class GamePlay(Screen):
                 self.score.store_score(self.score.score)
                 self.game.set_scene("GameOver")
 
-    def display_message(self, message_id):
-        self.current_message = MESSAGES[message_id]["text"]
-        self.message_timer = MESSAGES[message_id]["timer"]
-
-    def handle_message_timer(self, dt):
-        if self.message_timer > 0:
-            self.message_timer -= dt
-            if self.message_timer <= 0:
-                self.current_message = None
-                self.message_timer = 0
-
     def update(self, dt, events):
         self.pause_menu.update(events)
         if not self.is_paused:
@@ -128,21 +113,10 @@ class GamePlay(Screen):
             self.collision_manager.update()
             self.score.update_streak_meter_decay(dt)
             self.game_play_hud.update(dt)
-            self.handle_message_timer(dt)
             self.handle_game_over()
             self.handle_level_complete(dt)
 
     def draw(self, game_surface, sidebar_l_surface, sidebar_r_surface):
         super().draw(game_surface, sidebar_l_surface, sidebar_r_surface)
+        self.game_play_hud.draw(sidebar_l_surface, game_surface, sidebar_r_surface)
         self.pause_menu.draw(game_surface)
-        self.game_play_hud.draw(sidebar_l_surface, sidebar_r_surface)
-        if self.current_message:
-            render_text(
-                screen=game_surface,
-                text=self.current_message,
-                font_name="zendots",
-                font_size=48,
-                color="white",
-                pos=self.play_area_rect.center,
-                align="center",
-            )
