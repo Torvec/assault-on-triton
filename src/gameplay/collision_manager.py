@@ -2,7 +2,6 @@ class CollisionManager:
     def __init__(self, game_play):
         self.game_play = game_play
         self.sprite_groups = {
-            "player": self.game_play.player_group,
             "asteroids": self.game_play.asteroids,
             "enemy_drones": self.game_play.enemy_drones,
             "enemy_ships": self.game_play.enemy_ships,
@@ -12,7 +11,32 @@ class CollisionManager:
             "explosions": self.game_play.explosions,
             "pickups": self.game_play.pickups,
         }
-        self.player = self.sprite_groups["player"].sprite
+        self.player = self.game_play.player_group.sprite
+
+    def handle_shots(self, shot_type, colliders):
+        for shot in shot_type:
+            shot_v_colliders = shot.collides_with(colliders)
+            if shot_v_colliders:
+                for collider in shot_v_colliders:
+                    collider.take_damage(shot.damage)
+                    shot.kill()
+
+    def handle_explosives(self, explosive_type, colliders):
+        for explosive in explosive_type:
+            if explosive.collides_with(colliders):
+                explosive.explode()
+
+    def handle_explosions(self, explosion_type, colliders):
+        for explosion in explosion_type:
+            explosion_v_colliders = explosion.collides_with(colliders)
+            if explosion_v_colliders:
+                for collider in explosion_v_colliders:
+                    collider.take_damage(explosion.damage)
+
+    def filter_by_owner(self, group, is_player=True):
+        if is_player:
+            return [e for e in self.sprite_groups[group] if e.owner == self.player]
+        return [e for e in self.sprite_groups[group] if e.owner != self.player]
 
     def update(self):
         self.hostiles = [
@@ -40,69 +64,33 @@ class CollisionManager:
             ]
         ):
             return
-        player_shots = [
-            e for e in self.sprite_groups["shots"] if e.owner == self.player
+        player_shots = self.filter_by_owner("shots", is_player=True)
+        enemy_shots = self.filter_by_owner("shots", is_player=False)
+        player_bombs = self.filter_by_owner("bombs", is_player=True)
+        enemy_bombs = self.filter_by_owner("bombs", is_player=False)
+        player_missiles = self.filter_by_owner("missiles", is_player=True)
+        enemy_missiles = self.filter_by_owner("missiles", is_player=False)
+        player_explosions = self.filter_by_owner("explosions", is_player=True)
+        enemy_explosions = self.filter_by_owner("explosions", is_player=False)
+        player_bomb_colliders = [
+            *self.hostiles,
+            *enemy_shots,
+            *enemy_bombs,
+            *enemy_missiles,
+            *enemy_explosions,
         ]
-        enemy_shots = [e for e in self.sprite_groups["shots"] if e.owner != self.player]
-        player_bombs = [
-            e for e in self.sprite_groups["bombs"] if e.owner == self.player
+        enemy_bomb_colliders = [
+            self.player,
+            *player_shots,
+            *player_bombs,
+            *player_missiles,
+            *player_explosions,
         ]
-        enemy_bombs = [e for e in self.sprite_groups["bombs"] if e.owner != self.player]
-        player_missiles = [
-            e for e in self.sprite_groups["missiles"] if e.owner == self.player
-        ]
-        enemy_missiles = [
-            e for e in self.sprite_groups["missiles"] if e.owner != self.player
-        ]
-        player_explosions = [
-            e for e in self.sprite_groups["explosions"] if e.owner == self.player
-        ]
-        enemy_explosions = [
-            e for e in self.sprite_groups["explosions"] if e.owner != self.player
-        ]
-        for shot in player_shots:
-            shot_v_hostiles = shot.collides_with(self.hostiles)
-            if shot_v_hostiles:
-                for hostile in shot_v_hostiles:
-                    hostile.take_damage(shot.damage)
-                    shot.kill()
-        for shot in enemy_shots:
-            shot_v_player = shot.collides_with([self.player])
-            if shot_v_player:
-                for collider in shot_v_player:
-                    collider.take_damage(shot.damage)
-                    shot.kill()
-        for bomb in player_bombs:
-            colliders = [
-                *self.hostiles,
-                *enemy_shots,
-                *enemy_bombs,
-                *enemy_missiles,
-                *enemy_explosions,
-            ]
-            if bomb.collides_with(colliders):
-                bomb.explode()
-        for bomb in enemy_bombs:
-            colliders = [
-                self.player,
-                *player_shots,
-                *player_bombs,
-                *player_missiles,
-                *player_explosions,
-            ]
-            if bomb.collides_with(colliders):
-                bomb.explode()
-        for missile in enemy_missiles:
-            colliders = [self.player, *player_bombs, *player_explosions]
-            if missile.collides_with(colliders):
-                missile.explode()
-        for explosion in player_explosions:
-            explosion_v_hostiles = explosion.collides_with(self.hostiles)
-            if explosion_v_hostiles:
-                for hostile in explosion_v_hostiles:
-                    hostile.take_damage(explosion.damage)
-        for explosion in enemy_explosions:
-            explosion_v_player = explosion.collides_with([self.player])
-            if explosion_v_player:
-                for collider in explosion_v_player:
-                    collider.take_damage(explosion.damage)
+        enemy_missile_colliders = [self.player, *player_bombs, *player_explosions]
+        self.handle_shots(player_shots, self.hostiles)
+        self.handle_shots(enemy_shots, [self.player])
+        self.handle_explosives(player_bombs, player_bomb_colliders)
+        self.handle_explosives(enemy_bombs, enemy_bomb_colliders)
+        self.handle_explosives(enemy_missiles, enemy_missile_colliders)
+        self.handle_explosions(player_explosions, self.hostiles)
+        self.handle_explosions(enemy_explosions, [self.player])
