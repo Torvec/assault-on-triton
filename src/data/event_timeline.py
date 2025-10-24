@@ -1,27 +1,32 @@
 TIMELINE = [
     {
-        "time": 0,
+        "time": 3,
         "event": "show_dialogue",
         "params": {"dialogue_id": "intro_1_1"},
     },
     {
-        "time": 3,
+        "time": 6,
         "event": "show_dialogue",
         "params": {"dialogue_id": "intro_1_2"},
     },
     {
-        "time": 6,
+        "time": 9,
         "event": "show_dialogue",
         "params": {"dialogue_id": "intro_1_3"},
     },
     {
-        "time": 9,
+        "time": 12,
         "event": "show_dialogue",
         "params": {"dialogue_id": "intro_1_4"},
     },
-    {"time": 12, "event": "show_message", "params": {"message_id": "mission_start"}},
     {
-        "time": 13.3,
+        "time": 15,
+        "event": "show_dialogue",
+        "params": {"dialogue_id": "enemy_test"},
+    },
+    {"time": 15, "event": "show_message", "params": {"message_id": "mission_start"}},
+    {
+        "time": 16.3,
         "event": "spawn_entities",
         "params": {
             "type": "asteroid_lg",
@@ -35,7 +40,7 @@ TIMELINE = [
         },
     },
     {
-        "time": 13.7,
+        "time": 16.7,
         "event": "spawn_entities",
         "params": {
             "type": "asteroid_md",
@@ -49,7 +54,7 @@ TIMELINE = [
         },
     },
     {
-        "time": 13.9,
+        "time": 16.9,
         "event": "spawn_entities",
         "params": {
             "type": "asteroid_sm",
@@ -63,7 +68,7 @@ TIMELINE = [
         },
     },
     {
-        "time": 14.2,
+        "time": 17.2,
         "event": "spawn_entities",
         "params": {
             "type": "asteroid_sm",
@@ -77,7 +82,7 @@ TIMELINE = [
         },
     },
     {
-        "time": 15.5,
+        "time": 18.5,
         "event": "spawn_entities",
         "params": {
             "type": "asteroid_md",
@@ -91,7 +96,7 @@ TIMELINE = [
         },
     },
     {
-        "time": 16.8,
+        "time": 19.8,
         "event": "spawn_entities",
         "params": {
             "type": "asteroid_lg",
@@ -105,7 +110,7 @@ TIMELINE = [
         },
     },
     {
-        "time": 17.1,
+        "time": 20.1,
         "event": "spawn_entities",
         "params": {
             "type": "asteroid_md",
@@ -119,7 +124,7 @@ TIMELINE = [
         },
     },
     {
-        "time": 18.4,
+        "time": 21.4,
         "event": "spawn_entities",
         "params": {
             "type": "asteroid_sm",
@@ -133,7 +138,7 @@ TIMELINE = [
         },
     },
     {
-        "time": 19.6,
+        "time": 22.6,
         "event": "spawn_entities",
         "params": {
             "type": "asteroid_lg",
@@ -147,7 +152,7 @@ TIMELINE = [
         },
     },
     {
-        "time": 20.9,
+        "time": 23.9,
         "event": "spawn_entities",
         "params": {
             "type": "asteroid_lg",
@@ -161,7 +166,7 @@ TIMELINE = [
         },
     },
     {
-        "time": 21.5,
+        "time": 24.5,
         "event": "spawn_entities",
         "params": {
             "type": "asteroid_xl",
@@ -175,7 +180,7 @@ TIMELINE = [
         },
     },
     {
-        "time": 21.6,
+        "time": 24.6,
         "event": "spawn_entities",
         "params": {
             "type": "asteroid_xl",
@@ -189,7 +194,7 @@ TIMELINE = [
         },
     },
     {
-        "time": 22.0,
+        "time": 25.0,
         "event": "spawn_entities",
         "params": {
             "type": "power_level_pickup",
@@ -202,7 +207,7 @@ TIMELINE = [
         },
     },
     {
-        "time": 26.5,
+        "time": 27.5,
         "event": "spawn_entities",
         "params": {
             "type": "enemy_drone",
