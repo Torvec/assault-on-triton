@@ -19,7 +19,7 @@ TIMELINE = [
         "event": "show_dialogue",
         "params": {"dialogue_id": "intro_1_4"},
     },
-    {"time": 12, "event": "show_message", "params": {"text": "Mission Start!"}},
+    {"time": 12, "event": "show_message", "params": {"message_id": "mission_start"}},
     {
         "time": 13.3,
         "event": "spawn_entities",

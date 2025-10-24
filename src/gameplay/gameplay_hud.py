@@ -22,11 +22,13 @@ class GamePlayHUD:
         self.dialogue_timer = dialogue["timer"]
         self.dialogue_location = dialogue["location"]
 
-    def display_objective(self, objective_id):
-        pass
-
-    def display_hint(self, hint_id):
-        pass
+    def handle_dialogue_timer(self, dt):
+        if self.dialogue_timer > 0:
+            self.dialogue_timer -= dt
+            if self.dialogue_timer <= 0:
+                self.current_speaker = None
+                self.current_text = None
+                self.dialogue_location = None
 
     def draw_streak_meter(self, surface, rect):
         meter_y = rect.top + UI["hud_meter_y_offset"]
@@ -60,7 +62,7 @@ class GamePlayHUD:
         mins = int(game_timer // 60)
         secs = int(game_timer % 60)
         ms = int((game_timer % 1) * 1000)
-        return f"T-{mins:02}:{secs:02}:{ms:03}"
+        return f"TIME: {mins:02}:{secs:02}:{ms:03}"
 
     def draw_top_left(self, sidebar):
         """Score, multiplier, high score, time."""
@@ -97,22 +99,6 @@ class GamePlayHUD:
             align="topright",
         )
         self.draw_streak_meter(sidebar, content_rect)
-        render_text(
-            screen=sidebar,
-            text=f"HI SCORE: {self.game.score_store.high_score:,}",
-            font_size=UI["font_sizes"]["large"],
-            color=UI["colors"]["primary"],
-            pos=content_rect.bottomleft,
-            align="bottomleft",
-        )
-        # render_text(
-        #     screen=sidebar,
-        #     text=self.format_time(self.game_play.game_timer),
-        #     font_size=self.FONTS["lg"],
-        #     color=self.COLORS["primary"],
-        #     pos=content_rect.bottomleft,
-        #     align="bottomleft",
-        # )
 
     def draw_mid_left(self, sidebar):
         """Hero (aka the player) dialogue box."""
@@ -133,7 +119,7 @@ class GamePlayHUD:
         )
         if self.dialogue_location == "left":
             portrait = pygame.image.load(self.current_portrait)
-            portrait_rect = pygame.Rect(0, 0, 128, 128)
+            portrait_rect = portrait.get_rect()
             portrait_rect.midtop = content_rect.midtop
             sidebar.blit(portrait, portrait_rect)
             render_text(
@@ -154,7 +140,7 @@ class GamePlayHUD:
             )
 
     def draw_btm_left(self, sidebar):
-        """Objective display."""
+        """High Score Display"""
         btm_left_rect = pygame.Rect(
             0,
             0,
@@ -173,9 +159,10 @@ class GamePlayHUD:
         )
         render_text(
             screen=sidebar,
-            text="Objective: Defeat Enemy Waves (PLACEHOLDER)",
+            text=f"HI SCORE: {self.game.score_store.high_score:,}",
+            font_name="zendots",
             font_size=UI["font_sizes"]["small"],
-            color=UI["colors"]["secondary"],
+            color=UI["colors"]["primary"],
             pos=content_rect.midleft,
             align="midleft",
         )
@@ -253,7 +240,7 @@ class GamePlayHUD:
         )
         if self.dialogue_location == "right":
             portrait = pygame.image.load(self.current_portrait)
-            portrait_rect = pygame.Rect(0, 0, 128, 128)
+            portrait_rect = portrait.get_rect()
             portrait_rect.midtop = content_rect.midtop
             sidebar.blit(portrait, portrait_rect)
             render_text(
@@ -274,7 +261,7 @@ class GamePlayHUD:
             )
 
     def draw_btm_right(self, sidebar):
-        """Hints"""
+        """Game Timer Display"""
         btm_right_rect = pygame.Rect(
             0,
             0,
@@ -293,20 +280,16 @@ class GamePlayHUD:
         )
         render_text(
             screen=sidebar,
-            text="[Esc] to Pause Game",
-            font_size=UI["font_sizes"]["large"],
+            text=self.format_time(self.game_play.game_timer),
+            font_name="zendots",
+            font_size=UI["font_sizes"]["small"],
             color=UI["colors"]["secondary"],
             pos=content_rect.midleft,
             align="midleft",
         )
 
     def update(self, dt):
-        if self.dialogue_timer > 0:
-            self.dialogue_timer -= dt
-            if self.dialogue_timer <= 0:
-                self.current_speaker = None
-                self.current_text = None
-                self.dialogue_location = None
+        self.handle_dialogue_timer(dt)
 
     def draw(self, sidebar_l_surface, sidebar_r_surface):
         self.draw_top_left(sidebar_l_surface)

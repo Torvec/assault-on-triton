@@ -16,14 +16,11 @@ class EventManager:
         )
         spawner.spawn_entity()
 
-    def show_message(self, text):
-        print(text)
+    def show_message(self, message_id):
+        self.game_play.display_message(message_id)
 
     def show_dialogue(self, dialogue_id):
         self.game_play.game_play_hud.display_dialogue(dialogue_id)
-
-    def show_objective(self, objective_id):
-        self.game_play.game_play_hud.display_objective(objective_id)
 
     def control_player(self):
         # Disable controls
@@ -52,8 +49,6 @@ class EventManager:
                 self.show_message(**params)
             case "show_dialogue":
                 self.show_dialogue(**params)
-            case "show_objective":
-                self.show_objective(**params)
             case "control_player":
                 self.control_player(**params)
             case "pause_timeline":
