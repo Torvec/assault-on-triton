@@ -17,9 +17,6 @@ PLAYER = {
     "invincible_duration": 2,
     "invulnerable_duration": 30,
     "overdrive_duration": 20,
-    "primary_shot_offset": 8,
-    "secondary_shot_offset": 20,
-    "tertiary_shot_offset": 24,
     "base_bomb_ammo": 3,
     "max_bomb_ammo": 6,
     "bomb_cooldown": 2.0,
@@ -27,12 +24,21 @@ PLAYER = {
     "max_power_level": 4,
     "death_blast_radius": 128,
     "velocity_decay": 0.99,
-    "fire_rates": {
-        1: 0.2,
-        2: 0.18,
-        3: 0.16,
-        4: 0.14,
-        5: 0.12,  # overdrive
+    "shot_pos": {
+        1: {"x": 0, "y": -20},
+        2: {"x": -7, "y": -56},
+        3: {"x": 7, "y": -56},
+        4: {"x": -20, "y": -55},
+        5: {"x": 20, "y": -55},
+        6: {"x": -25, "y": -20},
+        7: {"x": 25, "y": -20},
+    },
+    "shots": {
+        1: {"rate": 0.20, "active_pos": [1]},
+        2: {"rate": 0.20, "active_pos": [2, 3]},
+        3: {"rate": 0.20, "active_pos": [1, 2, 3]},
+        4: {"rate": 0.18, "active_pos": [1, 2, 3, 4, 5]},
+        5: {"rate": 0.16, "active_pos": [1, 2, 3, 4, 5, 6, 7]},
     },
 }
 
@@ -68,20 +74,20 @@ PROJECTILES = {
     "player_shot": {
         1: {"range": 512, "speed": 500, "damage": 1},
         2: {"range": 768, "speed": 600, "damage": 2},
-        3: {"range": 1024, "speed": 700, "damage": 4},
-        4: {"range": 1024, "speed": 800, "damage": 6},
+        3: {"range": 1024, "speed": 700, "damage": 3},
+        4: {"range": 1024, "speed": 800, "damage": 4},
         5: {"range": 1024, "speed": 1000, "damage": 8},
     },
     "enemy_shot": {"range": 512, "speed": 500, "damage": 2},
     "player_bomb": {
         "radius": 8,
-        "speed": 200,
+        "speed": 250,
         "trigger_distance": 256,
-        "blast_radius": {1: 192, 2: 256, 3: 384, 4: 512},
+        "blast_radius": {1: 192, 2: 256, 3: 384, 4: 512, 5: 512},
     },
     "enemy_bomb": {
         "radius": 8,
-        "speed": 200,
+        "speed": 250,
         "trigger_distance": 256,
         "blast_radius": 384,
     },
