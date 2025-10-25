@@ -1,9 +1,9 @@
-from src.entities.entity import Entity
+from src.entities.collidable_entity import CollidableEntity
 from src.data.settings import PICKUPS, PLAYER
 from src.data.assets import IMAGES
 
 
-class Pickup(Entity):
+class Pickup(CollidableEntity):
 
     def __init__(self, x, y, game_play):
         super().__init__(x, y, game_play)

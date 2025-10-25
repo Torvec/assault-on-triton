@@ -10,10 +10,8 @@ class EventManager:
         self.timeline_index = 0
         self.timeline_time_paused = False
 
-    def spawn_entities(self, type, count, location, formation, behaviors):
-        spawner = SpawnManager(
-            self.game_play, type, count, location, formation, behaviors
-        )
+    def spawn_entity(self, type, location, behaviors):
+        spawner = SpawnManager(self.game_play, type, location, behaviors)
         spawner.spawn_entity()
 
     def show_message(self, message_id):
@@ -43,8 +41,8 @@ class EventManager:
         event_name = event["event"]
         params = event.get("params", {})
         match event_name:
-            case "spawn_entities":
-                self.spawn_entities(**params)
+            case "spawn_entity":
+                self.spawn_entity(**params)
             case "show_message":
                 self.show_message(**params)
             case "show_dialogue":

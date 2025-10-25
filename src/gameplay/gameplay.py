@@ -3,6 +3,7 @@ import pygame
 from src.screen import Screen
 
 # Entities
+from src.entities.background import Background
 from src.entities.player_ship import Player
 from src.entities.projectile import Shot, Bomb, Missile
 from src.entities.explosion import Explosion
@@ -21,8 +22,6 @@ from src.data.event_timeline import TIMELINE
 from src.gameplay.pause_menu import PauseMenu
 from src.gameplay.gameplay_hud import GamePlayHUD
 
-# Backgrounds
-from src.backgrounds.background import StarField, Planet, PlanetTwo
 
 
 class GamePlay(Screen):
@@ -41,10 +40,6 @@ class GamePlay(Screen):
         self.is_paused = False
         self.pause_menu = PauseMenu(self)
         self.event_manager = EventManager(self, TIMELINE)
-        #! Need a better way to handle background layers, this is kind of shit
-        self.background = StarField(0, 0, self.game)
-        self.background_2 = Planet(256, self.play_area_rect.bottom - 196, self.game)
-        self.background_3 = PlanetTwo(self.play_area_rect.midtop, -512, self.game)
 
         # Level completion tracking
         self.level_complete = False
@@ -53,6 +48,7 @@ class GamePlay(Screen):
 
         # Sprite Groups
         self.player_group = pygame.sprite.GroupSingle()
+        self.backgrounds = pygame.sprite.Group()
         self.asteroids = pygame.sprite.Group()
         self.enemy_drones = pygame.sprite.Group()
         self.enemy_ships = pygame.sprite.Group()
@@ -63,6 +59,7 @@ class GamePlay(Screen):
         self.pickups = pygame.sprite.Group()
 
         # Set containers attributes so the sprites automatically get added to the appropriate groups
+        Background.containers = (self.backgrounds, self.updateable, self.drawable)
         Asteroid.containers = (self.asteroids, self.updateable, self.drawable)
         EnemyDrone.containers = (self.enemy_drones, self.updateable, self.drawable)
         EnemyShip.containers = (self.enemy_ships, self.updateable, self.drawable)

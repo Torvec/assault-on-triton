@@ -8,7 +8,6 @@ class Game:
     def __init__(self, screen):
         self.data = DISPLAY
         self.screen = screen
-
         self.sidebar_l_surface = pygame.Surface(
             (self.data["sidebar_width"], self.screen.get_height())
         )
@@ -18,7 +17,6 @@ class Game:
         self.sidebar_r_surface = pygame.Surface(
             (self.data["sidebar_width"], self.screen.get_height())
         )
-
         self.clock = pygame.time.Clock()
         self.dt = 0
         self.score_store = ScoreStore()
@@ -57,16 +55,13 @@ class Game:
     def run(self):
         while self.running:
             events = pygame.event.get()
-
             self.current_scene.update(self.dt, events)
             self.current_scene.draw(
                 self.game_surface, self.sidebar_l_surface, self.sidebar_r_surface
             )
-
             for event in events:
                 if event.type == pygame.QUIT:
                     self.running = False
-
             # height = self.screen.get_height()
             # width = int(height * ASPECT_RATIO)
             # scaled_game_surface = pygame.transform.smoothscale(
@@ -77,7 +72,6 @@ class Game:
             # )
             # self.screen.fill("black")
             # self.screen.blit(scaled_game_surface, game_surface_rect.topleft)
-
             self.screen.blit(
                 self.sidebar_l_surface, (self.data["sidebar_left_offset"], 0)
             )
@@ -85,9 +79,6 @@ class Game:
             self.screen.blit(
                 self.sidebar_r_surface, (self.data["sidebar_right_offset"], 0)
             )
-
             pygame.display.flip()
-
             self.dt = self.clock.tick(self.data["target_fps"]) / 1000
-
         pygame.quit()

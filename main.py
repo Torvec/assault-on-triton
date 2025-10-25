@@ -1,6 +1,7 @@
 import traceback
 import pygame
 from src.game import Game
+from src.data.settings import DISPLAY
 
 
 def main():
@@ -8,7 +9,9 @@ def main():
     pygame.mixer.init()
     pygame.display.set_caption("Assault On Triton")
     # screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
-    screen = pygame.display.set_mode((1920, 1080))
+    screen = pygame.display.set_mode(
+        (DISPLAY["screen_width"], DISPLAY["screen_height"])
+    )
     try:
         game = Game(screen)
         game.run()

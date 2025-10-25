@@ -1,13 +1,13 @@
 import random
 import pygame
-from src.entities.entity import Entity
+from src.entities.collidable_entity import CollidableEntity
 from src.entities.explosion import Explosion
 from src.data.settings import ENEMIES
 from src.data.assets import IMAGES
 from src.entities.entity_directions import DIRECTION_DOWN
 
 
-class Asteroid(Entity):
+class Asteroid(CollidableEntity):
 
     def __init__(self, x, y, game_play, asteroid_size="md"):
         self.img_path = IMAGES[f"asteroid_{asteroid_size}"]
@@ -69,11 +69,11 @@ class Asteroid(Entity):
     def update(self, dt):
         super().update(dt)
 
-    def draw(self, screen):
-        super().draw(screen)
+    def draw(self, surface):
+        super().draw(surface)
         rotated_image = pygame.transform.rotate(self.image, self.rotation)
         rotated_rect = rotated_image.get_rect(center=self.rect.center)
-        screen.blit(rotated_image, rotated_rect)
+        surface.blit(rotated_image, rotated_rect)
 
 
 class AsteroidSM(Asteroid):
@@ -104,7 +104,7 @@ class AsteroidXL(Asteroid):
         self.splits_into = "asteroid_lg"
 
 
-class Ship(Entity):
+class Ship(CollidableEntity):
     def __init__(self, x, y, game_play, ship_type):
         self.img_path = IMAGES[ship_type]
         super().__init__(x, y, game_play)
@@ -134,10 +134,10 @@ class Ship(Entity):
         super().update(dt)
         self.shoot_timer -= dt
 
-    def draw(self, screen):
-        super().draw(screen)
-        screen.blit(self.image, self.rect)
-        self.flash_when_hit(screen, self.image, self.rect)
+    def draw(self, surface):
+        super().draw(surface)
+        surface.blit(self.image, self.rect)
+        self.flash_when_hit(surface, self.image, self.rect)
 
 
 class EnemyDrone(Ship):

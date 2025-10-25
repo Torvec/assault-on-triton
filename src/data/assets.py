@@ -28,6 +28,7 @@ IMAGES = {
     # Explosions
     "explosion": "assets/entities/explosion.png",
     # Backgrounds
+    "starfield": "assets/backgrounds/starfield_bg.png",
     "planet": "assets/backgrounds/planet.png",
     "planet_two": "assets/backgrounds/planet_two.png",
     # Portraits
