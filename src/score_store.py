@@ -1,7 +1,7 @@
 class ScoreStore:
 
     def __init__(self):
-        self.high_score = 14224100  #! Placeholder
+        self.high_score = 142241  #! Placeholder
         self.current_score = 0
 
     def create_score_store(self):
