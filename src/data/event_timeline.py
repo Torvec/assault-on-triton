@@ -1,30 +1,31 @@
 TIMELINE = [
     {
-        "time": 3,
+        "time": 0,
+        "event": "move_player_to",
+        "params": {"x": 304, "y": 540, "speed": 200},
+    },
+    {
+        "time": 1.5,
         "event": "show_dialogue",
         "params": {"dialogue_id": "intro_1_1"},
     },
     {
-        "time": 6,
+        "time": 4.5,
         "event": "show_dialogue",
         "params": {"dialogue_id": "intro_1_2"},
     },
     {
-        "time": 9,
+        "time": 7.5,
         "event": "show_dialogue",
         "params": {"dialogue_id": "intro_1_3"},
     },
     {
-        "time": 12,
+        "time": 10.5,
         "event": "show_dialogue",
         "params": {"dialogue_id": "intro_1_4"},
     },
-    {
-        "time": 15,
-        "event": "show_dialogue",
-        "params": {"dialogue_id": "enemy_test"},
-    },
-    {"time": 15, "event": "show_message", "params": {"message_id": "mission_start"}},
+    {"time": 13.5, "event": "enable_player_controls", "params": {}},
+    {"time": 13.5, "event": "show_message", "params": {"message_id": "mission_start"}},
     {
         "time": 16.3,
         "event": "spawn_entity",

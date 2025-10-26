@@ -82,8 +82,8 @@ class GamePlay(Screen):
         Pickup.containers = (self.pickups, self.updateable, self.drawable)
 
         self.player = Player(
-            self.play_area_rect.width // 2,
-            self.play_area_rect.height - 100,
+            self.play_area_rect.midbottom[0],
+            self.play_area_rect.midbottom[1],
             self,
         )
 

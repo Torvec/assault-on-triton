@@ -9,6 +9,16 @@ class EventManager:
         self.timeline_time = 0
         self.timeline_index = 0
         self.timeline_time_paused = False
+        self.event_handlers = {
+            "spawn_entity": self.spawn_entity,
+            "show_message": self.show_message,
+            "show_dialogue": self.show_dialogue,
+            "disable_player_controls": self.disable_player_controls,
+            "enable_player_controls": self.enable_player_controls,
+            "move_player_to": self.move_player_to,
+            "pause_timeline": self.pause_event_timeline,
+            "resume_timeline": self.resume_event_timeline,
+        }
 
     def spawn_entity(self, type, location, behaviors):
         spawner = SpawnManager(self.game_play, type, location, behaviors)
@@ -20,41 +30,29 @@ class EventManager:
     def show_dialogue(self, dialogue_id):
         self.game_play.game_play_hud.display_dialogue(dialogue_id)
 
-    def control_player(self):
-        # Disable controls
-        # Take control of player
-        # Move player to desired location
-        # etc.
-        pass
+    def disable_player_controls(self):
+        self.game_play.player.controls_enabled = False
+
+    def enable_player_controls(self):
+        self.game_play.player.controls_enabled = True
+
+    def move_player_to(self, x, y, speed):
+        self.game_play.player.move_player_to(x, y, speed)
 
     def pause_event_timeline(self):
         self.timeline_time_paused = True
-        print("Timeline timer is paused")
-        print(self.timeline_time_paused)
 
     def resume_event_timeline(self):
         self.timeline_time_paused = False
-        print("Timeline timer resumed")
-        print(self.timeline_time_paused)
 
     def handle_event(self, event):
         event_name = event["event"]
         params = event.get("params", {})
-        match event_name:
-            case "spawn_entity":
-                self.spawn_entity(**params)
-            case "show_message":
-                self.show_message(**params)
-            case "show_dialogue":
-                self.show_dialogue(**params)
-            case "control_player":
-                self.control_player(**params)
-            case "pause_timeline":
-                self.pause_event_timeline(**params)
-            case "resume_timeline":
-                self.resume_event_timeline(**params)
-            case _:
-                print(f"Unknown event type: {event_name}")
+        handler = self.event_handlers.get(event_name)
+        if handler:
+            handler(**params)
+        else:
+            print(f"Unknown event type: {event_name}")
 
     def process_timeline(self):
         while (
