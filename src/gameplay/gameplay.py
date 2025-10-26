@@ -2,6 +2,8 @@ import pygame
 
 from src.screen import Screen
 
+from src.gameplay.background import StarField, Planet, PlanetTwo
+
 # Entities
 from src.entities.player_ship import Player
 from src.entities.projectile import Shot, Bomb, Missile
@@ -22,7 +24,6 @@ from src.gameplay.pause_menu import PauseMenu
 from src.gameplay.gameplay_hud import GamePlayHUD
 
 
-
 class GamePlay(Screen):
 
     def __init__(self, game):
@@ -34,6 +35,19 @@ class GamePlay(Screen):
             self.game.game_surface.get_width(),
             self.game.game_surface.get_height(),
         )
+        self.backgrounds = [
+            StarField(0, 0, self.game),
+            Planet(
+                self.play_area_rect.midbottom[0],
+                self.play_area_rect.midbottom[1],
+                self.game,
+            ),
+            PlanetTwo(
+                self.play_area_rect.midtop[0],
+                self.play_area_rect.midtop[1] - 128,
+                self.game,
+            ),
+        ]
         self.game_play_hud = GamePlayHUD(self.game, self)
         self.score = ScoreManager(self.game.score_store)
         self.is_paused = False

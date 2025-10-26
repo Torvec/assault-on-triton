@@ -10,8 +10,31 @@ class Background:
         self.velocity = pygame.Vector2(0, 0)
         self.scroll_speed = 0
 
+        if hasattr(self, "img_path"):
+            self.image = pygame.image.load(self.img_path).convert_alpha()
+            self.rect = self.image.get_rect(center=self.position)
+
+    def scroll_vertically(self, dt, direction):
+        self.position.y += direction * self.scroll_speed * dt
+        self.rect.center = self.position
+
+    def transform_scale(self, dt, target_width, target_height, rate):
+        if not hasattr(self, "current_width"):
+            self.current_width = self.image.get_width()
+            self.current_height = self.image.get_height()
+
+        if self.current_width < target_width:
+            self.current_width = min(self.current_width + rate * dt, target_width)
+        elif self.current_width > target_width:
+            self.current_width = max(self.current_width - rate * dt, target_width)
+
+        if self.current_height < target_height:
+            self.current_height = min(self.current_height + rate * dt, target_height)
+        elif self.current_height > target_height:
+            self.current_height = max(self.current_height - rate * dt, target_height)
+
     def update(self, dt):
-        super().update(dt)
+        pass
 
     def draw(self, surface):
         pass
@@ -23,29 +46,16 @@ class StarField(Background):
         self.img_path = IMAGES["starfield"]
         super().__init__(x, y, game)
         self.scroll_speed = 4
-        # self.stars = [
-        #     (
-        #         random.randint(0, self.game.game_surface.get_width()),
-        #         random.randint(
-        #             -self.game.game_surface.get_width(),
-        #             self.game.game_surface.get_height(),
-        #         ),
-        #         random.randint(1, 3),
-        #     )
-        #     for _ in range(200)
-        # ]
+        self.image_height = self.image.get_height()
+        self.offset_y = 0
 
     def update(self, dt):
-        super().update(dt)
-        direction = pygame.Vector2(0, 1)
-        self.position += direction * self.scroll_speed * dt
+        self.scroll_vertically(dt, direction=1)
+        self.offset_y = (self.offset_y + self.scroll_speed * dt) % self.image_height
 
     def draw(self, surface):
-        # offset = self.position.y
-        # star_size = random.randint(1, 4)
-        # for x, y, star_size in self.stars:
-        #     pygame.draw.circle(surface, "grey70", (x, y + offset), star_size)
-        surface.blit(self.image, self.rect)
+        surface.blit(self.image, (self.position.x, self.offset_y))
+        surface.blit(self.image, (self.position.x, self.offset_y - self.image_height))
 
 
 class Planet(Background):
@@ -56,27 +66,19 @@ class Planet(Background):
         self.scroll_speed = 8
         self.current_width = self.image.get_width() * 4
         self.current_height = self.image.get_height() * 4
-        self.scale_to_size = 16
-        self.shrink_rate = 10
+        self.target_size = 16
+        self.change_rate = 10
 
     def update(self, dt):
-        super().update(dt)
-        if (
-            self.current_width > self.scale_to_size
-            and self.current_height > self.scale_to_size
-        ):
-            self.current_width -= self.shrink_rate * dt
-            self.current_height -= self.shrink_rate * dt
-        direction = pygame.Vector2(0, 1)
-        self.position += direction * self.scroll_speed * dt
+        self.scroll_vertically(dt, direction=1)
+        self.transform_scale(dt, self.target_size, self.target_size, self.change_rate)
 
     def draw(self, surface):
         scaled_image = pygame.transform.scale(
-            self.image, (self.current_width, self.current_height)
+            self.image, (int(self.current_width), int(self.current_height))
         )
         planet_rect = scaled_image.get_rect(center=self.position)
         surface.blit(scaled_image, planet_rect)
-        surface.blit(self.image, self.rect)
 
 
 class PlanetTwo(Background):
@@ -87,24 +89,16 @@ class PlanetTwo(Background):
         self.scroll_speed = 2
         self.current_width = 2
         self.current_height = 2
-        self.scale_to_size = 1024
-        self.growth_rate = 4
+        self.target_size = 1024
+        self.change_rate = 4
 
     def update(self, dt):
-        super().update(dt)
-        if (
-            self.current_width < self.scale_to_size
-            and self.current_height < self.scale_to_size
-        ):
-            self.current_width += self.growth_rate * dt
-            self.current_height += self.growth_rate * dt
-        direction = pygame.Vector2(0, 1)
-        self.position += direction * self.scroll_speed * dt
+        self.scroll_vertically(dt, direction=1)
+        self.transform_scale(dt, self.target_size, self.target_size, self.change_rate)
 
     def draw(self, surface):
         scaled_image = pygame.transform.scale(
-            self.image, (self.current_width, self.current_height)
+            self.image, (int(self.current_width), int(self.current_height))
         )
         planet_rect = scaled_image.get_rect(center=self.position)
         surface.blit(scaled_image, planet_rect)
-        surface.blit(self.image, self.rect)
