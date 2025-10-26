@@ -7,12 +7,19 @@ class Entity(pygame.sprite.Sprite):
     HIT_TIMER = 0.1
 
     _image_cache = {}
+    _sound_cache = {}
 
     @classmethod
     def load_image(cls, img_path):
         if img_path not in cls._image_cache:
             cls._image_cache[img_path] = pygame.image.load(img_path).convert_alpha()
         return cls._image_cache[img_path]
+
+    @classmethod
+    def load_sound(cls, sound_path):  
+        if sound_path not in cls._sound_cache:
+            cls._sound_cache[sound_path] = pygame.mixer.Sound(sound_path)
+        return cls._sound_cache[sound_path]
 
     def __init__(self, x, y, game_play):
         # Auto adds sprites to groups upon creation if a container attribute is present
@@ -24,6 +31,9 @@ class Entity(pygame.sprite.Sprite):
         # Image cache check so images only get loaded once instead of every time an entity is spawned
         if getattr(self, "img_path", None):
             self.image = self.load_image(self.img_path)
+        # Sfx cache check so sound files only get loaded once instead of every time its used
+        if getattr(self, "sfx_path", None):
+            self.sfx = self.load_sound(self.sfx_path)
 
         self.position = pygame.Vector2(x, y)
         self.game_play = game_play

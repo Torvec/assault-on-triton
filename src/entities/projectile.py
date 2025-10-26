@@ -11,6 +11,11 @@ class Projectile(Entity):
     def __init__(self, x, y, game_play, owner):
         super().__init__(x, y, game_play)
         self.owner = owner
+        self.distance_traveled = 0
+
+    def sound(self):
+        self.sfx.set_volume(0.5)
+        self.sfx.play()
 
     def update(self, dt):
         super().update(dt)
@@ -24,16 +29,8 @@ class Shot(Projectile):
     def __init__(self, x, y, game_play, owner):
         super().__init__(x, y, game_play, owner)
 
-        self.distance_traveled = 0
-        self.max_range = 0
-        self.speed = 0
-        self.damage = 0
-        self.sfx = None
-
     def sound(self):
-        self.shoot_sound = pygame.mixer.Sound(self.sfx)
-        self.shoot_sound.set_volume(0.5)
-        self.shoot_sound.play()
+        super().sound()
 
     def handle_max_range(self, dt):
         distance_this_frame = self.velocity.length() * dt
@@ -58,29 +55,27 @@ class Shot(Projectile):
 class PlayerShot(Shot):
 
     def __init__(self, x, y, game_play, owner, power_level):
-        self.data = PROJECTILES["player_shot"][power_level]
         if power_level == 5:
             image_key = "player_shot_ov"
         else:
             image_key = f"player_shot_lv{power_level}"
         self.img_path = IMAGES[image_key]
+        self.sfx_path = SOUNDS["player_shoot"]
         super().__init__(x, y, game_play, owner)
-        self.max_range = self.data["range"]
-        self.speed = self.data["speed"]
-        self.damage = self.data["damage"]
-        self.sfx = SOUNDS["player_shoot"]
+        self.max_range = PROJECTILES["player_shot"][power_level]["range"]
+        self.speed = PROJECTILES["player_shot"][power_level]["speed"]
+        self.damage = PROJECTILES["player_shot"][power_level]["damage"]
 
 
 class EnemyShot(Shot):
 
     def __init__(self, x, y, game_play, owner):
-        self.data = PROJECTILES["enemy_shot"]
         self.img_path = IMAGES["enemy_shot"]
+        self.sfx_path = SOUNDS["player_shoot"]
         super().__init__(x, y, game_play, owner)
-        self.max_range = self.data["range"]
-        self.speed = self.data["speed"]
-        self.damage = self.data["damage"]
-        self.sfx = SOUNDS["player_shoot"]
+        self.max_range = PROJECTILES["enemy_shot"]["range"]
+        self.speed = PROJECTILES["enemy_shot"]["speed"]
+        self.damage = PROJECTILES["enemy_shot"]["damage"]
 
 
 class ExplosiveProjectile(Entity):
@@ -88,8 +83,13 @@ class ExplosiveProjectile(Entity):
     def __init__(self, x, y, game_play, owner):
         super().__init__(x, y, game_play)
         self.owner = owner
+        self.distance_traveled = 0
         self.trigger_distance = 0
         self.blast_radius = 0
+
+    def sound(self):
+        self.sfx.set_volume(0.5)
+        self.sfx.play()
 
     def check_trigger_distance(self, dt):
         distance_this_frame = self.velocity.length() * dt
@@ -118,13 +118,9 @@ class Bomb(ExplosiveProjectile):
 
     def __init__(self, x, y, game_play, owner):
         super().__init__(x, y, game_play, owner)
-        self.distance_traveled = 0
-        self.speed = 0
-        self.blast_radius = 0
 
     def sound(self):
-        #! TODO: get sound effect for releasing bomb
-        pass
+        super().sound()
 
     def update(self, dt):
         super().update(dt)
@@ -139,34 +135,36 @@ class Bomb(ExplosiveProjectile):
 class PlayerBomb(Bomb):
 
     def __init__(self, x, y, game_play, owner):
-        self.data = PROJECTILES["player_bomb"]
         self.img_path = IMAGES["player_bomb"]
+        #! Add sfx_path when sound is available
         super().__init__(x, y, game_play, owner)
-        self.speed = self.data["speed"]
-        self.trigger_distance = self.data["trigger_distance"]
-        self.blast_radius = self.data["blast_radius"][owner.power_level]
+        self.speed = PROJECTILES["player_bomb"]["speed"]
+        self.trigger_distance = PROJECTILES["player_bomb"]["trigger_distance"]
+        self.blast_radius = PROJECTILES["player_bomb"]["blast_radius"][
+            owner.power_level
+        ]
 
 
 class EnemyBomb(Bomb):
 
     def __init__(self, x, y, game_play, owner):
-        self.data = PROJECTILES["enemy_bomb"]
         self.img_path = IMAGES["enemy_bomb"]
+        #! Add sfx_path when sound is available
         super().__init__(x, y, game_play, owner)
-        self.speed = self.data["speed"]
-        self.trigger_distance = self.data["trigger_distance"]
-        self.blast_radius = self.data["blast_radius"]
+        self.speed = PROJECTILES["enemy_bomb"]["speed"]
+        self.trigger_distance = PROJECTILES["enemy_bomb"]["trigger_distance"]
+        self.blast_radius = PROJECTILES["enemy_bomb"]["blast_radius"]
 
 
 class Missile(ExplosiveProjectile):
 
     def __init__(self, x, y, game_play, owner):
-        self.data = PROJECTILES["enemy_missile"]
         self.img_path = IMAGES["enemy_missile"]
+        #! Add sfx_path when sound is available
         super().__init__(x, y, game_play, owner)
-        self.speed = self.data["speed"]
-        self.trigger_distance = self.data["trigger_distance"]
-        self.blast_radius = self.data["blast_radius"]
+        self.speed = PROJECTILES["enemy_missile"]["speed"]
+        self.trigger_distance = PROJECTILES["enemy_missile"]["trigger_distance"]
+        self.blast_radius = PROJECTILES["enemy_missile"]["blast_radius"]
 
     def track_player(self):
         direction = self.game_play.player.position - self.position

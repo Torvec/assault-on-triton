@@ -50,7 +50,7 @@ class Player(Entity):
         player_forward_speed = self.velocity.dot(DIRECTION_UP)
         forward_only_speed = max(0, player_forward_speed)
         bomb.velocity = DIRECTION_UP * (forward_only_speed + bomb.speed)
-        bomb.sound()
+        #! bomb.sound() # No sound yet, so don't need to call it
 
     def handle_overdrive(self, dt):
         if self.overdriveTime > 0:
