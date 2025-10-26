@@ -3,7 +3,6 @@ import pygame
 from src.screen import Screen
 
 # Entities
-from src.entities.background import Background
 from src.entities.player_ship import Player
 from src.entities.projectile import Shot, Bomb, Missile
 from src.entities.explosion import Explosion
@@ -48,7 +47,6 @@ class GamePlay(Screen):
 
         # Sprite Groups
         self.player_group = pygame.sprite.GroupSingle()
-        self.backgrounds = pygame.sprite.Group()
         self.asteroids = pygame.sprite.Group()
         self.enemy_drones = pygame.sprite.Group()
         self.enemy_ships = pygame.sprite.Group()
@@ -59,7 +57,6 @@ class GamePlay(Screen):
         self.pickups = pygame.sprite.Group()
 
         # Set containers attributes so the sprites automatically get added to the appropriate groups
-        Background.containers = (self.backgrounds, self.updateable, self.drawable)
         Asteroid.containers = (self.asteroids, self.updateable, self.drawable)
         EnemyDrone.containers = (self.enemy_drones, self.updateable, self.drawable)
         EnemyShip.containers = (self.enemy_ships, self.updateable, self.drawable)

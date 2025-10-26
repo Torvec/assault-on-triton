@@ -1,5 +1,5 @@
 import pygame
-from src.entities.collidable_entity import CollidableEntity
+from src.entities.entity import Entity
 from src.entities.projectile import PlayerShot, PlayerBomb
 from src.entities.explosion import Explosion
 from src.entities.entity_directions import DIRECTION_UP
@@ -7,7 +7,7 @@ from src.data.settings import PLAYER
 from src.data.assets import IMAGES
 
 
-class Player(CollidableEntity):
+class Player(Entity):
 
     def __init__(self, x, y, game_play):
         self.img_path = IMAGES["player_ship"]

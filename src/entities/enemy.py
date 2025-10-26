@@ -1,13 +1,13 @@
 import random
 import pygame
-from src.entities.collidable_entity import CollidableEntity
+from src.entities.entity import Entity
 from src.entities.explosion import Explosion
 from src.data.settings import ENEMIES
 from src.data.assets import IMAGES
 from src.entities.entity_directions import DIRECTION_DOWN
 
 
-class Asteroid(CollidableEntity):
+class Asteroid(Entity):
 
     def __init__(self, x, y, game_play, asteroid_size="md"):
         self.img_path = IMAGES[f"asteroid_{asteroid_size}"]
@@ -44,12 +44,10 @@ class Asteroid(CollidableEntity):
             -ENEMIES["asteroid"]["split_angle"],
         ]:
             split_event = {
-                "event": "spawn_entities",
+                "event": "spawn_entity",
                 "params": {
                     "type": self.splits_into_name,
-                    "count": 1,
                     "location": self.position,
-                    "formation": "single",
                     "behaviors": [
                         {
                             "action": "move_angled",
@@ -104,7 +102,7 @@ class AsteroidXL(Asteroid):
         self.splits_into = "asteroid_lg"
 
 
-class Ship(CollidableEntity):
+class Ship(Entity):
     def __init__(self, x, y, game_play, ship_type):
         self.img_path = IMAGES[ship_type]
         super().__init__(x, y, game_play)

@@ -15,7 +15,6 @@ from src.entities.pickup import (
     BombAmmoPickup,
     InvulnerabilityPickup,
 )
-from src.entities import entity_formations
 
 
 class SpawnManager:
@@ -47,42 +46,35 @@ class SpawnManager:
         "invulnerability_pickup": InvulnerabilityPickup,
     }
 
-    def __init__(self, game_play, entity_name, count, location, formation, behaviors):
+    def __init__(self, game_play, entity_name, location, behaviors):
         self.game_play = game_play
-        self.play_area = game_play.play_area_rect
         self.entity_name = entity_name
-        self.count = count
         self.location = location
-        self.formation = formation
         self.behaviors = behaviors
 
-    def calculate_formation_positions(self, fwd_pos, formation, count):
-        spacing = 96
-        formation_fn_name = f"{formation}_formation"
-        formation_fn = getattr(entity_formations, formation_fn_name)
-        return formation_fn(fwd_pos, count, spacing)
-
     def spawn_entity(self):
-        # Support both string location and direct Vector2 position
+        position = self.calc_position()
+        entity_class = self.entities[self.entity_name]
+        entity = entity_class(position.x, position.y, self.game_play)
+        for behavior in self.behaviors:
+            entity.behaviors.append(behavior)
+
+    def calc_position(self):
+        play_area = self.game_play.play_area_rect
+
         if isinstance(self.location, pygame.Vector2):
-            fwd_pos = self.location
-        else:
-            # Calculate the forward position for the formation
-            x_multiplier = self.spawn_locations[self.location]
-            fwd_pos = pygame.Vector2(
-                self.play_area.left + x_multiplier * self.play_area.width,
-                self.play_area.top - 128,
+            return self.location.copy()  # Copy to avoid reference issues
+
+        elif isinstance(self.location, dict):
+            x = self.location.get("x", play_area.centerx)
+            y = self.location.get("y", play_area.top - 128)
+            return pygame.Vector2(x, y)
+
+        elif isinstance(self.location, str):
+            offset_x = self.spawn_locations[self.location]
+            return pygame.Vector2(
+                play_area.left + (offset_x * play_area.width),
+                play_area.top - 128,
             )
 
-        # Get all positions for the formation
-        positions = self.calculate_formation_positions(
-            fwd_pos, self.formation, self.count
-        )
-
-        # Spawn an entity at each position
-        entity_class = self.entities[self.entity_name]
-
-        for position in positions:
-            entity = entity_class(position.x, position.y, self.game_play)
-            for behavior in self.behaviors:
-                entity.behaviors.append(behavior)
+        return pygame.Vector2(play_area.centerx, play_area.top - 128)

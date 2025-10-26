@@ -1,12 +1,12 @@
 import pygame
-from src.entities.collidable_entity import CollidableEntity
+from src.entities.entity import Entity
 from src.entities.explosion import Explosion
 from src.data.settings import PROJECTILES
 from src.data.assets import IMAGES, SOUNDS
 from src.entities.entity_directions import DIRECTION_DOWN
 
 
-class Projectile(CollidableEntity):
+class Projectile(Entity):
 
     def __init__(self, x, y, game_play, owner):
         super().__init__(x, y, game_play)
@@ -83,7 +83,7 @@ class EnemyShot(Shot):
         self.sfx = SOUNDS["player_shoot"]
 
 
-class ExplosiveProjectile(CollidableEntity):
+class ExplosiveProjectile(Entity):
 
     def __init__(self, x, y, game_play, owner):
         super().__init__(x, y, game_play)

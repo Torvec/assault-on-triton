@@ -1,10 +1,10 @@
 import pygame
-from src.entities.collidable_entity import CollidableEntity
+from src.entities.entity import Entity
 from src.data.settings import EXPLOSIONS
 from src.data.assets import IMAGES
 
 
-class Explosion(CollidableEntity):
+class Explosion(Entity):
 
     def __init__(self, x, y, game_play, blast_radius, owner):
         self.data = EXPLOSIONS

@@ -1,8 +1,13 @@
-from src.entities.entity_directions import DIRECTION_DOWN
+from src.entities.entity_directions import *
 
 
-def move_straight(entity, dt):
-    entity.position += DIRECTION_DOWN * entity.speed * dt
+def move_straight(entity, direction, dt):
+    match direction:
+        case "down":
+            direction = DIRECTION_DOWN
+        case _:
+            pass
+    entity.position += direction * entity.speed * dt
 
 
 def move_angled(entity, dt, **kwargs):
