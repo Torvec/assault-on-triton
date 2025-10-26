@@ -1,0 +1,110 @@
+import pygame
+from src.data.assets import IMAGES
+
+
+class Background:
+
+    def __init__(self, x, y, game):
+        self.position = pygame.Vector2(x, y)
+        self.game = game
+        self.velocity = pygame.Vector2(0, 0)
+        self.scroll_speed = 0
+
+    def update(self, dt):
+        super().update(dt)
+
+    def draw(self, surface):
+        pass
+
+
+class StarField(Background):
+
+    def __init__(self, x, y, game):
+        self.img_path = IMAGES["starfield"]
+        super().__init__(x, y, game)
+        self.scroll_speed = 4
+        # self.stars = [
+        #     (
+        #         random.randint(0, self.game.game_surface.get_width()),
+        #         random.randint(
+        #             -self.game.game_surface.get_width(),
+        #             self.game.game_surface.get_height(),
+        #         ),
+        #         random.randint(1, 3),
+        #     )
+        #     for _ in range(200)
+        # ]
+
+    def update(self, dt):
+        super().update(dt)
+        direction = pygame.Vector2(0, 1)
+        self.position += direction * self.scroll_speed * dt
+
+    def draw(self, surface):
+        # offset = self.position.y
+        # star_size = random.randint(1, 4)
+        # for x, y, star_size in self.stars:
+        #     pygame.draw.circle(surface, "grey70", (x, y + offset), star_size)
+        surface.blit(self.image, self.rect)
+
+
+class Planet(Background):
+
+    def __init__(self, x, y, game):
+        self.img_path = IMAGES["planet"]
+        super().__init__(x, y, game)
+        self.scroll_speed = 8
+        self.current_width = self.image.get_width() * 4
+        self.current_height = self.image.get_height() * 4
+        self.scale_to_size = 16
+        self.shrink_rate = 10
+
+    def update(self, dt):
+        super().update(dt)
+        if (
+            self.current_width > self.scale_to_size
+            and self.current_height > self.scale_to_size
+        ):
+            self.current_width -= self.shrink_rate * dt
+            self.current_height -= self.shrink_rate * dt
+        direction = pygame.Vector2(0, 1)
+        self.position += direction * self.scroll_speed * dt
+
+    def draw(self, surface):
+        scaled_image = pygame.transform.scale(
+            self.image, (self.current_width, self.current_height)
+        )
+        planet_rect = scaled_image.get_rect(center=self.position)
+        surface.blit(scaled_image, planet_rect)
+        surface.blit(self.image, self.rect)
+
+
+class PlanetTwo(Background):
+
+    def __init__(self, x, y, game):
+        self.img_path = IMAGES["planet_two"]
+        super().__init__(x, y, game)
+        self.scroll_speed = 2
+        self.current_width = 2
+        self.current_height = 2
+        self.scale_to_size = 1024
+        self.growth_rate = 4
+
+    def update(self, dt):
+        super().update(dt)
+        if (
+            self.current_width < self.scale_to_size
+            and self.current_height < self.scale_to_size
+        ):
+            self.current_width += self.growth_rate * dt
+            self.current_height += self.growth_rate * dt
+        direction = pygame.Vector2(0, 1)
+        self.position += direction * self.scroll_speed * dt
+
+    def draw(self, surface):
+        scaled_image = pygame.transform.scale(
+            self.image, (self.current_width, self.current_height)
+        )
+        planet_rect = scaled_image.get_rect(center=self.position)
+        surface.blit(scaled_image, planet_rect)
+        surface.blit(self.image, self.rect)
