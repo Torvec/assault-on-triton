@@ -144,7 +144,7 @@ class Player(Entity):
             self.position = self.target_position.copy()
             self.scripted_movement_active = False
             self.velocity = pygame.Vector2(0, 0)
-            return
+            return True
 
         # Move towards target at specified speed
         if distance > 0:

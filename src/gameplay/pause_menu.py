@@ -9,7 +9,7 @@ class PauseMenu:
     menu_items = [
         "[ESC] Resume",
         "[1] Restart",
-        "[2] Main Menu",
+        "[2] Start Menu",
         "[Q] QUIT",
     ]
 

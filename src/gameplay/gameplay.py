@@ -22,6 +22,7 @@ from src.data.event_timeline import TIMELINE
 # UI
 from src.gameplay.pause_menu import PauseMenu
 from src.gameplay.gameplay_hud import GamePlayHUD
+from src.gameplay.end_level_menu import EndLevelMenu
 
 
 class GamePlay(Screen):
@@ -53,11 +54,8 @@ class GamePlay(Screen):
         self.is_paused = False
         self.pause_menu = PauseMenu(self)
         self.event_manager = EventManager(self, TIMELINE)
-
-        # Level completion tracking
+        self.end_level_menu = EndLevelMenu(self)
         self.level_complete = False
-        self.level_end_timer = 0
-        self.level_end_delay = 10.0
 
         # Sprite Groups
         self.player_group = pygame.sprite.GroupSingle()
@@ -95,25 +93,32 @@ class GamePlay(Screen):
             self.game.set_scene("GameOver")
 
     def handle_level_complete(self, dt):
+        timeline_index = self.event_manager.timeline_index
+        timeline_length = len(self.event_manager.timeline)
         hostile_count = (
             len(self.asteroids) + len(self.enemy_drones) + len(self.enemy_ships)
         )
-        if (
-            hostile_count == 0
-            and self.event_manager.timeline_index >= len(self.event_manager.timeline)
-            and not self.level_complete
-        ):
-            self.level_complete = True
-            self.level_end_timer = self.level_end_delay
 
-        if self.level_complete:
+        if timeline_index >= timeline_length and hostile_count == 0:
+            if not self.level_complete:
+                self.level_complete = True
+                self.level_end_timer = 5
+
             self.level_end_timer -= dt
-            if self.level_end_timer <= 0:
+            if self.level_end_timer <= 0 and not self.end_level_menu.show_menu:
                 self.score.store_score(self.score.score)
-                self.game.set_scene("GameOver")
+                # fmt: off
+                move_player_to_center = {
+                        "event": "move_player_to",
+                        "params": {"x": 304, "y": 540, "speed": 200},
+                    }
+                # fmt: on
+                self.event_manager.handle_event(move_player_to_center)
+                self.end_level_menu.show_menu = True
 
     def update(self, dt, events):
         self.pause_menu.update(events)
+        self.end_level_menu.update(events)
         if not self.is_paused:
             super().update(dt)
             self.game_timer += dt
@@ -128,3 +133,4 @@ class GamePlay(Screen):
         super().draw(game_surface, sidebar_l_surface, sidebar_r_surface)
         self.game_play_hud.draw(sidebar_l_surface, game_surface, sidebar_r_surface)
         self.pause_menu.draw(game_surface)
+        self.end_level_menu.draw(game_surface)
