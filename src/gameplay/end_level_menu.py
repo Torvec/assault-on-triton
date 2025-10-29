@@ -15,7 +15,7 @@ class EndLevelMenu:
         self.show_menu = False
         self.start_outro = False
 
-    def update(self, events):
+    def handle_event(self, events):
         if not self.show_menu:
             return
 

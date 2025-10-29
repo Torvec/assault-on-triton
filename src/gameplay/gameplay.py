@@ -116,9 +116,11 @@ class GamePlay(Screen):
                 self.event_manager.handle_event(move_player_to_center)
                 self.end_level_menu.show_menu = True
 
-    def update(self, dt, events):
-        self.pause_menu.update(events)
-        self.end_level_menu.update(events)
+    def handle_event(self, events):
+        self.pause_menu.handle_event(events)
+        self.end_level_menu.handle_event(events)
+
+    def update(self, dt):
         if not self.is_paused:
             super().update(dt)
             self.game_timer += dt

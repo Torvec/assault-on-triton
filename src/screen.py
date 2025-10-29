@@ -9,7 +9,10 @@ class Screen:
         self.drawable = pygame.sprite.Group()
         self.backgrounds = []
 
-    def update(self, dt, events=None):
+    def handle_event(self, events):
+        pass
+
+    def update(self, dt):
         for bg in self.backgrounds:
             bg.update(dt)
         self.updateable.update(dt)

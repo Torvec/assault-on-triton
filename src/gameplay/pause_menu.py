@@ -16,7 +16,7 @@ class PauseMenu:
     def __init__(self, game_play):
         self.game_play = game_play
 
-    def update(self, events):
+    def handle_event(self, events):
         for event in events:
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_ESCAPE:

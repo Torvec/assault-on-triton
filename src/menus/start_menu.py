@@ -17,8 +17,7 @@ class Start(Screen):
     def __init__(self, game):
         super().__init__(game)
 
-    def update(self, dt, events):
-        super().update(dt, events)
+    def handle_event(self, events):
         for event in events:
             if event.type == pygame.KEYDOWN:
                 match event.key:
@@ -33,6 +32,9 @@ class Start(Screen):
                     case pygame.K_q:
                         pygame.quit()
                         sys.exit()
+
+    def update(self, dt):
+        super().update(dt)
 
     def draw(self, game_surface, sidebar_l_surface, sidebar_r_surface):
         super().draw(game_surface, sidebar_l_surface, sidebar_r_surface)

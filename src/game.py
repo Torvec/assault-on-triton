@@ -6,16 +6,15 @@ from src.data.settings import DISPLAY
 class Game:
 
     def __init__(self, screen):
-        self.data = DISPLAY
         self.screen = screen
         self.sidebar_l_surface = pygame.Surface(
-            (self.data["sidebar_width"], self.screen.get_height())
+            (DISPLAY["sidebar_width"], self.screen.get_height())
         )
         self.game_surface = pygame.Surface(
-            (self.data["game_surface_width"], self.screen.get_height())
+            (DISPLAY["game_surface_width"], self.screen.get_height())
         )
         self.sidebar_r_surface = pygame.Surface(
-            (self.data["sidebar_width"], self.screen.get_height())
+            (DISPLAY["sidebar_width"], self.screen.get_height())
         )
         self.clock = pygame.time.Clock()
         self.dt = 0
@@ -55,30 +54,24 @@ class Game:
     def run(self):
         while self.running:
             events = pygame.event.get()
-            self.current_scene.update(self.dt, events)
-            self.current_scene.draw(
-                self.game_surface, self.sidebar_l_surface, self.sidebar_r_surface
-            )
             for event in events:
                 if event.type == pygame.QUIT:
                     self.running = False
-            # height = self.screen.get_height()
-            # width = int(height * ASPECT_RATIO)
-            # scaled_game_surface = pygame.transform.smoothscale(
-            #     self.game_surface, (width, height)
-            # )
-            # game_surface_rect = scaled_game_surface.get_rect(
-            #     center=(self.screen.get_width() // 2, self.screen.get_height() // 2)
-            # )
-            # self.screen.fill("black")
-            # self.screen.blit(scaled_game_surface, game_surface_rect.topleft)
-            self.screen.blit(
-                self.sidebar_l_surface, (self.data["sidebar_left_offset"], 0)
+
+            self.current_scene.handle_event(events)
+            self.current_scene.update(self.dt)
+            self.current_scene.draw(
+                self.game_surface, self.sidebar_l_surface, self.sidebar_r_surface
             )
-            self.screen.blit(self.game_surface, (self.data["game_surface_offset"], 0))
+
             self.screen.blit(
-                self.sidebar_r_surface, (self.data["sidebar_right_offset"], 0)
+                self.sidebar_l_surface, (DISPLAY["sidebar_left_offset"], 0)
             )
+            self.screen.blit(self.game_surface, (DISPLAY["game_surface_offset"], 0))
+            self.screen.blit(
+                self.sidebar_r_surface, (DISPLAY["sidebar_right_offset"], 0)
+            )
+
             pygame.display.flip()
-            self.dt = self.clock.tick(self.data["target_fps"]) / 1000
+            self.dt = self.clock.tick(DISPLAY["target_fps"]) / 1000
         pygame.quit()
