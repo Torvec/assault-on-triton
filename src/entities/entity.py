@@ -81,7 +81,6 @@ class Entity(pygame.sprite.Sprite):
 
     def flash_when_hit(self, screen, entity_surface, entity_rect):
         if self.is_hit:
-            #! screen.blit(self.mask_surface, (self.position.x, self.position.y))
             flash = pygame.Surface(entity_surface.get_size(), pygame.SRCALPHA)
             center = (flash.get_width() // 2, flash.get_height() // 2)
             pygame.draw.circle(

@@ -1,4 +1,5 @@
 IMAGES = {
+    "icon": "assets/entities/icon.png",
     # Player
     "player_ship": "assets/entities/player_spaceship.png",
     # Enemies

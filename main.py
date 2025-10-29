@@ -2,12 +2,14 @@ import traceback
 import pygame
 from src.game import Game
 from src.data.settings import DISPLAY
+from src.data.assets import IMAGES
 
 
 def main():
     pygame.init()
     pygame.mixer.init()
     pygame.display.set_caption("Assault On Triton")
+    pygame.display.set_icon(pygame.image.load(IMAGES["icon"]))
     screen = pygame.display.set_mode(
         (DISPLAY["screen_width"], DISPLAY["screen_height"])
     )
