@@ -36,37 +36,48 @@ class Start(Screen):
     def update(self, dt):
         super().update(dt)
 
-    def draw(self, game_surface, sidebar_l_surface, sidebar_r_surface):
-        super().draw(game_surface, sidebar_l_surface, sidebar_r_surface)
+    def draw(self, display_surface, game_surface):
+        super().draw(display_surface, game_surface)
         render_text(
             screen=game_surface,
             text="ASSAULT",
             font_name="zendots",
-            font_size=96,
+            font_size=84,
             antialias=True,
-            pos=(game_surface.get_width() * 0.5, game_surface.get_height() * 0.5 - 304),
+            pos=(
+                game_surface.get_rect().center[0],
+                game_surface.get_rect().center[1] - 188,
+            ),
+            align="midbottom",
         )
         render_text(
             screen=game_surface,
             text="ON",
             font_name="zendots",
-            font_size=64,
+            font_size=72,
             antialias=True,
-            pos=(game_surface.get_width() * 0.5, game_surface.get_height() * 0.5 - 224),
+            pos=(
+                game_surface.get_rect().center[0],
+                game_surface.get_rect().center[1] - 84 - 32,
+            ),
+            align="midbottom",
         )
         render_text(
             screen=game_surface,
             text="TRITON",
             font_name="zendots",
-            font_size=96,
+            font_size=84,
             antialias=True,
-            pos=(game_surface.get_width() * 0.5, game_surface.get_height() * 0.5 - 128),
+            pos=(
+                game_surface.get_rect().center[0],
+                game_surface.get_rect().center[1] - 32,
+            ),
+            align="midbottom",
         )
         menu_rect = pygame.Rect(
             0, 0, game_surface.get_width() * 0.75, game_surface.get_height() * 0.25
         )
-        menu_rect.center = game_surface.get_rect().center
-        menu_rect.y += 128
+        menu_rect.midtop = game_surface.get_rect().center
         pygame.draw.rect(game_surface, "grey4", menu_rect, border_radius=24)
         pygame.draw.rect(game_surface, "grey70", menu_rect, width=4, border_radius=24)
         for i, item in enumerate(self.menu_items):

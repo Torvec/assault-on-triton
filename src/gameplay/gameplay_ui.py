@@ -5,11 +5,18 @@ from src.data.dialogue import SCRIPTED
 from src.data.messages import MESSAGES
 
 
-class GamePlayHUD:
+class GamePlayUI:
 
     def __init__(self, game, game_play):
         self.game = game
         self.game_play = game_play
+        self.ui_area_rect = pygame.Rect(
+            0,
+            0,
+            1248,
+            self.game.display_surface.get_height(),
+        )
+        self.ui_area_rect.center = self.game.display_surface.get_rect().center
         self.current_speaker = None
         self.current_dialogue = None
         self.dialogue_timer = 0
@@ -63,12 +70,12 @@ class GamePlayHUD:
         rect = pygame.Rect(
             0,
             0,
-            surface.get_width() * 0.5,
+            self.ui_area_rect.width * 0.25,
             128,
         )
-        rect.topleft = surface.get_rect().midtop
-        rect.x -= 16
+        rect.topleft = self.ui_area_rect.topleft
         rect.y += 16
+        rect.x -= 16
         pygame.draw.rect(surface, UI["colors"]["background"], rect)
         content_rect = pygame.Rect(
             rect.x + 16,
@@ -211,11 +218,14 @@ class GamePlayHUD:
     def draw_top_right(self, surface):
         """Player stats: HP, lives, bombs, power level."""
         rect = pygame.Rect(
-            16,
-            16,
-            surface.get_width() * 0.5,
+            0,
+            0,
+            self.ui_area_rect.width * 0.25,
             128,
         )
+        rect.topright = self.ui_area_rect.topright
+        rect.y += 16
+        rect.x += 16
         pygame.draw.rect(surface, UI["colors"]["background"], rect)
         content_rect = pygame.Rect(
             rect.x + 16,
@@ -263,11 +273,11 @@ class GamePlayHUD:
         self.handle_dialogue_timer(dt)
         self.handle_message_timer(dt)
 
-    def draw(self, sidebar_l_surface, game_surface, sidebar_r_surface):
-        self.draw_top_left(sidebar_l_surface)
+    def draw(self, display_surface, game_surface):
+        self.draw_top_left(display_surface)
 
         self.draw_top_center(game_surface)
         self.draw_mid_center(game_surface)
         self.draw_btm_center(game_surface)
 
-        self.draw_top_right(sidebar_r_surface)
+        self.draw_top_right(display_surface)

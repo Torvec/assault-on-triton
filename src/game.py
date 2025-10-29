@@ -5,51 +5,36 @@ from src.data.settings import DISPLAY
 
 class Game:
 
-    def __init__(self, screen):
-        self.screen = screen
-        self.sidebar_l_surface = pygame.Surface(
-            (DISPLAY["sidebar_width"], self.screen.get_height())
-        )
+    def __init__(self, display_surface):
+        self.display_surface = display_surface
         self.game_surface = pygame.Surface(
-            (DISPLAY["game_surface_width"], self.screen.get_height())
-        )
-        self.sidebar_r_surface = pygame.Surface(
-            (DISPLAY["sidebar_width"], self.screen.get_height())
+            (DISPLAY["game_surface_width"], self.display_surface.get_height())
         )
         self.clock = pygame.time.Clock()
         self.dt = 0
         self.score_store = ScoreStore()
-        self.set_scene("Start")
         self.running = True
+        self.scenes = {
+            "Start": lambda: self._import_scene("src.menus.start_menu", "Start"),
+            "GamePlay": lambda: self._import_scene("src.gameplay.gameplay", "GamePlay"),
+            "GameOver": lambda: self._import_scene("src.menus.game_over", "GameOver"),
+            "Options": lambda: self._import_scene("src.menus.options_menu", "Options"),
+            "Scoreboard": lambda: self._import_scene(
+                "src.menus.scoreboard", "Scoreboard"
+            ),
+            "Credits": lambda: self._import_scene("src.menus.credits", "Credits"),
+        }
+
+        self.set_scene("Start")
+
+    def _import_scene(self, import_path, class_name):
+        module = __import__(import_path, fromlist=[class_name])
+        return getattr(module, class_name)(self)
 
     def set_scene(self, scene_name):
-        match scene_name:
-            case "Start":
-                from src.menus.start_menu import Start
-
-                self.current_scene = Start(self)
-            case "GamePlay":
-                from src.gameplay.gameplay import GamePlay
-
-                self.current_scene = GamePlay(self)
-            case "GameOver":
-                from src.menus.game_over import GameOver
-
-                self.current_scene = GameOver(self)
-            case "Options":
-                from src.menus.options_menu import Options
-
-                self.current_scene = Options(self)
-            case "Scoreboard":
-                from src.menus.scoreboard import Scoreboard
-
-                self.current_scene = Scoreboard(self)
-            case "Credits":
-                from src.menus.credits import Credits
-
-                self.current_scene = Credits(self)
-            case _:
-                raise ValueError(f"Unknown scene: {scene_name}")
+        if scene_name not in self.scenes:
+            raise ValueError(f"Unknown scene: {scene_name}")
+        self.current_scene = self.scenes[scene_name]()
 
     def run(self):
         while self.running:
@@ -57,21 +42,12 @@ class Game:
             for event in events:
                 if event.type == pygame.QUIT:
                     self.running = False
-
             self.current_scene.handle_event(events)
             self.current_scene.update(self.dt)
-            self.current_scene.draw(
-                self.game_surface, self.sidebar_l_surface, self.sidebar_r_surface
+            self.current_scene.draw(self.display_surface, self.game_surface)
+            self.display_surface.blit(
+                self.game_surface, (DISPLAY["game_surface_offset"], 0)
             )
-
-            self.screen.blit(
-                self.sidebar_l_surface, (DISPLAY["sidebar_left_offset"], 0)
-            )
-            self.screen.blit(self.game_surface, (DISPLAY["game_surface_offset"], 0))
-            self.screen.blit(
-                self.sidebar_r_surface, (DISPLAY["sidebar_right_offset"], 0)
-            )
-
             pygame.display.flip()
             self.dt = self.clock.tick(DISPLAY["target_fps"]) / 1000
         pygame.quit()

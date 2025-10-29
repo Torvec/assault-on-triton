@@ -21,7 +21,7 @@ from src.data.event_timeline import TIMELINE
 
 # UI
 from src.gameplay.pause_menu import PauseMenu
-from src.gameplay.gameplay_hud import GamePlayHUD
+from src.gameplay.gameplay_ui import GamePlayUI
 from src.gameplay.end_level_menu import EndLevelMenu
 
 
@@ -49,7 +49,7 @@ class GamePlay(Screen):
                 self.game,
             ),
         ]
-        self.game_play_hud = GamePlayHUD(self.game, self)
+        self.gameplay_ui = GamePlayUI(self.game, self)
         self.score = ScoreManager(self.game.score_store)
         self.is_paused = False
         self.pause_menu = PauseMenu(self)
@@ -127,12 +127,12 @@ class GamePlay(Screen):
             self.event_manager.update(dt)
             self.collision_manager.update()
             self.score.update_streak_meter_decay(dt)
-            self.game_play_hud.update(dt)
+            self.gameplay_ui.update(dt)
             self.handle_game_over()
             self.handle_level_complete(dt)
 
-    def draw(self, game_surface, sidebar_l_surface, sidebar_r_surface):
-        super().draw(game_surface, sidebar_l_surface, sidebar_r_surface)
-        self.game_play_hud.draw(sidebar_l_surface, game_surface, sidebar_r_surface)
+    def draw(self, display_surface, game_surface):
+        super().draw(display_surface, game_surface)
+        self.gameplay_ui.draw(display_surface, game_surface)
         self.pause_menu.draw(game_surface)
         self.end_level_menu.draw(game_surface)

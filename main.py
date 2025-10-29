@@ -10,11 +10,11 @@ def main():
     pygame.mixer.init()
     pygame.display.set_caption("Assault On Triton")
     pygame.display.set_icon(pygame.image.load(IMAGES["icon"]))
-    screen = pygame.display.set_mode(
+    display_surface = pygame.display.set_mode(
         (DISPLAY["screen_width"], DISPLAY["screen_height"])
     )
     try:
-        game = Game(screen)
+        game = Game(display_surface)
         game.run()
     except Exception as e:
         print(f"An error occurred: {e}")

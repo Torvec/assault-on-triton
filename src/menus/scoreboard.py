@@ -16,9 +16,8 @@ class Scoreboard(Screen):
     def update(self, dt):
         super().update(dt)
 
-    def draw(self, game_surface, sidebar_l_surface, sidebar_r_surface):
-        super().draw(game_surface, sidebar_l_surface, sidebar_r_surface)
-
+    def draw(self, display_surface, game_surface):
+        super().draw(display_surface, game_surface)
         render_text(
             screen=game_surface,
             text="High Scores",
@@ -26,7 +25,6 @@ class Scoreboard(Screen):
             font_size=48,
             pos=(game_surface.get_width() * 0.5, 64),
         )
-
         render_text(
             screen=game_surface,
             text="scores go here",

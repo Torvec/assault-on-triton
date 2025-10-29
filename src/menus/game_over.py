@@ -37,8 +37,8 @@ class GameOver(Screen):
     def update(self, dt):
         super().update(dt)
 
-    def draw(self, game_surface, sidebar_l_surface, sidebar_r_surface):
-        super().draw(game_surface, sidebar_l_surface, sidebar_r_surface)
+    def draw(self, display_surface, game_surface):
+        super().draw(display_surface, game_surface)
         render_text(
             screen=game_surface,
             text=self.menu_title,

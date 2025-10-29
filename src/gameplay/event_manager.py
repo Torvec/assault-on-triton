@@ -3,8 +3,8 @@ from src.gameplay.spawn_manager import SpawnManager
 
 class EventManager:
 
-    def __init__(self, game_play, timeline):
-        self.game_play = game_play
+    def __init__(self, gameplay, timeline):
+        self.gameplay = gameplay
         self.timeline = timeline
         self.timeline_time = 0
         self.timeline_index = 0
@@ -21,23 +21,23 @@ class EventManager:
         }
 
     def spawn_entity(self, type, location, behaviors):
-        spawner = SpawnManager(self.game_play, type, location, behaviors)
+        spawner = SpawnManager(self.gameplay, type, location, behaviors)
         spawner.spawn_entity()
 
     def show_message(self, message_id):
-        self.game_play.game_play_hud.display_message(message_id)
+        self.gameplay.gameplay_ui.display_message(message_id)
 
     def show_dialogue(self, dialogue_id):
-        self.game_play.game_play_hud.display_dialogue(dialogue_id)
+        self.gameplay.gameplay_ui.display_dialogue(dialogue_id)
 
     def disable_player_controls(self):
-        self.game_play.player.controls_enabled = False
+        self.gameplay.player.controls_enabled = False
 
     def enable_player_controls(self):
-        self.game_play.player.controls_enabled = True
+        self.gameplay.player.controls_enabled = True
 
     def move_player_to(self, x, y, speed):
-        self.game_play.player.move_player_to(x, y, speed)
+        self.gameplay.player.move_player_to(x, y, speed)
 
     def pause_event_timeline(self):
         self.timeline_time_paused = True
