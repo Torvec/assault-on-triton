@@ -20,9 +20,8 @@ from src.gameplay.collision_manager import CollisionManager
 from src.data.event_timeline import TIMELINE
 
 # UI
-from src.gameplay.pause_menu import PauseMenu
+from src.gameplay.gameplay_modals import PauseModal, GameOverModal, EndLevelModal
 from src.gameplay.gameplay_ui import GamePlayUI
-from src.gameplay.end_level_menu import EndLevelMenu
 
 
 class GamePlay(Screen):
@@ -30,6 +29,8 @@ class GamePlay(Screen):
     def __init__(self, game):
         super().__init__(game)
         self.game_timer = 0
+        self.is_paused = False
+        self.level_complete = False
         self.play_area_rect = pygame.Rect(
             0,
             0,
@@ -51,11 +52,10 @@ class GamePlay(Screen):
         ]
         self.gameplay_ui = GamePlayUI(self.game, self)
         self.score = ScoreManager(self.game.score_store)
-        self.is_paused = False
-        self.pause_menu = PauseMenu(self)
+        self.pause_modal = PauseModal(self)
+        self.end_level_modal = EndLevelModal(self)
+        self.game_over_modal = GameOverModal(self)
         self.event_manager = EventManager(self, TIMELINE)
-        self.end_level_menu = EndLevelMenu(self)
-        self.level_complete = False
 
         # Sprite Groups
         self.player_group = pygame.sprite.GroupSingle()
@@ -90,7 +90,7 @@ class GamePlay(Screen):
     def handle_game_over(self):
         if self.player.lives < 1:
             self.score.store_score(self.score.score)
-            self.game.set_scene("GameOver")
+            self.game_over_modal.is_visible = True
 
     def handle_level_complete(self, dt):
         timeline_index = self.event_manager.timeline_index
@@ -105,7 +105,7 @@ class GamePlay(Screen):
                 self.level_end_timer = 5
 
             self.level_end_timer -= dt
-            if self.level_end_timer <= 0 and not self.end_level_menu.show_menu:
+            if self.level_end_timer <= 0 and not self.end_level_modal.is_visible:
                 self.score.store_score(self.score.score)
                 # fmt: off
                 move_player_to_center = {
@@ -114,11 +114,19 @@ class GamePlay(Screen):
                     }
                 # fmt: on
                 self.event_manager.handle_event(move_player_to_center)
-                self.end_level_menu.show_menu = True
+                self.end_level_modal.is_visible = True
+
+    def handle_pause(self, events):
+        for event in events:
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_ESCAPE:
+                    self.pause_modal.is_visible = True
 
     def handle_event(self, events):
-        self.pause_menu.handle_event(events)
-        self.end_level_menu.handle_event(events)
+        self.handle_pause(events)
+        self.pause_modal.handle_event(events)
+        self.end_level_modal.handle_event(events)
+        self.game_over_modal.handle_event(events)
 
     def update(self, dt):
         if not self.is_paused:
@@ -134,5 +142,6 @@ class GamePlay(Screen):
     def draw(self, display_surface, game_surface):
         super().draw(display_surface, game_surface)
         self.gameplay_ui.draw(display_surface, game_surface)
-        self.pause_menu.draw(game_surface)
-        self.end_level_menu.draw(game_surface)
+        self.pause_modal.draw(game_surface)
+        self.end_level_modal.draw(game_surface)
+        self.game_over_modal.draw(game_surface)

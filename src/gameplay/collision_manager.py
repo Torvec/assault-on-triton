@@ -48,7 +48,7 @@ class CollisionManager:
             player_v_hostiles = self.player.collides_with(self.hostiles)
             if player_v_hostiles:
                 for hostile in player_v_hostiles:
-                    self.player.take_damage(1)
+                    self.player.take_damage(5)
                     hostile.take_damage(1)
         if self.sprite_groups["pickups"]:
             player_v_pickups = self.player.collides_with(self.sprite_groups["pickups"])

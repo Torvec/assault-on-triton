@@ -80,7 +80,7 @@ PROJECTILES = {
         4: {"range": 1024, "speed": 800, "damage": 4},
         5: {"range": 1024, "speed": 1000, "damage": 8},
     },
-    "enemy_shot": {"range": 512, "speed": 500, "damage": 2},
+    "enemy_shot": {"range": 512, "speed": 500, "damage": 10},
     "player_bomb": {
         "radius": 8,
         "speed": 250,

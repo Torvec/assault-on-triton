@@ -7,9 +7,9 @@ from src.data.messages import MESSAGES
 
 class GamePlayUI:
 
-    def __init__(self, game, game_play):
+    def __init__(self, game, gameplay):
         self.game = game
-        self.game_play = game_play
+        self.gameplay = gameplay
         self.ui_area_rect = pygame.Rect(
             0,
             0,
@@ -56,8 +56,8 @@ class GamePlayUI:
         meter_border_rect.midleft = rect.midleft
         pygame.draw.rect(surface, "white", meter_border_rect, 2, 4)
         fill_percent = (
-            self.game_play.score.streak_meter
-            / self.game_play.score.streak_meter_threshold
+            self.gameplay.score.streak_meter
+            / self.gameplay.score.streak_meter_threshold
         )
         fill_width = int((rect.width - 4) * fill_percent)
         meter_fill_rect = pygame.Rect(0, 0, fill_width, 12)
@@ -85,7 +85,7 @@ class GamePlayUI:
         )
         render_text(
             screen=surface,
-            text=f"SCORE: {self.game_play.score.score:09}",
+            text=f"SCORE: {self.gameplay.score.score:09}",
             font_name="zendots",
             font_size=UI["font_sizes"]["small"],
             color=UI["colors"]["primary"],
@@ -94,7 +94,7 @@ class GamePlayUI:
         )
         render_text(
             screen=surface,
-            text=f"x{self.game_play.score.multiplier}",
+            text=f"x{self.gameplay.score.multiplier}",
             font_name="zendots",
             font_size=UI["font_sizes"]["small"],
             color=UI["colors"]["primary"],
@@ -235,7 +235,7 @@ class GamePlayUI:
         )
         render_text(
             screen=surface,
-            text=f"HP x {self.game_play.player.hp}%",
+            text=f"HP x {self.gameplay.player.hp}%",
             font_size=UI["font_sizes"]["large"],
             color=UI["colors"]["primary"],
             pos=content_rect.topleft,
@@ -243,7 +243,7 @@ class GamePlayUI:
         )
         render_text(
             screen=surface,
-            text=f"LIVES x {self.game_play.player.lives}",
+            text=f"LIVES x {self.gameplay.player.lives}",
             font_size=UI["font_sizes"]["large"],
             color=UI["colors"]["primary"],
             pos=content_rect.midleft,
@@ -251,14 +251,14 @@ class GamePlayUI:
         )
         render_text(
             screen=surface,
-            text=f"BOMBS x {self.game_play.player.bomb_ammo}",
+            text=f"BOMBS x {self.gameplay.player.bomb_ammo}",
             font_size=UI["font_sizes"]["large"],
             color=UI["colors"]["primary"],
             pos=content_rect.center,
             align="center",
         )
         power_display = UI["power_levels"].get(
-            self.game_play.player.power_level, "( ? )"
+            self.gameplay.player.power_level, "( ? )"
         )
         render_text(
             screen=surface,

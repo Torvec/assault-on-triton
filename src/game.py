@@ -17,7 +17,6 @@ class Game:
         self.scenes = {
             "Start": lambda: self._import_scene("src.menus.start_menu", "Start"),
             "GamePlay": lambda: self._import_scene("src.gameplay.gameplay", "GamePlay"),
-            "GameOver": lambda: self._import_scene("src.menus.game_over", "GameOver"),
             "Options": lambda: self._import_scene("src.menus.options_menu", "Options"),
             "Scoreboard": lambda: self._import_scene(
                 "src.menus.scoreboard", "Scoreboard"
