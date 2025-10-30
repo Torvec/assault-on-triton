@@ -11,8 +11,7 @@ class Modal:
         self.is_visible = False
 
     def handle_event(self, events):
-        if not self.is_visible:
-            return
+        pass
 
     def draw(self, surface):
         if not self.is_visible:
@@ -126,9 +125,6 @@ class GameOverModal(Modal):
         )
 
     def handle_event(self, events):
-        if not self.is_visible:
-            return
-
         for event in events:
             if event.type == pygame.KEYDOWN:
                 match event.key:

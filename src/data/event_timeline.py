@@ -1,4 +1,6 @@
 TIMELINE = [
+    {"time": 0, "event": "trigger_intro", "params": {}},
+    {"time": 100, "event": "trigger_outro", "params": {}},
     {
         "time": 0,
         "event": "move_player_to",

@@ -1,4 +1,5 @@
 from src.gameplay.spawn_manager import SpawnManager
+from src.gameplay.gameplay_states import GameplayState
 
 
 class EventManager:
@@ -6,19 +7,35 @@ class EventManager:
     def __init__(self, gameplay, timeline):
         self.gameplay = gameplay
         self.timeline = timeline
-        self.timeline_time = 0
+        self.timeline_time = 0.0
         self.timeline_index = 0
-        self.timeline_time_paused = False
+        self.is_paused = False
         self.event_handlers = {
+            "trigger_intro": self.trigger_intro,
+            "trigger_cutscene": self.trigger_cutscene,
+            "trigger_waves": self.trigger_waves,
+            "trigger_battle": self.trigger_battle,
+            "trigger_outro": self.trigger_intro,
             "spawn_entity": self.spawn_entity,
             "show_message": self.show_message,
             "show_dialogue": self.show_dialogue,
-            "disable_player_controls": self.disable_player_controls,
-            "enable_player_controls": self.enable_player_controls,
             "move_player_to": self.move_player_to,
-            "pause_timeline": self.pause_event_timeline,
-            "resume_timeline": self.resume_event_timeline,
         }
+
+    def trigger_intro(self):
+        self.gameplay.change_state(GameplayState.INTRO)
+
+    def trigger_cutscene(self):
+        self.gameplay.change_state(GameplayState.CUTSCENE)
+
+    def trigger_waves(self):
+        self.gameplay.change_state(GameplayState.WAVES)
+
+    def trigger_battle(self):
+        self.gameplay.change_state(GameplayState.BATTLE)
+
+    def trigger_outro(self):
+        self.gameplay.change_state(GameplayState.OUTRO)
 
     def spawn_entity(self, type, location, behaviors):
         spawner = SpawnManager(self.gameplay, type, location, behaviors)
@@ -30,20 +47,8 @@ class EventManager:
     def show_dialogue(self, dialogue_id):
         self.gameplay.gameplay_ui.display_dialogue(dialogue_id)
 
-    def disable_player_controls(self):
-        self.gameplay.player.controls_enabled = False
-
-    def enable_player_controls(self):
-        self.gameplay.player.controls_enabled = True
-
     def move_player_to(self, x, y, speed):
         self.gameplay.player.move_player_to(x, y, speed)
-
-    def pause_event_timeline(self):
-        self.timeline_time_paused = True
-
-    def resume_event_timeline(self):
-        self.timeline_time_paused = False
 
     def handle_event(self, event):
         event_name = event["event"]
@@ -64,6 +69,8 @@ class EventManager:
             self.timeline_index += 1
 
     def update(self, dt):
-        if not self.timeline_time_paused:
-            self.timeline_time += dt
-            self.process_timeline()
+        if self.is_paused:
+            return
+        
+        self.timeline_time += dt
+        self.process_timeline()
