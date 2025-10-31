@@ -4,13 +4,11 @@ from src.screen import Screen
 
 from src.gameplay.gameplay_states import (
     GameplayState,
-    IntroState,
     CutsceneState,
-    WavesState,
-    BattleState,
+    PlayState,
     PausedState,
     GameOverState,
-    OutroState,
+    MissionCompleteState,
 )
 
 from src.gameplay.background import StarField, Planet, PlanetTwo
@@ -42,11 +40,8 @@ class GamePlay(Screen):
         self.current_state = None
         self.previous_state = None
         self.states = {}
-
         self.game_timer = 0
         self.is_paused = False
-
-        # self.level_complete = False
         self.play_area_rect = pygame.Rect(
             0,
             0,
@@ -106,13 +101,11 @@ class GamePlay(Screen):
         self.init_states()
 
     def init_states(self):
-        self.states[GameplayState.INTRO] = IntroState(self)
         self.states[GameplayState.CUTSCENE] = CutsceneState(self)
-        self.states[GameplayState.WAVES] = WavesState(self)
-        self.states[GameplayState.BATTLE] = BattleState(self)
+        self.states[GameplayState.PLAY] = PlayState(self)
         self.states[GameplayState.PAUSED] = PausedState(self)
         self.states[GameplayState.GAME_OVER] = GameOverState(self)
-        self.states[GameplayState.OUTRO] = OutroState(self)
+        self.states[GameplayState.MISSION_COMPLETE] = MissionCompleteState(self)
 
     def change_state(self, new_state):
         if self.current_state:
@@ -121,11 +114,6 @@ class GamePlay(Screen):
 
         self.current_state = new_state
         self.states[self.current_state].enter()
-
-    # def handle_game_over(self):
-    #     if self.player.lives < 1:
-    #         self.score.store_score(self.score.score)
-    #         self.game_over_modal.is_visible = True
 
     # def handle_level_complete(self, dt):
     #     timeline_index = self.event_manager.timeline_index
@@ -151,41 +139,17 @@ class GamePlay(Screen):
     #             self.event_manager.handle_event(move_player_to_center)
     #             self.end_level_modal.is_visible = True
 
-    # def handle_pause(self, events):
-    #     for event in events:
-    #         if event.type == pygame.KEYDOWN:
-    #             if event.key == pygame.K_ESCAPE:
-    #                 self.pause_modal.is_visible = True
-
     def handle_event(self, events):
-        # self.handle_pause(events)
-        # if self.pause_modal.is_visible:
-        #     self.pause_modal.handle_event(events)
-        # elif self.end_level_modal.is_visible:
-        #     self.end_level_modal.handle_event(events)
-        # elif self.game_over_modal.is_visible:
-        #     self.game_over_modal.handle_event(events)
         if self.current_state:
             self.states[self.current_state].handle_event(events)
 
     def update(self, dt):
-        # if not self.is_paused:
-        #     super().update(dt)
-        #     self.game_timer += dt
-        #     self.event_manager.update(dt)
-        #     self.collision_manager.update()
-        #     self.score.update_streak_meter_decay(dt)
-        #     self.gameplay_ui.update(dt)
-        #     self.handle_game_over()
-        #     self.handle_level_complete(dt)
+        super().update(dt)
         if self.current_state:
             self.states[self.current_state].update(dt)
 
     def draw(self, display_surface, game_surface):
         super().draw(display_surface, game_surface)
-        # self.pause_modal.draw(game_surface)
-        # self.end_level_modal.draw(game_surface)
-        # self.game_over_modal.draw(game_surface)
         self.gameplay_ui.draw(display_surface, game_surface)
         if self.current_state:
             self.states[self.current_state].draw(game_surface)

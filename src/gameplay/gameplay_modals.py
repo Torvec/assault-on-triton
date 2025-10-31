@@ -89,25 +89,37 @@ class EndLevelModal(Modal):
                 "[ENTER] Credits",
             ],
         )
-        self.start_outro = False
+        # self.start_outro = False
 
     def handle_event(self, events):
+        if not self.is_visible:
+            return
+            
         for event in events:
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_RETURN:
                     self.is_visible = False
-                    if not self.start_outro:
-                        self.start_outro = True
-                        move_player_to_top = {
-                            "event": "move_player_to",
-                            "params": {"x": 304, "y": -96, "speed": 300},
-                        }
-                        self.gameplay.event_manager.handle_event(move_player_to_top)
+                    outro_cutscene = {
+                        "event": "trigger_cutscene",
+                        "params": {"cutscene_id": "outro_2"}
+                    }
+                    self.gameplay.event_manager.handle_event(outro_cutscene)
+        # for event in events:
+        #     if event.type == pygame.KEYDOWN:
+        #         if event.key == pygame.K_RETURN:
+        #             self.is_visible = False
+        #             if not self.start_outro:
+        #                 self.start_outro = True
+        #                 move_player_to_top = {
+        #                     "event": "move_player_to",
+        #                     "params": {"x": 304, "y": -96, "speed": 300},
+        #                 }
+        #                 self.gameplay.event_manager.handle_event(move_player_to_top)
 
-        if self.start_outro:
-            if self.gameplay.player.scripted_movement_active:
-                return
-            self.gameplay.game.set_scene("Credits")
+        # if self.start_outro:
+        #     if self.gameplay.player.scripted_movement_active:
+        #         return
+        #     self.gameplay.game.set_scene("Credits")
 
 
 class GameOverModal(Modal):

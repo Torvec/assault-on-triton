@@ -19,37 +19,38 @@ class GamePlayUI:
         self.ui_area_rect.center = self.game.display_surface.get_rect().center
         self.current_speaker = None
         self.current_dialogue = None
-        self.dialogue_timer = 0
+        self.dialogue_duration = 0
         self.dialogue_location = None
         self.current_message = None
-        self.message_timer = 0
+        self.message_duration = 0
 
     def display_dialogue(self, dialogue_id):
         dialogue = SCRIPTED[dialogue_id]
         self.current_speaker = dialogue["speaker"]
         self.current_portrait = dialogue["portrait"]
         self.current_dialogue = dialogue["text"]
-        self.dialogue_timer = dialogue["timer"]
+        self.dialogue_duration = dialogue["duration"]
         self.dialogue_location = dialogue["location"]
 
-    def handle_dialogue_timer(self, dt):
-        if self.dialogue_timer > 0:
-            self.dialogue_timer -= dt
-            if self.dialogue_timer <= 0:
+    def handle_dialogue_duration(self, dt):
+        if self.dialogue_duration > 0:
+            self.dialogue_duration -= dt
+            if self.dialogue_duration <= 0:
                 self.current_speaker = None
                 self.current_text = None
                 self.dialogue_location = None
 
     def display_message(self, message_id):
-        self.current_message = MESSAGES[message_id]["text"]
-        self.message_timer = MESSAGES[message_id]["timer"]
+        message = MESSAGES[message_id]
+        self.current_message = message["text"]
+        self.message_duration = message["duration"]
 
-    def handle_message_timer(self, dt):
-        if self.message_timer > 0:
-            self.message_timer -= dt
-            if self.message_timer <= 0:
+    def handle_message_duration(self, dt):
+        if self.message_duration > 0:
+            self.message_duration -= dt
+            if self.message_duration <= 0:
                 self.current_message = None
-                self.message_timer = 0
+                self.message_duration = 0
 
     def draw_streak_meter(self, surface, rect):
         meter_border_rect = pygame.Rect(0, 0, rect.width, 16)
@@ -66,7 +67,7 @@ class GamePlayUI:
         pygame.draw.rect(surface, "grey50", meter_fill_rect)
 
     def draw_top_left(self, surface):
-        """Score, multiplier, high score, time."""
+        """Score, multiplier, high score"""
         rect = pygame.Rect(
             0,
             0,
@@ -157,6 +158,7 @@ class GamePlayUI:
             )
 
     def draw_mid_center(self, surface):
+        """For message overlays"""
         if self.current_message:
             render_text(
                 screen=surface,
@@ -270,8 +272,8 @@ class GamePlayUI:
         )
 
     def update(self, dt):
-        self.handle_dialogue_timer(dt)
-        self.handle_message_timer(dt)
+        self.handle_dialogue_duration(dt)
+        self.handle_message_duration(dt)
 
     def draw(self, display_surface, game_surface):
         self.draw_top_left(display_surface)

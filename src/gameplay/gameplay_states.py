@@ -4,13 +4,11 @@ import pygame
 
 
 class GameplayState(Enum):
-    INTRO = auto()
     CUTSCENE = auto()
-    WAVES = auto()
-    BATTLE = auto()
+    PLAY = auto()
     PAUSED = auto()
     GAME_OVER = auto()
-    OUTRO = auto()
+    MISSION_COMPLETE = auto()
 
 
 class State(ABC):
@@ -38,27 +36,6 @@ class State(ABC):
         pass
 
 
-class IntroState(State):
-
-    def enter(self):
-        self.gameplay.player.controls_enabled = False
-
-    def exit(self):
-        pass
-
-    def handle_event(self, events):
-        for event in events:
-            if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_ESCAPE:
-                    self.gameplay.change_state(GameplayState.PAUSED)
-
-    def update(self, dt):
-        pass
-
-    def draw(self, surface):
-        pass
-
-
 class CutsceneState(State):
 
     def enter(self):
@@ -80,9 +57,14 @@ class CutsceneState(State):
         pass
 
 
-class WavesState(State):
+class PlayState(State):
+
+    def __init__(self, gameplay):
+        super().__init__(gameplay)
+        self.is_battle = False
+
     def enter(self):
-        self.gameplay.event_manager.is_paused = False
+        self.gameplay.event_manager.is_paused = self.is_battle
         self.gameplay.player.controls_enabled = True
 
     def exit(self):
@@ -102,37 +84,10 @@ class WavesState(State):
 
         self.gameplay.game_timer += dt
         self.gameplay.collision_manager.update()
-        self.gameplay.event_manager.update(dt)
+        if not self.is_battle:
+            self.gameplay.event_manager.update(dt)
         self.gameplay.score.update_streak_meter_decay(dt)
-
-    def draw(self, surface):
-        pass
-
-
-class BattleState(State):
-    
-    def enter(self):
-        self.gameplay.event_manager.is_paused = True
-        self.gameplay.player.controls_enabled = True
-
-    def exit(self):
-        pass
-
-    def handle_event(self, events):
-        for event in events:
-            if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_ESCAPE:
-                    self.gameplay.change_state(GameplayState.PAUSED)
-
-    def update(self, dt):
-        if self.gameplay.player.lives < 1:
-            self.gameplay.score.store_score(self.score.score)
-            self.gameplay.change_state(GameplayState.GAME_OVER)
-            return
-
-        self.gameplay.game_timer += dt
-        self.gameplay.collision_manager.update()
-        self.gameplay.score.update_streak_meter_decay(dt)
+        self.gameplay.gameplay_ui.update(dt)
 
     def draw(self, surface):
         pass
@@ -150,7 +105,7 @@ class PausedState(State):
     def exit(self):
         self.gameplay.pause_modal.is_visible = False
         self.gameplay.event_manager.is_paused = self.previous_timeline_paused
-        self.gameplay.player.controls_enabled = self.gameplay.player.controls_enabled
+        self.gameplay.player.controls_enabled = self.previous_player_controls_enabled
 
     def handle_event(self, events):
         self.gameplay.pause_modal.handle_event(events)
@@ -166,6 +121,7 @@ class GameOverState(State):
 
     def enter(self):
         self.gameplay.game_over_modal.is_visible = True
+        self.gameplay.event_manager.is_paused = True
         self.gameplay.player.controls_enabled = False
 
     def exit(self):
@@ -181,17 +137,19 @@ class GameOverState(State):
         self.gameplay.game_over_modal.draw(surface)
 
 
-class OutroState(State):
-
+class MissionCompleteState(State):
     def enter(self):
-        self.gameplay.end_level_modal.is_visible = True
+        self.gameplay.event_manager.is_paused = True
         self.gameplay.player.controls_enabled = False
+        self.gameplay.end_level_modal.is_visible = True
+        self.gameplay.score.store_score(self.gameplay.score.score)
 
     def exit(self):
-        pass
+        self.gameplay.end_level_modal.is_visible = False
 
     def handle_event(self, events):
         self.gameplay.end_level_modal.handle_event(events)
+        # EndLevelModal will handle the transition to next cutscene/credits
 
     def update(self, dt):
         pass
