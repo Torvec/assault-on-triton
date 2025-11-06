@@ -47,6 +47,9 @@ class Entity(pygame.sprite.Sprite):
         self.speed = 0
         self.velocity = pygame.Vector2(0, 0)
         self.rotation = 0
+        self.scripted_movement_active = False
+        self.target_position = pygame.Vector2(0, 0)
+        self.movement_speed = 0
         self.behaviors = []
 
     def handle_boundaries(self, action="kill"):
@@ -94,6 +97,32 @@ class Entity(pygame.sprite.Sprite):
             if self.hit_timer <= 0:
                 self.is_hit = False
                 self.hit_timer = self.HIT_TIMER
+
+    def scripted_movement(self, x, y, speed):
+        self.scripted_movement_active = True
+        self.target_position = pygame.Vector2(x, y)
+        self.movement_speed = speed
+
+    def handle_scripted_movement(self, dt):
+        if not self.scripted_movement_active:
+            return
+
+        # Calculate direction to target
+        direction = self.target_position - self.position
+        distance = direction.length()
+
+        # Check if we've reached the target
+        if distance < 5:  # Threshold to prevent jittering
+            self.position = self.target_position.copy()
+            self.scripted_movement_active = False
+            self.velocity = pygame.Vector2(0, 0)
+            return True
+
+        # Move towards target at specified speed
+        if distance > 0:
+            direction.normalize_ip()
+            self.velocity = direction * self.movement_speed
+            self.position += self.velocity * dt
 
     def handle_behaviors(self, dt):
         for behavior_data in self.behaviors:

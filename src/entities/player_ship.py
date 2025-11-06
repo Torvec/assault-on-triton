@@ -24,9 +24,7 @@ class Player(Entity):
         self.bomb_timer = 0
         self.power_level = PLAYER["base_power_level"]
         self.controls_enabled = False
-        self.scripted_movement_active = False
-        self.target_position = pygame.Vector2(0, 0)
-        self.movement_speed = 0
+        
 
     def shoot(self):
         if self.shoot_timer > 0:
@@ -124,33 +122,6 @@ class Player(Entity):
         if self.velocity.length() > self.speed:
             self.velocity.scale_to_length(self.speed)
         self.position += self.velocity * dt
-
-    def move_player_to(self, x, y, speed):
-        self.controls_enabled = False
-        self.scripted_movement_active = True
-        self.target_position = pygame.Vector2(x, y)
-        self.movement_speed = speed
-
-    def handle_scripted_movement(self, dt):
-        if not self.scripted_movement_active:
-            return
-
-        # Calculate direction to target
-        direction = self.target_position - self.position
-        distance = direction.length()
-
-        # Check if we've reached the target
-        if distance < 5:  # Threshold to prevent jittering
-            self.position = self.target_position.copy()
-            self.scripted_movement_active = False
-            self.velocity = pygame.Vector2(0, 0)
-            return True
-
-        # Move towards target at specified speed
-        if distance > 0:
-            direction.normalize_ip()
-            self.velocity = direction * self.movement_speed
-            self.position += self.velocity * dt
 
     def update(self, dt):
         super().update(dt)

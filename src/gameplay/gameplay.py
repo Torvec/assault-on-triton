@@ -22,11 +22,13 @@ from src.entities.pickup import Pickup
 
 # Managers
 from src.gameplay.event_manager import EventManager
+# from src.gameplay.cutscene_manager import CutsceneManager
 from src.gameplay.score_manager import ScoreManager
 from src.gameplay.collision_manager import CollisionManager
 
 # Data
-from src.data.event_timeline import TIMELINE
+from src.data.event_timeline import TIMELINE, EVENTS
+
 
 # UI
 from src.gameplay.gameplay_modals import PauseModal, GameOverModal, EndLevelModal
@@ -90,7 +92,8 @@ class GamePlay(Screen):
             self,
         )
 
-        self.event_manager = EventManager(self, TIMELINE)
+        self.event_manager = EventManager(self, EVENTS)
+        # self.cutscene_manager = CutsceneManager(self)
         self.collision_manager = CollisionManager(self)
         self.gameplay_ui = GamePlayUI(self.game, self)
         self.score = ScoreManager(self.game.score_store)
@@ -114,30 +117,6 @@ class GamePlay(Screen):
 
         self.current_state = new_state
         self.states[self.current_state].enter()
-
-    # def handle_level_complete(self, dt):
-    #     timeline_index = self.event_manager.timeline_index
-    #     timeline_length = len(self.event_manager.timeline)
-    #     hostile_count = (
-    #         len(self.asteroids) + len(self.enemy_drones) + len(self.enemy_ships)
-    #     )
-
-    #     if timeline_index >= timeline_length and hostile_count == 0:
-    #         if not self.level_complete:
-    #             self.level_complete = True
-    #             self.level_end_timer = 5
-
-    #         self.level_end_timer -= dt
-    #         if self.level_end_timer <= 0 and not self.end_level_modal.is_visible:
-    #             self.score.store_score(self.score.score)
-    #             # fmt: off
-    #             move_player_to_center = {
-    #                     "event": "move_player_to",
-    #                     "params": {"x": 304, "y": 540, "speed": 200},
-    #                 }
-    #             # fmt: on
-    #             self.event_manager.handle_event(move_player_to_center)
-    #             self.end_level_modal.is_visible = True
 
     def handle_event(self, events):
         if self.current_state:

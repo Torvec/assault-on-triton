@@ -20,8 +20,9 @@ class EventManager:
             "show_dialogue": self.show_dialogue,
         }
 
-    def trigger_cutscene(self):
+    def trigger_cutscene(self, cutscene_id):
         self.gameplay.change_state(GameplayState.CUTSCENE)
+        self.gameplay.cutscene_manager.start_cutscene(cutscene_id)
 
     def trigger_waves(self):
         play_state = self.gameplay.states[GameplayState.PLAY]
@@ -40,8 +41,8 @@ class EventManager:
         spawner = SpawnManager(self.gameplay, type, location, behaviors)
         spawner.spawn_entity()
 
-    def show_message(self, text, duration):
-        self.gameplay.gameplay_ui.display_message(text, duration)
+    def show_message(self, message_id):
+        self.gameplay.gameplay_ui.display_message(message_id)
 
     def show_dialogue(self, dialogue_id):
         self.gameplay.gameplay_ui.display_dialogue(dialogue_id)
