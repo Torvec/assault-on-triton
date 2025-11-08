@@ -127,16 +127,16 @@ class CollisionManager:
 class SpawnManager:
 
     spawn_locations = {
-        "left_edge": 0.1,
-        "far_left": 0.2,
-        "left": 0.3,
-        "center_left": 0.4,
-        "center": 0.5,
-        "center_right": 0.6,
-        "right": 0.7,
-        "far_right": 0.8,
-        "right_edge": 0.9,
-        "player_spawn": 0,
+        "top_left_edge": (0.1, "top"),
+        "top_far_left": (0.2, "top"),
+        "top_left": (0.3, "top"),
+        "top_center_left": (0.4, "top"),
+        "top_center": (0.5, "top"),
+        "top_center_right": (0.6, "top"),
+        "top_right": (0.7, "top"),
+        "top_far_right": (0.8, "top"),
+        "top_right_edge": (0.9, "top"),
+        "player_spawn": (0.5, "btm"),
     }
 
     entities = {
@@ -172,28 +172,24 @@ class SpawnManager:
     def calc_position(self):
         play_area = self.gameplay.play_area_rect
 
-        if isinstance(self.location, pygame.Vector2):
-            return self.location.copy()
+        if isinstance(self.location, str):
+            offset_x, side_y = self.spawn_locations[self.location]
+            offset_y = 128
 
-        elif isinstance(self.location, dict):
-            x = self.location["x"]
-            y = self.location["y"]
-            return pygame.Vector2(x, y)
+            if side_y == "top":
+                return pygame.Vector2(
+                    play_area.left + (offset_x * play_area.width),
+                    play_area.top - offset_y,
+                )
+            elif side_y == "btm":
+                return pygame.Vector2(
+                    play_area.left + (offset_x * play_area.width),
+                    play_area.bottom,
+                )
 
-        elif self.location == "player_spawn":
-            return pygame.Vector2(
-                play_area.width * 0.5,
-                play_area.height,
-            )
-
-        elif isinstance(self.location, str):
-            offset_x = self.spawn_locations[self.location]
-            return pygame.Vector2(
-                play_area.left + (offset_x * play_area.width),
-                play_area.top - 128,
-            )
-
-        return pygame.Vector2(play_area.centerx, play_area.top - 128)
+        elif isinstance(self.location, pygame.Vector2):
+            # return self.location.copy()
+            return self.location
 
 
 class EventManager:
@@ -265,6 +261,20 @@ class EventManager:
 
         self.timeline_time += dt
         self.process_timeline()
+
+
+class CutsceneManager:
+    def __init__(self):
+        pass
+
+    def start_cutscene(self):
+        print("Start Cutscene")
+
+    def end_cutscene(self):
+        print("End Cutscene")
+
+    def update(self, dt):
+        pass
 
 
 class ScoreManager:

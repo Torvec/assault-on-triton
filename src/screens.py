@@ -131,7 +131,6 @@ class GamePlay(Screen):
             self.previous_state = self.current_state
         self.current_state = new_state
         self.states[self.current_state].enter()
-        print(f"Changing state to: {new_state}")
 
     def handle_event(self, events):
         if self.current_state:

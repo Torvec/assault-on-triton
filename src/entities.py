@@ -107,17 +107,21 @@ class Entity(pygame.sprite.Sprite):
         self.scripted_movement_active = False
         self.target_position = pygame.Vector2(0, 0)
         self.movement_speed = 0
+        self.ignore_boundaries = False
         self.behaviors = []
 
     def handle_boundaries(self, action="kill"):
+        if self.ignore_boundaries:
+            return
+
         if action == "block":
             self.position.x = max(
-                self.play_area.left + self.rect.width // 2,
-                min(self.position.x, self.play_area.right - self.rect.width // 2),
+                self.play_area.left + self.rect.width * 0.5,
+                min(self.position.x, self.play_area.right - self.rect.width * 0.5),
             )
             self.position.y = max(
-                self.play_area.top + self.rect.height // 2,
-                min(self.position.y, self.play_area.bottom - self.rect.height // 2),
+                self.play_area.top + self.rect.height * 0.5,
+                min(self.position.y, self.play_area.bottom - self.rect.height * 0.5),
             )
         elif action == "kill" and (
             self.rect.right < self.play_area.left
@@ -245,26 +249,6 @@ class Explosion(Entity):
         )
         scaled_rect = scaled_image.get_rect(center=self.rect.center)
         screen.blit(scaled_image, scaled_rect)
-
-
-class Pickup(Entity):
-
-    def __init__(self, x, y, game_play):
-        super().__init__(x, y, game_play)
-        self.player = self.game_play.player
-        pickup_type = getattr(self, "pickup_type", "health")
-        data = PICKUPS.get(pickup_type, PICKUPS["health"])
-        self.speed = data["speed"]
-
-    def apply(self):
-        pass
-
-    def update(self, dt):
-        super().update(dt)
-
-    def draw(self, screen):
-        super().draw(screen)
-        screen.blit(self.image, self.rect)
 
 
 class Projectile(Entity):
@@ -443,142 +427,6 @@ class Missile(ExplosiveProjectile):
         screen.blit(rotated_image, self.rect)
 
 
-class HealthPickup(Pickup):
-
-    pickup_type = "health"
-
-    def __init__(self, x, y, game_play):
-        self.img_path = IMAGES["health_pickup"]
-        self.player_data = PLAYER
-        super().__init__(x, y, game_play)
-        self.heal_amount = PICKUPS["health"]["heal_amount"]
-
-    def apply(self):
-        if self.player.hp >= 75:
-            self.player.hp = self.player_data["base_hp"]
-        else:
-            self.player.hp += self.heal_amount
-        self.kill()
-
-    def update(self, dt):
-        super().update(dt)
-
-    def draw(self, screen):
-        super().draw(screen)
-
-
-class ExtraLifePickup(Pickup):
-
-    pickup_type = "life"
-
-    def __init__(self, x, y, game_play):
-        self.img_path = IMAGES["life_pickup"]
-        self.player_data = PLAYER
-        super().__init__(x, y, game_play)
-        self.fallback_score = PICKUPS["life"]["fallback_score"]
-
-    def apply(self):
-        if self.player.lives < self.player_data["max_lives"]:
-            self.player.lives += 1
-        else:
-            self.game_play.score.handle_score(self.fallback_score)
-            self.game_play.score.handle_streak_meter_inc(self.fallback_score)
-        self.kill()
-
-    def update(self, dt):
-        super().update(dt)
-
-    def draw(self, screen):
-        super().draw(screen)
-
-
-class PowerLevelPickup(Pickup):
-
-    pickup_type = "power"
-
-    def __init__(self, x, y, game_play):
-        self.img_path = IMAGES["power_pickup"]
-        self.player_data = PLAYER
-        super().__init__(x, y, game_play)
-        self.fallback_score = PICKUPS["power"]["fallback_score"]
-
-    def apply(self):
-        if self.player.power_level < self.player_data["max_power_level"]:
-            self.player.power_level += 1
-        else:
-            self.game_play.score.handle_score(self.fallback_score)
-            self.game_play.score.handle_streak_meter_inc(self.fallback_score)
-        self.kill()
-
-    def update(self, dt):
-        super().update(dt)
-
-    def draw(self, screen):
-        super().draw(screen)
-
-
-class OverdrivePickup(Pickup):
-
-    def __init__(self, x, y, game_play):
-        self.img_path = IMAGES["overdrive_pickup"]
-        self.player_data = PLAYER
-        super().__init__(x, y, game_play)
-
-    def apply(self):
-        self.player.power_level = 5
-        self.player.overdriveTime = self.player_data["overdrive_duration"]
-        self.kill()
-
-    def update(self, dt):
-        super().update(dt)
-
-    def draw(self, screen):
-        super().draw(screen)
-
-
-class BombAmmoPickup(Pickup):
-
-    pickup_type = "bomb"
-
-    def __init__(self, x, y, game_play):
-        self.img_path = IMAGES["bomb_pickup"]
-        self.player_data = PLAYER
-        super().__init__(x, y, game_play)
-        self.fallback_score = PICKUPS["bomb"]["fallback_score"]
-
-    def apply(self):
-        if self.player.bomb_ammo < self.player_data["max_bomb_ammo"]:
-            self.player.bomb_ammo += 1
-        else:
-            self.game_play.score.handle_score(self.fallback_score)
-            self.game_play.score.handle_streak_meter_inc(self.fallback_score)
-        self.kill()
-
-    def update(self, dt):
-        super().update(dt)
-
-    def draw(self, screen):
-        super().draw(screen)
-
-
-class InvulnerabilityPickup(Pickup):
-
-    def __init__(self, x, y, game_play):
-        self.img_path = IMAGES["invulnerable_pickup"]
-        self.player_data = PLAYER
-        super().__init__(x, y, game_play)
-
-    def apply(self):
-        self.player.invincibleTime = self.player_data["invulnerable_duration"]
-        self.kill()
-
-    def update(self, dt):
-        super().update(dt)
-
-    def draw(self, screen):
-        super().draw(screen)
-
-
 class Asteroid(Entity):
 
     def __init__(self, x, y, game_play, asteroid_size="md"):
@@ -718,6 +566,162 @@ class EnemyDrone(Ship):
 class EnemyShip(Ship):
     def __init__(self, x, y, game_play):
         super().__init__(x, y, game_play, "enemy_ship")
+
+
+class Pickup(Entity):
+
+    def __init__(self, x, y, game_play):
+        super().__init__(x, y, game_play)
+        self.player = self.game_play.player
+        pickup_type = getattr(self, "pickup_type", "health")
+        data = PICKUPS.get(pickup_type, PICKUPS["health"])
+        self.speed = data["speed"]
+
+    def apply(self):
+        pass
+
+    def update(self, dt):
+        super().update(dt)
+
+    def draw(self, screen):
+        super().draw(screen)
+        screen.blit(self.image, self.rect)
+
+
+class HealthPickup(Pickup):
+
+    pickup_type = "health"
+
+    def __init__(self, x, y, game_play):
+        self.img_path = IMAGES["health_pickup"]
+        self.player_data = PLAYER
+        super().__init__(x, y, game_play)
+        self.heal_amount = PICKUPS["health"]["heal_amount"]
+
+    def apply(self):
+        if self.player.hp >= 75:
+            self.player.hp = self.player_data["base_hp"]
+        else:
+            self.player.hp += self.heal_amount
+        self.kill()
+
+    def update(self, dt):
+        super().update(dt)
+
+    def draw(self, screen):
+        super().draw(screen)
+
+
+class ExtraLifePickup(Pickup):
+
+    pickup_type = "life"
+
+    def __init__(self, x, y, game_play):
+        self.img_path = IMAGES["life_pickup"]
+        self.player_data = PLAYER
+        super().__init__(x, y, game_play)
+        self.fallback_score = PICKUPS["life"]["fallback_score"]
+
+    def apply(self):
+        if self.player.lives < self.player_data["max_lives"]:
+            self.player.lives += 1
+        else:
+            self.game_play.score.handle_score(self.fallback_score)
+            self.game_play.score.handle_streak_meter_inc(self.fallback_score)
+        self.kill()
+
+    def update(self, dt):
+        super().update(dt)
+
+    def draw(self, screen):
+        super().draw(screen)
+
+
+class PowerLevelPickup(Pickup):
+
+    pickup_type = "power"
+
+    def __init__(self, x, y, game_play):
+        self.img_path = IMAGES["power_pickup"]
+        self.player_data = PLAYER
+        super().__init__(x, y, game_play)
+        self.fallback_score = PICKUPS["power"]["fallback_score"]
+
+    def apply(self):
+        if self.player.power_level < self.player_data["max_power_level"]:
+            self.player.power_level += 1
+        else:
+            self.game_play.score.handle_score(self.fallback_score)
+            self.game_play.score.handle_streak_meter_inc(self.fallback_score)
+        self.kill()
+
+    def update(self, dt):
+        super().update(dt)
+
+    def draw(self, screen):
+        super().draw(screen)
+
+
+class OverdrivePickup(Pickup):
+
+    def __init__(self, x, y, game_play):
+        self.img_path = IMAGES["overdrive_pickup"]
+        self.player_data = PLAYER
+        super().__init__(x, y, game_play)
+
+    def apply(self):
+        self.player.power_level = 5
+        self.player.overdriveTime = self.player_data["overdrive_duration"]
+        self.kill()
+
+    def update(self, dt):
+        super().update(dt)
+
+    def draw(self, screen):
+        super().draw(screen)
+
+
+class BombAmmoPickup(Pickup):
+
+    pickup_type = "bomb"
+
+    def __init__(self, x, y, game_play):
+        self.img_path = IMAGES["bomb_pickup"]
+        self.player_data = PLAYER
+        super().__init__(x, y, game_play)
+        self.fallback_score = PICKUPS["bomb"]["fallback_score"]
+
+    def apply(self):
+        if self.player.bomb_ammo < self.player_data["max_bomb_ammo"]:
+            self.player.bomb_ammo += 1
+        else:
+            self.game_play.score.handle_score(self.fallback_score)
+            self.game_play.score.handle_streak_meter_inc(self.fallback_score)
+        self.kill()
+
+    def update(self, dt):
+        super().update(dt)
+
+    def draw(self, screen):
+        super().draw(screen)
+
+
+class InvulnerabilityPickup(Pickup):
+
+    def __init__(self, x, y, game_play):
+        self.img_path = IMAGES["invulnerable_pickup"]
+        self.player_data = PLAYER
+        super().__init__(x, y, game_play)
+
+    def apply(self):
+        self.player.invincibleTime = self.player_data["invulnerable_duration"]
+        self.kill()
+
+    def update(self, dt):
+        super().update(dt)
+
+    def draw(self, screen):
+        super().draw(screen)
 
 
 class Player(Entity):

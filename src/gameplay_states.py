@@ -62,6 +62,7 @@ class CutsceneState(State):
         print("Entering CutsceneState")
         if self.gameplay.player_group.sprite:
             self.gameplay.player_group.sprite.controls_enabled = False
+            self.gameplay.player_group.sprite.ignore_boundaries = True
         self.gameplay.event_manager.is_paused = True
         self.gameplay.cutscene_manager.is_active = True
 
@@ -69,6 +70,7 @@ class CutsceneState(State):
         print("Exiting CutsceneState")
         self.gameplay.event_manager.is_paused = False
         self.gameplay.cutscene_manager.is_active = False
+        self.gameplay.player_group.sprite.ignore_boundaries = False
 
     def handle_event(self, events):
         for event in events:
