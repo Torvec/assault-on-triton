@@ -62,7 +62,6 @@ class GamePlay(Screen):
         self.previous_state = None
         self.states = {}
         self.game_timer = 0
-        self.is_paused = False
 
         self.play_area_rect = pygame.Rect(
             0,
@@ -105,12 +104,6 @@ class GamePlay(Screen):
         Explosion.containers = (self.explosions, self.updateable, self.drawable)
         Pickup.containers = (self.pickups, self.updateable, self.drawable)
 
-        self.player = Player(
-            self.play_area_rect.midbottom[0],
-            self.play_area_rect.midbottom[1],
-            self,
-        )
-
         self.event_manager = EventManager(self, EVENTS)
         # self.cutscene_manager = CutsceneManager(self)
         self.collision_manager = CollisionManager(self)
@@ -123,7 +116,6 @@ class GamePlay(Screen):
 
         self.init_states()
         self.change_state(GameplayState.INIT)
-        print(f"{self.current_state}")
 
     def init_states(self):
         self.states[GameplayState.INIT] = InitState(self)
@@ -146,7 +138,8 @@ class GamePlay(Screen):
             self.states[self.current_state].handle_event(events)
 
     def update(self, dt):
-        super().update(dt)
+        if self.current_state != GameplayState.PAUSED:
+            super().update(dt)
         if self.current_state:
             self.states[self.current_state].update(dt)
 

@@ -19,19 +19,24 @@ from data.settings import SCORING
 
 
 class CollisionManager:
-    def __init__(self, game_play):
-        self.game_play = game_play
+
+    def __init__(self, gameplay):
+        self.gameplay = gameplay
         self.sprite_groups = {
-            "asteroids": self.game_play.asteroids,
-            "enemy_drones": self.game_play.enemy_drones,
-            "enemy_ships": self.game_play.enemy_ships,
-            "missiles": self.game_play.missiles,
-            "shots": self.game_play.shots,
-            "bombs": self.game_play.bombs,
-            "explosions": self.game_play.explosions,
-            "pickups": self.game_play.pickups,
+            "asteroids": self.gameplay.asteroids,
+            "enemy_drones": self.gameplay.enemy_drones,
+            "enemy_ships": self.gameplay.enemy_ships,
+            "missiles": self.gameplay.missiles,
+            "shots": self.gameplay.shots,
+            "bombs": self.gameplay.bombs,
+            "explosions": self.gameplay.explosions,
+            "pickups": self.gameplay.pickups,
         }
-        self.player = self.game_play.player_group.sprite
+
+    @property
+    def player(self):
+        """Dynamically get the player sprite from the player_group."""
+        return self.gameplay.player_group.sprite
 
     def handle_shots(self, shot_type, colliders):
         for shot in shot_type:
@@ -59,6 +64,9 @@ class CollisionManager:
         return [e for e in self.sprite_groups[group] if e.owner != self.player]
 
     def update(self):
+        if not self.player:
+            return
+
         self.hostiles = [
             *self.sprite_groups["asteroids"],
             *self.sprite_groups["enemy_drones"],
@@ -147,8 +155,8 @@ class SpawnManager:
         "invulnerability_pickup": InvulnerabilityPickup,
     }
 
-    def __init__(self, game_play, entity_name, location, behaviors):
-        self.game_play = game_play
+    def __init__(self, gameplay, entity_name, location, behaviors):
+        self.gameplay = gameplay
         self.entity_name = entity_name
         self.location = location
         self.behaviors = behaviors
@@ -156,13 +164,13 @@ class SpawnManager:
     def spawn_entity(self):
         position = self.calc_position()
         entity_class = self.entities[self.entity_name]
-        entity = entity_class(position.x, position.y, self.game_play)
+        entity = entity_class(position.x, position.y, self.gameplay)
         if self.behaviors:
             for behavior in self.behaviors:
                 entity.behaviors.append(behavior)
 
     def calc_position(self):
-        play_area = self.game_play.play_area_rect
+        play_area = self.gameplay.play_area_rect
 
         if isinstance(self.location, pygame.Vector2):
             return self.location.copy()
@@ -175,7 +183,7 @@ class SpawnManager:
         elif self.location == "player_spawn":
             return pygame.Vector2(
                 play_area.width * 0.5,
-                play_area.height + 96,
+                play_area.height,
             )
 
         elif isinstance(self.location, str):

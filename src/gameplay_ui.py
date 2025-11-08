@@ -220,6 +220,9 @@ class GamePlayUI:
 
     def draw_top_right(self, surface):
         """Player stats: HP, lives, bombs, power level."""
+        if not self.gameplay.player_group.sprite:
+            return
+
         rect = pygame.Rect(
             0,
             0,
@@ -238,7 +241,7 @@ class GamePlayUI:
         )
         render_text(
             screen=surface,
-            text=f"HP x {self.gameplay.player.hp}%",
+            text=f"HP x {self.gameplay.player_group.sprite.hp}%",
             font_size=UI["font_sizes"]["large"],
             color=UI["colors"]["primary"],
             pos=content_rect.topleft,
@@ -246,7 +249,7 @@ class GamePlayUI:
         )
         render_text(
             screen=surface,
-            text=f"LIVES x {self.gameplay.player.lives}",
+            text=f"LIVES x {self.gameplay.player_group.sprite.lives}",
             font_size=UI["font_sizes"]["large"],
             color=UI["colors"]["primary"],
             pos=content_rect.midleft,
@@ -254,14 +257,14 @@ class GamePlayUI:
         )
         render_text(
             screen=surface,
-            text=f"BOMBS x {self.gameplay.player.bomb_ammo}",
+            text=f"BOMBS x {self.gameplay.player_group.sprite.bomb_ammo}",
             font_size=UI["font_sizes"]["large"],
             color=UI["colors"]["primary"],
             pos=content_rect.center,
             align="center",
         )
         power_display = UI["power_levels"].get(
-            self.gameplay.player.power_level, "( ? )"
+            self.gameplay.player_group.sprite.power_level, "( ? )"
         )
         render_text(
             screen=surface,
@@ -348,9 +351,8 @@ class PauseModal(Modal):
         for event in events:
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_ESCAPE:
-                    self.gameplay.is_paused = not self.gameplay.is_paused
-                    self.is_visible = self.gameplay.is_paused
-                elif self.gameplay.is_paused:
+                    self.gameplay.change_state(self.gameplay.previous_state)
+                else:
                     match event.key:
                         case pygame.K_1:
                             self.gameplay.game.set_scene("GamePlay")
@@ -400,7 +402,7 @@ class EndLevelModal(Modal):
         #                 self.gameplay.event_manager.handle_event(move_player_to_top)
 
         # if self.start_outro:
-        #     if self.gameplay.player.scripted_movement_active:
+        #     if self.gameplay.player_group.scripted_movement_active:
         #         return
         #     self.gameplay.game.set_scene("Credits")
 
