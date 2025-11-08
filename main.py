@@ -1,8 +1,8 @@
 import traceback
 import pygame
 from src.game import Game
-from src.data.settings import DISPLAY
-from src.data.assets import IMAGES
+from data.settings import DISPLAY
+from data.assets import IMAGES
 
 
 def main():

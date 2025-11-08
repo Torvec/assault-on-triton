@@ -1,4 +1,4 @@
-from src.data.assets import IMAGES
+from data.assets import IMAGES
 
 CAST = {
     "commander": {

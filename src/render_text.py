@@ -1,5 +1,5 @@
 import pygame
-from src.data.assets import FONTS
+from data.assets import FONTS
 
 
 def render_text(

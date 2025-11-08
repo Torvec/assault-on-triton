@@ -1,5 +1,5 @@
 import pygame
-from src.data.assets import IMAGES
+from data.assets import IMAGES
 
 
 class Background:

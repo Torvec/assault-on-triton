@@ -39,6 +39,7 @@ class State(ABC):
 class CutsceneState(State):
 
     def enter(self):
+        print("Entering CutsceneState")
         self.gameplay.player.controls_enabled = False
         self.gameplay.event_manager.is_paused = True
         self.gameplay.cutscene_manager.is_active = True
@@ -67,6 +68,7 @@ class PlayState(State):
         self.is_battle = False
 
     def enter(self):
+        print("Entering PlayState")
         self.gameplay.event_manager.is_paused = self.is_battle
         self.gameplay.player.controls_enabled = True
 
@@ -99,6 +101,7 @@ class PlayState(State):
 class PausedState(State):
 
     def enter(self):
+        print("Entering PausedState")
         self.previous_timeline_paused = self.gameplay.event_manager.is_paused
         self.previous_player_controls_enabled = self.gameplay.player.controls_enabled
         self.gameplay.pause_modal.is_visible = True
@@ -123,6 +126,7 @@ class PausedState(State):
 class GameOverState(State):
 
     def enter(self):
+        print("Entering GameOverState")
         self.gameplay.game_over_modal.is_visible = True
         self.gameplay.event_manager.is_paused = True
         self.gameplay.player.controls_enabled = False
@@ -141,7 +145,9 @@ class GameOverState(State):
 
 
 class MissionCompleteState(State):
+
     def enter(self):
+        print("Entering MissionCompleteState")
         self.gameplay.event_manager.is_paused = True
         self.gameplay.player.controls_enabled = False
         self.gameplay.end_level_modal.is_visible = True

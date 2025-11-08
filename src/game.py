@@ -1,6 +1,7 @@
 import pygame
+from src.screens import Start, GamePlay, Options, Scoreboard, Credits
 from src.score_store import ScoreStore
-from src.data.settings import DISPLAY
+from data.settings import DISPLAY
 
 
 class Game:
@@ -15,25 +16,19 @@ class Game:
         self.score_store = ScoreStore()
         self.running = True
         self.scenes = {
-            "Start": lambda: self._import_scene("src.menus.start_menu", "Start"),
-            "GamePlay": lambda: self._import_scene("src.gameplay.gameplay", "GamePlay"),
-            "Options": lambda: self._import_scene("src.menus.options_menu", "Options"),
-            "Scoreboard": lambda: self._import_scene(
-                "src.menus.scoreboard", "Scoreboard"
-            ),
-            "Credits": lambda: self._import_scene("src.menus.credits", "Credits"),
+            "Start": Start,
+            "GamePlay": GamePlay,
+            "Options": Options,
+            "Scoreboard": Scoreboard,
+            "Credits": Credits,
         }
 
         self.set_scene("Start")
 
-    def _import_scene(self, import_path, class_name):
-        module = __import__(import_path, fromlist=[class_name])
-        return getattr(module, class_name)(self)
-
     def set_scene(self, scene_name):
         if scene_name not in self.scenes:
             raise ValueError(f"Unknown scene: {scene_name}")
-        self.current_scene = self.scenes[scene_name]()
+        self.current_scene = self.scenes[scene_name](self)
 
     def run(self):
         while self.running:
