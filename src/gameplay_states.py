@@ -4,6 +4,7 @@ import pygame
 
 
 class GameplayState(Enum):
+    INIT = auto()
     CUTSCENE = auto()
     PLAY = auto()
     PAUSED = auto()
@@ -36,6 +37,25 @@ class State(ABC):
         pass
 
 
+class InitState(State):
+
+    def enter(self):
+        self.gameplay.event_manager.is_paused = False
+        print("Entering InitState")
+
+    def exit(self):
+        print("Exiting InitState")
+
+    def handle_event(self, events):
+        pass
+
+    def update(self, dt):
+        self.gameplay.event_manager.update(dt)
+
+    def draw(self, surface):
+        pass
+
+
 class CutsceneState(State):
 
     def enter(self):
@@ -45,6 +65,7 @@ class CutsceneState(State):
         self.gameplay.cutscene_manager.is_active = True
 
     def exit(self):
+        print("Exiting CutsceneState")
         self.gameplay.event_manager.is_paused = False
         self.gameplay.cutscene_manager.is_active = False
 
@@ -73,6 +94,7 @@ class PlayState(State):
         self.gameplay.player.controls_enabled = True
 
     def exit(self):
+        print("Exiting PlayState")
         pass
 
     def handle_event(self, events):
@@ -109,6 +131,7 @@ class PausedState(State):
         self.gameplay.player.controls_enabled = False
 
     def exit(self):
+        print("Exiting PausedState")
         self.gameplay.pause_modal.is_visible = False
         self.gameplay.event_manager.is_paused = self.previous_timeline_paused
         self.gameplay.player.controls_enabled = self.previous_player_controls_enabled
@@ -132,6 +155,7 @@ class GameOverState(State):
         self.gameplay.player.controls_enabled = False
 
     def exit(self):
+        print("Exiting GameOverState")
         self.gameplay.game_over_modal.is_visible = False
 
     def handle_event(self, events):
@@ -154,6 +178,7 @@ class MissionCompleteState(State):
         self.gameplay.score.store_score(self.gameplay.score.score)
 
     def exit(self):
+        print("Exiting MissionCompleteState")
         self.gameplay.end_level_modal.is_visible = False
 
     def handle_event(self, events):

@@ -17,6 +17,7 @@ from src.managers import CollisionManager, EventManager, ScoreManager
 from src.gameplay_ui import GamePlayUI, PauseModal, EndLevelModal, GameOverModal
 from src.gameplay_states import (
     GameplayState,
+    InitState,
     PlayState,
     CutsceneState,
     PausedState,
@@ -121,10 +122,11 @@ class GamePlay(Screen):
         self.game_over_modal = GameOverModal(self)
 
         self.init_states()
-        self.change_state(GameplayState.PLAY)
+        self.change_state(GameplayState.INIT)
         print(f"{self.current_state}")
 
     def init_states(self):
+        self.states[GameplayState.INIT] = InitState(self)
         self.states[GameplayState.CUTSCENE] = CutsceneState(self)
         self.states[GameplayState.PLAY] = PlayState(self)
         self.states[GameplayState.PAUSED] = PausedState(self)

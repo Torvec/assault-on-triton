@@ -1,10 +1,10 @@
 EVENTS = [
-    {"time": 0, "event": "trigger_waves", "params": {}},
     {
-        "time": 0.1,
+        "time": 0,
         "event": "spawn_entity",
         "params": {"type": "player", "location": "player_spawn", "behaviors": []},
     },
+    {"time": 0.1, "event": "trigger_waves", "params": {}},
     # {"time": 0.5, "event": "trigger_cutscene", "params": {"cutscene_id": "intro"}},
     # {
     #     "time": 1,
