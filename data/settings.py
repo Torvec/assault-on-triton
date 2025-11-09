@@ -70,6 +70,22 @@ ENEMIES = {
         "shot_offset": 4,
         "blast_radius": 48,
     },
+    "sub_boss": {
+        "radius": 32,
+        "speed": 200,
+        "hp": 250,
+        "shot_cooldown": 0.4,
+        "shot_offset": 4,
+        "blast_radius": 256,
+    },
+    "level_boss": {
+        "radius": 32,
+        "speed": 200,
+        "hp": 500,
+        "shot_cooldown": 0.4,
+        "shot_offset": 4,
+        "blast_radius": 512,
+    },
 }
 
 PROJECTILES = {

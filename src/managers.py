@@ -7,6 +7,8 @@ from src.entities import (
     AsteroidSM,
     EnemyDrone,
     EnemyShip,
+    SubBoss,
+    LevelBoss,
     HealthPickup,
     ExtraLifePickup,
     PowerLevelPickup,
@@ -170,6 +172,8 @@ class SpawnManager:
         "asteroid_sm": AsteroidSM,
         "enemy_drone": EnemyDrone,
         "enemy_ship": EnemyShip,
+        "sub_boss": SubBoss,
+        "level_boss": LevelBoss,
         "health_pickup": HealthPickup,
         "extra_life_pickup": ExtraLifePickup,
         "power_level_pickup": PowerLevelPickup,
@@ -281,16 +285,7 @@ class EventManager:
     def handle_battle(self, event):
         params = event.get("params", {})
         self.gameplay.change_state(GameplayState.PLAY)
-
-        spawner = SpawnManager(
-            self.gameplay,
-            params["boss_type"],
-            params["boss_location"],
-            params.get("boss_behaviors", []),
-        )
-        boss_entity = spawner.spawn_entity()
-
-        self.gameplay.battle_manager.start_battle(params["battle_id"], boss_entity)
+        self.gameplay.battle_manager.start_battle(params["battle_id"])
 
     def handle_mission_complete(self, event):
         self.gameplay.change_state(GameplayState.MISSION_COMPLETE)
@@ -365,6 +360,10 @@ class CutsceneManager:
     def get_entity(self, entity_name):
         if entity_name == "player":
             return self.gameplay.player_group.sprite
+        elif entity_name == "sub_boss":
+            return self.gameplay.sub_boss_group.sprite
+        elif entity_name == "level_boss":
+            return self.gameplay.level_boss_group.sprite
         return None
 
 
@@ -435,27 +434,29 @@ class WaveManager:
 class BattleManager:
     def __init__(self, gameplay):
         self.gameplay = gameplay
-        self.boss_entity = None
-        self.battle_id = None
+        self.current_battle = None
+        self.battle_entity = None
 
-    def start_battle(self, battle_id, boss_entity):
-        print(f"Starting battle: {battle_id}")
-        self.battle_id = battle_id
-        self.boss_entity = boss_entity
+    def start_battle(self, battle_id):
+        if battle_id == "sub_boss":
+            self.battle_entity = self.gameplay.sub_boss_group.sprite
+        elif battle_id == "level_boss":
+            self.battle_entity = self.gameplay.level_boss_group.sprite
+        else:
+            print(f"Warning: Battle entity for {battle_id} not found!")
 
     def check_battle_complete(self):
-        if self.boss_entity:
-            if not self.boss_entity.alive():
-                self.end_battle()
+        if self.battle_entity and not self.battle_entity.alive():
+            self.end_battle()
 
     def end_battle(self):
         print(f"Ending battle: {self.battle_id}")
-        self.boss_entity = None
-        self.battle_id = None
+        self.battle_entity = None
+        self.current_battle = None
         self.gameplay.event_manager.on_event_complete()
 
     def update(self, dt):
-        if self.boss_entity:
+        if self.battle_entity:
             self.check_battle_complete()
 
 

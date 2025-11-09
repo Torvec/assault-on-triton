@@ -6,6 +6,8 @@ from src.entities import (
     Asteroid,
     EnemyDrone,
     EnemyShip,
+    SubBoss,
+    LevelBoss,
     Missile,
     Shot,
     Bomb,
@@ -95,6 +97,8 @@ class GamePlay(Screen):
         self.asteroids = pygame.sprite.Group()
         self.enemy_drones = pygame.sprite.Group()
         self.enemy_ships = pygame.sprite.Group()
+        self.sub_boss_group = pygame.sprite.GroupSingle()
+        self.level_boss_group = pygame.sprite.GroupSingle()
         self.missiles = pygame.sprite.Group()
         self.shots = pygame.sprite.Group()
         self.bombs = pygame.sprite.Group()
@@ -105,6 +109,8 @@ class GamePlay(Screen):
         Asteroid.containers = (self.asteroids, self.updateable, self.drawable)
         EnemyDrone.containers = (self.enemy_drones, self.updateable, self.drawable)
         EnemyShip.containers = (self.enemy_ships, self.updateable, self.drawable)
+        SubBoss.containers = (self.sub_boss_group, self.updateable, self.drawable)
+        LevelBoss.containers = (self.level_boss_group, self.updateable, self.drawable)
         Missile.containers = (self.missiles, self.updateable, self.drawable)
         Shot.containers = (self.shots, self.updateable, self.drawable)
         Bomb.containers = (self.bombs, self.updateable, self.drawable)

@@ -546,6 +546,70 @@ class EnemyShip(Ship):
         super().__init__(x, y, gameplay, "enemy_ship")
 
 
+class SubBoss(Entity):
+    def __init__(self, x, y, gameplay):
+        self.img_path = IMAGES["sub_boss"]
+        super().__init__(x, y, gameplay)
+        self.speed = ENEMIES["sub_boss"]["speed"]
+        self.hp = ENEMIES["sub_boss"]["hp"]
+        self.blast_radius = ENEMIES["sub_boss"]["blast_radius"]
+        self.score_value = self.hp
+
+    def take_damage(self, amount):
+        self.hp -= amount
+        if self.hp <= 0:
+            self.gameplay.score.handle_score(self.score_value)
+            self.gameplay.score.handle_streak_meter_in(self.score_value)
+            self.explode()
+        self.is_hit = True
+
+    def explode(self):
+        Explosion(
+            self.position.x, self.position.y, self.gameplay, self.blast_radius, self
+        )
+        self.kill()
+
+    def update(self, dt):
+        super().update(dt)
+
+    def draw(self, surface):
+        super().draw(surface)
+        surface.blit(self.image, self.rect)
+        self.flash_when_hit(surface, self.image, self.rect)
+
+
+class LevelBoss(Entity):
+    def __init__(self, x, y, gameplay):
+        self.img_path = IMAGES["level_boss"]
+        super().__init__(x, y, gameplay)
+        self.speed = ENEMIES["level_boss"]["speed"]
+        self.hp = ENEMIES["level_boss"]["hp"]
+        self.blast_radius = ENEMIES["level_boss"]["blast_radius"]
+        self.score_value = self.hp
+
+    def take_damage(self, amount):
+        self.hp -= amount
+        if self.hp <= 0:
+            self.gameplay.score.handle_score(self.score_value)
+            self.gameplay.score.handle_streak_meter_in(self.score_value)
+            self.explode()
+        self.is_hit = True
+
+    def explode(self):
+        Explosion(
+            self.position.x, self.position.y, self.gameplay, self.blast_radius, self
+        )
+        self.kill()
+
+    def update(self, dt):
+        super().update(dt)
+
+    def draw(self, surface):
+        super().draw(surface)
+        surface.blit(self.image, self.rect)
+        self.flash_when_hit(surface, self.image, self.rect)
+
+
 class Pickup(Entity):
 
     def __init__(self, x, y, gameplay):
