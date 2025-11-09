@@ -22,6 +22,7 @@ class CollisionManager:
 
     def __init__(self, gameplay):
         self.gameplay = gameplay
+        self.boundary_handling_enabled = True
         self.sprite_groups = {
             "asteroids": self.gameplay.asteroids,
             "enemy_drones": self.gameplay.enemy_drones,
@@ -37,6 +38,28 @@ class CollisionManager:
     def player(self):
         """Dynamically get the player sprite from the player_group."""
         return self.gameplay.player_group.sprite
+
+    def handle_boundaries(self, entity, action="kill"):
+        if not self.boundary_handling_enabled:
+            return
+
+        play_area = self.gameplay.play_area_rect
+
+        if action == "block":
+            entity.position.x = max(
+                play_area.left + entity.rect.width * 0.5,
+                min(entity.position.x, play_area.right - entity.rect.width * 0.5),
+            )
+            entity.position.y = max(
+                play_area.top + entity.rect.height * 0.5,
+                min(entity.position.y, play_area.bottom - entity.rect.height * 0.5),
+            )
+        elif action == "kill" and (
+            entity.rect.right < play_area.left
+            or entity.rect.left > play_area.right
+            or entity.rect.top > play_area.bottom
+        ):
+            entity.kill()
 
     def handle_shots(self, shot_type, colliders):
         for shot in shot_type:
@@ -199,7 +222,7 @@ class EventManager:
         self.timeline = timeline
         self.timeline_time = 0.0
         self.timeline_index = 0
-        self.is_paused = False
+        self.timeline_is_active = True
         self.event_handlers = {
             "trigger_cutscene": self.trigger_cutscene,
             "trigger_waves": self.trigger_waves,
@@ -211,6 +234,7 @@ class EventManager:
         }
 
     def trigger_cutscene(self, cutscene_id):
+        self.timeline_is_active = False
         self.gameplay.change_state(GameplayState.CUTSCENE)
         self.gameplay.cutscene_manager.start_cutscene(cutscene_id)
 
@@ -256,7 +280,7 @@ class EventManager:
             self.timeline_index += 1
 
     def update(self, dt):
-        if self.is_paused:
+        if not self.timeline_is_active:
             return
 
         self.timeline_time += dt
@@ -264,17 +288,75 @@ class EventManager:
 
 
 class CutsceneManager:
-    def __init__(self):
-        pass
+    def __init__(self, gameplay):
+        self.gameplay = gameplay
+        self.current_cutscene = None
+        self.cutscene_data = None
+        self.cutscene_time = 0.0
+        self.cutscene_index = 0
+        self.action_handlers = {
+            "show_dialogue": self.show_dialogue,
+            "move_entity_to_loc": self.move_entity_to_loc,
+        }
 
-    def start_cutscene(self):
+    def get_entity(self, entity_name):
+        if entity_name == "player":
+            return self.gameplay.player_group.sprite
+        return None
+
+    def show_dialogue(self, dialogue_id):
+        self.gameplay.gameplay_ui.display_dialogue(dialogue_id)
+
+    def move_entity_to_loc(self, entity_name, location, speed):
+        entity = self.get_entity(entity_name)
+        target_pos = pygame.Vector2(location["x"], location["y"])
+        entity.scripted_movement(target_pos.x, target_pos.y, speed)
+
+    def start_cutscene(self, cutscene_id):
+        from data.cutscene import CUTSCENE
+
         print("Start Cutscene")
+        self.current_cutscene = cutscene_id
+        self.cutscene_data = CUTSCENE.get(cutscene_id, [])
 
     def end_cutscene(self):
         print("End Cutscene")
+        self.current_cutscene = None
+        self.cutscene_data = None
+        self.cutscene_time = 0.0
+        self.cutscene_index = 0
+        self.gameplay.event_manager.timeline_is_active = True
+
+    def handle_action(self, action):
+        action_name = action["action"]
+        params = action.get("params", {})
+        handler = self.action_handlers.get(action_name)
+        if handler:
+            handler(**params)
+        else:
+            print(f"Unknown action type: {action_name}")
+
+    def process_timeline(self):
+        if not self.cutscene_data:
+            return
+
+        while (
+            self.cutscene_index < len(self.cutscene_data)
+            and self.cutscene_time >= self.cutscene_data[self.cutscene_index]["time"]
+        ):
+            current_action = self.cutscene_data[self.cutscene_index]
+            self.handle_action(current_action)
+            self.cutscene_index += 1
+
+        if self.cutscene_index >= len(self.cutscene_data):
+            self.end_cutscene()
 
     def update(self, dt):
-        pass
+        if self.current_cutscene is None:
+            return
+
+        self.cutscene_time += dt
+        self.process_timeline()
 
 
 class ScoreManager:

@@ -1,20 +1,13 @@
-from data.assets import IMAGES
-
 CAST = {
     "commander": {
         "name": "Commander",
-        "portrait": IMAGES["commander_portrait"],
+        "portrait": "commander_portrait",
         "location": "bottom",
     },
     "hero": {
         "name": "Lt. Hiro",
-        "portrait": IMAGES["hero_portrait"],
+        "portrait": "hero_portrait",
         "location": "bottom",
-    },
-    "test": {
-        "name": "test",
-        "portrait": IMAGES["commander_portrait"],
-        "location": "top",
     },
 }
 
@@ -46,13 +39,6 @@ SCRIPTED = {
         "text": "Good Luck out there!",
         "duration": 2.5,
         "location": CAST["commander"]["location"],
-    },
-    "enemy_test": {
-        "speaker": CAST["test"]["name"],
-        "portrait": CAST["test"]["portrait"],
-        "text": "Come get some",
-        "duration": 2.5,
-        "location": CAST["test"]["location"],
     },
 }
 

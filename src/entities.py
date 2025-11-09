@@ -49,10 +49,10 @@ def shoot(entity, dt, **kwargs):
     shot_pos = entity.position + DIRECTION_DOWN * entity.rect.height // 2
 
     shot_l = EnemyShot(
-        shot_pos.x - entity.shot_offset_pos, shot_pos.y, entity.game_play, entity
+        shot_pos.x - entity.shot_offset_pos, shot_pos.y, entity.gameplay, entity
     )
     shot_r = EnemyShot(
-        shot_pos.x + entity.shot_offset_pos, shot_pos.y, entity.game_play, entity
+        shot_pos.x + entity.shot_offset_pos, shot_pos.y, entity.gameplay, entity
     )
     shot_l.velocity = DIRECTION_DOWN * shot_l.speed
     shot_r.velocity = DIRECTION_DOWN * shot_r.speed
@@ -78,7 +78,7 @@ class Entity(pygame.sprite.Sprite):
             cls._sound_cache[sound_path] = pygame.mixer.Sound(sound_path)
         return cls._sound_cache[sound_path]
 
-    def __init__(self, x, y, game_play):
+    def __init__(self, x, y, gameplay):
         # Auto adds sprites to groups upon creation if a containers attribute is present
         if hasattr(self, "containers"):
             super().__init__(self.containers)
@@ -92,7 +92,7 @@ class Entity(pygame.sprite.Sprite):
             self.sfx = self.load_sound(self.sfx_path)
 
         self.position = pygame.Vector2(x, y)
-        self.game_play = game_play
+        self.gameplay = gameplay
         self.rect = self.image.get_rect()
         self.rect.center = (self.position.x, self.position.y)
         self.mask = pygame.mask.from_surface(self.image)
@@ -100,35 +100,14 @@ class Entity(pygame.sprite.Sprite):
         self.is_hit = False
         self.hit_timer = self.HIT_TIMER
         self.blast_radius = 0
-        self.play_area = game_play.play_area_rect
+        self.play_area = gameplay.play_area_rect
         self.speed = 0
         self.velocity = pygame.Vector2(0, 0)
         self.rotation = 0
         self.scripted_movement_active = False
         self.target_position = pygame.Vector2(0, 0)
         self.movement_speed = 0
-        self.ignore_boundaries = False
         self.behaviors = []
-
-    def handle_boundaries(self, action="kill"):
-        if self.ignore_boundaries:
-            return
-
-        if action == "block":
-            self.position.x = max(
-                self.play_area.left + self.rect.width * 0.5,
-                min(self.position.x, self.play_area.right - self.rect.width * 0.5),
-            )
-            self.position.y = max(
-                self.play_area.top + self.rect.height * 0.5,
-                min(self.position.y, self.play_area.bottom - self.rect.height * 0.5),
-            )
-        elif action == "kill" and (
-            self.rect.right < self.play_area.left
-            or self.rect.left > self.play_area.right
-            or self.rect.top > self.play_area.bottom
-        ):
-            self.kill()
 
     def collides_with(self, other_group):
         rect_collisions = pygame.sprite.spritecollide(self, other_group, False)
@@ -197,9 +176,10 @@ class Entity(pygame.sprite.Sprite):
 
     def update(self, dt):
         self.rect.center = (self.position.x, self.position.y)
+        self.handle_scripted_movement(dt)
         self.handle_behaviors(dt)
-        self.handle_boundaries()
         self.handle_hit_timer(dt)
+        self.gameplay.collision_manager.handle_boundaries(self)
 
     def draw(self, surface):
         pass
@@ -207,10 +187,10 @@ class Entity(pygame.sprite.Sprite):
 
 class Explosion(Entity):
 
-    def __init__(self, x, y, game_play, blast_radius, owner):
+    def __init__(self, x, y, gameplay, blast_radius, owner):
         self.data = EXPLOSIONS
         self.img_path = IMAGES["explosion"]
-        super().__init__(x, y, game_play)
+        super().__init__(x, y, gameplay)
         self.blast_radius = blast_radius
         self.owner = owner
         self.init_radius = self.data["initial_radius"]
@@ -253,8 +233,8 @@ class Explosion(Entity):
 
 class Projectile(Entity):
 
-    def __init__(self, x, y, game_play, owner):
-        super().__init__(x, y, game_play)
+    def __init__(self, x, y, gameplay, owner):
+        super().__init__(x, y, gameplay)
         self.owner = owner
         self.distance_traveled = 0
 
@@ -271,8 +251,8 @@ class Projectile(Entity):
 
 class Shot(Projectile):
 
-    def __init__(self, x, y, game_play, owner):
-        super().__init__(x, y, game_play, owner)
+    def __init__(self, x, y, gameplay, owner):
+        super().__init__(x, y, gameplay, owner)
 
     def sound(self):
         super().sound()
@@ -283,7 +263,7 @@ class Shot(Projectile):
         if (
             self.distance_traveled >= self.max_range
             or self.rect.bottom < 0
-            or self.rect.top > self.game_play.play_area_rect.height
+            or self.rect.top > self.gameplay.play_area_rect.height
         ):
             self.kill()
 
@@ -299,14 +279,14 @@ class Shot(Projectile):
 
 class PlayerShot(Shot):
 
-    def __init__(self, x, y, game_play, owner, power_level):
+    def __init__(self, x, y, gameplay, owner, power_level):
         if power_level == 5:
             image_key = "player_shot_ov"
         else:
             image_key = f"player_shot_lv{power_level}"
         self.img_path = IMAGES[image_key]
         self.sfx_path = SOUNDS["player_shoot"]
-        super().__init__(x, y, game_play, owner)
+        super().__init__(x, y, gameplay, owner)
         self.max_range = PROJECTILES["player_shot"][power_level]["range"]
         self.speed = PROJECTILES["player_shot"][power_level]["speed"]
         self.damage = PROJECTILES["player_shot"][power_level]["damage"]
@@ -314,10 +294,10 @@ class PlayerShot(Shot):
 
 class EnemyShot(Shot):
 
-    def __init__(self, x, y, game_play, owner):
+    def __init__(self, x, y, gameplay, owner):
         self.img_path = IMAGES["enemy_shot"]
         self.sfx_path = SOUNDS["player_shoot"]
-        super().__init__(x, y, game_play, owner)
+        super().__init__(x, y, gameplay, owner)
         self.max_range = PROJECTILES["enemy_shot"]["range"]
         self.speed = PROJECTILES["enemy_shot"]["speed"]
         self.damage = PROJECTILES["enemy_shot"]["damage"]
@@ -325,8 +305,8 @@ class EnemyShot(Shot):
 
 class ExplosiveProjectile(Entity):
 
-    def __init__(self, x, y, game_play, owner):
-        super().__init__(x, y, game_play)
+    def __init__(self, x, y, gameplay, owner):
+        super().__init__(x, y, gameplay)
         self.owner = owner
         self.distance_traveled = 0
         self.trigger_distance = 0
@@ -346,7 +326,7 @@ class ExplosiveProjectile(Entity):
         Explosion(
             self.position.x,
             self.position.y,
-            self.game_play,
+            self.gameplay,
             self.blast_radius,
             self.owner,
         )
@@ -361,8 +341,8 @@ class ExplosiveProjectile(Entity):
 
 class Bomb(ExplosiveProjectile):
 
-    def __init__(self, x, y, game_play, owner):
-        super().__init__(x, y, game_play, owner)
+    def __init__(self, x, y, gameplay, owner):
+        super().__init__(x, y, gameplay, owner)
 
     def sound(self):
         super().sound()
@@ -379,10 +359,10 @@ class Bomb(ExplosiveProjectile):
 
 class PlayerBomb(Bomb):
 
-    def __init__(self, x, y, game_play, owner):
+    def __init__(self, x, y, gameplay, owner):
         self.img_path = IMAGES["player_bomb"]
         #! Add sfx_path when sound is available
-        super().__init__(x, y, game_play, owner)
+        super().__init__(x, y, gameplay, owner)
         self.speed = PROJECTILES["player_bomb"]["speed"]
         self.trigger_distance = PROJECTILES["player_bomb"]["trigger_distance"]
         self.blast_radius = PROJECTILES["player_bomb"]["blast_radius"][
@@ -392,10 +372,10 @@ class PlayerBomb(Bomb):
 
 class EnemyBomb(Bomb):
 
-    def __init__(self, x, y, game_play, owner):
+    def __init__(self, x, y, gameplay, owner):
         self.img_path = IMAGES["enemy_bomb"]
         #! Add sfx_path when sound is available
-        super().__init__(x, y, game_play, owner)
+        super().__init__(x, y, gameplay, owner)
         self.speed = PROJECTILES["enemy_bomb"]["speed"]
         self.trigger_distance = PROJECTILES["enemy_bomb"]["trigger_distance"]
         self.blast_radius = PROJECTILES["enemy_bomb"]["blast_radius"]
@@ -403,16 +383,16 @@ class EnemyBomb(Bomb):
 
 class Missile(ExplosiveProjectile):
 
-    def __init__(self, x, y, game_play, owner):
+    def __init__(self, x, y, gameplay, owner):
         self.img_path = IMAGES["enemy_missile"]
         #! Add sfx_path when sound is available
-        super().__init__(x, y, game_play, owner)
+        super().__init__(x, y, gameplay, owner)
         self.speed = PROJECTILES["enemy_missile"]["speed"]
         self.trigger_distance = PROJECTILES["enemy_missile"]["trigger_distance"]
         self.blast_radius = PROJECTILES["enemy_missile"]["blast_radius"]
 
     def track_player(self):
-        direction = self.game_play.player.position - self.position
+        direction = self.gameplay.player.position - self.position
         return DIRECTION_DOWN.angle_to(direction)
 
     def update(self, dt):
@@ -429,9 +409,9 @@ class Missile(ExplosiveProjectile):
 
 class Asteroid(Entity):
 
-    def __init__(self, x, y, game_play, asteroid_size="md"):
+    def __init__(self, x, y, gameplay, asteroid_size="md"):
         self.img_path = IMAGES[f"asteroid_{asteroid_size}"]
-        super().__init__(x, y, game_play)
+        super().__init__(x, y, gameplay)
         self.speed = ENEMIES["asteroid"][asteroid_size]["speed"]
         self.hp = ENEMIES["asteroid"][asteroid_size]["hp"]
         self.score_value = self.hp
@@ -448,8 +428,8 @@ class Asteroid(Entity):
     def take_damage(self, amount):
         self.hp -= amount
         if self.hp <= 0:
-            self.game_play.score.handle_score(self.score_value)
-            self.game_play.score.handle_streak_meter_inc(self.score_value)
+            self.gameplay.score.handle_score(self.score_value)
+            self.gameplay.score.handle_streak_meter_inc(self.score_value)
             self.split()
 
     def split(self):
@@ -482,7 +462,7 @@ class Asteroid(Entity):
                     ],
                 },
             }
-            self.game_play.event_manager.handle_event(split_event)
+            self.gameplay.event_manager.handle_event(split_event)
 
     def update(self, dt):
         super().update(dt)
@@ -496,36 +476,36 @@ class Asteroid(Entity):
 
 class AsteroidSM(Asteroid):
 
-    def __init__(self, x, y, game_play):
-        super().__init__(x, y, game_play, "sm")
+    def __init__(self, x, y, gameplay):
+        super().__init__(x, y, gameplay, "sm")
         self.splits_into = None
 
 
 class AsteroidMD(Asteroid):
 
-    def __init__(self, x, y, game_play):
-        super().__init__(x, y, game_play, "md")
+    def __init__(self, x, y, gameplay):
+        super().__init__(x, y, gameplay, "md")
         self.splits_into = "asteroid_sm"
 
 
 class AsteroidLG(Asteroid):
 
-    def __init__(self, x, y, game_play):
-        super().__init__(x, y, game_play, "lg")
+    def __init__(self, x, y, gameplay):
+        super().__init__(x, y, gameplay, "lg")
         self.splits_into = "asteroid_md"
 
 
 class AsteroidXL(Asteroid):
 
-    def __init__(self, x, y, game_play):
-        super().__init__(x, y, game_play, "xl")
+    def __init__(self, x, y, gameplay):
+        super().__init__(x, y, gameplay, "xl")
         self.splits_into = "asteroid_lg"
 
 
 class Ship(Entity):
-    def __init__(self, x, y, game_play, ship_type):
+    def __init__(self, x, y, gameplay, ship_type):
         self.img_path = IMAGES[ship_type]
-        super().__init__(x, y, game_play)
+        super().__init__(x, y, gameplay)
         self.speed = ENEMIES[ship_type]["speed"]
         self.hp = ENEMIES[ship_type]["hp"]
         self.blast_radius = ENEMIES[ship_type]["blast_radius"]
@@ -537,14 +517,14 @@ class Ship(Entity):
     def take_damage(self, amount):
         self.hp -= amount
         if self.hp <= 0:
-            self.game_play.score.handle_score(self.score_value)
-            self.game_play.score.handle_streak_meter_inc(self.score_value)
+            self.gameplay.score.handle_score(self.score_value)
+            self.gameplay.score.handle_streak_meter_inc(self.score_value)
             self.explode()
         self.is_hit = True
 
     def explode(self):
         Explosion(
-            self.position.x, self.position.y, self.game_play, self.blast_radius, self
+            self.position.x, self.position.y, self.gameplay, self.blast_radius, self
         )
         self.kill()
 
@@ -559,20 +539,20 @@ class Ship(Entity):
 
 
 class EnemyDrone(Ship):
-    def __init__(self, x, y, game_play):
-        super().__init__(x, y, game_play, "enemy_drone")
+    def __init__(self, x, y, gameplay):
+        super().__init__(x, y, gameplay, "enemy_drone")
 
 
 class EnemyShip(Ship):
-    def __init__(self, x, y, game_play):
-        super().__init__(x, y, game_play, "enemy_ship")
+    def __init__(self, x, y, gameplay):
+        super().__init__(x, y, gameplay, "enemy_ship")
 
 
 class Pickup(Entity):
 
-    def __init__(self, x, y, game_play):
-        super().__init__(x, y, game_play)
-        self.player = self.game_play.player
+    def __init__(self, x, y, gameplay):
+        super().__init__(x, y, gameplay)
+        self.player = self.gameplay.player
         pickup_type = getattr(self, "pickup_type", "health")
         data = PICKUPS.get(pickup_type, PICKUPS["health"])
         self.speed = data["speed"]
@@ -592,10 +572,10 @@ class HealthPickup(Pickup):
 
     pickup_type = "health"
 
-    def __init__(self, x, y, game_play):
+    def __init__(self, x, y, gameplay):
         self.img_path = IMAGES["health_pickup"]
         self.player_data = PLAYER
-        super().__init__(x, y, game_play)
+        super().__init__(x, y, gameplay)
         self.heal_amount = PICKUPS["health"]["heal_amount"]
 
     def apply(self):
@@ -616,18 +596,18 @@ class ExtraLifePickup(Pickup):
 
     pickup_type = "life"
 
-    def __init__(self, x, y, game_play):
+    def __init__(self, x, y, gameplay):
         self.img_path = IMAGES["life_pickup"]
         self.player_data = PLAYER
-        super().__init__(x, y, game_play)
+        super().__init__(x, y, gameplay)
         self.fallback_score = PICKUPS["life"]["fallback_score"]
 
     def apply(self):
         if self.player.lives < self.player_data["max_lives"]:
             self.player.lives += 1
         else:
-            self.game_play.score.handle_score(self.fallback_score)
-            self.game_play.score.handle_streak_meter_inc(self.fallback_score)
+            self.gameplay.score.handle_score(self.fallback_score)
+            self.gameplay.score.handle_streak_meter_inc(self.fallback_score)
         self.kill()
 
     def update(self, dt):
@@ -641,18 +621,18 @@ class PowerLevelPickup(Pickup):
 
     pickup_type = "power"
 
-    def __init__(self, x, y, game_play):
+    def __init__(self, x, y, gameplay):
         self.img_path = IMAGES["power_pickup"]
         self.player_data = PLAYER
-        super().__init__(x, y, game_play)
+        super().__init__(x, y, gameplay)
         self.fallback_score = PICKUPS["power"]["fallback_score"]
 
     def apply(self):
         if self.player.power_level < self.player_data["max_power_level"]:
             self.player.power_level += 1
         else:
-            self.game_play.score.handle_score(self.fallback_score)
-            self.game_play.score.handle_streak_meter_inc(self.fallback_score)
+            self.gameplay.score.handle_score(self.fallback_score)
+            self.gameplay.score.handle_streak_meter_inc(self.fallback_score)
         self.kill()
 
     def update(self, dt):
@@ -664,10 +644,10 @@ class PowerLevelPickup(Pickup):
 
 class OverdrivePickup(Pickup):
 
-    def __init__(self, x, y, game_play):
+    def __init__(self, x, y, gameplay):
         self.img_path = IMAGES["overdrive_pickup"]
         self.player_data = PLAYER
-        super().__init__(x, y, game_play)
+        super().__init__(x, y, gameplay)
 
     def apply(self):
         self.player.power_level = 5
@@ -685,18 +665,18 @@ class BombAmmoPickup(Pickup):
 
     pickup_type = "bomb"
 
-    def __init__(self, x, y, game_play):
+    def __init__(self, x, y, gameplay):
         self.img_path = IMAGES["bomb_pickup"]
         self.player_data = PLAYER
-        super().__init__(x, y, game_play)
+        super().__init__(x, y, gameplay)
         self.fallback_score = PICKUPS["bomb"]["fallback_score"]
 
     def apply(self):
         if self.player.bomb_ammo < self.player_data["max_bomb_ammo"]:
             self.player.bomb_ammo += 1
         else:
-            self.game_play.score.handle_score(self.fallback_score)
-            self.game_play.score.handle_streak_meter_inc(self.fallback_score)
+            self.gameplay.score.handle_score(self.fallback_score)
+            self.gameplay.score.handle_streak_meter_inc(self.fallback_score)
         self.kill()
 
     def update(self, dt):
@@ -708,10 +688,10 @@ class BombAmmoPickup(Pickup):
 
 class InvulnerabilityPickup(Pickup):
 
-    def __init__(self, x, y, game_play):
+    def __init__(self, x, y, gameplay):
         self.img_path = IMAGES["invulnerable_pickup"]
         self.player_data = PLAYER
-        super().__init__(x, y, game_play)
+        super().__init__(x, y, gameplay)
 
     def apply(self):
         self.player.invincibleTime = self.player_data["invulnerable_duration"]
@@ -726,9 +706,9 @@ class InvulnerabilityPickup(Pickup):
 
 class Player(Entity):
 
-    def __init__(self, x, y, game_play):
+    def __init__(self, x, y, gameplay):
         self.img_path = IMAGES["player_ship"]
-        super().__init__(x, y, game_play)
+        super().__init__(x, y, gameplay)
         self.acceleration = PLAYER["base_acceleration"]
         self.speed = PLAYER["base_speed"]
         self.lives = PLAYER["base_lives"]
@@ -752,7 +732,7 @@ class Player(Entity):
             shot = PlayerShot(
                 self.position.x + offset["x"],
                 self.position.y + offset["y"],
-                self.game_play,
+                self.gameplay,
                 self,
                 self.power_level,
             )
@@ -764,7 +744,7 @@ class Player(Entity):
             return
         self.bomb_timer = PLAYER["bomb_cooldown"]
         self.bomb_ammo -= 1
-        bomb = PlayerBomb(self.position.x, self.position.y, self.game_play, self)
+        bomb = PlayerBomb(self.position.x, self.position.y, self.gameplay, self)
         player_forward_speed = self.velocity.dot(DIRECTION_UP)
         forward_only_speed = max(0, player_forward_speed)
         bomb.velocity = DIRECTION_UP * (forward_only_speed + bomb.speed)
@@ -780,7 +760,7 @@ class Player(Entity):
     def take_damage(self, amount):
         if self.invincibleTime > 0:
             return
-        self.game_play.score.handle_streak_meter_dec()
+        self.gameplay.score.handle_streak_meter_dec()
         self.hp -= amount
         if self.hp <= 0:
             self.lives -= 1
@@ -802,7 +782,7 @@ class Player(Entity):
         Explosion(
             self.position.x,
             self.position.y,
-            self.game_play,
+            self.gameplay,
             self.blast_radius,
             self,
         )
@@ -810,8 +790,8 @@ class Player(Entity):
 
     def respawn(self):
         self.invincibleTime = PLAYER["invincible_duration"]
-        self.position.x = self.game_play.play_area_rect.width // 2
-        self.position.y = self.game_play.play_area_rect.height - 100
+        self.position.x = self.gameplay.play_area_rect.width // 2
+        self.position.y = self.gameplay.play_area_rect.height - 100
         self.hp = PLAYER["base_hp"]
 
     def controls(self, dt):
@@ -842,11 +822,8 @@ class Player(Entity):
     def update(self, dt):
         super().update(dt)
         self.controls(dt)
-        if not self.scripted_movement_active:
-            self.apply_acceleration(dt)
-            self.handle_boundaries("block")
-        else:
-            self.handle_scripted_movement(dt)
+        self.apply_acceleration(dt)
+        self.gameplay.collision_manager.handle_boundaries(self, action="block")
         self.handle_invincibility(dt)
         self.handle_overdrive(dt)
         self.shoot_timer -= dt

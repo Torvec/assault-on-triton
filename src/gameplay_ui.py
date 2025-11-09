@@ -4,6 +4,7 @@ from src.render_text import render_text
 from data.settings import UI
 from data.dialogue import SCRIPTED
 from data.messages import MESSAGES
+from data.assets import IMAGES
 
 
 class GamePlayUI:
@@ -28,7 +29,7 @@ class GamePlayUI:
     def display_dialogue(self, dialogue_id):
         dialogue = SCRIPTED[dialogue_id]
         self.current_speaker = dialogue["speaker"]
-        self.current_portrait = dialogue["portrait"]
+        self.current_portrait = IMAGES[dialogue["portrait"]]
         self.current_dialogue = dialogue["text"]
         self.dialogue_duration = dialogue["duration"]
         self.dialogue_location = dialogue["location"]
@@ -350,17 +351,14 @@ class PauseModal(Modal):
     def handle_event(self, events):
         for event in events:
             if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_ESCAPE:
-                    self.gameplay.change_state(self.gameplay.previous_state)
-                else:
-                    match event.key:
-                        case pygame.K_1:
-                            self.gameplay.game.set_scene("GamePlay")
-                        case pygame.K_2:
-                            self.gameplay.game.set_scene("Start")
-                        case pygame.K_q:
-                            pygame.quit()
-                            sys.exit()
+                match event.key:
+                    case pygame.K_1:
+                        self.gameplay.game.change_screen("GamePlay")
+                    case pygame.K_2:
+                        self.gameplay.game.change_screen("Start")
+                    case pygame.K_q:
+                        pygame.quit()
+                        sys.exit()
 
 
 class EndLevelModal(Modal):
@@ -404,7 +402,7 @@ class EndLevelModal(Modal):
         # if self.start_outro:
         #     if self.gameplay.player_group.scripted_movement_active:
         #         return
-        #     self.gameplay.game.set_scene("Credits")
+        #     self.gameplay.game.change_screen("Credits")
 
 
 class GameOverModal(Modal):
@@ -426,13 +424,13 @@ class GameOverModal(Modal):
             if event.type == pygame.KEYDOWN:
                 match event.key:
                     case pygame.K_RETURN:
-                        self.gameplay.game.set_scene("GamePlay")
+                        self.gameplay.game.change_screen("GamePlay")
                     case pygame.K_1:
-                        self.gameplay.game.set_scene("Start")
+                        self.gameplay.game.change_screen("Start")
                     case pygame.K_2:
-                        self.gameplay.game.set_scene("Scoreboard")
+                        self.gameplay.game.change_screen("Scoreboard")
                     case pygame.K_3:
-                        self.gameplay.game.set_scene("Credits")
+                        self.gameplay.game.change_screen("Credits")
                     case pygame.K_q:
                         pygame.quit()
                         sys.exit()

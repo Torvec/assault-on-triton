@@ -23,9 +23,9 @@ class Game:
             "Credits": Credits,
         }
 
-        self.set_scene("Start")
+        self.change_screen("Start")
 
-    def set_scene(self, scene_name):
+    def change_screen(self, scene_name):
         if scene_name not in self.scenes:
             raise ValueError(f"Unknown scene: {scene_name}")
         self.current_scene = self.scenes[scene_name](self)

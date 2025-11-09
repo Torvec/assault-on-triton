@@ -13,7 +13,7 @@ from src.entities import (
     Pickup,
     Player,
 )
-from src.managers import CollisionManager, EventManager, ScoreManager
+from src.managers import CollisionManager, EventManager, CutsceneManager, ScoreManager
 from src.gameplay_ui import GamePlayUI, PauseModal, EndLevelModal, GameOverModal
 from src.gameplay_states import (
     GameplayState,
@@ -105,7 +105,7 @@ class GamePlay(Screen):
         Pickup.containers = (self.pickups, self.updateable, self.drawable)
 
         self.event_manager = EventManager(self, EVENTS)
-        # self.cutscene_manager = CutsceneManager(self)
+        self.cutscene_manager = CutsceneManager(self)
         self.collision_manager = CollisionManager(self)
         self.score = ScoreManager(self.game.score_store)
 
@@ -157,7 +157,7 @@ class Credits(Screen):
     def handle_event(self, events):
         for event in events:
             if event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
-                self.game.set_scene("Start")
+                self.game.change_screen("Start")
 
     def update(self, dt):
         super().update(dt)
@@ -188,7 +188,7 @@ class Options(Screen):
     def handle_event(self, events):
         for event in events:
             if event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
-                self.game.set_scene("Start")
+                self.game.change_screen("Start")
 
     def update(self, dt):
         super().update(dt)
@@ -219,7 +219,7 @@ class Scoreboard(Screen):
     def handle_event(self, events):
         for event in events:
             if event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
-                self.game.set_scene("Start")
+                self.game.change_screen("Start")
 
     def update(self, dt):
         super().update(dt)
@@ -260,13 +260,13 @@ class Start(Screen):
             if event.type == pygame.KEYDOWN:
                 match event.key:
                     case pygame.K_RETURN:
-                        self.game.set_scene("GamePlay")
+                        self.game.change_screen("GamePlay")
                     case pygame.K_o:
-                        self.game.set_scene("Options")
+                        self.game.change_screen("Options")
                     case pygame.K_s:
-                        self.game.set_scene("Scoreboard")
+                        self.game.change_screen("Scoreboard")
                     case pygame.K_c:
-                        self.game.set_scene("Credits")
+                        self.game.change_screen("Credits")
                     case pygame.K_q:
                         pygame.quit()
                         sys.exit()

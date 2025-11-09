@@ -40,7 +40,7 @@ class State(ABC):
 class InitState(State):
 
     def enter(self):
-        self.gameplay.event_manager.is_paused = False
+        self.gameplay.event_manager.timeline_is_active = True
         print("Entering InitState")
 
     def exit(self):
@@ -60,17 +60,11 @@ class CutsceneState(State):
 
     def enter(self):
         print("Entering CutsceneState")
-        if self.gameplay.player_group.sprite:
-            self.gameplay.player_group.sprite.controls_enabled = False
-            self.gameplay.player_group.sprite.ignore_boundaries = True
-        self.gameplay.event_manager.is_paused = True
-        self.gameplay.cutscene_manager.is_active = True
+        self.gameplay.player_group.sprite.controls_enabled = False
+        self.gameplay.collision_manager.boundary_handling_enabled = False
 
     def exit(self):
         print("Exiting CutsceneState")
-        self.gameplay.event_manager.is_paused = False
-        self.gameplay.cutscene_manager.is_active = False
-        self.gameplay.player_group.sprite.ignore_boundaries = False
 
     def handle_event(self, events):
         for event in events:
@@ -80,6 +74,7 @@ class CutsceneState(State):
 
     def update(self, dt):
         self.gameplay.cutscene_manager.update(dt)
+        self.gameplay.event_manager.update(dt)
 
     def draw(self, surface):
         pass
@@ -93,9 +88,9 @@ class PlayState(State):
 
     def enter(self):
         print("Entering PlayState")
-        self.gameplay.event_manager.is_paused = self.is_battle
-        if self.gameplay.player_group.sprite:
-            self.gameplay.player_group.sprite.controls_enabled = True
+        self.gameplay.event_manager.timeline_is_active = self.is_battle
+        self.gameplay.player_group.sprite.controls_enabled = True
+        self.gameplay.collision_manager.boundary_handling_enabled = True
 
     def exit(self):
         print("Exiting PlayState")
@@ -108,10 +103,7 @@ class PlayState(State):
                     self.gameplay.change_state(GameplayState.PAUSED)
 
     def update(self, dt):
-        if (
-            self.gameplay.player_group.sprite
-            and self.gameplay.player_group.sprite.lives < 1
-        ):
+        if self.gameplay.player_group.sprite.lives < 1:
             self.gameplay.score.store_score(self.gameplay.score.score)
             self.gameplay.change_state(GameplayState.GAME_OVER)
             return
@@ -131,28 +123,20 @@ class PausedState(State):
 
     def enter(self):
         print("Entering PausedState")
-        self.previous_timeline_paused = self.gameplay.event_manager.is_paused
-        self.previous_player_controls_enabled = (
-            self.gameplay.player_group.sprite.controls_enabled
-            if self.gameplay.player_group.sprite
-            else False
-        )
+        self.gameplay.player_group.sprite.controls_enabled = False
+        self.gameplay.event_manager.timeline_is_active = False
         self.gameplay.pause_modal.is_visible = True
-        self.gameplay.event_manager.is_paused = True
-        if self.gameplay.player_group.sprite:
-            self.gameplay.player_group.sprite.controls_enabled = False
 
     def exit(self):
         print("Exiting PausedState")
         self.gameplay.pause_modal.is_visible = False
-        self.gameplay.event_manager.is_paused = self.previous_timeline_paused
-        if self.gameplay.player_group.sprite:
-            self.gameplay.player_group.sprite.controls_enabled = (
-                self.previous_player_controls_enabled
-            )
 
     def handle_event(self, events):
         self.gameplay.pause_modal.handle_event(events)
+        for event in events:
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_ESCAPE:
+                    self.gameplay.change_state(self.gameplay.previous_state)
 
     def update(self, dt):
         pass
@@ -166,9 +150,8 @@ class GameOverState(State):
     def enter(self):
         print("Entering GameOverState")
         self.gameplay.game_over_modal.is_visible = True
-        self.gameplay.event_manager.is_paused = True
-        if self.gameplay.player_group.sprite:
-            self.gameplay.player_group.sprite.controls_enabled = False
+        self.gameplay.event_manager.timeline_is_active = False
+        self.gameplay.player_group.sprite.controls_enabled = False
 
     def exit(self):
         print("Exiting GameOverState")
@@ -188,9 +171,8 @@ class MissionCompleteState(State):
 
     def enter(self):
         print("Entering MissionCompleteState")
-        self.gameplay.event_manager.is_paused = True
-        if self.gameplay.player_group.sprite:
-            self.gameplay.player_group.sprite.controls_enabled = False
+        self.gameplay.event_manager.timeline_is_active = True
+        self.gameplay.player_group.sprite.controls_enabled = False
         self.gameplay.end_level_modal.is_visible = True
         self.gameplay.score.store_score(self.gameplay.score.score)
 
