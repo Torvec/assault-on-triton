@@ -130,8 +130,30 @@ SCRIPTED = {
         "duration": 2.5,
         "location": CAST["hero"]["location"],
     },
-    "level_boss_intro_1_1": {},
-    "level_boss_defeat_1_1": {},
+    #! Level Boss Intro
+    "level_boss_intro_1_1": {
+        "speaker": "",
+        "portrait": "",
+        "text": "",
+        "duration": "",
+        "location": "",
+    },
+    #! Level Boss Defeat
+    "level_boss_defeat_1_1": {
+        "speaker": "",
+        "portrait": "",
+        "text": "",
+        "duration": "",
+        "location": "",
+    },
+    #! Outro
+    "outro_1_1": {
+        "speaker": "",
+        "portrait": "",
+        "text": "",
+        "duration": "",
+        "location": "",
+    },
 }
 
 DYNAMIC = {}

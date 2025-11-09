@@ -142,20 +142,18 @@ class GamePlay(Screen):
         self.states[self.current_state].enter()
 
     def handle_event(self, events):
-        if self.current_state:
-            self.states[self.current_state].handle_event(events)
+        self.states[self.current_state].handle_event(events)
 
     def update(self, dt):
         if self.current_state != GameplayState.PAUSED:
             super().update(dt)
-        if self.current_state:
-            self.states[self.current_state].update(dt)
+        self.states[self.current_state].update(dt)
+        self.gameplay_ui.update(dt)
 
     def draw(self, display_surface, game_surface):
         super().draw(display_surface, game_surface)
         self.gameplay_ui.draw(display_surface, game_surface)
-        if self.current_state:
-            self.states[self.current_state].draw(game_surface)
+        self.states[self.current_state].draw(game_surface)
 
 
 class Credits(Screen):

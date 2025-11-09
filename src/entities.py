@@ -156,7 +156,8 @@ class Entity(pygame.sprite.Sprite):
             self.position = self.target_position.copy()
             self.scripted_movement_active = False
             self.velocity = pygame.Vector2(0, 0)
-            return True
+            self.gameplay.cutscene_manager.on_action_complete()
+            return
 
         # Move towards target at specified speed
         if distance > 0:
@@ -444,25 +445,22 @@ class Asteroid(Entity):
             -ENEMIES["asteroid"]["split_angle"],
         ]:
             split_event = {
-                "event": "spawn_entity",
-                "params": {
-                    "type": self.splits_into_name,
-                    "location": self.position,
-                    "behaviors": [
-                        {
-                            "action": "move_angled",
-                            "params": {
-                                "angle": angle,
-                                "velocity_factor": ENEMIES["asteroid"][
-                                    "split_velocity_factor"
-                                ],
-                            },
+                "type": self.splits_into_name,
+                "location": self.position,
+                "behaviors": [
+                    {
+                        "action": "move_angled",
+                        "params": {
+                            "angle": angle,
+                            "velocity_factor": ENEMIES["asteroid"][
+                                "split_velocity_factor"
+                            ],
                         },
-                        {"action": "rotate_constantly", "params": {}},
-                    ],
-                },
+                    },
+                    {"action": "rotate_constantly", "params": {}},
+                ],
             }
-            self.gameplay.event_manager.handle_event(split_event)
+            self.gameplay.wave_manager.spawn_enemy(split_event)
 
     def update(self, dt):
         super().update(dt)

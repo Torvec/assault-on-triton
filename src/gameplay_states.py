@@ -73,7 +73,7 @@ class CutsceneState(State):
                     self.gameplay.change_state(GameplayState.PAUSED)
 
     def update(self, dt):
-        self.gameplay.cutscene_manager.update(dt)
+        pass
 
     def draw(self, surface):
         pass

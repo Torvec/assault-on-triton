@@ -232,6 +232,7 @@ class EventManager:
         }
 
     def start(self):
+        print("Starting Event Queue")
         self.process_next()
 
     def process_next(self):
@@ -277,7 +278,6 @@ class EventManager:
         self.gameplay.change_state(GameplayState.PLAY)
         self.gameplay.wave_manager.start_wave(params["wave_id"])
 
-    # ! Current implementation isn't going to work the way i want it to, should only need an ID and then the battlemanager can get the rest of of the info from enemy_battles.py, i don't want it in the event queue directly
     def handle_battle(self, event):
         params = event.get("params", {})
         self.gameplay.change_state(GameplayState.PLAY)
@@ -298,79 +298,74 @@ class EventManager:
     def handle_message(self, event):
         params = event.get("params", {})
         self.gameplay.gameplay_ui.display_message(params["message_id"])
-        self.on_event_complete()
 
 
 class CutsceneManager:
     def __init__(self, gameplay):
         self.gameplay = gameplay
-        self.current_cutscene = None
-        self.cutscene_data = None
-        self.cutscene_time = 0.0
-        self.cutscene_index = 0
+        self.current_cutscene_id = None
+        self.current_actions = None
+        self.current_index = 0
         self.action_handlers = {
-            "show_dialogue": self.show_dialogue,
-            "move_entity_to_loc": self.move_entity_to_loc,
+            "show_dialogue": self.handle_dialogue,
+            "move_entity_to_loc": self.handle_move_entity_to_loc,
         }
+
+    def start_cutscene(self, cutscene_id):
+        from data.cutscenes import CUTSCENE
+
+        print(f"Start Cutscene: {cutscene_id}")
+        self.current_cutscene_id = cutscene_id
+        self.current_actions = CUTSCENE.get(cutscene_id, [])
+        self.current_index = 0
+        self.process_next()
+
+    def process_next(self):
+        if self.current_index >= len(self.current_actions):
+            print("Action queue complete")
+            self.end_cutscene()
+            return
+
+        self.current_action = self.current_actions[self.current_index]
+        action_type = self.current_action["action"]
+        params = self.current_action.get("params", {})
+        handler = self.action_handlers.get(action_type)
+
+        if handler:
+            print(f"Processing cutscene action {self.current_index}: {action_type}")
+            handler(**params)
+        else:
+            print(f"Unknown action type: {action_type}")
+            self.on_action_complete()
+
+    def on_action_complete(self):
+        print(f"Cutscene action complete: {self.current_action['action']}")
+        self.current_index += 1
+        self.process_next()
+
+    def end_cutscene(self):
+        print(f"End Cutscene: {self.current_cutscene_id}")
+        self.current_cutscene_id = None
+        self.current_actions = None
+        self.current_index = 0
+        self.gameplay.event_manager.on_event_complete()
+
+    def handle_dialogue(self, dialogue_id):
+        self.gameplay.gameplay_ui.display_dialogue(dialogue_id)
+
+    def handle_move_entity_to_loc(self, entity_name, location, speed):
+        entity = self.get_entity(entity_name)
+        if entity is None:
+            print(f"Entity '{entity_name}' not found")
+            self.on_action_complete()
+            return
+        target_pos = pygame.Vector2(location["x"], location["y"])
+        entity.scripted_movement(target_pos.x, target_pos.y, speed)
 
     def get_entity(self, entity_name):
         if entity_name == "player":
             return self.gameplay.player_group.sprite
         return None
-
-    def show_dialogue(self, dialogue_id):
-        self.gameplay.gameplay_ui.display_dialogue(dialogue_id)
-
-    def move_entity_to_loc(self, entity_name, location, speed):
-        entity = self.get_entity(entity_name)
-        target_pos = pygame.Vector2(location["x"], location["y"])
-        entity.scripted_movement(target_pos.x, target_pos.y, speed)
-
-    def start_cutscene(self, cutscene_id):
-        from data.cutscenes import CUTSCENE
-
-        print("Start Cutscene")
-        self.current_cutscene = cutscene_id
-        self.cutscene_data = CUTSCENE.get(cutscene_id, [])
-
-    def end_cutscene(self):
-        print("End Cutscene")
-        self.current_cutscene = None
-        self.cutscene_data = None
-        self.cutscene_time = 0.0
-        self.cutscene_index = 0
-        self.gameplay.event_manager.on_event_complete()
-
-    def handle_action(self, action):
-        action_name = action["action"]
-        params = action.get("params", {})
-        handler = self.action_handlers.get(action_name)
-        if handler:
-            handler(**params)
-        else:
-            print(f"Unknown action type: {action_name}")
-
-    def process_timeline(self):
-        if not self.cutscene_data:
-            return
-
-        while (
-            self.cutscene_index < len(self.cutscene_data)
-            and self.cutscene_time >= self.cutscene_data[self.cutscene_index]["time"]
-        ):
-            current_action = self.cutscene_data[self.cutscene_index]
-            self.handle_action(current_action)
-            self.cutscene_index += 1
-
-        if self.cutscene_index >= len(self.cutscene_data):
-            self.end_cutscene()
-
-    def update(self, dt):
-        if self.current_cutscene is None:
-            return
-
-        self.cutscene_time += dt
-        self.process_timeline()
 
 
 class WaveManager:
@@ -411,8 +406,10 @@ class WaveManager:
 
     def is_wave_complete(self):
         all_spawns_complete = self.wave_index >= len(self.wave_data)
-        all_enemies_defeated = len(self.gameplay.asteroids) == 0 and len(
-            self.gameplay.enemy_drones == 0 and len(self.gameplay.enemy_ships == 0)
+        all_enemies_defeated = (
+            len(self.gameplay.asteroids) == 0
+            and len(self.gameplay.enemy_drones) == 0
+            and len(self.gameplay.enemy_ships) == 0
         )
         return all_spawns_complete and all_enemies_defeated
 
@@ -435,7 +432,6 @@ class WaveManager:
             self.end_wave()
 
 
-# ! Current implementation isn't going to work the way i want it to, should only need an ID and then the battlemanager can get the rest of of the info from enemy_battles.py, i don't want it in the event queue directly
 class BattleManager:
     def __init__(self, gameplay):
         self.gameplay = gameplay

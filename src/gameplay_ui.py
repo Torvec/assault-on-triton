@@ -41,6 +41,7 @@ class GamePlayUI:
                 self.current_speaker = None
                 self.current_text = None
                 self.dialogue_location = None
+                self.gameplay.cutscene_manager.on_action_complete()
 
     def display_message(self, message_id):
         message = MESSAGES[message_id]
@@ -53,6 +54,7 @@ class GamePlayUI:
             if self.message_duration <= 0:
                 self.current_message = None
                 self.message_duration = 0
+                self.gameplay.event_manager.on_event_complete()
 
     def draw_streak_meter(self, surface, rect):
         meter_border_rect = pygame.Rect(0, 0, rect.width, 16)
@@ -372,7 +374,6 @@ class EndLevelModal(Modal):
                 "[ENTER] Credits",
             ],
         )
-        # self.start_outro = False
 
     def handle_event(self, events):
         if not self.is_visible:
