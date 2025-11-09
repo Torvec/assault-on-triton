@@ -13,7 +13,14 @@ from src.entities import (
     Pickup,
     Player,
 )
-from src.managers import CollisionManager, EventManager, CutsceneManager, ScoreManager
+from src.managers import (
+    CollisionManager,
+    EventManager,
+    CutsceneManager,
+    ScoreManager,
+    BattleManager,
+    WaveManager,
+)
 from src.gameplay_ui import GamePlayUI, PauseModal, EndLevelModal, GameOverModal
 from src.gameplay_states import (
     GameplayState,
@@ -24,7 +31,7 @@ from src.gameplay_states import (
     GameOverState,
     MissionCompleteState,
 )
-from data.event_timeline import EVENTS
+from data.event_queue import EVENT_QUEUE
 
 
 class Screen:
@@ -104,7 +111,9 @@ class GamePlay(Screen):
         Explosion.containers = (self.explosions, self.updateable, self.drawable)
         Pickup.containers = (self.pickups, self.updateable, self.drawable)
 
-        self.event_manager = EventManager(self, EVENTS)
+        self.event_manager = EventManager(self, EVENT_QUEUE)
+        self.wave_manager = WaveManager(self)
+        self.battle_manager = BattleManager(self)
         self.cutscene_manager = CutsceneManager(self)
         self.collision_manager = CollisionManager(self)
         self.score = ScoreManager(self.game.score_store)

@@ -166,7 +166,7 @@ class GamePlayUI:
                 screen=surface,
                 text=self.current_message,
                 font_name="zendots",
-                font_size=48,
+                font_size=32,
                 color="yellow",
                 pos=surface.get_rect().center,
                 align="center",

@@ -217,74 +217,88 @@ class SpawnManager:
 
 class EventManager:
 
-    def __init__(self, gameplay, timeline):
+    def __init__(self, gameplay, events):
         self.gameplay = gameplay
-        self.timeline = timeline
-        self.timeline_time = 0.0
-        self.timeline_index = 0
-        self.timeline_is_active = True
+        self.events = events
+        self.current_index = 0
+        self.current_event = None
         self.event_handlers = {
-            "trigger_cutscene": self.trigger_cutscene,
-            "trigger_waves": self.trigger_waves,
-            "trigger_battle": self.trigger_battle,
-            "trigger_mission_complete": self.trigger_mission_complete,
-            "spawn_entity": self.spawn_entity,
-            "show_message": self.show_message,
-            "show_dialogue": self.show_dialogue,
+            "spawn_entity": self.handle_spawn_entity,
+            "trigger_cutscene": self.handle_cutscene,
+            "trigger_wave": self.handle_wave,
+            "trigger_battle": self.handle_battle,
+            "trigger_mission_complete": self.handle_mission_complete,
+            "show_message": self.handle_message,
         }
 
-    def trigger_cutscene(self, cutscene_id):
-        self.timeline_is_active = False
-        self.gameplay.change_state(GameplayState.CUTSCENE)
-        self.gameplay.cutscene_manager.start_cutscene(cutscene_id)
+    def start(self):
+        self.process_next()
 
-    def trigger_waves(self):
-        play_state = self.gameplay.states[GameplayState.PLAY]
-        play_state.is_battle = False
-        self.gameplay.change_state(GameplayState.PLAY)
-
-    def trigger_battle(self):
-        play_state = self.gameplay.states[GameplayState.PLAY]
-        play_state.is_battle = True
-        self.gameplay.change_state(GameplayState.PLAY)
-
-    def trigger_mission_complete(self):
-        self.gameplay.change_state(GameplayState.MISSION_COMPLETE)
-
-    def spawn_entity(self, type, location, behaviors):
-        spawner = SpawnManager(self.gameplay, type, location, behaviors)
-        spawner.spawn_entity()
-
-    def show_message(self, message_id):
-        self.gameplay.gameplay_ui.display_message(message_id)
-
-    def show_dialogue(self, dialogue_id):
-        self.gameplay.gameplay_ui.display_dialogue(dialogue_id)
-
-    def handle_event(self, event):
-        event_name = event["event"]
-        params = event.get("params", {})
-        handler = self.event_handlers.get(event_name)
-        if handler:
-            handler(**params)
-        else:
-            print(f"Unknown event type: {event_name}")
-
-    def process_timeline(self):
-        while (
-            self.timeline_index < len(self.timeline)
-            and self.timeline_time >= self.timeline[self.timeline_index]["time"]
-        ):
-            current_event = self.timeline[self.timeline_index]
-            self.handle_event(current_event)
-            self.timeline_index += 1
-
-    def update(self, dt):
-        if not self.timeline_is_active:
+    def process_next(self):
+        if self.current_index >= len(self.events):
+            print("Event queue complete")
             return
 
-        self.timeline_time += dt
-        self.process_timeline()
+        self.current_event = self.events[self.current_index]
+        event_type = self.current_event["type"]
+        handler = self.event_handlers.get(event_type)
+
+        if handler:
+            print(f"Processing event {self.current_index}: {event_type}")
+            handler(self.current_event)
+        else:
+            print(f"Unknown event type: {event_type}")
+            self.on_event_complete()
+
+    def on_event_complete(self):
+        print(f"Event complete: {self.current_event['type']}")
+        self.current_index += 1
+        self.current_event = None
+        self.process_next()
+
+    def handle_spawn_entity(self, event):
+        params = event.get("params", {})
+        spawner = SpawnManager(
+            self.gameplay,
+            params["type"],
+            params["location"],
+            params.get("behaviors", []),
+        )
+        spawner.spawn_entity()
+        self.on_event_complete()
+
+    def handle_cutscene(self, event):
+        params = event.get("params", {})
+        self.gameplay.change_state(GameplayState.CUTSCENE)
+        self.gameplay.cutscene_manager.start_cutscene(params["cutscene_id"])
+
+    def handle_wave(self, event):
+        params = event.get("params", {})
+        self.gameplay.change_state(GameplayState.PLAY)
+        self.gameplay.wave_manager.start_wave(params["wave_id"])
+
+    # ! Current implementation isn't going to work the way i want it to, should only need an ID and then the battlemanager can get the rest of of the info from enemy_battles.py, i don't want it in the event queue directly
+    def handle_battle(self, event):
+        params = event.get("params", {})
+        self.gameplay.change_state(GameplayState.PLAY)
+
+        spawner = SpawnManager(
+            self.gameplay,
+            params["boss_type"],
+            params["boss_location"],
+            params.get("boss_behaviors", []),
+        )
+        boss_entity = spawner.spawn_entity()
+
+        self.gameplay.battle_manager.start_battle(params["battle_id"], boss_entity)
+
+    def handle_mission_complete(self, event):
+        self.gameplay.change_state(GameplayState.MISSION_COMPLETE)
+
+    def handle_message(self, event):
+        params = event.get("params", {})
+        self.gameplay.gameplay_ui.display_message(params["message_id"])
+        self.on_event_complete()
 
 
 class CutsceneManager:
@@ -313,7 +327,7 @@ class CutsceneManager:
         entity.scripted_movement(target_pos.x, target_pos.y, speed)
 
     def start_cutscene(self, cutscene_id):
-        from data.cutscene import CUTSCENE
+        from data.cutscenes import CUTSCENE
 
         print("Start Cutscene")
         self.current_cutscene = cutscene_id
@@ -325,7 +339,7 @@ class CutsceneManager:
         self.cutscene_data = None
         self.cutscene_time = 0.0
         self.cutscene_index = 0
-        self.gameplay.event_manager.timeline_is_active = True
+        self.gameplay.event_manager.on_event_complete()
 
     def handle_action(self, action):
         action_name = action["action"]
@@ -359,16 +373,105 @@ class CutsceneManager:
         self.process_timeline()
 
 
+class WaveManager:
+    def __init__(self, gameplay):
+        self.gameplay = gameplay
+        self.current_wave = None
+        self.wave_data = None
+        self.wave_time = 0.0
+        self.wave_index = 0
+
+    def start_wave(self, wave_id):
+        from data.enemy_waves import WAVE
+
+        print(f"Starting wave: {wave_id}")
+        self.current_wave = wave_id
+        self.wave_data = WAVE.get(wave_id, [])
+
+    def process_wave(self):
+        if not self.wave_data:
+            return
+
+        while (
+            self.wave_index < len(self.wave_data)
+            and self.wave_time >= self.wave_data[self.wave_index]["time"]
+        ):
+            spawn_event = self.wave_data[self.wave_index]
+            self.spawn_enemy(spawn_event)
+            self.wave_index += 1
+
+    def spawn_enemy(self, spawn_event):
+        spawner = SpawnManager(
+            self.gameplay,
+            spawn_event["type"],
+            spawn_event["location"],
+            spawn_event.get("behaviors", []),
+        )
+        spawner.spawn_entity()
+
+    def is_wave_complete(self):
+        all_spawns_complete = self.wave_index >= len(self.wave_data)
+        all_enemies_defeated = len(self.gameplay.asteroids) == 0 and len(
+            self.gameplay.enemy_drones == 0 and len(self.gameplay.enemy_ships == 0)
+        )
+        return all_spawns_complete and all_enemies_defeated
+
+    def end_wave(self):
+        print(f"Wave Complete: {self.current_wave}")
+        self.current_wave = None
+        self.wave_data = None
+        self.wave_time = 0.0
+        self.wave_index = 0
+        self.gameplay.event_manager.on_event_complete()
+
+    def update(self, dt):
+        if not self.wave_data:
+            return
+
+        self.wave_time += dt
+        self.process_wave()
+
+        if self.is_wave_complete():
+            self.end_wave()
+
+
+# ! Current implementation isn't going to work the way i want it to, should only need an ID and then the battlemanager can get the rest of of the info from enemy_battles.py, i don't want it in the event queue directly
+class BattleManager:
+    def __init__(self, gameplay):
+        self.gameplay = gameplay
+        self.boss_entity = None
+        self.battle_id = None
+
+    def start_battle(self, battle_id, boss_entity):
+        print(f"Starting battle: {battle_id}")
+        self.battle_id = battle_id
+        self.boss_entity = boss_entity
+
+    def check_battle_complete(self):
+        if self.boss_entity:
+            if not self.boss_entity.alive():
+                self.end_battle()
+
+    def end_battle(self):
+        print(f"Ending battle: {self.battle_id}")
+        self.boss_entity = None
+        self.battle_id = None
+        self.gameplay.event_manager.on_event_complete()
+
+    def update(self, dt):
+        if self.boss_entity:
+            self.check_battle_complete()
+
+
 class ScoreManager:
 
     def __init__(self, score_store):
-        self.data = SCORING
         self.score_store = score_store
         self.score = 0
-        self.multiplier = self.data["initial_multiplier"]
-        self.streak_meter = self.data["initial_streak_meter"]
-        self.streak_meter_threshold = self.data["streak_threshold_base"]
-        self.streak_meter_decay_amount = self.data["streak_decay_base"]
+        self.multiplier = SCORING["initial_multiplier"]
+        self.streak_meter = SCORING["initial_streak_meter"]
+        self.streak_meter_threshold = SCORING["streak_threshold_base"]
+        self.streak_meter_decay_amount = SCORING["streak_decay_base"]
         self.streak_meter_delay_decay_timer = 0
 
     def handle_score(self, amount):
@@ -376,7 +479,7 @@ class ScoreManager:
             self.score += amount
         else:
             self.score += amount * self.multiplier
-            self.streak_meter_delay_decay_timer = self.data["streak_delay"]
+            self.streak_meter_delay_decay_timer = SCORING["streak_delay"]
 
     def handle_streak_meter_inc(self, amount):
         self.streak_meter += amount

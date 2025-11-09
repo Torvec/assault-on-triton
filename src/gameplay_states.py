@@ -40,8 +40,8 @@ class State(ABC):
 class InitState(State):
 
     def enter(self):
-        self.gameplay.event_manager.timeline_is_active = True
         print("Entering InitState")
+        self.gameplay.event_manager.start()
 
     def exit(self):
         print("Exiting InitState")
@@ -50,7 +50,7 @@ class InitState(State):
         pass
 
     def update(self, dt):
-        self.gameplay.event_manager.update(dt)
+        pass
 
     def draw(self, surface):
         pass
@@ -74,7 +74,6 @@ class CutsceneState(State):
 
     def update(self, dt):
         self.gameplay.cutscene_manager.update(dt)
-        self.gameplay.event_manager.update(dt)
 
     def draw(self, surface):
         pass
@@ -82,13 +81,8 @@ class CutsceneState(State):
 
 class PlayState(State):
 
-    def __init__(self, gameplay):
-        super().__init__(gameplay)
-        self.is_battle = False
-
     def enter(self):
         print("Entering PlayState")
-        self.gameplay.event_manager.timeline_is_active = self.is_battle
         self.gameplay.player_group.sprite.controls_enabled = True
         self.gameplay.collision_manager.boundary_handling_enabled = True
 
@@ -107,11 +101,10 @@ class PlayState(State):
             self.gameplay.score.store_score(self.gameplay.score.score)
             self.gameplay.change_state(GameplayState.GAME_OVER)
             return
-
         self.gameplay.game_timer += dt
         self.gameplay.collision_manager.update()
-        if not self.is_battle:
-            self.gameplay.event_manager.update(dt)
+        self.gameplay.wave_manager.update(dt)
+        self.gameplay.battle_manager.update(dt)
         self.gameplay.score.update_streak_meter_decay(dt)
         self.gameplay.gameplay_ui.update(dt)
 
@@ -124,7 +117,6 @@ class PausedState(State):
     def enter(self):
         print("Entering PausedState")
         self.gameplay.player_group.sprite.controls_enabled = False
-        self.gameplay.event_manager.timeline_is_active = False
         self.gameplay.pause_modal.is_visible = True
 
     def exit(self):
@@ -150,7 +142,6 @@ class GameOverState(State):
     def enter(self):
         print("Entering GameOverState")
         self.gameplay.game_over_modal.is_visible = True
-        self.gameplay.event_manager.timeline_is_active = False
         self.gameplay.player_group.sprite.controls_enabled = False
 
     def exit(self):
@@ -171,7 +162,6 @@ class MissionCompleteState(State):
 
     def enter(self):
         print("Entering MissionCompleteState")
-        self.gameplay.event_manager.timeline_is_active = True
         self.gameplay.player_group.sprite.controls_enabled = False
         self.gameplay.end_level_modal.is_visible = True
         self.gameplay.score.store_score(self.gameplay.score.score)
