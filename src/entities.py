@@ -22,6 +22,24 @@ def move_straight(entity, direction, dt):
     entity.position += direction * entity.speed * dt
 
 
+def move_to_location(entity, x, y, speed, dt):
+
+    direction = pygame.Vector2(x, y) - entity.position
+    distance = direction.length()
+
+    if distance < 5:  # * Note: Threshold to prevent jittering
+        entity.position = entity.target_position.copy()
+        entity.velocity = pygame.Vector2(0, 0)
+        entity.gameplay.cutscene_manager.on_action_complete()
+
+        return
+
+    if distance > 0:
+        direction.normalize_ip()
+        entity.velocity = direction * speed
+        entity.position += entity.velocity * dt
+
+
 def move_angled(entity, dt, **kwargs):
     angle = kwargs.get("angle", 0)
     velocity_factor = kwargs.get("velocity_factor", 1.0)
@@ -147,19 +165,16 @@ class Entity(pygame.sprite.Sprite):
         if not self.scripted_movement_active:
             return
 
-        # Calculate direction to target
         direction = self.target_position - self.position
         distance = direction.length()
 
-        # Check if we've reached the target
-        if distance < 5:  # Threshold to prevent jittering
+        if distance < 5:  # * Threshold to prevent jittering
             self.position = self.target_position.copy()
             self.scripted_movement_active = False
             self.velocity = pygame.Vector2(0, 0)
             self.gameplay.cutscene_manager.on_action_complete()
             return
 
-        # Move towards target at specified speed
         if distance > 0:
             direction.normalize_ip()
             self.velocity = direction * self.movement_speed
@@ -546,68 +561,74 @@ class EnemyShip(Ship):
         super().__init__(x, y, gameplay, "enemy_ship")
 
 
-class SubBoss(Entity):
+class SubBoss(Ship):
     def __init__(self, x, y, gameplay):
-        self.img_path = IMAGES["sub_boss"]
-        super().__init__(x, y, gameplay)
-        self.speed = ENEMIES["sub_boss"]["speed"]
-        self.hp = ENEMIES["sub_boss"]["hp"]
-        self.blast_radius = ENEMIES["sub_boss"]["blast_radius"]
-        self.score_value = self.hp
+        super().__init__(x, y, gameplay, "sub_boss")
+        #! Using the Ship parent class temporarily just to test the battle manager and play state
 
-    def take_damage(self, amount):
-        self.hp -= amount
-        if self.hp <= 0:
-            self.gameplay.score.handle_score(self.score_value)
-            self.gameplay.score.handle_streak_meter_in(self.score_value)
-            self.explode()
-        self.is_hit = True
+    #     self.img_path = IMAGES["sub_boss"]
+    #     super().__init__(x, y, gameplay)
+    #     self.speed = ENEMIES["sub_boss"]["speed"]
+    #     self.hp = ENEMIES["sub_boss"]["hp"]
+    #     self.blast_radius = ENEMIES["sub_boss"]["blast_radius"]
+    #     self.score_value = self.hp
 
-    def explode(self):
-        Explosion(
-            self.position.x, self.position.y, self.gameplay, self.blast_radius, self
-        )
-        self.kill()
+    # def take_damage(self, amount):
+    #     self.hp -= amount
+    #     if self.hp <= 0:
+    #         self.gameplay.score.handle_score(self.score_value)
+    #         self.gameplay.score.handle_streak_meter_in(self.score_value)
+    #         self.explode()
+    #     self.is_hit = True
 
-    def update(self, dt):
-        super().update(dt)
+    # def explode(self):
+    #     Explosion(
+    #         self.position.x, self.position.y, self.gameplay, self.blast_radius, self
+    #     )
+    #     self.kill()
 
-    def draw(self, surface):
-        super().draw(surface)
-        surface.blit(self.image, self.rect)
-        self.flash_when_hit(surface, self.image, self.rect)
+    # def update(self, dt):
+    #     super().update(dt)
+
+    # def draw(self, surface):
+    #     super().draw(surface)
+    #     surface.blit(self.image, self.rect)
+    #     self.flash_when_hit(surface, self.image, self.rect)
 
 
-class LevelBoss(Entity):
+class LevelBoss(Ship):
     def __init__(self, x, y, gameplay):
-        self.img_path = IMAGES["level_boss"]
-        super().__init__(x, y, gameplay)
-        self.speed = ENEMIES["level_boss"]["speed"]
-        self.hp = ENEMIES["level_boss"]["hp"]
-        self.blast_radius = ENEMIES["level_boss"]["blast_radius"]
-        self.score_value = self.hp
+        super().__init__(x, y, gameplay, "level_boss")
+        #! Using the Ship parent class temporarily just to test the battle manager and play state
 
-    def take_damage(self, amount):
-        self.hp -= amount
-        if self.hp <= 0:
-            self.gameplay.score.handle_score(self.score_value)
-            self.gameplay.score.handle_streak_meter_in(self.score_value)
-            self.explode()
-        self.is_hit = True
+    #     self.img_path = IMAGES["level_boss"]
+    #     super().__init__(x, y, gameplay)
+    #     self.speed = ENEMIES["level_boss"]["speed"]
+    #     self.hp = ENEMIES["level_boss"]["hp"]
+    #     self.blast_radius = ENEMIES["level_boss"]["blast_radius"]
+    #     self.score_value = self.hp
 
-    def explode(self):
-        Explosion(
-            self.position.x, self.position.y, self.gameplay, self.blast_radius, self
-        )
-        self.kill()
+    # def take_damage(self, amount):
+    #     self.hp -= amount
+    #     if self.hp <= 0:
+    #         self.gameplay.score.handle_score(self.score_value)
+    #         self.gameplay.score.handle_streak_meter_in(self.score_value)
+    #         self.explode()
+    #     self.is_hit = True
 
-    def update(self, dt):
-        super().update(dt)
+    # def explode(self):
+    #     Explosion(
+    #         self.position.x, self.position.y, self.gameplay, self.blast_radius, self
+    #     )
+    #     self.kill()
 
-    def draw(self, surface):
-        super().draw(surface)
-        surface.blit(self.image, self.rect)
-        self.flash_when_hit(surface, self.image, self.rect)
+    # def update(self, dt):
+    #     super().update(dt)
+
+    # def draw(self, surface):
+    #     super().draw(surface)
+    #     surface.blit(self.image, self.rect)
+    #     self.flash_when_hit(surface, self.image, self.rect)
 
 
 class Pickup(Entity):

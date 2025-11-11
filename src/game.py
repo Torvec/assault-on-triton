@@ -15,7 +15,7 @@ class Game:
         self.dt = 0
         self.score_store = ScoreStore()
         self.running = True
-        self.scenes = {
+        self.screens = {
             "Start": Start,
             "GamePlay": GamePlay,
             "Options": Options,
@@ -25,10 +25,10 @@ class Game:
 
         self.change_screen("Start")
 
-    def change_screen(self, scene_name):
-        if scene_name not in self.scenes:
-            raise ValueError(f"Unknown scene: {scene_name}")
-        self.current_scene = self.scenes[scene_name](self)
+    def change_screen(self, screen_name):
+        if screen_name not in self.screens:
+            raise ValueError(f"Unknown scene: {screen_name}")
+        self.current_scene = self.screens[screen_name](self)
 
     def run(self):
         while self.running:

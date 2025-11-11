@@ -55,7 +55,6 @@ ENEMIES = {
         "split_velocity_factor": 1.2,
     },
     "enemy_drone": {
-        "radius": 16,
         "speed": 300,
         "hp": 4,
         "shot_cooldown": 0.6,
@@ -63,7 +62,6 @@ ENEMIES = {
         "blast_radius": 32,
     },
     "enemy_ship": {
-        "radius": 32,
         "speed": 200,
         "hp": 8,
         "shot_cooldown": 0.4,
@@ -71,17 +69,15 @@ ENEMIES = {
         "blast_radius": 48,
     },
     "sub_boss": {
-        "radius": 32,
         "speed": 200,
-        "hp": 250,
+        "hp": 256,
         "shot_cooldown": 0.4,
         "shot_offset": 4,
         "blast_radius": 256,
     },
     "level_boss": {
-        "radius": 32,
         "speed": 200,
-        "hp": 500,
+        "hp": 512,
         "shot_cooldown": 0.4,
         "shot_offset": 4,
         "blast_radius": 512,
@@ -98,19 +94,16 @@ PROJECTILES = {
     },
     "enemy_shot": {"range": 512, "speed": 500, "damage": 10},
     "player_bomb": {
-        "radius": 8,
         "speed": 250,
         "trigger_distance": 256,
         "blast_radius": {1: 192, 2: 256, 3: 384, 4: 512, 5: 512},
     },
     "enemy_bomb": {
-        "radius": 8,
         "speed": 250,
         "trigger_distance": 256,
         "blast_radius": 384,
     },
     "enemy_missile": {
-        "radius": 10,
         "speed": 200,
         "trigger_distance": 256,
         "blast_radius": 64,

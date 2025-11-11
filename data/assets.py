@@ -9,8 +9,8 @@ IMAGES = {
     "asteroid_xl": "assets/entities/asteroid_xl.png",
     "enemy_drone": "assets/entities/enemy_drone.png",
     "enemy_ship": "assets/entities/enemy_ship.png",
-    "sub_boss": "assets/entities/sub_boss.png",
-    "level_boss": "assets/entities/level_boss.png",
+    "sub_boss": "assets/entities/enemy_ship.png",  #! Placeholder sprite, replace when actual sprite is ready
+    "level_boss": "assets/entities/asteroid_xl.png",  #! Placeholder sprite, replace when actual sprite is ready
     # Projectiles
     "player_shot_lv1": "assets/entities/player_shot_lv1.png",
     "player_shot_lv2": "assets/entities/player_shot_lv2.png",

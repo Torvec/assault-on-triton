@@ -153,8 +153,8 @@ class GamePlay(Screen):
     def update(self, dt):
         if self.current_state != GameplayState.PAUSED:
             super().update(dt)
+            self.gameplay_ui.update(dt)
         self.states[self.current_state].update(dt)
-        self.gameplay_ui.update(dt)
 
     def draw(self, display_surface, game_surface):
         super().draw(display_surface, game_surface)

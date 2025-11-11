@@ -29,6 +29,8 @@ class CollisionManager:
             "asteroids": self.gameplay.asteroids,
             "enemy_drones": self.gameplay.enemy_drones,
             "enemy_ships": self.gameplay.enemy_ships,
+            "sub_boss": self.gameplay.sub_boss_group,
+            "level_boss": self.gameplay.level_boss_group,
             "missiles": self.gameplay.missiles,
             "shots": self.gameplay.shots,
             "bombs": self.gameplay.bombs,
@@ -96,6 +98,8 @@ class CollisionManager:
             *self.sprite_groups["asteroids"],
             *self.sprite_groups["enemy_drones"],
             *self.sprite_groups["enemy_ships"],
+            *self.sprite_groups["sub_boss"],
+            *self.sprite_groups["level_boss"],
         ]
         if self.hostiles:
             player_v_hostiles = self.player.collides_with(self.hostiles)
@@ -242,6 +246,7 @@ class EventManager:
     def process_next(self):
         if self.current_index >= len(self.events):
             print("Event queue complete")
+            self.gameplay.game.change_screen("Credits")
             return
 
         self.current_event = self.events[self.current_index]
@@ -450,7 +455,7 @@ class BattleManager:
             self.end_battle()
 
     def end_battle(self):
-        print(f"Ending battle: {self.battle_id}")
+        print(f"Ending battle: {self.current_battle}")
         self.battle_entity = None
         self.current_battle = None
         self.gameplay.event_manager.on_event_complete()

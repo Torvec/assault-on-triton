@@ -38,7 +38,7 @@ EVENT_QUEUE = [
         "type": "trigger_cutscene",
         "params": {"cutscene_id": "level_boss_defeat"},
     },
-    {"type": "trigger_mission_complete", "params": {}},
+    # {"type": "trigger_mission_complete", "params": {}},
     {"type": "trigger_cutscene", "params": {"cutscene_id": "outro"}},
     {
         "type": "show_message",
