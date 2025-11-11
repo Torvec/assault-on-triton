@@ -67,9 +67,7 @@ class GamePlay(Screen):
 
     def __init__(self, game):
         super().__init__(game)
-        self.current_state = None
-        self.previous_state = None
-        self.states = {}
+
         self.game_timer = 0
 
         self.play_area_rect = pygame.Rect(
@@ -129,16 +127,17 @@ class GamePlay(Screen):
         self.end_level_modal = EndLevelModal(self)
         self.game_over_modal = GameOverModal(self)
 
-        self.init_states()
+        self.current_state = None
+        self.previous_state = None
+        self.states = {
+            GameplayState.INIT: InitState(self),
+            GameplayState.CUTSCENE: CutsceneState(self),
+            GameplayState.PLAY: PlayState(self),
+            GameplayState.PAUSED: PausedState(self),
+            GameplayState.GAME_OVER: GameOverState(self),
+            GameplayState.MISSION_COMPLETE: MissionCompleteState(self),
+        }
         self.change_state(GameplayState.INIT)
-
-    def init_states(self):
-        self.states[GameplayState.INIT] = InitState(self)
-        self.states[GameplayState.CUTSCENE] = CutsceneState(self)
-        self.states[GameplayState.PLAY] = PlayState(self)
-        self.states[GameplayState.PAUSED] = PausedState(self)
-        self.states[GameplayState.GAME_OVER] = GameOverState(self)
-        self.states[GameplayState.MISSION_COMPLETE] = MissionCompleteState(self)
 
     def change_state(self, new_state):
         if self.current_state:

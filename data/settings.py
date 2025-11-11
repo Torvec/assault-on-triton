@@ -126,8 +126,8 @@ SCORING = {
     "streak_threshold_base": 10,
     "streak_decay_base": 1,
     "streak_delay": 3,  # seconds before decay starts
-    "initial_multiplier": 1,
-    "initial_streak_meter": 0,
+    "init_multiplier": 1,
+    "init_streak_meter": 0,
 }
 
 UI = {

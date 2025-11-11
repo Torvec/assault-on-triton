@@ -470,8 +470,8 @@ class ScoreManager:
     def __init__(self, score_store):
         self.score_store = score_store
         self.score = 0
-        self.multiplier = SCORING["initial_multiplier"]
-        self.streak_meter = SCORING["initial_streak_meter"]
+        self.multiplier = SCORING["init_multiplier"]
+        self.streak_meter = SCORING["init_streak_meter"]
         self.streak_meter_threshold = SCORING["streak_threshold_base"]
         self.streak_meter_decay_amount = SCORING["streak_decay_base"]
         self.streak_meter_delay_decay_timer = 0
@@ -485,9 +485,8 @@ class ScoreManager:
 
     def handle_streak_meter_inc(self, amount):
         self.streak_meter += amount
-        if self.streak_meter > self.streak_meter_threshold:
+        while self.streak_meter >= self.streak_meter_threshold:
             remainder = self.streak_meter - self.streak_meter_threshold
-            self.streak_meter = 0
             self.streak_meter += remainder
             self.handle_multiplier(1)
 
