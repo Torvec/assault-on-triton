@@ -120,7 +120,7 @@ class GamePlay(Screen):
         self.battle_manager = BattleManager(self)
         self.cutscene_manager = CutsceneManager(self)
         self.collision_manager = CollisionManager(self)
-        self.score = ScoreManager(self.game.score_store)
+        self.score_manager = ScoreManager(self.game.score_store)
 
         self.gameplay_ui = GamePlayUI(self.game, self)
         self.pause_modal = PauseModal(self)

@@ -98,14 +98,14 @@ class PlayState(State):
 
     def update(self, dt):
         if self.gameplay.player_group.sprite.lives < 1:
-            self.gameplay.score.store_score(self.gameplay.score.score)
+            self.gameplay.score_manager.store_score(self.gameplay.score_manager.score)
             self.gameplay.change_state(GameplayState.GAME_OVER)
             return
         self.gameplay.game_timer += dt
         self.gameplay.collision_manager.update()
         self.gameplay.wave_manager.update(dt)
         self.gameplay.battle_manager.update(dt)
-        self.gameplay.score.update_streak_meter_decay(dt)
+        self.gameplay.score_manager.update_streak_meter_decay(dt)
         self.gameplay.gameplay_ui.update(dt)
 
     def draw(self, surface):
@@ -164,7 +164,7 @@ class MissionCompleteState(State):
         print("Entering MissionCompleteState")
         self.gameplay.player_group.sprite.controls_enabled = False
         self.gameplay.end_level_modal.is_visible = True
-        self.gameplay.score.store_score(self.gameplay.score.score)
+        self.gameplay.score_manager.store_score(self.gameplay.score_manager.score)
 
     def exit(self):
         print("Exiting MissionCompleteState")

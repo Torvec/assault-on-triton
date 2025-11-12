@@ -444,8 +444,8 @@ class Asteroid(Entity):
     def take_damage(self, amount):
         self.hp -= amount
         if self.hp <= 0:
-            self.gameplay.score.handle_score(self.score_value)
-            self.gameplay.score.handle_streak_meter_inc(self.score_value)
+            self.gameplay.score_manager.handle_score(self.score_value)
+            self.gameplay.score_manager.handle_streak_meter_inc(self.score_value)
             self.split()
 
     def split(self):
@@ -530,8 +530,8 @@ class Ship(Entity):
     def take_damage(self, amount):
         self.hp -= amount
         if self.hp <= 0:
-            self.gameplay.score.handle_score(self.score_value)
-            self.gameplay.score.handle_streak_meter_inc(self.score_value)
+            self.gameplay.score_manager.handle_score(self.score_value)
+            self.gameplay.score_manager.handle_streak_meter_inc(self.score_value)
             self.explode()
         self.is_hit = True
 
@@ -576,8 +576,8 @@ class SubBoss(Ship):
     # def take_damage(self, amount):
     #     self.hp -= amount
     #     if self.hp <= 0:
-    #         self.gameplay.score.handle_score(self.score_value)
-    #         self.gameplay.score.handle_streak_meter_in(self.score_value)
+    #         self.gameplay.score_manager.handle_score(self.score_value)
+    #         self.gameplay.score_manager.handle_streak_meter_in(self.score_value)
     #         self.explode()
     #     self.is_hit = True
 
@@ -611,8 +611,8 @@ class LevelBoss(Ship):
     # def take_damage(self, amount):
     #     self.hp -= amount
     #     if self.hp <= 0:
-    #         self.gameplay.score.handle_score(self.score_value)
-    #         self.gameplay.score.handle_streak_meter_in(self.score_value)
+    #         self.gameplay.score_manager.handle_score(self.score_value)
+    #         self.gameplay.score_manager.handle_streak_meter_in(self.score_value)
     #         self.explode()
     #     self.is_hit = True
 
@@ -689,8 +689,8 @@ class ExtraLifePickup(Pickup):
         if self.player.lives < self.player_data["max_lives"]:
             self.player.lives += 1
         else:
-            self.gameplay.score.handle_score(self.fallback_score)
-            self.gameplay.score.handle_streak_meter_inc(self.fallback_score)
+            self.gameplay.score_manager.handle_score(self.fallback_score)
+            self.gameplay.score_manager.handle_streak_meter_inc(self.fallback_score)
         self.kill()
 
     def update(self, dt):
@@ -714,8 +714,8 @@ class PowerLevelPickup(Pickup):
         if self.player.power_level < self.player_data["max_power_level"]:
             self.player.power_level += 1
         else:
-            self.gameplay.score.handle_score(self.fallback_score)
-            self.gameplay.score.handle_streak_meter_inc(self.fallback_score)
+            self.gameplay.score_manager.handle_score(self.fallback_score)
+            self.gameplay.score_manager.handle_streak_meter_inc(self.fallback_score)
         self.kill()
 
     def update(self, dt):
@@ -758,8 +758,8 @@ class BombAmmoPickup(Pickup):
         if self.player.bomb_ammo < self.player_data["max_bomb_ammo"]:
             self.player.bomb_ammo += 1
         else:
-            self.gameplay.score.handle_score(self.fallback_score)
-            self.gameplay.score.handle_streak_meter_inc(self.fallback_score)
+            self.gameplay.score_manager.handle_score(self.fallback_score)
+            self.gameplay.score_manager.handle_streak_meter_inc(self.fallback_score)
         self.kill()
 
     def update(self, dt):
@@ -843,7 +843,7 @@ class Player(Entity):
     def take_damage(self, amount):
         if self.invincibleTime > 0:
             return
-        self.gameplay.score.handle_streak_meter_dec()
+        self.gameplay.score_manager.handle_streak_meter_dec()
         self.hp -= amount
         if self.hp <= 0:
             self.lives -= 1

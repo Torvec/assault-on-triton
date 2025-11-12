@@ -61,8 +61,8 @@ class GamePlayUI:
         meter_border_rect.midleft = rect.midleft
         pygame.draw.rect(surface, "white", meter_border_rect, 2, 4)
         fill_percent = (
-            self.gameplay.score.streak_meter
-            / self.gameplay.score.streak_meter_threshold
+            self.gameplay.score_manager.streak_meter
+            / self.gameplay.score_manager.streak_meter_threshold
         )
         fill_width = int((rect.width - 4) * fill_percent)
         meter_fill_rect = pygame.Rect(0, 0, fill_width, 12)
@@ -90,7 +90,7 @@ class GamePlayUI:
         )
         render_text(
             screen=surface,
-            text=f"SCORE: {self.gameplay.score.score:09}",
+            text=f"SCORE: {self.gameplay.score_manager.score:09}",
             font_name="zendots",
             font_size=UI["font_sizes"]["small"],
             color=UI["colors"]["primary"],
@@ -99,7 +99,7 @@ class GamePlayUI:
         )
         render_text(
             screen=surface,
-            text=f"x{self.gameplay.score.multiplier}",
+            text=f"x{self.gameplay.score_manager.multiplier}",
             font_name="zendots",
             font_size=UI["font_sizes"]["small"],
             color=UI["colors"]["primary"],
