@@ -47,14 +47,21 @@ class GamePlayUI:
         message = MESSAGES[message_id]
         self.current_message = message["text"]
         self.message_duration = message["duration"]
+        self.message_is_blocking = message["blocking"]
+
+        if not self.message_is_blocking:
+            self.gameplay.event_manager.on_event_complete()
 
     def handle_message_duration(self, dt):
         if self.message_duration > 0:
             self.message_duration -= dt
+
             if self.message_duration <= 0:
                 self.current_message = None
                 self.message_duration = 0
-                self.gameplay.event_manager.on_event_complete()
+
+                if self.message_is_blocking:
+                    self.gameplay.event_manager.on_event_complete()
 
     def draw_streak_meter(self, surface, rect):
         meter_border_rect = pygame.Rect(0, 0, rect.width, 16)
