@@ -155,3 +155,16 @@ UI = {
     },
     "power_levels": {1: "( I )", 2: "( II )", 3: "( III )", 4: "( IV )", 5: "( OV )"},
 }
+
+SPAWN_LOCATIONS = {
+    "top_left_edge": (0.1, "top"),
+    "top_far_left": (0.2, "top"),
+    "top_left": (0.3, "top"),
+    "top_center_left": (0.4, "top"),
+    "top_center": (0.5, "top"),
+    "top_center_right": (0.6, "top"),
+    "top_right": (0.7, "top"),
+    "top_far_right": (0.8, "top"),
+    "top_right_edge": (0.9, "top"),
+    "player_spawn": (0.5, "btm"),
+}

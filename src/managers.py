@@ -17,7 +17,7 @@ from src.entities import (
     InvulnerabilityPickup,
 )
 from src.gameplay_states import GameplayState
-from data.settings import SCORING
+from data.settings import SCORING, SPAWN_LOCATIONS
 
 
 class CollisionManager:
@@ -155,19 +155,6 @@ class CollisionManager:
 
 class SpawnManager:
 
-    spawn_locations = {
-        "top_left_edge": (0.1, "top"),
-        "top_far_left": (0.2, "top"),
-        "top_left": (0.3, "top"),
-        "top_center_left": (0.4, "top"),
-        "top_center": (0.5, "top"),
-        "top_center_right": (0.6, "top"),
-        "top_right": (0.7, "top"),
-        "top_far_right": (0.8, "top"),
-        "top_right_edge": (0.9, "top"),
-        "player_spawn": (0.5, "btm"),
-    }
-
     entities = {
         "player": Player,
         "asteroid_xl": AsteroidXL,
@@ -204,7 +191,7 @@ class SpawnManager:
         play_area = self.gameplay.play_area_rect
 
         if isinstance(self.location, str):
-            offset_x, side_y = self.spawn_locations[self.location]
+            offset_x, side_y = SPAWN_LOCATIONS[self.location]
             offset_y = 128
 
             if side_y == "top":
