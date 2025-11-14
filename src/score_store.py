@@ -4,6 +4,12 @@ class ScoreStore:
         self.high_score = 142241  #! Placeholder
         self.current_score = 0
 
+    def get_current_score(self):
+        return self.current_score
+    
+    def set_current_score(self, num):
+        self.current_score = num
+
     def create_score_store(self):
         # Creates the json file that stores all scores from highest to lowest if one is not found
         pass

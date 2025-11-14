@@ -40,7 +40,6 @@ class CollisionManager:
 
     @property
     def player(self):
-        """Dynamically get the player sprite from the player_group."""
         return self.gameplay.player_group.sprite
 
     def handle_boundaries(self, entity, action="kill"):
@@ -514,5 +513,5 @@ class ScoreManager:
                 else:
                     self.streak_meter = 0
 
-    def store_score(self, score):
-        self.score_store.current_score = score
+    def store_score(self):
+        self.score_store.set_current_score(self.score)

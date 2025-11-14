@@ -1,5 +1,6 @@
 import pygame
-from src.screens import Start, GamePlay, Options, Scoreboard, Credits
+from src.screens import Start, Options, Scoreboard, Credits
+from src.gameplay_screen import GamePlay
 from src.score_store import ScoreStore
 from data.settings import DISPLAY
 

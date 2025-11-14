@@ -204,14 +204,13 @@ class Entity(pygame.sprite.Sprite):
 class Explosion(Entity):
 
     def __init__(self, x, y, gameplay, blast_radius, owner):
-        self.data = EXPLOSIONS
         self.img_path = IMAGES["explosion"]
         super().__init__(x, y, gameplay)
         self.blast_radius = blast_radius
         self.owner = owner
-        self.init_radius = self.data["initial_radius"]
-        self.exp_rate = self.data["expansion_rate"]
-        self.damage = self.data["damage"]
+        self.init_radius = EXPLOSIONS["initial_radius"]
+        self.exp_rate = EXPLOSIONS["expansion_rate"]
+        self.damage = EXPLOSIONS["damage"]
 
     def sound(self):
         #! TODO: Get sound effect for explosion
@@ -224,7 +223,7 @@ class Explosion(Entity):
 
         for sprite in other_group:
             distance = self.position.distance_to(sprite.position)
-            sprite_radius = sprite.rect.width // 2
+            sprite_radius = sprite.rect.width * 0.5
 
             if distance <= current_radius + sprite_radius:
                 collisions.append(sprite)
@@ -537,7 +536,7 @@ class Ship(Entity):
 
     def explode(self):
         Explosion(
-            self.position.x, self.position.y, self.gameplay, self.blast_radius, self
+            self.position.x, self.position.y, self.gameplay, self.blast_radius, None
         )
         self.kill()
 
@@ -847,11 +846,11 @@ class Player(Entity):
         self.hp -= amount
         if self.hp <= 0:
             self.lives -= 1
-            self.explode()
             if self.lives <= 0:
+                self.explode()
                 return
-            else:
-                self.respawn()
+            # else:
+            #     self.respawn()
         self.invincibleTime = PLAYER["invincible_duration"]
         self.is_hit = True
 
@@ -867,7 +866,7 @@ class Player(Entity):
             self.position.y,
             self.gameplay,
             self.blast_radius,
-            self,
+            None,
         )
         self.kill()
 

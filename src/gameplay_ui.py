@@ -316,8 +316,8 @@ class Modal:
         rect = pygame.Rect(
             0,
             0,
-            surface.get_width() * 0.75,
-            surface.get_height() * 0.3,
+            surface.get_width() - 16,
+            surface.get_height() * 0.4,
         )
         rect.center = surface.get_rect().center
         pygame.draw.rect(surface, "grey4", rect, border_radius=24)
@@ -339,7 +339,7 @@ class Modal:
                 font_name="spacegrotesk_semibold",
                 font_size=32,
                 color="grey",
-                pos=(rect.midtop[0], rect.midtop[1] + 64 + (i * 48)),
+                pos=(rect.midtop[0], rect.midtop[1] + 96 + (i * 48)),
                 align="midtop",
             )
 
@@ -377,7 +377,7 @@ class EndLevelModal(Modal):
             title="Mission Complete!",
             menu_items=[
                 f"Score: {gameplay.game.score_store.current_score}",
-                f"Time: {gameplay.game_timer}",
+                f"Time: {gameplay.game_timer:.2f}".replace(".", ":"),
                 "[ENTER] Credits",
             ],
         )
@@ -398,10 +398,11 @@ class GameOverModal(Modal):
             gameplay,
             title="Game Over",
             menu_items=[
+                f"Score: {gameplay.game.score_store.get_current_score()}",
+                f"Time: {gameplay.game_timer:.2f}".replace(".", ":"),
                 "[Enter] Replay",
                 "[1] Main Menu",
                 "[2] Scoreboard",
-                "[3] Credits",
                 "[Q] Quit Game",
             ],
         )
@@ -416,8 +417,6 @@ class GameOverModal(Modal):
                         self.gameplay.game.change_screen("Start")
                     case pygame.K_2:
                         self.gameplay.game.change_screen("Scoreboard")
-                    case pygame.K_3:
-                        self.gameplay.game.change_screen("Credits")
                     case pygame.K_q:
                         pygame.quit()
                         sys.exit()

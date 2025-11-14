@@ -97,8 +97,8 @@ class PlayState(State):
                     self.gameplay.change_state(GameplayState.PAUSED)
 
     def update(self, dt):
-        if self.gameplay.player_group.sprite.lives < 1:
-            self.gameplay.score_manager.store_score(self.gameplay.score_manager.score)
+        if not self.gameplay.player_group.sprite:
+            self.gameplay.score_manager.store_score()
             self.gameplay.change_state(GameplayState.GAME_OVER)
             return
         self.gameplay.game_timer += dt
@@ -141,8 +141,8 @@ class GameOverState(State):
 
     def enter(self):
         print("Entering GameOverState")
+        self.gameplay.create_game_over_modal()
         self.gameplay.game_over_modal.is_visible = True
-        self.gameplay.player_group.sprite.controls_enabled = False
 
     def exit(self):
         print("Exiting GameOverState")
@@ -163,8 +163,9 @@ class MissionCompleteState(State):
     def enter(self):
         print("Entering MissionCompleteState")
         self.gameplay.player_group.sprite.controls_enabled = False
+        self.gameplay.score_manager.store_score()
+        self.gameplay.create_end_level_modal()
         self.gameplay.end_level_modal.is_visible = True
-        self.gameplay.score_manager.store_score(self.gameplay.score_manager.score)
 
     def exit(self):
         print("Exiting MissionCompleteState")
