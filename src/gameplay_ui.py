@@ -389,12 +389,7 @@ class EndLevelModal(Modal):
         for event in events:
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_RETURN:
-                    self.is_visible = False
-                    outro_cutscene = {
-                        "event": "trigger_cutscene",
-                        "params": {"cutscene_id": "outro_2"},
-                    }
-                    self.gameplay.event_manager.handle_event(outro_cutscene)
+                    self.gameplay.event_manager.on_event_complete()
 
 
 class GameOverModal(Modal):
