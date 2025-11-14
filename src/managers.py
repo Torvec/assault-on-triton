@@ -155,29 +155,28 @@ class CollisionManager:
 
 class SpawnManager:
 
-    entities = {
-        "player": Player,
-        "asteroid_xl": AsteroidXL,
-        "asteroid_lg": AsteroidLG,
-        "asteroid_md": AsteroidMD,
-        "asteroid_sm": AsteroidSM,
-        "enemy_drone": EnemyDrone,
-        "enemy_ship": EnemyShip,
-        "sub_boss": SubBoss,
-        "level_boss": LevelBoss,
-        "health_pickup": HealthPickup,
-        "extra_life_pickup": ExtraLifePickup,
-        "power_level_pickup": PowerLevelPickup,
-        "overdrive_pickup": OverdrivePickup,
-        "bomb_ammo_pickup": BombAmmoPickup,
-        "invulnerability_pickup": InvulnerabilityPickup,
-    }
-
     def __init__(self, gameplay, entity_name, location, behaviors):
         self.gameplay = gameplay
         self.entity_name = entity_name
         self.location = location
         self.behaviors = behaviors
+        self.entities = {
+            "player": Player,
+            "asteroid_xl": AsteroidXL,
+            "asteroid_lg": AsteroidLG,
+            "asteroid_md": AsteroidMD,
+            "asteroid_sm": AsteroidSM,
+            "enemy_drone": EnemyDrone,
+            "enemy_ship": EnemyShip,
+            "sub_boss": SubBoss,
+            "level_boss": LevelBoss,
+            "health_pickup": HealthPickup,
+            "extra_life_pickup": ExtraLifePickup,
+            "power_level_pickup": PowerLevelPickup,
+            "overdrive_pickup": OverdrivePickup,
+            "bomb_ammo_pickup": BombAmmoPickup,
+            "invulnerability_pickup": InvulnerabilityPickup,
+        }
 
     def spawn_entity(self):
         position = self.calc_position()

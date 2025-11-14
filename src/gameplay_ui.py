@@ -395,22 +395,6 @@ class EndLevelModal(Modal):
                         "params": {"cutscene_id": "outro_2"},
                     }
                     self.gameplay.event_manager.handle_event(outro_cutscene)
-        # for event in events:
-        #     if event.type == pygame.KEYDOWN:
-        #         if event.key == pygame.K_RETURN:
-        #             self.is_visible = False
-        #             if not self.start_outro:
-        #                 self.start_outro = True
-        #                 move_player_to_top = {
-        #                     "event": "move_player_to",
-        #                     "params": {"x": 304, "y": -96, "speed": 300},
-        #                 }
-        #                 self.gameplay.event_manager.handle_event(move_player_to_top)
-
-        # if self.start_outro:
-        #     if self.gameplay.player_group.scripted_movement_active:
-        #         return
-        #     self.gameplay.game.change_screen("Credits")
 
 
 class GameOverModal(Modal):

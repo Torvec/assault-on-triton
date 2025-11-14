@@ -172,34 +172,9 @@ class MissionCompleteState(State):
 
     def handle_event(self, events):
         self.gameplay.end_level_modal.handle_event(events)
-        # EndLevelModal will handle the transition to next cutscene/credits
 
     def update(self, dt):
         pass
 
     def draw(self, surface):
         self.gameplay.end_level_modal.draw(surface)
-
-    # def handle_level_complete(self, dt):
-    #     timeline_index = self.event_manager.timeline_index
-    #     timeline_length = len(self.event_manager.timeline)
-    #     hostile_count = (
-    #         len(self.asteroids) + len(self.enemy_drones) + len(self.enemy_ships)
-    #     )
-
-    #     if timeline_index >= timeline_length and hostile_count == 0:
-    #         if not self.level_complete:
-    #             self.level_complete = True
-    #             self.level_end_timer = 5
-
-    #         self.level_end_timer -= dt
-    #         if self.level_end_timer <= 0 and not self.end_level_modal.is_visible:
-    #             self.score.store_score(self.score.score)
-    #             # fmt: off
-    #             move_player_to_center = {
-    #                     "event": "move_player_to",
-    #                     "params": {"x": 304, "y": 540, "speed": 200},
-    #                 }
-    #             # fmt: on
-    #             self.event_manager.handle_event(move_player_to_center)
-    #             self.end_level_modal.is_visible = True
