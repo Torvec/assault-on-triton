@@ -58,7 +58,7 @@ def rotate_constantly(entity, dt):
     entity.rotation += entity.rotation_speed * dt
 
 
-def shoot(entity, dt, **kwargs):
+def shoot(entity, dt):
     if entity.shoot_timer > 0:
         return
 
@@ -594,6 +594,7 @@ class Boss(Entity):
 
     def update(self, dt):
         super().update(dt)
+        self.shoot_timer -= dt
 
     def draw(self, surface):
         super().draw(surface)
