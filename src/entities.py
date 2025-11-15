@@ -23,15 +23,17 @@ def move_straight(entity, direction, dt):
 
 
 def move_to_location(entity, x, y, speed, dt):
-
-    direction = pygame.Vector2(x, y) - entity.position
+    target = pygame.Vector2(x, y)
+    direction = target - entity.position
     distance = direction.length()
 
-    if distance < 5:  # * Note: Threshold to prevent jittering
-        entity.position = entity.target_position.copy()
+    if distance < 5:  # Threshold to prevent jittering
+        entity.position = target.copy()
         entity.velocity = pygame.Vector2(0, 0)
+        entity.behaviors = [
+            b for b in entity.behaviors if b.get("action") != "move_to_location"
+        ]
         entity.gameplay.cutscene_manager.on_action_complete()
-
         return
 
     if distance > 0:
@@ -122,9 +124,6 @@ class Entity(pygame.sprite.Sprite):
         self.speed = 0
         self.velocity = pygame.Vector2(0, 0)
         self.rotation = 0
-        self.scripted_movement_active = False
-        self.target_position = pygame.Vector2(0, 0)
-        self.movement_speed = 0
         self.behaviors = []
 
     def collides_with(self, other_group):
@@ -156,30 +155,6 @@ class Entity(pygame.sprite.Sprite):
                 self.is_hit = False
                 self.hit_timer = self.HIT_TIMER
 
-    def scripted_movement(self, x, y, speed):
-        self.scripted_movement_active = True
-        self.target_position = pygame.Vector2(x, y)
-        self.movement_speed = speed
-
-    def handle_scripted_movement(self, dt):
-        if not self.scripted_movement_active:
-            return
-
-        direction = self.target_position - self.position
-        distance = direction.length()
-
-        if distance < 5:  # * Threshold to prevent jittering
-            self.position = self.target_position.copy()
-            self.scripted_movement_active = False
-            self.velocity = pygame.Vector2(0, 0)
-            self.gameplay.cutscene_manager.on_action_complete()
-            return
-
-        if distance > 0:
-            direction.normalize_ip()
-            self.velocity = direction * self.movement_speed
-            self.position += self.velocity * dt
-
     def handle_behaviors(self, dt):
         for behavior_data in self.behaviors:
             behavior_fn_name = behavior_data["action"]
@@ -192,7 +167,6 @@ class Entity(pygame.sprite.Sprite):
 
     def update(self, dt):
         self.rect.center = (self.position.x, self.position.y)
-        self.handle_scripted_movement(dt)
         self.handle_behaviors(dt)
         self.handle_hit_timer(dt)
         self.gameplay.collision_manager.handle_boundaries(self)

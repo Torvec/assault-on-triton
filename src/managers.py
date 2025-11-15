@@ -344,8 +344,15 @@ class CutsceneManager:
             print(f"Entity '{entity_name}' not found")
             self.on_action_complete()
             return
-        target_pos = pygame.Vector2(location["x"], location["y"])
-        entity.scripted_movement(target_pos.x, target_pos.y, speed)
+        move_behavior = {
+            "action": "move_to_location",
+            "params": {
+                "x": location["x"],
+                "y": location["y"],
+                "speed": speed,
+            },
+        }
+        entity.behaviors.append(move_behavior)
 
     def handle_explode_entity(self, entity_name):
         entity = self.get_entity(entity_name)

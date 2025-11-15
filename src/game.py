@@ -24,13 +24,12 @@ class Game:
             "Credits": Credits,
             "Thanks": Thanks,
         }
-
         self.change_screen("Start")
 
     def change_screen(self, screen_name):
         if screen_name not in self.screens:
             raise ValueError(f"Unknown scene: {screen_name}")
-        self.current_scene = self.screens[screen_name](self)
+        self.current_screen = self.screens[screen_name](self)
 
     def run(self):
         while self.running:
@@ -38,9 +37,9 @@ class Game:
             for event in events:
                 if event.type == pygame.QUIT:
                     self.running = False
-            self.current_scene.handle_event(events)
-            self.current_scene.update(self.dt)
-            self.current_scene.draw(self.display_surface, self.game_surface)
+            self.current_screen.handle_event(events)
+            self.current_screen.update(self.dt)
+            self.current_screen.draw(self.display_surface, self.game_surface)
             self.display_surface.blit(
                 self.game_surface, (DISPLAY["game_surface_offset"], 0)
             )
