@@ -4,7 +4,6 @@ EVENT_QUEUE = [
         "params": {
             "type": "player",
             "location": "player_spawn",
-            "behaviors": [],
         },
     },
     {
@@ -28,7 +27,6 @@ EVENT_QUEUE = [
         "params": {
             "type": "sub_boss",
             "location": "top_center",
-            "behaviors": [],
         },
     },
     {
@@ -58,7 +56,6 @@ EVENT_QUEUE = [
         "params": {
             "type": "level_boss",
             "location": "top_center",
-            "behaviors": [],
         },
     },
     {

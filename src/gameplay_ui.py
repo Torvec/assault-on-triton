@@ -381,7 +381,7 @@ class EndLevelModal(Modal):
             menu_items=[
                 f"Score: {gameplay.game.score_store.current_score}",
                 f"Time: {gameplay.game_timer:.2f}".replace(".", ":"),
-                "[ENTER] Credits",
+                "[ENTER] Continue",
             ],
         )
 

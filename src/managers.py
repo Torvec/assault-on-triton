@@ -204,7 +204,6 @@ class SpawnManager:
                 )
 
         elif isinstance(self.location, pygame.Vector2):
-            # return self.location.copy()
             return self.location
 
 
@@ -231,7 +230,7 @@ class EventManager:
     def process_next(self):
         if self.current_index >= len(self.events):
             print("Event queue complete")
-            self.gameplay.game.change_screen("Credits")
+            self.gameplay.game.change_screen("Thanks")
             return
 
         self.current_event = self.events[self.current_index]
@@ -403,14 +402,6 @@ class WaveManager:
         )
         spawner.spawn_entity()
 
-    def is_wave_complete(self):
-        all_spawns_complete = self.wave_index >= len(self.wave_data)
-        all_enemies_defeated = (
-            len(self.gameplay.asteroids) == 0
-            and len(self.gameplay.enemy_drones) == 0
-            and len(self.gameplay.enemy_ships) == 0
-        )
-        return all_spawns_complete and all_enemies_defeated
 
     def end_wave(self):
         print(f"Wave Complete: {self.current_wave}")
@@ -427,7 +418,10 @@ class WaveManager:
         self.wave_time += dt
         self.process_wave()
 
-        if self.is_wave_complete():
+        if (
+            self.wave_index >= len(self.wave_data)
+            and len(self.gameplay.active_targets) == 0
+        ):
             self.end_wave()
 
 

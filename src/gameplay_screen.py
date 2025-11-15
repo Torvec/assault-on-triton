@@ -34,6 +34,7 @@ from src.gameplay_states import (
 )
 from data.event_queue import EVENT_QUEUE
 
+
 class GamePlay(Screen):
 
     def __init__(self, game):
@@ -73,18 +74,39 @@ class GamePlay(Screen):
         self.bombs = pygame.sprite.Group()
         self.explosions = pygame.sprite.Group()
         self.pickups = pygame.sprite.Group()
+        self.active_targets = pygame.sprite.Group()
 
         Player.containers = (self.player_group, self.updateable, self.drawable)
-        Asteroid.containers = (self.asteroids, self.updateable, self.drawable)
-        EnemyDrone.containers = (self.enemy_drones, self.updateable, self.drawable)
-        EnemyShip.containers = (self.enemy_ships, self.updateable, self.drawable)
+        Asteroid.containers = (
+            self.asteroids,
+            self.updateable,
+            self.drawable,
+            self.active_targets,
+        )
+        EnemyDrone.containers = (
+            self.enemy_drones,
+            self.updateable,
+            self.drawable,
+            self.active_targets,
+        )
+        EnemyShip.containers = (
+            self.enemy_ships,
+            self.updateable,
+            self.drawable,
+            self.active_targets,
+        )
         SubBoss.containers = (self.sub_boss_group, self.updateable, self.drawable)
         LevelBoss.containers = (self.level_boss_group, self.updateable, self.drawable)
         Missile.containers = (self.missiles, self.updateable, self.drawable)
         Shot.containers = (self.shots, self.updateable, self.drawable)
         Bomb.containers = (self.bombs, self.updateable, self.drawable)
         Explosion.containers = (self.explosions, self.updateable, self.drawable)
-        Pickup.containers = (self.pickups, self.updateable, self.drawable)
+        Pickup.containers = (
+            self.pickups,
+            self.updateable,
+            self.drawable,
+            self.active_targets,
+        )
 
         self.event_manager = EventManager(self, EVENT_QUEUE)
         self.wave_manager = WaveManager(self)
