@@ -230,20 +230,26 @@ class Explosion(Entity):
 
         return collisions
 
-    def update(self, dt):
-        super().update(dt)
+    def handle_explosion_expansion(self, dt):
         if self.init_radius < self.blast_radius:
             self.init_radius += self.exp_rate * dt
             if self.init_radius >= self.blast_radius:
                 self.kill()
 
-    def draw(self, screen):
-        super().draw(screen)
+    def handle_explosion_animation(self, screen):
         scaled_image = pygame.transform.scale(
             self.image, (self.init_radius * 2, self.init_radius * 2)
         )
         scaled_rect = scaled_image.get_rect(center=self.rect.center)
         screen.blit(scaled_image, scaled_rect)
+
+    def update(self, dt):
+        super().update(dt)
+        self.handle_explosion_expansion(dt)
+
+    def draw(self, screen):
+        super().draw(screen)
+        self.handle_explosion_animation(screen)
 
 
 class Projectile(Entity):
@@ -560,74 +566,49 @@ class EnemyShip(Ship):
         super().__init__(x, y, gameplay, "enemy_ship")
 
 
-class SubBoss(Ship):
+class Boss(Entity):
+    def __init__(self, x, y, gameplay, boss_type):
+        self.img_path = IMAGES[boss_type]
+        super().__init__(x, y, gameplay)
+        self.speed = ENEMIES[boss_type]["speed"]
+        self.hp = ENEMIES[boss_type]["hp"]
+        self.blast_radius = ENEMIES[boss_type]["blast_radius"]
+        self.score_value = self.hp
+        self.shoot_timer = 0
+        self.shoot_cooldown = ENEMIES[boss_type]["shot_cooldown"]
+        self.shot_offset_pos = ENEMIES[boss_type]["shot_offset"]
+
+    def take_damage(self, amount):
+        self.hp -= amount
+        if self.hp <= 0:
+            self.gameplay.score_manager.handle_score(self.score_value)
+            self.gameplay.score_manager.handle_streak_meter_inc(self.score_value)
+            self.gameplay.battle_manager.end_battle()
+        self.is_hit = True
+
+    def explode(self):
+        Explosion(
+            self.position.x, self.position.y, self.gameplay, self.blast_radius, None
+        )
+        self.kill()
+
+    def update(self, dt):
+        super().update(dt)
+
+    def draw(self, surface):
+        super().draw(surface)
+        surface.blit(self.image, self.rect)
+        self.flash_when_hit(surface, self.image, self.rect)
+
+
+class SubBoss(Boss):
     def __init__(self, x, y, gameplay):
         super().__init__(x, y, gameplay, "sub_boss")
-        #! Using the Ship parent class temporarily just to test the battle manager and play state
-
-    #     self.img_path = IMAGES["sub_boss"]
-    #     super().__init__(x, y, gameplay)
-    #     self.speed = ENEMIES["sub_boss"]["speed"]
-    #     self.hp = ENEMIES["sub_boss"]["hp"]
-    #     self.blast_radius = ENEMIES["sub_boss"]["blast_radius"]
-    #     self.score_value = self.hp
-
-    # def take_damage(self, amount):
-    #     self.hp -= amount
-    #     if self.hp <= 0:
-    #         self.gameplay.score_manager.handle_score(self.score_value)
-    #         self.gameplay.score_manager.handle_streak_meter_in(self.score_value)
-    #         self.explode()
-    #     self.is_hit = True
-
-    # def explode(self):
-    #     Explosion(
-    #         self.position.x, self.position.y, self.gameplay, self.blast_radius, self
-    #     )
-    #     self.kill()
-
-    # def update(self, dt):
-    #     super().update(dt)
-
-    # def draw(self, surface):
-    #     super().draw(surface)
-    #     surface.blit(self.image, self.rect)
-    #     self.flash_when_hit(surface, self.image, self.rect)
 
 
-class LevelBoss(Ship):
+class LevelBoss(Boss):
     def __init__(self, x, y, gameplay):
         super().__init__(x, y, gameplay, "level_boss")
-        #! Using the Ship parent class temporarily just to test the battle manager and play state
-
-    #     self.img_path = IMAGES["level_boss"]
-    #     super().__init__(x, y, gameplay)
-    #     self.speed = ENEMIES["level_boss"]["speed"]
-    #     self.hp = ENEMIES["level_boss"]["hp"]
-    #     self.blast_radius = ENEMIES["level_boss"]["blast_radius"]
-    #     self.score_value = self.hp
-
-    # def take_damage(self, amount):
-    #     self.hp -= amount
-    #     if self.hp <= 0:
-    #         self.gameplay.score_manager.handle_score(self.score_value)
-    #         self.gameplay.score_manager.handle_streak_meter_in(self.score_value)
-    #         self.explode()
-    #     self.is_hit = True
-
-    # def explode(self):
-    #     Explosion(
-    #         self.position.x, self.position.y, self.gameplay, self.blast_radius, self
-    #     )
-    #     self.kill()
-
-    # def update(self, dt):
-    #     super().update(dt)
-
-    # def draw(self, surface):
-    #     super().draw(surface)
-    #     surface.blit(self.image, self.rect)
-    #     self.flash_when_hit(surface, self.image, self.rect)
 
 
 class Pickup(Entity):

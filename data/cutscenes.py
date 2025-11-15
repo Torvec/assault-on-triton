@@ -80,7 +80,10 @@ CUTSCENE = {
             "action": "show_dialogue",
             "params": {"dialogue_id": "sub_boss_defeat_1_2"},
         },
-        # TODO: Add an explosion event for the sub boss sprite
+        {
+            "action": "explode_entity",
+            "params": {"entity_name": "sub_boss"},
+        },
         {
             "action": "show_dialogue",
             "params": {"dialogue_id": "sub_boss_defeat_1_3"},
@@ -145,7 +148,10 @@ CUTSCENE = {
             "action": "show_dialogue",
             "params": {"dialogue_id": "level_boss_defeat_1_2"},
         },
-        # TODO: Add an explosion event for the sub boss sprite
+        {
+            "action": "explode_entity",
+            "params": {"entity_name": "level_boss"},
+        },
         {
             "action": "show_dialogue",
             "params": {"dialogue_id": "level_boss_defeat_1_3"},
@@ -169,5 +175,4 @@ CUTSCENE = {
             },
         },
     ],
-    # "outro_2": {},
 }

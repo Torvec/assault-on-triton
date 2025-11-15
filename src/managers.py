@@ -294,6 +294,7 @@ class CutsceneManager:
         self.action_handlers = {
             "show_dialogue": self.handle_dialogue,
             "move_entity_to_loc": self.handle_move_entity_to_loc,
+            "explode_entity": self.handle_explode_entity,
         }
 
     def start_cutscene(self, cutscene_id):
@@ -346,6 +347,15 @@ class CutsceneManager:
             return
         target_pos = pygame.Vector2(location["x"], location["y"])
         entity.scripted_movement(target_pos.x, target_pos.y, speed)
+
+    def handle_explode_entity(self, entity_name):
+        entity = self.get_entity(entity_name)
+        if entity is None:
+            print(f"Entity '{entity_name}' not found")
+            self.on_action_complete()
+            return
+        entity.explode()
+        self.on_action_complete()
 
     def get_entity(self, entity_name):
         if entity_name == "player":
@@ -435,10 +445,6 @@ class BattleManager:
         else:
             print(f"Warning: Battle entity for {battle_id} not found!")
 
-    def check_battle_complete(self):
-        if self.battle_entity and not self.battle_entity.alive():
-            self.end_battle()
-
     def end_battle(self):
         print(f"Ending battle: {self.current_battle}")
         self.battle_entity = None
@@ -446,8 +452,7 @@ class BattleManager:
         self.gameplay.event_manager.on_event_complete()
 
     def update(self, dt):
-        if self.battle_entity:
-            self.check_battle_complete()
+        pass
 
 
 class ScoreManager:

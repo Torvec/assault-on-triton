@@ -128,17 +128,20 @@ class GamePlayUI:
         """Enemy dialogue box."""
         if self.dialogue_location == "top":
             rect = pygame.Rect(
-                16,
-                16,
-                surface.get_width() - 4,
+                0,
+                0,
+                surface.get_width() - 32,
                 192,
             )
+            rect.topleft = surface.get_rect().topleft
+            rect.x += 16
+            rect.y += 16
             pygame.draw.rect(surface, UI["colors"]["background"], rect)
             content_rect = pygame.Rect(
                 rect.x + 16,
                 rect.y + 16,
-                rect.width - 32,
-                rect.height - 32,
+                rect.width - 16,
+                rect.height - 16,
             )
             portrait = pygame.image.load(self.current_portrait)
             portrait_rect = portrait.get_rect()
