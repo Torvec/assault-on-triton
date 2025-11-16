@@ -46,18 +46,34 @@ PLAYER = {
 
 ENEMIES = {
     "asteroid": {
-        "sm": {"speed": 120, "hp": 2, "splits_into": None},
-        "md": {"speed": 100, "hp": 4, "splits_into": "sm"},
-        "lg": {"speed": 80, "hp": 6, "splits_into": "md"},
-        "xl": {"speed": 60, "hp": 12, "splits_into": "lg"},
+        "sm": {
+            "speed": 120,
+            "hp": 2,
+            "splits_into": None,
+        },
+        "md": {
+            "speed": 100,
+            "hp": 4,
+            "splits_into": "sm",
+        },
+        "lg": {
+            "speed": 80,
+            "hp": 6,
+            "splits_into": "md",
+        },
+        "xl": {
+            "speed": 60,
+            "hp": 12,
+            "splits_into": "lg",
+        },
         "rotation_speed_range": (-90, 90),
         "split_angle": 30,
         "split_velocity_factor": 1.2,
     },
     "enemy_drone": {
-        "speed": 300,
+        "speed": 175,
         "hp": 4,
-        "shot_cooldown": 0.6,
+        "shot_cooldown": 0.8,
         "shot_offset": 4,
         "blast_radius": 32,
     },
@@ -86,17 +102,47 @@ ENEMIES = {
 
 PROJECTILES = {
     "player_shot": {
-        1: {"range": 512, "speed": 500, "damage": 1},
-        2: {"range": 768, "speed": 600, "damage": 2},
-        3: {"range": 1024, "speed": 700, "damage": 3},
-        4: {"range": 1024, "speed": 800, "damage": 4},
-        5: {"range": 1024, "speed": 1000, "damage": 8},
+        1: {
+            "range": 512,
+            "speed": 500,
+            "damage": 1,
+        },
+        2: {
+            "range": 768,
+            "speed": 600,
+            "damage": 2,
+        },
+        3: {
+            "range": 1024,
+            "speed": 700,
+            "damage": 3,
+        },
+        4: {
+            "range": 1024,
+            "speed": 800,
+            "damage": 4,
+        },
+        5: {
+            "range": 1024,
+            "speed": 1000,
+            "damage": 8,
+        },
     },
-    "enemy_shot": {"range": 512, "speed": 500, "damage": 10},
+    "enemy_shot": {
+        "range": 512,
+        "speed": 500,
+        "damage": 10,
+    },
     "player_bomb": {
         "speed": 250,
         "trigger_distance": 256,
-        "blast_radius": {1: 192, 2: 256, 3: 384, 4: 512, 5: 512},
+        "blast_radius": {
+            1: 192,
+            2: 256,
+            3: 384,
+            4: 512,
+            5: 512,
+        },
     },
     "enemy_bomb": {
         "speed": 250,
@@ -110,17 +156,40 @@ PROJECTILES = {
     },
 }
 
-
 PICKUPS = {
-    "health": {"radius": 16, "speed": 150, "heal_amount": 25},
-    "power": {"radius": 16, "speed": 150, "fallback_score": 100},
-    "bomb": {"radius": 16, "speed": 150, "fallback_score": 100},
-    "life": {"radius": 16, "speed": 150, "fallback_score": 100},
+    "health": {
+        "radius": 16,
+        "speed": 150,
+        "heal_amount": 25,
+    },
+    "power": {
+        "radius": 16,
+        "speed": 150,
+        "fallback_score": 100,
+    },
+    "bomb": {
+        "radius": 16,
+        "speed": 150,
+        "fallback_score": 100,
+    },
+    "life": {
+        "radius": 16,
+        "speed": 150,
+        "fallback_score": 100,
+    },
 }
 
-EXPLOSIONS = {"initial_radius": 4, "expansion_rate": 256, "damage": 5}
+EXPLOSIONS = {
+    "initial_radius": 4,
+    "expansion_rate": 256,
+    "damage": 5,
+}
 
-AUDIO = {"master_volume": 1.0, "sfx_volume": 0.5, "music_volume": 0.7}
+AUDIO = {
+    "master_volume": 1.0,
+    "sfx_volume": 0.5,
+    "music_volume": 0.7,
+}
 
 SCORING = {
     "streak_threshold_base": 10,
@@ -153,7 +222,13 @@ UI = {
         "meter_border": "grey70",
         "meter_fill": "grey50",
     },
-    "power_levels": {1: "( I )", 2: "( II )", 3: "( III )", 4: "( IV )", 5: "( OV )"},
+    "power_levels": {
+        1: "( I )",
+        2: "( II )",
+        3: "( III )",
+        4: "( IV )",
+        5: "( OV )",
+    },
 }
 
 SPAWN_LOCATIONS = {

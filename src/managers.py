@@ -214,6 +214,7 @@ class EventManager:
         self.events = events
         self.current_index = 0
         self.current_event = None
+        self.delay_timer = 0
         self.event_handlers = {
             "spawn_entity": self.handle_spawn_entity,
             "trigger_cutscene": self.handle_cutscene,
@@ -244,11 +245,15 @@ class EventManager:
             print(f"Unknown event type: {event_type}")
             self.on_event_complete()
 
-    def on_event_complete(self):
+    def on_event_complete(self, delay=0):
         print(f"Event complete: {self.current_event['type']}")
         self.current_index += 1
         self.current_event = None
-        self.process_next()
+
+        if delay > 0:
+            self.delay_timer = delay
+        else:
+            self.process_next()
 
     def handle_spawn_entity(self, event):
         params = event.get("params", {})
@@ -282,6 +287,13 @@ class EventManager:
     def handle_message(self, event):
         params = event.get("params", {})
         self.gameplay.gameplay_ui.display_message(params["message_id"])
+
+    def update(self, dt):
+        if self.delay_timer > 0:
+            self.delay_timer -= dt
+            if self.delay_timer <= 0:
+                self.delay_timer = 0
+                self.process_next()
 
 
 class CutsceneManager:
@@ -409,14 +421,13 @@ class WaveManager:
         )
         spawner.spawn_entity()
 
-
     def end_wave(self):
         print(f"Wave Complete: {self.current_wave}")
         self.current_wave = None
         self.wave_data = None
         self.wave_time = 0.0
         self.wave_index = 0
-        self.gameplay.event_manager.on_event_complete()
+        self.gameplay.event_manager.on_event_complete(delay=3)
 
     def update(self, dt):
         if not self.wave_data:
@@ -429,6 +440,7 @@ class WaveManager:
             self.wave_index >= len(self.wave_data)
             and len(self.gameplay.active_targets) == 0
         ):
+
             self.end_wave()
 
 

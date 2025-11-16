@@ -590,10 +590,11 @@ class Pickup(Entity):
 
     def __init__(self, x, y, gameplay):
         super().__init__(x, y, gameplay)
-        self.player = self.gameplay.player
+        self.player = self.gameplay.player_group.sprite
         pickup_type = getattr(self, "pickup_type", "health")
         data = PICKUPS.get(pickup_type, PICKUPS["health"])
         self.speed = data["speed"]
+        self.rotation_speed = 45
 
     def apply(self):
         pass
@@ -601,9 +602,11 @@ class Pickup(Entity):
     def update(self, dt):
         super().update(dt)
 
-    def draw(self, screen):
-        super().draw(screen)
-        screen.blit(self.image, self.rect)
+    def draw(self, surface):
+        super().draw(surface)
+        rotated_image = pygame.transform.rotate(self.image, self.rotation)
+        rotated_rect = rotated_image.get_rect(center=self.rect.center)
+        surface.blit(rotated_image, rotated_rect)
 
 
 class HealthPickup(Pickup):
@@ -626,8 +629,8 @@ class HealthPickup(Pickup):
     def update(self, dt):
         super().update(dt)
 
-    def draw(self, screen):
-        super().draw(screen)
+    def draw(self, surface):
+        super().draw(surface)
 
 
 class ExtraLifePickup(Pickup):
@@ -651,8 +654,8 @@ class ExtraLifePickup(Pickup):
     def update(self, dt):
         super().update(dt)
 
-    def draw(self, screen):
-        super().draw(screen)
+    def draw(self, surface):
+        super().draw(surface)
 
 
 class PowerLevelPickup(Pickup):
@@ -676,8 +679,8 @@ class PowerLevelPickup(Pickup):
     def update(self, dt):
         super().update(dt)
 
-    def draw(self, screen):
-        super().draw(screen)
+    def draw(self, surface):
+        super().draw(surface)
 
 
 class OverdrivePickup(Pickup):
@@ -695,8 +698,8 @@ class OverdrivePickup(Pickup):
     def update(self, dt):
         super().update(dt)
 
-    def draw(self, screen):
-        super().draw(screen)
+    def draw(self, surface):
+        super().draw(surface)
 
 
 class BombAmmoPickup(Pickup):
@@ -720,8 +723,8 @@ class BombAmmoPickup(Pickup):
     def update(self, dt):
         super().update(dt)
 
-    def draw(self, screen):
-        super().draw(screen)
+    def draw(self, surface):
+        super().draw(surface)
 
 
 class InvulnerabilityPickup(Pickup):
@@ -738,8 +741,8 @@ class InvulnerabilityPickup(Pickup):
     def update(self, dt):
         super().update(dt)
 
-    def draw(self, screen):
-        super().draw(screen)
+    def draw(self, surface):
+        super().draw(surface)
 
 
 class Player(Entity):
@@ -867,7 +870,7 @@ class Player(Entity):
         self.shoot_timer -= dt
         self.bomb_timer -= dt
 
-    def draw(self, screen):
-        super().draw(screen)
-        screen.blit(self.image, self.rect)
-        self.flash_when_hit(screen, self.image, self.rect)
+    def draw(self, surface):
+        super().draw(surface)
+        surface.blit(self.image, self.rect)
+        self.flash_when_hit(surface, self.image, self.rect)
