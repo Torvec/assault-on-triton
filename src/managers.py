@@ -440,7 +440,6 @@ class WaveManager:
             self.wave_index >= len(self.wave_data)
             and len(self.gameplay.active_targets) == 0
         ):
-
             self.end_wave()
 
 

@@ -47,7 +47,7 @@ PLAYER = {
 ENEMIES = {
     "asteroid": {
         "sm": {
-            "speed": 120,
+            "speed": 100,
             "hp": 2,
             "splits_into": None,
         },
@@ -57,13 +57,13 @@ ENEMIES = {
             "splits_into": "sm",
         },
         "lg": {
-            "speed": 80,
+            "speed": 100,
             "hp": 6,
             "splits_into": "md",
         },
         "xl": {
-            "speed": 60,
-            "hp": 12,
+            "speed": 100,
+            "hp": 10,
             "splits_into": "lg",
         },
         "rotation_speed_range": (-90, 90),
@@ -71,16 +71,16 @@ ENEMIES = {
         "split_velocity_factor": 1.2,
     },
     "enemy_drone": {
-        "speed": 175,
+        "speed": 150,
         "hp": 4,
         "shot_cooldown": 0.8,
         "shot_offset": 4,
         "blast_radius": 32,
     },
     "enemy_ship": {
-        "speed": 200,
+        "speed": 175,
         "hp": 8,
-        "shot_cooldown": 0.4,
+        "shot_cooldown": 0.6,
         "shot_offset": 4,
         "blast_radius": 48,
     },
@@ -105,7 +105,7 @@ PROJECTILES = {
         1: {
             "range": 512,
             "speed": 500,
-            "damage": 1,
+            "damage": 2,
         },
         2: {
             "range": 768,
@@ -125,13 +125,13 @@ PROJECTILES = {
         5: {
             "range": 1024,
             "speed": 1000,
-            "damage": 8,
+            "damage": 6,
         },
     },
     "enemy_shot": {
         "range": 512,
-        "speed": 500,
-        "damage": 10,
+        "speed": 300,
+        "damage": 5,
     },
     "player_bomb": {
         "speed": 250,
@@ -159,22 +159,22 @@ PROJECTILES = {
 PICKUPS = {
     "health": {
         "radius": 16,
-        "speed": 150,
+        "speed": 120,
         "heal_amount": 25,
     },
     "power": {
         "radius": 16,
-        "speed": 150,
+        "speed": 120,
         "fallback_score": 100,
     },
     "bomb": {
         "radius": 16,
-        "speed": 150,
+        "speed": 120,
         "fallback_score": 100,
     },
     "life": {
         "radius": 16,
-        "speed": 150,
+        "speed": 120,
         "fallback_score": 100,
     },
 }
@@ -232,14 +232,14 @@ UI = {
 }
 
 SPAWN_LOCATIONS = {
-    "top_left_edge": (0.1, "top"),
-    "top_far_left": (0.2, "top"),
-    "top_left": (0.3, "top"),
-    "top_center_left": (0.4, "top"),
-    "top_center": (0.5, "top"),
-    "top_center_right": (0.6, "top"),
-    "top_right": (0.7, "top"),
-    "top_far_right": (0.8, "top"),
-    "top_right_edge": (0.9, "top"),
+    "top_left_edge": (0.1, "top"),  # 1
+    "top_far_left": (0.2, "top"),  # 2
+    "top_left": (0.3, "top"),  # 3
+    "top_center_left": (0.4, "top"),  # 4
+    "top_center": (0.5, "top"),  # 5
+    "top_center_right": (0.6, "top"),  # 6
+    "top_right": (0.7, "top"),  # 7
+    "top_far_right": (0.8, "top"),  # 8
+    "top_right_edge": (0.9, "top"),  # 9
     "player_spawn": (0.5, "btm"),
 }
