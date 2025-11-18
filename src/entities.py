@@ -782,28 +782,21 @@ class Player(Entity):
         keys = pygame.key.get_pressed()
 
         if keys[pygame.K_a]:
-            self.velocity.x -= self.acceleration * dt
+            self.position += DIRECTION_LEFT * self.speed * dt
         if keys[pygame.K_d]:
-            self.velocity.x += self.acceleration * dt
+            self.position += DIRECTION_RIGHT * self.speed * dt
         if keys[pygame.K_w]:
-            self.velocity.y -= self.acceleration * dt
+            self.position += DIRECTION_UP * self.speed * dt
         if keys[pygame.K_s]:
-            self.velocity.y += self.acceleration * dt
+            self.position += DIRECTION_DOWN * self.speed * dt
         if keys[pygame.K_SPACE]:
             self.shoot()
         if keys[pygame.K_e]:
             self.release_bomb()
 
-    def apply_acceleration(self, dt):
-        self.velocity *= PLAYER["velocity_decay"]
-        if self.velocity.length() > self.speed:
-            self.velocity.scale_to_length(self.speed)
-        self.position += self.velocity * dt
-
     def update(self, dt):
         super().update(dt)
         self.controls(dt)
-        self.apply_acceleration(dt)
         self.gameplay.collision_manager.handle_boundaries(self, action="block")
         self.handle_invincibility(dt)
         self.handle_overdrive(dt)

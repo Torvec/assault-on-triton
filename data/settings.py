@@ -10,7 +10,6 @@ DISPLAY = {
 }
 
 PLAYER = {
-    "radius": 48,
     "base_acceleration": 600,
     "base_speed": 350,
     "base_lives": 1,
@@ -36,10 +35,10 @@ PLAYER = {
         7: {"x": 25, "y": -20},
     },
     "shots": {
-        1: {"rate": 0.20, "active_pos": [1]},
-        2: {"rate": 0.20, "active_pos": [2, 3]},
-        3: {"rate": 0.20, "active_pos": [1, 2, 3]},
-        4: {"rate": 0.18, "active_pos": [1, 2, 3, 4, 5]},
+        1: {"rate": 0.16, "active_pos": [1]},
+        2: {"rate": 0.16, "active_pos": [2, 3]},
+        3: {"rate": 0.16, "active_pos": [1, 2, 3]},
+        4: {"rate": 0.16, "active_pos": [1, 2, 3, 4, 5]},
         5: {"rate": 0.16, "active_pos": [1, 2, 3, 4, 5, 6, 7]},
     },
 }
@@ -103,13 +102,13 @@ ENEMIES = {
 PROJECTILES = {
     "player_shot": {
         1: {
-            "range": 512,
-            "speed": 500,
+            "range": 768,
+            "speed": 700,
             "damage": 2,
         },
         2: {
             "range": 768,
-            "speed": 600,
+            "speed": 700,
             "damage": 2,
         },
         3: {
@@ -119,12 +118,12 @@ PROJECTILES = {
         },
         4: {
             "range": 1024,
-            "speed": 800,
+            "speed": 700,
             "damage": 4,
         },
         5: {
             "range": 1024,
-            "speed": 1000,
+            "speed": 700,
             "damage": 6,
         },
     },
