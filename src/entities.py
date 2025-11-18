@@ -13,72 +13,6 @@ DIRECTION_DOWN_LEFT = pygame.Vector2(-1, 1).normalize()
 DIRECTION_DOWN_RIGHT = pygame.Vector2(1, 1).normalize()
 
 
-def move_straight(entity, direction, dt):
-    match direction:
-        case "down":
-            direction = DIRECTION_DOWN
-        case _:
-            pass
-    entity.position += direction * entity.speed * dt
-
-
-def move_to_location(entity, x, y, speed, dt):
-    target = pygame.Vector2(x, y)
-    direction = target - entity.position
-    distance = direction.length()
-
-    if distance < 5:  # Threshold to prevent jittering
-        entity.position = target.copy()
-        entity.velocity = pygame.Vector2(0, 0)
-        entity.behaviors = [
-            b for b in entity.behaviors if b.get("action") != "move_to_location"
-        ]
-        entity.gameplay.cutscene_manager.on_action_complete()
-        return
-
-    if distance > 0:
-        direction.normalize_ip()
-        entity.velocity = direction * speed
-        entity.position += entity.velocity * dt
-
-
-def move_angled(entity, dt, **kwargs):
-    angle = kwargs.get("angle", 0)
-    velocity_factor = kwargs.get("velocity_factor", 1.0)
-
-    # Sets up a flag so that the changing of direction only happens once and not continuously
-    if not hasattr(entity, "_angled_velocity_set"):
-
-        base_velocity = DIRECTION_DOWN * entity.speed
-        entity.velocity = base_velocity.rotate(angle) * velocity_factor
-        entity._angled_velocity_set = True
-
-    entity.position += entity.velocity * dt
-
-
-def rotate_constantly(entity, dt):
-    entity.rotation += entity.rotation_speed * dt
-
-
-def shoot(entity, dt):
-    if entity.shoot_timer > 0:
-        return
-
-    entity.shoot_timer = entity.shoot_cooldown
-
-    shot_pos = entity.position + DIRECTION_DOWN * entity.rect.height // 2
-
-    shot_l = EnemyShot(
-        shot_pos.x - entity.shot_offset_pos, shot_pos.y, entity.gameplay, entity
-    )
-    shot_r = EnemyShot(
-        shot_pos.x + entity.shot_offset_pos, shot_pos.y, entity.gameplay, entity
-    )
-    shot_l.velocity = DIRECTION_DOWN * shot_l.speed
-    shot_r.velocity = DIRECTION_DOWN * shot_r.speed
-    shot_l.sound()
-
-
 class Entity(pygame.sprite.Sprite):
 
     HIT_TIMER = 0.1
@@ -156,11 +90,17 @@ class Entity(pygame.sprite.Sprite):
                 self.hit_timer = self.HIT_TIMER
 
     def handle_behaviors(self, dt):
+        from src import entity_behaviors
+
         for behavior_data in self.behaviors:
             behavior_fn_name = behavior_data["action"]
-            behavior_fn = globals().get(behavior_fn_name)
+
+            behavior_fn = getattr(entity_behaviors, behavior_fn_name, None)
             if not behavior_fn:
-                raise ValueError(f"Behavior function '{behavior_fn_name}' not found.")
+                raise ValueError(
+                    f"Behavior function '{behavior_fn_name}' not found in entity_behaviors."
+                )
+
             params = behavior_data.get("params", {})
             params["dt"] = dt
             behavior_fn(self, **params)
