@@ -11,7 +11,7 @@ WAVE = {
             ],
         },
         {
-            "time": 1,
+            "time": 1.5,
             "type": "asteroid_sm",
             "location": "top_right",
             "behaviors": [
@@ -20,7 +20,7 @@ WAVE = {
             ],
         },
         {
-            "time": 1.5,
+            "time": 2,
             "type": "asteroid_md",
             "location": "top_center",
             "behaviors": [
@@ -29,7 +29,7 @@ WAVE = {
             ],
         },
         {
-            "time": 1.5,
+            "time": 2,
             "type": "asteroid_sm",
             "location": "top_left",
             "behaviors": [
@@ -38,27 +38,9 @@ WAVE = {
             ],
         },
         {
-            "time": 2.5,
+            "time": 3,
             "type": "asteroid_sm",
             "location": "top_far_right",
-            "behaviors": [
-                {"action": "move_straight", "params": {"direction": "down"}},
-                {"action": "rotate_constantly", "params": {}},
-            ],
-        },
-        {
-            "time": 3,
-            "type": "asteroid_sm",
-            "location": "top_right_edge",
-            "behaviors": [
-                {"action": "move_straight", "params": {"direction": "down"}},
-                {"action": "rotate_constantly", "params": {}},
-            ],
-        },
-        {
-            "time": 3,
-            "type": "asteroid_sm",
-            "location": "top_center_left",
             "behaviors": [
                 {"action": "move_straight", "params": {"direction": "down"}},
                 {"action": "rotate_constantly", "params": {}},
@@ -67,7 +49,16 @@ WAVE = {
         {
             "time": 3.5,
             "type": "asteroid_sm",
-            "location": "top_left_edge",
+            "location": "top_right_edge",
+            "behaviors": [
+                {"action": "move_straight", "params": {"direction": "down"}},
+                {"action": "rotate_constantly", "params": {}},
+            ],
+        },
+        {
+            "time": 3.5,
+            "type": "asteroid_sm",
+            "location": "top_center_left",
             "behaviors": [
                 {"action": "move_straight", "params": {"direction": "down"}},
                 {"action": "rotate_constantly", "params": {}},
@@ -76,16 +67,7 @@ WAVE = {
         {
             "time": 4,
             "type": "asteroid_sm",
-            "location": "top_right",
-            "behaviors": [
-                {"action": "move_straight", "params": {"direction": "down"}},
-                {"action": "rotate_constantly", "params": {}},
-            ],
-        },
-        {
-            "time": 4,
-            "type": "asteroid_md",
-            "location": "top_far_left",
+            "location": "top_left_edge",
             "behaviors": [
                 {"action": "move_straight", "params": {"direction": "down"}},
                 {"action": "rotate_constantly", "params": {}},
@@ -94,24 +76,6 @@ WAVE = {
         {
             "time": 4.5,
             "type": "asteroid_sm",
-            "location": "top_center_right",
-            "behaviors": [
-                {"action": "move_straight", "params": {"direction": "down"}},
-                {"action": "rotate_constantly", "params": {}},
-            ],
-        },
-        {
-            "time": 5,
-            "type": "asteroid_sm",
-            "location": "top_left",
-            "behaviors": [
-                {"action": "move_straight", "params": {"direction": "down"}},
-                {"action": "rotate_constantly", "params": {}},
-            ],
-        },
-        {
-            "time": 5.5,
-            "type": "asteroid_md",
             "location": "top_right",
             "behaviors": [
                 {"action": "move_straight", "params": {"direction": "down"}},
@@ -119,34 +83,7 @@ WAVE = {
             ],
         },
         {
-            "time": 6,
-            "type": "asteroid_md",
-            "location": "top_center_left",
-            "behaviors": [
-                {"action": "move_straight", "params": {"direction": "down"}},
-                {"action": "rotate_constantly", "params": {}},
-            ],
-        },
-        {
-            "time": 7,
-            "type": "asteroid_sm",
-            "location": "top_far_right",
-            "behaviors": [
-                {"action": "move_straight", "params": {"direction": "down"}},
-                {"action": "rotate_constantly", "params": {}},
-            ],
-        },
-        {
-            "time": 7,
-            "type": "asteroid_sm",
-            "location": "top_center",
-            "behaviors": [
-                {"action": "move_straight", "params": {"direction": "down"}},
-                {"action": "rotate_constantly", "params": {}},
-            ],
-        },
-        {
-            "time": 7.5,
+            "time": 4.5,
             "type": "asteroid_md",
             "location": "top_far_left",
             "behaviors": [
@@ -155,7 +92,70 @@ WAVE = {
             ],
         },
         {
+            "time": 5,
+            "type": "asteroid_sm",
+            "location": "top_center_right",
+            "behaviors": [
+                {"action": "move_straight", "params": {"direction": "down"}},
+                {"action": "rotate_constantly", "params": {}},
+            ],
+        },
+        {
+            "time": 5.5,
+            "type": "asteroid_sm",
+            "location": "top_left",
+            "behaviors": [
+                {"action": "move_straight", "params": {"direction": "down"}},
+                {"action": "rotate_constantly", "params": {}},
+            ],
+        },
+        {
+            "time": 6,
+            "type": "asteroid_md",
+            "location": "top_right",
+            "behaviors": [
+                {"action": "move_straight", "params": {"direction": "down"}},
+                {"action": "rotate_constantly", "params": {}},
+            ],
+        },
+        {
+            "time": 6.5,
+            "type": "asteroid_md",
+            "location": "top_center_left",
+            "behaviors": [
+                {"action": "move_straight", "params": {"direction": "down"}},
+                {"action": "rotate_constantly", "params": {}},
+            ],
+        },
+        {
+            "time": 7.5,
+            "type": "asteroid_sm",
+            "location": "top_far_right",
+            "behaviors": [
+                {"action": "move_straight", "params": {"direction": "down"}},
+                {"action": "rotate_constantly", "params": {}},
+            ],
+        },
+        {
+            "time": 7.5,
+            "type": "asteroid_sm",
+            "location": "top_center",
+            "behaviors": [
+                {"action": "move_straight", "params": {"direction": "down"}},
+                {"action": "rotate_constantly", "params": {}},
+            ],
+        },
+        {
             "time": 8,
+            "type": "asteroid_md",
+            "location": "top_far_left",
+            "behaviors": [
+                {"action": "move_straight", "params": {"direction": "down"}},
+                {"action": "rotate_constantly", "params": {}},
+            ],
+        },
+        {
+            "time": 8.5,
             "type": "asteroid_md",
             "location": "top_center_right",
             "behaviors": [
@@ -164,7 +164,7 @@ WAVE = {
             ],
         },
         {
-            "time": 8.5,
+            "time": 9,
             "type": "asteroid_md",
             "location": "top_center_left",
             "behaviors": [
@@ -174,7 +174,7 @@ WAVE = {
         },
         ### END SECTION 1 ###
         {
-            "time": 10.5,
+            "time": 11,
             "type": "asteroid_lg",
             "location": "top_far_right",
             "behaviors": [
@@ -183,7 +183,7 @@ WAVE = {
             ],
         },
         {
-            "time": 11,
+            "time": 11.5,
             "type": "asteroid_sm",
             "location": "top_center",
             "behaviors": [
@@ -192,7 +192,7 @@ WAVE = {
             ],
         },
         {
-            "time": 11,
+            "time": 11.5,
             "type": "asteroid_lg",
             "location": "top_far_left",
             "behaviors": [
@@ -201,7 +201,7 @@ WAVE = {
             ],
         },
         {
-            "time": 12,
+            "time": 12.5,
             "type": "asteroid_sm",
             "location": "top_left",
             "behaviors": [
@@ -210,7 +210,7 @@ WAVE = {
             ],
         },
         {
-            "time": 12.5,
+            "time": 13,
             "type": "asteroid_lg",
             "location": "top_center",
             "behaviors": [
@@ -219,7 +219,7 @@ WAVE = {
             ],
         },
         {
-            "time": 12.5,
+            "time": 13,
             "type": "asteroid_sm",
             "location": "top_right",
             "behaviors": [
@@ -228,7 +228,7 @@ WAVE = {
             ],
         },
         {
-            "time": 13.5,
+            "time": 14,
             "type": "asteroid_md",
             "location": "top_far_left",
             "behaviors": [
@@ -237,7 +237,7 @@ WAVE = {
             ],
         },
         {
-            "time": 14,
+            "time": 14.5,
             "type": "asteroid_sm",
             "location": "top_center",
             "behaviors": [
@@ -246,7 +246,7 @@ WAVE = {
             ],
         },
         {
-            "time": 14.5,
+            "time": 15,
             "type": "asteroid_lg",
             "location": "top_far_right",
             "behaviors": [
@@ -255,7 +255,7 @@ WAVE = {
             ],
         },
         {
-            "time": 14.5,
+            "time": 15,
             "type": "asteroid_sm",
             "location": "top_far_left",
             "behaviors": [
@@ -264,7 +264,7 @@ WAVE = {
             ],
         },
         {
-            "time": 15.5,
+            "time": 16,
             "type": "asteroid_lg",
             "location": "top_center_right",
             "behaviors": [
@@ -273,7 +273,7 @@ WAVE = {
             ],
         },
         {
-            "time": 15.5,
+            "time": 16,
             "type": "asteroid_md",
             "location": "top_center_left",
             "behaviors": [
@@ -282,7 +282,7 @@ WAVE = {
             ],
         },
         {
-            "time": 16,
+            "time": 16.5,
             "type": "asteroid_md",
             "location": "top_right_edge",
             "behaviors": [
@@ -291,7 +291,7 @@ WAVE = {
             ],
         },
         {
-            "time": 16.5,
+            "time": 17,
             "type": "asteroid_lg",
             "location": "top_left",
             "behaviors": [
@@ -300,7 +300,7 @@ WAVE = {
             ],
         },
         {
-            "time": 17.5,
+            "time": 18,
             "type": "asteroid_md",
             "location": "top_left_edge",
             "behaviors": [
@@ -309,7 +309,7 @@ WAVE = {
             ],
         },
         {
-            "time": 17.5,
+            "time": 18,
             "type": "asteroid_sm",
             "location": "top_center_left",
             "behaviors": [
@@ -318,7 +318,7 @@ WAVE = {
             ],
         },
         {
-            "time": 18,
+            "time": 18.5,
             "type": "asteroid_lg",
             "location": "top_far_right",
             "behaviors": [
@@ -327,7 +327,7 @@ WAVE = {
             ],
         },
         {
-            "time": 18.5,
+            "time": 19,
             "type": "asteroid_md",
             "location": "top_center_left",
             "behaviors": [
@@ -336,7 +336,7 @@ WAVE = {
             ],
         },
         {
-            "time": 19,
+            "time": 19.5,
             "type": "asteroid_md",
             "location": "top_center_right",
             "behaviors": [
@@ -346,7 +346,7 @@ WAVE = {
         },
         ### END SECTION 2 ###
         {
-            "time": 20.5,
+            "time": 21,
             "type": "asteroid_xl",
             "location": "top_far_left",
             "behaviors": [
@@ -355,18 +355,9 @@ WAVE = {
             ],
         },
         {
-            "time": 22,
+            "time": 22.5,
             "type": "asteroid_xl",
             "location": "top_far_right",
-            "behaviors": [
-                {"action": "move_straight", "params": {"direction": "down"}},
-                {"action": "rotate_constantly", "params": {}},
-            ],
-        },
-        {
-            "time": 22.5,
-            "type": "asteroid_sm",
-            "location": "top_center",
             "behaviors": [
                 {"action": "move_straight", "params": {"direction": "down"}},
                 {"action": "rotate_constantly", "params": {}},
@@ -375,7 +366,7 @@ WAVE = {
         {
             "time": 23,
             "type": "asteroid_sm",
-            "location": "top_left",
+            "location": "top_center",
             "behaviors": [
                 {"action": "move_straight", "params": {"direction": "down"}},
                 {"action": "rotate_constantly", "params": {}},
@@ -384,6 +375,15 @@ WAVE = {
         {
             "time": 23.5,
             "type": "asteroid_sm",
+            "location": "top_left",
+            "behaviors": [
+                {"action": "move_straight", "params": {"direction": "down"}},
+                {"action": "rotate_constantly", "params": {}},
+            ],
+        },
+        {
+            "time": 24,
+            "type": "asteroid_sm",
             "location": "top_center_right",
             "behaviors": [
                 {"action": "move_straight", "params": {"direction": "down"}},
@@ -391,7 +391,7 @@ WAVE = {
             ],
         },
         {
-            "time": 24.5,
+            "time": 25,
             "type": "asteroid_md",
             "location": "top_right",
             "behaviors": [
@@ -400,7 +400,7 @@ WAVE = {
             ],
         },
         {
-            "time": 25,
+            "time": 25.5,
             "type": "asteroid_xl",
             "location": "top_center_left",
             "behaviors": [
@@ -409,7 +409,7 @@ WAVE = {
             ],
         },
         {
-            "time": 26,
+            "time": 26.5,
             "type": "asteroid_sm",
             "location": "top_center",
             "behaviors": [
@@ -418,7 +418,7 @@ WAVE = {
             ],
         },
         {
-            "time": 26.5,
+            "time": 27,
             "type": "asteroid_md",
             "location": "top_far_right",
             "behaviors": [
@@ -427,7 +427,7 @@ WAVE = {
             ],
         },
         {
-            "time": 27,
+            "time": 27.5,
             "type": "asteroid_sm",
             "location": "top_far_left",
             "behaviors": [
@@ -436,7 +436,7 @@ WAVE = {
             ],
         },
         {
-            "time": 28,
+            "time": 28.5,
             "type": "asteroid_xl",
             "location": "top_center_right",
             "behaviors": [
@@ -445,7 +445,7 @@ WAVE = {
             ],
         },
         {
-            "time": 28,
+            "time": 28.5,
             "type": "asteroid_sm",
             "location": "top_left",
             "behaviors": [
@@ -454,7 +454,7 @@ WAVE = {
             ],
         },
         {
-            "time": 28.5,
+            "time": 29,
             "type": "asteroid_sm",
             "location": "top_right_edge",
             "behaviors": [
@@ -464,7 +464,7 @@ WAVE = {
         },
         ### END SECTION 3 ###
         {
-            "time": 30,
+            "time": 31,
             "type": "asteroid_sm",
             "location": "top_center_right",
             "behaviors": [
@@ -473,7 +473,7 @@ WAVE = {
             ],
         },
         {
-            "time": 31,
+            "time": 32,
             "type": "asteroid_lg",
             "location": "top_far_left",
             "behaviors": [
@@ -482,27 +482,9 @@ WAVE = {
             ],
         },
         {
-            "time": 31.5,
+            "time": 32.5,
             "type": "asteroid_sm",
             "location": "top_far_right",
-            "behaviors": [
-                {"action": "move_straight", "params": {"direction": "down"}},
-                {"action": "rotate_constantly", "params": {}},
-            ],
-        },
-        {
-            "time": 32,
-            "type": "asteroid_sm",
-            "location": "top_right",
-            "behaviors": [
-                {"action": "move_straight", "params": {"direction": "down"}},
-                {"action": "rotate_constantly", "params": {}},
-            ],
-        },
-        {
-            "time": 32,
-            "type": "asteroid_md",
-            "location": "top_center_left",
             "behaviors": [
                 {"action": "move_straight", "params": {"direction": "down"}},
                 {"action": "rotate_constantly", "params": {}},
@@ -511,7 +493,16 @@ WAVE = {
         {
             "time": 33,
             "type": "asteroid_sm",
-            "location": "top_left",
+            "location": "top_right",
+            "behaviors": [
+                {"action": "move_straight", "params": {"direction": "down"}},
+                {"action": "rotate_constantly", "params": {}},
+            ],
+        },
+        {
+            "time": 33,
+            "type": "asteroid_md",
+            "location": "top_center_left",
             "behaviors": [
                 {"action": "move_straight", "params": {"direction": "down"}},
                 {"action": "rotate_constantly", "params": {}},
@@ -520,6 +511,15 @@ WAVE = {
         {
             "time": 34,
             "type": "asteroid_sm",
+            "location": "top_left",
+            "behaviors": [
+                {"action": "move_straight", "params": {"direction": "down"}},
+                {"action": "rotate_constantly", "params": {}},
+            ],
+        },
+        {
+            "time": 35,
+            "type": "asteroid_sm",
             "location": "top_center",
             "behaviors": [
                 {"action": "move_straight", "params": {"direction": "down"}},
@@ -527,7 +527,7 @@ WAVE = {
             ],
         },
         {
-            "time": 34.5,
+            "time": 35.5,
             "type": "asteroid_sm",
             "location": "top_far_right",
             "behaviors": [
@@ -536,7 +536,7 @@ WAVE = {
             ],
         },
         {
-            "time": 35,
+            "time": 36,
             "type": "asteroid_md",
             "location": "top_center_right",
             "behaviors": [
@@ -545,7 +545,7 @@ WAVE = {
             ],
         },
         {
-            "time": 35,
+            "time": 36,
             "type": "asteroid_md",
             "location": "top_far_left",
             "behaviors": [
@@ -554,7 +554,7 @@ WAVE = {
             ],
         },
         {
-            "time": 36.5,
+            "time": 37,
             "type": "asteroid_md",
             "location": "top_far_right",
             "behaviors": [
@@ -563,7 +563,7 @@ WAVE = {
             ],
         },
         {
-            "time": 37,
+            "time": 37.5,
             "type": "asteroid_sm",
             "location": "top_center_left",
             "behaviors": [
@@ -572,7 +572,7 @@ WAVE = {
             ],
         },
         {
-            "time": 37.5,
+            "time": 38,
             "type": "asteroid_sm",
             "location": "top_left_edge",
             "behaviors": [
@@ -581,7 +581,7 @@ WAVE = {
             ],
         },
         {
-            "time": 38,
+            "time": 38.5,
             "type": "asteroid_sm",
             "location": "top_right",
             "behaviors": [
@@ -590,7 +590,7 @@ WAVE = {
             ],
         },
         {
-            "time": 38,
+            "time": 38.5,
             "type": "asteroid_sm",
             "location": "top_left",
             "behaviors": [
@@ -599,7 +599,7 @@ WAVE = {
             ],
         },
         {
-            "time": 38.5,
+            "time": 39,
             "type": "asteroid_sm",
             "location": "top_center",
             "behaviors": [
@@ -609,7 +609,7 @@ WAVE = {
         },
         ### END SECTION 4 ####
         {
-            "time": 40,
+            "time": 41,
             "type": "bomb_ammo_pickup",
             "location": "top_right",
             "behaviors": [
@@ -619,7 +619,7 @@ WAVE = {
         },
         #! Enemy Drones Wave
         {
-            "time": 45,
+            "time": 46,
             "type": "enemy_drone",
             "location": "top_far_left",
             "behaviors": [
@@ -628,7 +628,7 @@ WAVE = {
             ],
         },
         {
-            "time": 45.5,
+            "time": 46.5,
             "type": "asteroid_md",
             "location": "top_center_left",
             "behaviors": [
@@ -637,7 +637,7 @@ WAVE = {
             ],
         },
         {
-            "time": 46,
+            "time": 47,
             "type": "asteroid_sm",
             "location": "top_center_right",
             "behaviors": [
@@ -646,7 +646,7 @@ WAVE = {
             ],
         },
         {
-            "time": 47,
+            "time": 48,
             "type": "enemy_drone",
             "location": "top_far_right",
             "behaviors": [
@@ -655,7 +655,7 @@ WAVE = {
             ],
         },
         {
-            "time": 47.5,
+            "time": 48.5,
             "type": "asteroid_sm",
             "location": "top_center_left",
             "behaviors": [
@@ -664,7 +664,7 @@ WAVE = {
             ],
         },
         {
-            "time": 49,
+            "time": 50,
             "type": "asteroid_sm",
             "location": "top_right",
             "behaviors": [
@@ -673,7 +673,7 @@ WAVE = {
             ],
         },
         {
-            "time": 49,
+            "time": 50,
             "type": "enemy_drone",
             "location": "top_left",
             "behaviors": [
@@ -682,26 +682,8 @@ WAVE = {
             ],
         },
         {
-            "time": 49.5,
+            "time": 50.5,
             "type": "asteroid_sm",
-            "location": "top_center",
-            "behaviors": [
-                {"action": "move_straight", "params": {"direction": "down"}},
-                {"action": "rotate_constantly", "params": {}},
-            ],
-        },
-        {
-            "time": 51,
-            "type": "enemy_drone",
-            "location": "top_right",
-            "behaviors": [
-                {"action": "move_straight", "params": {"direction": "down"}},
-                {"action": "shoot", "params": {}},
-            ],
-        },
-        {
-            "time": 51,
-            "type": "asteroid_md",
             "location": "top_center",
             "behaviors": [
                 {"action": "move_straight", "params": {"direction": "down"}},
@@ -710,7 +692,16 @@ WAVE = {
         },
         {
             "time": 52,
-            "type": "asteroid_sm",
+            "type": "enemy_drone",
+            "location": "top_right",
+            "behaviors": [
+                {"action": "move_straight", "params": {"direction": "down"}},
+                {"action": "shoot", "params": {}},
+            ],
+        },
+        {
+            "time": 52,
+            "type": "asteroid_md",
             "location": "top_center",
             "behaviors": [
                 {"action": "move_straight", "params": {"direction": "down"}},
@@ -719,6 +710,15 @@ WAVE = {
         },
         {
             "time": 53,
+            "type": "asteroid_sm",
+            "location": "top_center",
+            "behaviors": [
+                {"action": "move_straight", "params": {"direction": "down"}},
+                {"action": "rotate_constantly", "params": {}},
+            ],
+        },
+        {
+            "time": 54,
             "type": "enemy_drone",
             "location": "top_center_left",
             "behaviors": [
@@ -727,7 +727,7 @@ WAVE = {
             ],
         },
         {
-            "time": 55,
+            "time": 56,
             "type": "asteroid_sm",
             "location": "top_far_left",
             "behaviors": [
@@ -736,7 +736,7 @@ WAVE = {
             ],
         },
         {
-            "time": 55.5,
+            "time": 56.5,
             "type": "enemy_drone",
             "location": "top_center_right",
             "behaviors": [
@@ -745,7 +745,7 @@ WAVE = {
             ],
         },
         {
-            "time": 56.5,
+            "time": 57,
             "type": "enemy_drone",
             "location": "top_right",
             "behaviors": [
@@ -754,7 +754,7 @@ WAVE = {
             ],
         },
         {
-            "time": 56.5,
+            "time": 57,
             "type": "enemy_drone",
             "location": "top_center",
             "behaviors": [
@@ -763,7 +763,7 @@ WAVE = {
             ],
         },
         {
-            "time": 58.5,
+            "time": 59,
             "type": "asteroid_sm",
             "location": "top_far_left",
             "behaviors": [
@@ -772,7 +772,7 @@ WAVE = {
             ],
         },
         {
-            "time": 58.5,
+            "time": 59,
             "type": "enemy_drone",
             "location": "top_far_left",
             "behaviors": [
@@ -781,7 +781,7 @@ WAVE = {
             ],
         },
         {
-            "time": 59.5,
+            "time": 60,
             "type": "enemy_drone",
             "location": "top_left",
             "behaviors": [
@@ -790,7 +790,7 @@ WAVE = {
             ],
         },
         {
-            "time": 59.5,
+            "time": 60,
             "type": "enemy_drone",
             "location": "top_left_edge",
             "behaviors": [
@@ -799,7 +799,7 @@ WAVE = {
             ],
         },
         {
-            "time": 61,
+            "time": 62,
             "type": "asteroid_sm",
             "location": "top_center_left",
             "behaviors": [
@@ -808,7 +808,7 @@ WAVE = {
             ],
         },
         {
-            "time": 61.5,
+            "time": 62.5,
             "type": "enemy_drone",
             "location": "top_far_right",
             "behaviors": [
@@ -817,7 +817,7 @@ WAVE = {
             ],
         },
         {
-            "time": 62,
+            "time": 63,
             "type": "asteroid_sm",
             "location": "top_far_left",
             "behaviors": [
@@ -826,7 +826,7 @@ WAVE = {
             ],
         },
         {
-            "time": 62.5,
+            "time": 63.5,
             "type": "enemy_drone",
             "location": "top_right_edge",
             "behaviors": [
@@ -835,7 +835,7 @@ WAVE = {
             ],
         },
         {
-            "time": 62.5,
+            "time": 63.5,
             "type": "enemy_drone",
             "location": "top_right",
             "behaviors": [
@@ -844,7 +844,7 @@ WAVE = {
             ],
         },
         {
-            "time": 64,
+            "time": 65,
             "type": "bomb_ammo_pickup",
             "location": "top_right",
             "behaviors": [
@@ -853,7 +853,7 @@ WAVE = {
             ],
         },
         {
-            "time": 65,
+            "time": 66,
             "type": "health_pickup",
             "location": "top_center",
             "behaviors": [
@@ -862,7 +862,7 @@ WAVE = {
             ],
         },
         {
-            "time": 66,
+            "time": 68,
             "type": "power_level_pickup",
             "location": "top_left",
             "behaviors": [
@@ -872,18 +872,9 @@ WAVE = {
         },
         #! Enemy Ships Wave
         {
-            "time": 71,
-            "type": "enemy_ship",
-            "location": "top_far_left",
-            "behaviors": [
-                {"action": "move_straight", "params": {"direction": "down"}},
-                {"action": "shoot", "params": {}},
-            ],
-        },
-        {
             "time": 72,
             "type": "enemy_ship",
-            "location": "top_left",
+            "location": "top_far_left",
             "behaviors": [
                 {"action": "move_straight", "params": {"direction": "down"}},
                 {"action": "shoot", "params": {}},
@@ -892,7 +883,7 @@ WAVE = {
         {
             "time": 73,
             "type": "enemy_ship",
-            "location": "top_center_left",
+            "location": "top_left",
             "behaviors": [
                 {"action": "move_straight", "params": {"direction": "down"}},
                 {"action": "shoot", "params": {}},
@@ -901,7 +892,7 @@ WAVE = {
         {
             "time": 74,
             "type": "enemy_ship",
-            "location": "top_center",
+            "location": "top_center_left",
             "behaviors": [
                 {"action": "move_straight", "params": {"direction": "down"}},
                 {"action": "shoot", "params": {}},
@@ -910,7 +901,7 @@ WAVE = {
         {
             "time": 75,
             "type": "enemy_ship",
-            "location": "top_center_right",
+            "location": "top_center",
             "behaviors": [
                 {"action": "move_straight", "params": {"direction": "down"}},
                 {"action": "shoot", "params": {}},
@@ -919,7 +910,7 @@ WAVE = {
         {
             "time": 76,
             "type": "enemy_ship",
-            "location": "top_right",
+            "location": "top_center_right",
             "behaviors": [
                 {"action": "move_straight", "params": {"direction": "down"}},
                 {"action": "shoot", "params": {}},
@@ -928,7 +919,7 @@ WAVE = {
         {
             "time": 77,
             "type": "enemy_ship",
-            "location": "top_far_right",
+            "location": "top_right",
             "behaviors": [
                 {"action": "move_straight", "params": {"direction": "down"}},
                 {"action": "shoot", "params": {}},
@@ -937,15 +928,6 @@ WAVE = {
         {
             "time": 78,
             "type": "enemy_ship",
-            "location": "top_right_edge",
-            "behaviors": [
-                {"action": "move_straight", "params": {"direction": "down"}},
-                {"action": "shoot", "params": {}},
-            ],
-        },
-        {
-            "time": 80,
-            "type": "enemy_ship",
             "location": "top_far_right",
             "behaviors": [
                 {"action": "move_straight", "params": {"direction": "down"}},
@@ -953,9 +935,9 @@ WAVE = {
             ],
         },
         {
-            "time": 81,
+            "time": 79,
             "type": "enemy_ship",
-            "location": "top_right",
+            "location": "top_right_edge",
             "behaviors": [
                 {"action": "move_straight", "params": {"direction": "down"}},
                 {"action": "shoot", "params": {}},
@@ -964,7 +946,7 @@ WAVE = {
         {
             "time": 82,
             "type": "enemy_ship",
-            "location": "top_center_right",
+            "location": "top_far_right",
             "behaviors": [
                 {"action": "move_straight", "params": {"direction": "down"}},
                 {"action": "shoot", "params": {}},
@@ -973,7 +955,7 @@ WAVE = {
         {
             "time": 83,
             "type": "enemy_ship",
-            "location": "top_center",
+            "location": "top_right",
             "behaviors": [
                 {"action": "move_straight", "params": {"direction": "down"}},
                 {"action": "shoot", "params": {}},
@@ -982,7 +964,7 @@ WAVE = {
         {
             "time": 84,
             "type": "enemy_ship",
-            "location": "top_center_left",
+            "location": "top_center_right",
             "behaviors": [
                 {"action": "move_straight", "params": {"direction": "down"}},
                 {"action": "shoot", "params": {}},
@@ -991,7 +973,7 @@ WAVE = {
         {
             "time": 85,
             "type": "enemy_ship",
-            "location": "top_left",
+            "location": "top_center",
             "behaviors": [
                 {"action": "move_straight", "params": {"direction": "down"}},
                 {"action": "shoot", "params": {}},
@@ -1000,7 +982,7 @@ WAVE = {
         {
             "time": 86,
             "type": "enemy_ship",
-            "location": "top_far_left",
+            "location": "top_center_left",
             "behaviors": [
                 {"action": "move_straight", "params": {"direction": "down"}},
                 {"action": "shoot", "params": {}},
@@ -1009,6 +991,24 @@ WAVE = {
         {
             "time": 87,
             "type": "enemy_ship",
+            "location": "top_left",
+            "behaviors": [
+                {"action": "move_straight", "params": {"direction": "down"}},
+                {"action": "shoot", "params": {}},
+            ],
+        },
+        {
+            "time": 88,
+            "type": "enemy_ship",
+            "location": "top_far_left",
+            "behaviors": [
+                {"action": "move_straight", "params": {"direction": "down"}},
+                {"action": "shoot", "params": {}},
+            ],
+        },
+        {
+            "time": 89,
+            "type": "enemy_ship",
             "location": "top_left_edge",
             "behaviors": [
                 {"action": "move_straight", "params": {"direction": "down"}},
@@ -1016,7 +1016,7 @@ WAVE = {
             ],
         },
         {
-            "time": 90,
+            "time": 92,
             "type": "bomb_ammo_pickup",
             "location": "top_center_right",
             "behaviors": [
@@ -1025,7 +1025,7 @@ WAVE = {
             ],
         },
         {
-            "time": 92,
+            "time": 94,
             "type": "health_pickup",
             "location": "top_center",
             "behaviors": [
@@ -1035,7 +1035,7 @@ WAVE = {
         },
         #! Drones + Ships Wave
         {
-            "time": 94,
+            "time": 96,
             "type": "enemy_ship",
             "location": "top_center",
             "behaviors": [
@@ -1044,7 +1044,7 @@ WAVE = {
             ],
         },
         {
-            "time": 96,
+            "time": 98,
             "type": "enemy_drone",
             "location": "top_center_right",
             "behaviors": [
@@ -1053,7 +1053,7 @@ WAVE = {
             ],
         },
         {
-            "time": 96,
+            "time": 98,
             "type": "enemy_drone",
             "location": "top_center_left",
             "behaviors": [
@@ -1062,7 +1062,7 @@ WAVE = {
             ],
         },
         {
-            "time": 96.5,
+            "time": 98.5,
             "type": "enemy_ship",
             "location": "top_far_right",
             "behaviors": [
@@ -1071,7 +1071,7 @@ WAVE = {
             ],
         },
         {
-            "time": 96.5,
+            "time": 98.5,
             "type": "enemy_ship",
             "location": "top_far_left",
             "behaviors": [
@@ -1080,7 +1080,7 @@ WAVE = {
             ],
         },
         {
-            "time": 98,
+            "time": 100,
             "type": "enemy_ship",
             "location": "top_center",
             "behaviors": [
@@ -1089,7 +1089,7 @@ WAVE = {
             ],
         },
         {
-            "time": 99.5,
+            "time": 100.5,
             "type": "enemy_drone",
             "location": "top_right",
             "behaviors": [
@@ -1098,7 +1098,7 @@ WAVE = {
             ],
         },
         {
-            "time": 99.5,
+            "time": 100.5,
             "type": "enemy_drone",
             "location": "top_left",
             "behaviors": [
@@ -1107,7 +1107,7 @@ WAVE = {
             ],
         },
         {
-            "time": 101.5,
+            "time": 102.5,
             "type": "enemy_ship",
             "location": "top_center",
             "behaviors": [
@@ -1116,7 +1116,7 @@ WAVE = {
             ],
         },
         {
-            "time": 103,
+            "time": 103.5,
             "type": "enemy_ship",
             "location": "top_center",
             "behaviors": [
@@ -1125,7 +1125,7 @@ WAVE = {
             ],
         },
         {
-            "time": 104,
+            "time": 105,
             "type": "enemy_drone",
             "location": "top_center_right",
             "behaviors": [
@@ -1134,7 +1134,7 @@ WAVE = {
             ],
         },
         {
-            "time": 104,
+            "time": 105,
             "type": "enemy_drone",
             "location": "top_center_left",
             "behaviors": [
@@ -1143,7 +1143,7 @@ WAVE = {
             ],
         },
         {
-            "time": 106,
+            "time": 107,
             "type": "enemy_ship",
             "location": "top_far_right",
             "behaviors": [
@@ -1152,44 +1152,8 @@ WAVE = {
             ],
         },
         {
-            "time": 106,
+            "time": 107,
             "type": "enemy_ship",
-            "location": "top_far_left",
-            "behaviors": [
-                {"action": "move_straight", "params": {"direction": "down"}},
-                {"action": "shoot", "params": {}},
-            ],
-        },
-        {
-            "time": 108,
-            "type": "enemy_ship",
-            "location": "top_center_right",
-            "behaviors": [
-                {"action": "move_straight", "params": {"direction": "down"}},
-                {"action": "shoot", "params": {}},
-            ],
-        },
-        {
-            "time": 108,
-            "type": "enemy_ship",
-            "location": "top_center_left",
-            "behaviors": [
-                {"action": "move_straight", "params": {"direction": "down"}},
-                {"action": "shoot", "params": {}},
-            ],
-        },
-        {
-            "time": 108.5,
-            "type": "enemy_drone",
-            "location": "top_far_right",
-            "behaviors": [
-                {"action": "move_straight", "params": {"direction": "down"}},
-                {"action": "shoot", "params": {}},
-            ],
-        },
-        {
-            "time": 108.5,
-            "type": "enemy_drone",
             "location": "top_far_left",
             "behaviors": [
                 {"action": "move_straight", "params": {"direction": "down"}},
@@ -1198,15 +1162,42 @@ WAVE = {
         },
         {
             "time": 109,
-            "type": "enemy_drone",
-            "location": "top_center",
+            "type": "enemy_ship",
+            "location": "top_center_right",
             "behaviors": [
                 {"action": "move_straight", "params": {"direction": "down"}},
                 {"action": "shoot", "params": {}},
             ],
         },
         {
-            "time": 112,
+            "time": 109,
+            "type": "enemy_ship",
+            "location": "top_center_left",
+            "behaviors": [
+                {"action": "move_straight", "params": {"direction": "down"}},
+                {"action": "shoot", "params": {}},
+            ],
+        },
+        {
+            "time": 109.5,
+            "type": "enemy_drone",
+            "location": "top_far_right",
+            "behaviors": [
+                {"action": "move_straight", "params": {"direction": "down"}},
+                {"action": "shoot", "params": {}},
+            ],
+        },
+        {
+            "time": 109.5,
+            "type": "enemy_drone",
+            "location": "top_far_left",
+            "behaviors": [
+                {"action": "move_straight", "params": {"direction": "down"}},
+                {"action": "shoot", "params": {}},
+            ],
+        },
+        {
+            "time": 110,
             "type": "enemy_drone",
             "location": "top_center",
             "behaviors": [
@@ -1217,6 +1208,15 @@ WAVE = {
         {
             "time": 113,
             "type": "enemy_drone",
+            "location": "top_center",
+            "behaviors": [
+                {"action": "move_straight", "params": {"direction": "down"}},
+                {"action": "shoot", "params": {}},
+            ],
+        },
+        {
+            "time": 114,
+            "type": "enemy_drone",
             "location": "top_center_right",
             "behaviors": [
                 {"action": "move_straight", "params": {"direction": "down"}},
@@ -1224,7 +1224,7 @@ WAVE = {
             ],
         },
         {
-            "time": 113,
+            "time": 114,
             "type": "enemy_drone",
             "location": "top_center_left",
             "behaviors": [
@@ -1233,7 +1233,7 @@ WAVE = {
             ],
         },
         {
-            "time": 115,
+            "time": 116,
             "type": "enemy_ship",
             "location": "top_far_right",
             "behaviors": [
@@ -1242,7 +1242,7 @@ WAVE = {
             ],
         },
         {
-            "time": 115,
+            "time": 116,
             "type": "enemy_ship",
             "location": "top_center",
             "behaviors": [
@@ -1251,7 +1251,7 @@ WAVE = {
             ],
         },
         {
-            "time": 115,
+            "time": 116,
             "type": "enemy_ship",
             "location": "top_far_left",
             "behaviors": [
@@ -1260,7 +1260,7 @@ WAVE = {
             ],
         },
         {
-            "time": 117,
+            "time": 119,
             "type": "enemy_ship",
             "location": "top_center_right",
             "behaviors": [
@@ -1269,7 +1269,7 @@ WAVE = {
             ],
         },
         {
-            "time": 117,
+            "time": 119,
             "type": "enemy_ship",
             "location": "top_center_left",
             "behaviors": [
@@ -1278,7 +1278,7 @@ WAVE = {
             ],
         },
         {
-            "time": 119,
+            "time": 120,
             "type": "enemy_drone",
             "location": "top_far_right",
             "behaviors": [
@@ -1287,7 +1287,7 @@ WAVE = {
             ],
         },
         {
-            "time": 119,
+            "time": 120,
             "type": "enemy_drone",
             "location": "top_center",
             "behaviors": [
@@ -1296,27 +1296,9 @@ WAVE = {
             ],
         },
         {
-            "time": 119,
+            "time": 120,
             "type": "enemy_drone",
             "location": "top_far_left",
-            "behaviors": [
-                {"action": "move_straight", "params": {"direction": "down"}},
-                {"action": "shoot", "params": {}},
-            ],
-        },
-        {
-            "time": 119.5,
-            "type": "enemy_drone",
-            "location": "top_center_right",
-            "behaviors": [
-                {"action": "move_straight", "params": {"direction": "down"}},
-                {"action": "shoot", "params": {}},
-            ],
-        },
-        {
-            "time": 119.5,
-            "type": "enemy_drone",
-            "location": "top_center_left",
             "behaviors": [
                 {"action": "move_straight", "params": {"direction": "down"}},
                 {"action": "shoot", "params": {}},
@@ -1324,6 +1306,24 @@ WAVE = {
         },
         {
             "time": 120.5,
+            "type": "enemy_drone",
+            "location": "top_center_right",
+            "behaviors": [
+                {"action": "move_straight", "params": {"direction": "down"}},
+                {"action": "shoot", "params": {}},
+            ],
+        },
+        {
+            "time": 120.5,
+            "type": "enemy_drone",
+            "location": "top_center_left",
+            "behaviors": [
+                {"action": "move_straight", "params": {"direction": "down"}},
+                {"action": "shoot", "params": {}},
+            ],
+        },
+        {
+            "time": 121,
             "type": "enemy_ship",
             "location": "top_center",
             "behaviors": [
@@ -1332,7 +1332,7 @@ WAVE = {
             ],
         },
         {
-            "time": 122.5,
+            "time": 123,
             "type": "enemy_ship",
             "location": "top_right_edge",
             "behaviors": [
@@ -1341,7 +1341,7 @@ WAVE = {
             ],
         },
         {
-            "time": 122.5,
+            "time": 123,
             "type": "enemy_ship",
             "location": "top_left_edge",
             "behaviors": [
@@ -1350,7 +1350,7 @@ WAVE = {
             ],
         },
         {
-            "time": 123,
+            "time": 124,
             "type": "enemy_ship",
             "location": "top_far_right",
             "behaviors": [
@@ -1359,45 +1359,9 @@ WAVE = {
             ],
         },
         {
-            "time": 123,
+            "time": 124,
             "type": "enemy_ship",
             "location": "top_far_left",
-            "behaviors": [
-                {"action": "move_straight", "params": {"direction": "down"}},
-                {"action": "shoot", "params": {}},
-            ],
-        },
-        {
-            "time": 123.5,
-            "type": "enemy_ship",
-            "location": "top_right",
-            "behaviors": [
-                {"action": "move_straight", "params": {"direction": "down"}},
-                {"action": "shoot", "params": {}},
-            ],
-        },
-        {
-            "time": 123.5,
-            "type": "enemy_ship",
-            "location": "top_left",
-            "behaviors": [
-                {"action": "move_straight", "params": {"direction": "down"}},
-                {"action": "shoot", "params": {}},
-            ],
-        },
-        {
-            "time": 124,
-            "type": "enemy_ship",
-            "location": "top_center_right",
-            "behaviors": [
-                {"action": "move_straight", "params": {"direction": "down"}},
-                {"action": "shoot", "params": {}},
-            ],
-        },
-        {
-            "time": 124,
-            "type": "enemy_ship",
-            "location": "top_center_left",
             "behaviors": [
                 {"action": "move_straight", "params": {"direction": "down"}},
                 {"action": "shoot", "params": {}},
@@ -1406,15 +1370,42 @@ WAVE = {
         {
             "time": 124.5,
             "type": "enemy_ship",
-            "location": "top_center",
+            "location": "top_right",
             "behaviors": [
                 {"action": "move_straight", "params": {"direction": "down"}},
                 {"action": "shoot", "params": {}},
             ],
         },
         {
-            "time": 126.5,
-            "type": "enemy_drone",
+            "time": 124.5,
+            "type": "enemy_ship",
+            "location": "top_left",
+            "behaviors": [
+                {"action": "move_straight", "params": {"direction": "down"}},
+                {"action": "shoot", "params": {}},
+            ],
+        },
+        {
+            "time": 125,
+            "type": "enemy_ship",
+            "location": "top_center_right",
+            "behaviors": [
+                {"action": "move_straight", "params": {"direction": "down"}},
+                {"action": "shoot", "params": {}},
+            ],
+        },
+        {
+            "time": 125,
+            "type": "enemy_ship",
+            "location": "top_center_left",
+            "behaviors": [
+                {"action": "move_straight", "params": {"direction": "down"}},
+                {"action": "shoot", "params": {}},
+            ],
+        },
+        {
+            "time": 125.5,
+            "type": "enemy_ship",
             "location": "top_center",
             "behaviors": [
                 {"action": "move_straight", "params": {"direction": "down"}},
@@ -1424,6 +1415,15 @@ WAVE = {
         {
             "time": 127,
             "type": "enemy_drone",
+            "location": "top_center",
+            "behaviors": [
+                {"action": "move_straight", "params": {"direction": "down"}},
+                {"action": "shoot", "params": {}},
+            ],
+        },
+        {
+            "time": 128,
+            "type": "enemy_drone",
             "location": "top_center_right",
             "behaviors": [
                 {"action": "move_straight", "params": {"direction": "down"}},
@@ -1431,7 +1431,7 @@ WAVE = {
             ],
         },
         {
-            "time": 127,
+            "time": 128,
             "type": "enemy_drone",
             "location": "top_center_left",
             "behaviors": [
@@ -1440,7 +1440,7 @@ WAVE = {
             ],
         },
         {
-            "time": 127.5,
+            "time": 128.5,
             "type": "enemy_drone",
             "location": "top_right",
             "behaviors": [
@@ -1449,7 +1449,7 @@ WAVE = {
             ],
         },
         {
-            "time": 127.5,
+            "time": 128.5,
             "type": "enemy_drone",
             "location": "top_left",
             "behaviors": [
@@ -1458,7 +1458,7 @@ WAVE = {
             ],
         },
         {
-            "time": 128,
+            "time": 129,
             "type": "enemy_drone",
             "location": "top_far_right",
             "behaviors": [
@@ -1467,7 +1467,7 @@ WAVE = {
             ],
         },
         {
-            "time": 128,
+            "time": 129,
             "type": "enemy_drone",
             "location": "top_far_left",
             "behaviors": [
@@ -1476,7 +1476,7 @@ WAVE = {
             ],
         },
         {
-            "time": 128.5,
+            "time": 129.5,
             "type": "enemy_drone",
             "location": "top_right_edge",
             "behaviors": [
@@ -1485,7 +1485,7 @@ WAVE = {
             ],
         },
         {
-            "time": 128.5,
+            "time": 129.5,
             "type": "enemy_drone",
             "location": "top_left_edge",
             "behaviors": [
@@ -1494,7 +1494,7 @@ WAVE = {
             ],
         },
         {
-            "time": 130.5,
+            "time": 131,
             "type": "enemy_ship",
             "location": "top_right_edge",
             "behaviors": [
@@ -1503,7 +1503,7 @@ WAVE = {
             ],
         },
         {
-            "time": 130.5,
+            "time": 131,
             "type": "enemy_ship",
             "location": "top_far_right",
             "behaviors": [
@@ -1512,7 +1512,7 @@ WAVE = {
             ],
         },
         {
-            "time": 130.5,
+            "time": 131,
             "type": "enemy_ship",
             "location": "top_right",
             "behaviors": [
@@ -1521,7 +1521,7 @@ WAVE = {
             ],
         },
         {
-            "time": 130.5,
+            "time": 131,
             "type": "enemy_ship",
             "location": "top_center_right",
             "behaviors": [
@@ -1530,7 +1530,7 @@ WAVE = {
             ],
         },
         {
-            "time": 130.5,
+            "time": 131,
             "type": "enemy_ship",
             "location": "top_center",
             "behaviors": [
@@ -1539,7 +1539,7 @@ WAVE = {
             ],
         },
         {
-            "time": 130.5,
+            "time": 131,
             "type": "enemy_ship",
             "location": "top_center_left",
             "behaviors": [
@@ -1548,7 +1548,7 @@ WAVE = {
             ],
         },
         {
-            "time": 130.5,
+            "time": 131,
             "type": "enemy_ship",
             "location": "top_left",
             "behaviors": [
@@ -1557,7 +1557,7 @@ WAVE = {
             ],
         },
         {
-            "time": 130.5,
+            "time": 131,
             "type": "enemy_ship",
             "location": "top_far_left",
             "behaviors": [
@@ -1566,7 +1566,7 @@ WAVE = {
             ],
         },
         {
-            "time": 130.5,
+            "time": 131,
             "type": "enemy_ship",
             "location": "top_left_edge",
             "behaviors": [
@@ -1575,7 +1575,7 @@ WAVE = {
             ],
         },
         {
-            "time": 133,
+            "time": 134,
             "type": "bomb_ammo_pickup",
             "location": "top_right",
             "behaviors": [
