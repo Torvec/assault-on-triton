@@ -34,6 +34,7 @@ class Start(Screen):
 
     menu_items = [
         "[Enter] PLAY",
+        "[T] TESTING",
         "[O] OPTIONS",
         "[S] SCORES",
         "[C] CREDITS",
@@ -49,6 +50,8 @@ class Start(Screen):
                 match event.key:
                     case pygame.K_RETURN:
                         self.game.change_screen("GamePlay")
+                    case pygame.K_t:
+                        self.game.change_screen("Testing")
                     case pygame.K_o:
                         self.game.change_screen("Options")
                     case pygame.K_s:
@@ -101,7 +104,7 @@ class Start(Screen):
             align="midbottom",
         )
         menu_rect = pygame.Rect(
-            0, 0, game_surface.get_width() * 0.75, game_surface.get_height() * 0.25
+            0, 0, game_surface.get_width() * 0.75, game_surface.get_height() * 0.3
         )
         menu_rect.midtop = game_surface.get_rect().center
         pygame.draw.rect(game_surface, "grey4", menu_rect, border_radius=24)

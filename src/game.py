@@ -1,6 +1,7 @@
 import pygame
 from src.screens import Start, Options, Scoreboard, Credits, Thanks
 from src.gameplay_screen import GamePlay
+from src.testing import Testing
 from src.score_store import ScoreStore
 from data.settings import DISPLAY
 
@@ -23,6 +24,7 @@ class Game:
             "Scoreboard": Scoreboard,
             "Credits": Credits,
             "Thanks": Thanks,
+            "Testing": Testing,
         }
         self.change_screen("Start")
 
