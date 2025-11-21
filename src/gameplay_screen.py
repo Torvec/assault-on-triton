@@ -1,6 +1,10 @@
 import pygame
 from src.screens import Screen
-from src.backgrounds import Planet, PlanetTwo, StarField
+from src.backgrounds import (
+    Planet,
+    PlanetTwo,
+    StarField,
+)
 from src.entities import (
     Asteroid,
     EnemyDrone,
@@ -23,7 +27,12 @@ from src.managers import (
     BattleManager,
     WaveManager,
 )
-from src.gameplay_ui import GamePlayUI, PauseModal, EndLevelModal, GameOverModal
+from src.gameplay_ui import (
+    GamePlayUI,
+    PauseModal,
+    EndLevelModal,
+    GameOverModal,
+)
 from src.gameplay_states import (
     GameplayState,
     InitState,
@@ -34,7 +43,6 @@ from src.gameplay_states import (
     MissionCompleteState,
 )
 from data.event_queue import EVENT_QUEUE
-from data.test_events import TEST_QUEUE
 
 
 class GamePlay(Screen):
@@ -78,7 +86,11 @@ class GamePlay(Screen):
         self.pickups = pygame.sprite.Group()
         self.active_targets = pygame.sprite.Group()
 
-        Player.containers = (self.player_group, self.updateable, self.drawable)
+        Player.containers = (
+            self.player_group,
+            self.updateable,
+            self.drawable,
+        )
         Asteroid.containers = (
             self.asteroids,
             self.updateable,
@@ -97,12 +109,36 @@ class GamePlay(Screen):
             self.drawable,
             self.active_targets,
         )
-        SubBoss.containers = (self.sub_boss_group, self.updateable, self.drawable)
-        LevelBoss.containers = (self.level_boss_group, self.updateable, self.drawable)
-        Missile.containers = (self.missiles, self.updateable, self.drawable)
-        Shot.containers = (self.shots, self.updateable, self.drawable)
-        Bomb.containers = (self.bombs, self.updateable, self.drawable)
-        Explosion.containers = (self.explosions, self.updateable, self.drawable)
+        SubBoss.containers = (
+            self.sub_boss_group,
+            self.updateable,
+            self.drawable,
+        )
+        LevelBoss.containers = (
+            self.level_boss_group,
+            self.updateable,
+            self.drawable,
+        )
+        Missile.containers = (
+            self.missiles,
+            self.updateable,
+            self.drawable,
+        )
+        Shot.containers = (
+            self.shots,
+            self.updateable,
+            self.drawable,
+        )
+        Bomb.containers = (
+            self.bombs,
+            self.updateable,
+            self.drawable,
+        )
+        Explosion.containers = (
+            self.explosions,
+            self.updateable,
+            self.drawable,
+        )
         Pickup.containers = (
             self.pickups,
             self.updateable,
@@ -110,7 +146,7 @@ class GamePlay(Screen):
             self.active_targets,
         )
 
-        self.event_manager = EventManager(self, TEST_QUEUE) #! FOR TESTING
+        self.event_manager = EventManager(self, EVENT_QUEUE)
         self.spawn_manager = SpawnManager(self)
         self.wave_manager = WaveManager(self)
         self.battle_manager = BattleManager(self)
