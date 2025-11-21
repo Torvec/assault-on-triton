@@ -16,6 +16,7 @@ from src.entities import (
 )
 from src.managers import (
     CollisionManager,
+    SpawnManager,
     EventManager,
     CutsceneManager,
     ScoreManager,
@@ -109,6 +110,7 @@ class GamePlay(Screen):
         )
 
         self.event_manager = EventManager(self, EVENT_QUEUE)
+        self.spawn_manager = SpawnManager(self)
         self.wave_manager = WaveManager(self)
         self.battle_manager = BattleManager(self)
         self.cutscene_manager = CutsceneManager(self)

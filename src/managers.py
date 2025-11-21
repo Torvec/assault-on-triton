@@ -154,11 +154,8 @@ class CollisionManager:
 
 class SpawnManager:
 
-    def __init__(self, gameplay, entity_name, location, behaviors):
+    def __init__(self, gameplay):
         self.gameplay = gameplay
-        self.entity_name = entity_name
-        self.location = location
-        self.behaviors = behaviors
         self.entities = {
             "player": Player,
             "asteroid_xl": AsteroidXL,
@@ -177,19 +174,19 @@ class SpawnManager:
             "invulnerability_pickup": InvulnerabilityPickup,
         }
 
-    def spawn_entity(self):
-        position = self.calc_position()
-        entity_class = self.entities[self.entity_name]
+    def spawn_entity(self, entity_name, location, behaviors=None):
+        position = self.calc_position(location)
+        entity_class = self.entities[entity_name]
         entity = entity_class(position.x, position.y, self.gameplay)
-        if self.behaviors:
-            for behavior in self.behaviors:
+        if behaviors:
+            for behavior in behaviors:
                 entity.behaviors.append(behavior)
 
-    def calc_position(self):
+    def calc_position(self, location):
         play_area = self.gameplay.play_area_rect
 
-        if isinstance(self.location, str):
-            offset_x, side_y = SPAWN_LOCATIONS[self.location]
+        if isinstance(location, str):
+            offset_x, side_y = SPAWN_LOCATIONS[location]
             offset_y = 128
 
             if side_y == "top":
@@ -203,8 +200,8 @@ class SpawnManager:
                     play_area.bottom,
                 )
 
-        elif isinstance(self.location, pygame.Vector2):
-            return self.location
+        elif isinstance(location, pygame.Vector2):
+            return location
 
 
 class EventManager:
@@ -257,13 +254,11 @@ class EventManager:
 
     def handle_spawn_entity(self, event):
         params = event.get("params", {})
-        spawner = SpawnManager(
-            self.gameplay,
+        self.gameplay.spawn_manager.spawn_entity(
             params["type"],
             params["location"],
             params.get("behaviors", []),
         )
-        spawner.spawn_entity()
         self.on_event_complete()
 
     def handle_cutscene(self, event):
@@ -412,14 +407,12 @@ class WaveManager:
             self.spawn_enemy(spawn_event)
             self.wave_index += 1
 
-    def spawn_enemy(self, spawn_event):
-        spawner = SpawnManager(
-            self.gameplay,
-            spawn_event["type"],
-            spawn_event["location"],
-            spawn_event.get("behaviors", []),
+    def spawn_enemy(self, event):
+        self.gameplay.spawn_manager.spawn_entity(
+            event["type"],
+            event["location"],
+            event.get("behaviors", []),
         )
-        spawner.spawn_entity()
 
     def end_wave(self):
         print(f"Wave Complete: {self.current_wave}")
