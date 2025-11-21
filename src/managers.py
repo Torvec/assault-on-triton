@@ -228,7 +228,7 @@ class EventManager:
     def process_next(self):
         if self.current_index >= len(self.events):
             print("Event queue complete")
-            self.gameplay.game.change_screen("Thanks")
+            self.gameplay.game.change_screen("GamePlay") #! Should be Thanks, but doing this for testing now
             return
 
         self.current_event = self.events[self.current_index]

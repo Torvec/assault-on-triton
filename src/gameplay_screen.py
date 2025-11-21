@@ -34,6 +34,7 @@ from src.gameplay_states import (
     MissionCompleteState,
 )
 from data.event_queue import EVENT_QUEUE
+from data.test_events import TEST_QUEUE
 
 
 class GamePlay(Screen):
@@ -109,7 +110,7 @@ class GamePlay(Screen):
             self.active_targets,
         )
 
-        self.event_manager = EventManager(self, EVENT_QUEUE)
+        self.event_manager = EventManager(self, TEST_QUEUE) #! FOR TESTING
         self.spawn_manager = SpawnManager(self)
         self.wave_manager = WaveManager(self)
         self.battle_manager = BattleManager(self)

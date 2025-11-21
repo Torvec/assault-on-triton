@@ -1,4 +1,15 @@
 WAVE = {
+    "test_wave": [
+        {
+            "time": 0,
+            "type": "asteroid_sm",
+            "location": "top_center",
+            "behaviors": [
+                {"action": "move_straight", "params": {"direction": "down"}},
+                {"action": "rotate_constantly", "params": {}},
+            ],
+        },
+    ],
     "wave_sequence_1": [
         #! Asteroids Wave
         {

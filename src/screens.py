@@ -34,7 +34,6 @@ class Start(Screen):
 
     menu_items = [
         "[Enter] PLAY",
-        "[T] TESTING",
         "[O] OPTIONS",
         "[S] SCORES",
         "[C] CREDITS",
@@ -50,8 +49,6 @@ class Start(Screen):
                 match event.key:
                     case pygame.K_RETURN:
                         self.game.change_screen("GamePlay")
-                    case pygame.K_t:
-                        self.game.change_screen("Testing")
                     case pygame.K_o:
                         self.game.change_screen("Options")
                     case pygame.K_s:
