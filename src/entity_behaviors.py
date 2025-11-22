@@ -11,6 +11,16 @@ def move_straight(entity, direction, dt):
     entity.position += direction * entity.speed * dt
 
 
+def move_straight_angle(entity, angle=0, dt=0):
+    if not hasattr(entity, "_straight_angle_set"):
+        direction = DIRECTION_DOWN.rotate(angle)
+        if direction.length() != 0:
+            direction = direction.normalize()
+        entity.velocity = direction * entity.speed
+        entity._straight_angle_set = True
+    entity.position += entity.velocity * dt
+
+
 def move_to_location(entity, x, y, speed, dt):
     target = pygame.Vector2(x, y)
     direction = target - entity.position
