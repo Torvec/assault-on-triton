@@ -5,7 +5,7 @@ WAVE = {
             "type": "asteroid_sm",
             "location": "top_center",
             "behaviors": [
-                {"action": "move_straight_angle", "params": {"angle": 20}},
+                {"action": "move_straight", "params": {}},
                 {"action": "rotate_constantly", "params": {}},
             ],
         },
@@ -14,7 +14,7 @@ WAVE = {
             "type": "asteroid_sm",
             "location": "top_center",
             "behaviors": [
-                {"action": "move_straight_angle", "params": {"angle": -20}},
+                {"action": "move_straight", "params": {"angle": -20}},
                 {"action": "rotate_constantly", "params": {}},
             ],
         },

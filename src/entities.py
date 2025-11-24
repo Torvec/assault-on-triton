@@ -383,7 +383,7 @@ class Asteroid(Entity):
                 "location": self.position,
                 "behaviors": [
                     {
-                        "action": "move_angled",
+                        "action": "move_straight",
                         "params": {
                             "angle": angle,
                             "velocity_factor": ENEMIES["asteroid"][

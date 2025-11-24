@@ -2,22 +2,12 @@ import pygame
 from src.entities import DIRECTION_DOWN, EnemyShot
 
 
-def move_straight(entity, direction, dt):
-    match direction:
-        case "down":
-            direction = DIRECTION_DOWN
-        case _:
-            pass
-    entity.position += direction * entity.speed * dt
+def move_straight(entity, angle=0, velocity_factor=1.0, dt=0):
+    direction = DIRECTION_DOWN.rotate(angle)
 
-
-def move_straight_angle(entity, angle=0, dt=0):
-    if not hasattr(entity, "_straight_angle_set"):
-        direction = DIRECTION_DOWN.rotate(angle)
-        if direction.length() != 0:
-            direction = direction.normalize()
-        entity.velocity = direction * entity.speed
-        entity._straight_angle_set = True
+    if not hasattr(entity, "_angle_set"):
+        entity.velocity = direction * entity.speed * velocity_factor
+        entity._angle_set = True
     entity.position += entity.velocity * dt
 
 
@@ -39,20 +29,6 @@ def move_to_location(entity, x, y, speed, dt):
         direction.normalize_ip()
         entity.velocity = direction * speed
         entity.position += entity.velocity * dt
-
-
-def move_angled(entity, dt, **kwargs):
-    angle = kwargs.get("angle", 0)
-    velocity_factor = kwargs.get("velocity_factor", 1.0)
-
-    # Sets up a flag so that the changing of direction only happens once and not continuously
-    if not hasattr(entity, "_angled_velocity_set"):
-
-        base_velocity = DIRECTION_DOWN * entity.speed
-        entity.velocity = base_velocity.rotate(angle) * velocity_factor
-        entity._angled_velocity_set = True
-
-    entity.position += entity.velocity * dt
 
 
 def rotate_constantly(entity, dt):
