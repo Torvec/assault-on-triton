@@ -59,6 +59,7 @@ class Entity(pygame.sprite.Sprite):
         self.velocity = pygame.Vector2(0, 0)
         self.rotation = 0
         self.behaviors = []
+        self._debug_print_timer = 0
 
     def collides_with(self, other_group):
         rect_collisions = pygame.sprite.spritecollide(self, other_group, False)
@@ -110,6 +111,10 @@ class Entity(pygame.sprite.Sprite):
         self.handle_behaviors(dt)
         self.handle_hit_timer(dt)
         self.gameplay.collision_manager.handle_boundaries(self)
+        self._debug_print_timer += dt
+        if self._debug_print_timer >= 1.0 and len(self.behaviors) > 0:
+            print(self.behaviors)
+            self._debug_print_timer = 0
 
     def draw(self, surface):
         pass
