@@ -18,6 +18,54 @@ WAVE = {
                 {"action": "rotate_constantly", "params": {}},
             ],
         },
+        {
+            "time": 2,
+            "type": "asteroid_sm",
+            "location": "top_far_left",
+            "behaviors": [
+                {
+                    "action": "move_saw_wave",
+                    "params": {
+                        "v_speed": 100,
+                        "h_speed": 150,
+                        "init_direction": "right",
+                    },
+                },
+                {"action": "rotate_constantly", "params": {}},
+            ],
+        },
+        {
+            "time": 3,
+            "type": "asteroid_sm",
+            "location": "top_far_right",
+            "behaviors": [
+                {
+                    "action": "move_saw_wave",
+                    "params": {
+                        "v_speed": 100,
+                        "h_speed": 160,
+                        "init_direction": "left",
+                    },
+                },
+                {"action": "rotate_constantly", "params": {}},
+            ],
+        },
+        {
+            "time": 4,
+            "type": "asteroid_sm",
+            "location": "top_center",
+            "behaviors": [
+                {
+                    "action": "move_sine_wave",
+                    "params": {
+                        "frequency": 4,
+                        "amplitude": 400,
+                        "speed": 100,
+                    },
+                },
+                {"action": "rotate_constantly", "params": {}},
+            ],
+        },
     ],
     "wave_sequence_1": [
         #! Asteroids Wave
