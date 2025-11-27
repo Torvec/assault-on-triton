@@ -1,50 +1,118 @@
 WAVE = {
     "test_wave": [
+        # {
+        #     "time": 0,
+        #     "type": "asteroid_sm",
+        #     "location": "top_center",
+        #     "behaviors": [
+        #         {"action": "move_straight", "params": {}},
+        #         {"action": "rotate_constantly", "params": {}},
+        #     ],
+        # },
+        # {
+        #     "time": 0,
+        #     "type": "asteroid_sm",
+        #     "location": "top_center",
+        #     "behaviors": [
+        #         {"action": "move_straight", "params": {"angle": -20}},
+        #         {"action": "rotate_constantly", "params": {}},
+        #     ],
+        # },
+        # {
+        #     "time": 2,
+        #     "type": "asteroid_sm",
+        #     "location": "top_far_left",
+        #     "behaviors": [
+        #         {
+        #             "action": "move_saw_wave",
+        #             "params": {
+        #                 "x_speed": 150,
+        #                 "y_speed": 100,
+        #                 "init_direction": "right",
+        #             },
+        #         },
+        #         {"action": "rotate_constantly", "params": {}},
+        #     ],
+        # },
+        # {
+        #     "time": 3,
+        #     "type": "asteroid_sm",
+        #     "location": "top_far_right",
+        #     "behaviors": [
+        #         {
+        #             "action": "move_saw_wave",
+        #             "params": {
+        #                 "x_speed": 160,
+        #                 "y_speed": 100,
+        #                 "init_direction": "left",
+        #             },
+        #         },
+        #         {"action": "rotate_constantly", "params": {}},
+        #     ],
+        # },
+        # {
+        #     "time": 4,
+        #     "type": "asteroid_sm",
+        #     "location": "top_center",
+        #     "behaviors": [
+        #         {
+        #             "action": "move_sine_wave",
+        #             "params": {
+        #                 "frequency": 4,
+        #                 "amplitude": 400,
+        #                 "speed": 100,
+        #             },
+        #         },
+        #         {"action": "rotate_constantly", "params": {}},
+        #     ],
+        # },
+        # {
+        #     "time": 5,
+        #     "type": "asteroid_md",
+        #     "location": "top_far_left",
+        #     "behaviors": [
+        #         {
+        #             "action": "move_square_wave",
+        #             "params": {
+        #                 "x_dist": 400,
+        #                 "y_dist": 50,
+        #                 "init_horizontal_dir": "right",
+        #                 "x_speed": 100,
+        #                 "y_speed": 100,
+        #             },
+        #         },
+        #         {"action": "rotate_constantly", "params": {}},
+        #     ],
+        # },
+        # {
+        #     "time": 5,
+        #     "type": "asteroid_md",
+        #     "location": "top_far_right",
+        #     "behaviors": [
+        #         {
+        #             "action": "move_square_wave",
+        #             "params": {
+        #                 "x_dist": 400,
+        #                 "y_dist": 100,
+        #                 "init_horizontal_dir": "left",
+        #                 "x_speed": 100,
+        #                 "y_speed": 100,
+        #             },
+        #         },
+        #         {"action": "rotate_constantly", "params": {}},
+        #     ],
+        # },
         {
             "time": 0,
-            "type": "asteroid_sm",
-            "location": "top_center",
-            "behaviors": [
-                {"action": "move_straight", "params": {}},
-                {"action": "rotate_constantly", "params": {}},
-            ],
-        },
-        {
-            "time": 0,
-            "type": "asteroid_sm",
-            "location": "top_center",
-            "behaviors": [
-                {"action": "move_straight", "params": {"angle": -20}},
-                {"action": "rotate_constantly", "params": {}},
-            ],
-        },
-        {
-            "time": 2,
-            "type": "asteroid_sm",
-            "location": "top_far_left",
-            "behaviors": [
-                {
-                    "action": "move_saw_wave",
-                    "params": {
-                        "v_speed": 100,
-                        "h_speed": 150,
-                        "init_direction": "right",
-                    },
-                },
-                {"action": "rotate_constantly", "params": {}},
-            ],
-        },
-        {
-            "time": 3,
-            "type": "asteroid_sm",
+            "type": "asteroid_lg",
             "location": "top_far_right",
             "behaviors": [
                 {
-                    "action": "move_saw_wave",
+                    "action": "move_arc",
                     "params": {
-                        "v_speed": 100,
-                        "h_speed": 160,
-                        "init_direction": "left",
+                        "pivot_point": (0, 0),
+                        "direction": "cw",
+                        "speed": 100,
                     },
                 },
                 {"action": "rotate_constantly", "params": {}},
@@ -52,14 +120,50 @@ WAVE = {
         },
         {
             "time": 4,
+            "type": "asteroid_lg",
+            "location": "top_far_left",
+            "behaviors": [
+                {
+                    "action": "move_arc",
+                    "params": {
+                        "pivot_point": (608, 0),
+                        "direction": "ccw",
+                        "speed": 100,
+                    },
+                },
+                {"action": "rotate_constantly", "params": {}},
+            ],
+        },
+        {
+            "time": 6,
             "type": "asteroid_sm",
             "location": "top_center",
             "behaviors": [
                 {
-                    "action": "move_sine_wave",
+                    "action": "move_circular",
                     "params": {
-                        "frequency": 4,
-                        "amplitude": 400,
+                        "radius_x": 150,
+                        "radius_y": 80,
+                        "center": (304, 200),
+                        "direction": "cw",
+                        "speed": 100,
+                    },
+                },
+                {"action": "rotate_constantly", "params": {}},
+            ],
+        },
+        {
+            "time": 7,
+            "type": "asteroid_sm",
+            "location": "top_center",
+            "behaviors": [
+                {
+                    "action": "move_circular",
+                    "params": {
+                        "radius_x": 150,
+                        "radius_y": 80,
+                        "center": (304, 100),
+                        "direction": "ccw",
                         "speed": 100,
                     },
                 },

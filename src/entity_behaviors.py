@@ -31,23 +31,37 @@ def move_to_location(entity, x, y, speed, dt):
         entity.position += entity.velocity * dt
 
 
-def move_square_wave(entity, v_dist, h_dist, init_horiz_direction, v_speed, h_speed, dt):
-    directions = {
-        "left": -1,
-        "right": 1
-    }
+def move_square_wave(entity, x_dist, y_dist, init_horizontal_dir, x_speed, y_speed, dt):
+    directions = {"left": -1, "right": 1}
+    axis = ("x", "y")
 
-    if not hasattr(entity, "_horiz_direction"):
-        entity._horiz_dirction = directions[init_horiz_direction]
+    if not hasattr(entity, "_sqwave_state"):
+        entity._sqwave_state = {
+            "current_y_dist": 0,
+            "current_x_dist": 0,
+            "current_horizontal_dir": directions[init_horizontal_dir],
+            "current_axis": axis[1],
+        }
+    state = entity._sqwave_state
 
-    """
-    Switch direction: vertical (down only), horizontal (left and right)
-        Vertical to Horizontal switch happens when v_dist reached
-        Horizontal to Vertical switch happens when h_dist reached
-        Horizontal direction switches after h_dist reached also (left becomes right, right becomes left)
-    Separate speeds for vertical and horizontal movement (can be equal)
+    # y axis movement
+    if state["current_axis"] == axis[1]:
+        state["current_y_dist"] += y_speed * dt
+        entity.velocity = DIRECTION_DOWN * y_speed
+        if state["current_y_dist"] >= y_dist:
+            state["current_axis"] = axis[0]
+            state["current_y_dist"] = 0
 
-    """
+    # x axis movement
+    elif state["current_axis"] == axis[0]:
+        state["current_x_dist"] += x_speed * dt
+        entity.velocity = pygame.Vector2(state["current_horizontal_dir"] * x_speed, 0)
+        if state["current_x_dist"] >= x_dist:
+            state["current_axis"] = axis[1]
+            state["current_horizontal_dir"] *= -1
+            state["current_x_dist"] = 0
+
+    entity.position += entity.velocity * dt
 
 
 def move_sine_wave(entity, frequency, amplitude, speed, dt):
@@ -62,7 +76,7 @@ def move_sine_wave(entity, frequency, amplitude, speed, dt):
     entity.position += entity.velocity * dt
 
 
-def move_saw_wave(entity, v_speed, h_speed, init_direction, dt):
+def move_saw_wave(entity, x_speed, y_speed, init_direction, dt):
     directions = {
         "left": -1,
         "right": 1,
@@ -75,16 +89,35 @@ def move_saw_wave(entity, v_speed, h_speed, init_direction, dt):
     elif entity.position.x >= entity.gameplay.play_area_rect.width:
         entity._saw_dir = directions["left"]
 
-    entity.velocity = pygame.Vector2(h_speed * entity._saw_dir, v_speed)
+    entity.velocity = pygame.Vector2(x_speed * entity._saw_dir, y_speed)
     entity.position += entity.velocity * dt
 
 
 def move_arc(entity, pivot_point, direction, speed, dt):
-    pass
+    directions = {"ccw": -90, "cw": 90}
+    radius = entity.position - pivot_point
+    tangent_direction = radius.rotate(directions[direction]).normalize()
+    entity.velocity = tangent_direction * speed
+    entity.position += entity.velocity * dt
 
 
 def move_circular(entity, radius_x, radius_y, center, direction, speed, dt):
-    pass
+
+    if not hasattr(entity, "_circle_time"):
+        entity._circle_time = 0
+
+    angular_speed = speed / max(radius_x, radius_y)
+    directions = {
+        "cw": angular_speed,
+        "ccw": -angular_speed
+    }
+
+    entity._circle_time += dt * directions[direction]
+    angle = entity._circle_time
+
+    x = center[0] + radius_x * math.cos(angle)
+    y = center[1] + radius_y * math.sin(angle)
+    entity.position = pygame.Vector2(x, y)
 
 
 def move_side_to_side(entity, speed, dt):
