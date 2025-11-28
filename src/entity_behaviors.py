@@ -132,13 +132,18 @@ def rotate_constantly(entity, dt):
 
 
 def shoot(entity, dt):
+    """
+    - Change this to shift responsibility from the entity to this behavior as far as fire rate goes
+    - Change this to be able to accomodate at least one and more than two shot origins, 
+    the entity will define where the shots originate from and this will create them in the correct locations accordingly
+    - define a method in the entity class to instantiate the shot instead of doing it here so this module doesn't require importing the EnemyShot
+    """
     if entity.shoot_timer > 0:
         return
 
     entity.shoot_timer = entity.shoot_cooldown
 
-    shot_pos = entity.position + DIRECTION_DOWN * entity.rect.height // 2
-
+    shot_pos = entity.position + DIRECTION_DOWN * entity.rect.height * 0.5
     shot_l = EnemyShot(
         shot_pos.x - entity.shot_offset_pos, shot_pos.y, entity.gameplay, entity
     )

@@ -43,60 +43,62 @@ PLAYER = {
     },
 }
 
-ENEMIES = {
-    "asteroid": {
-        "sm": {
-            "speed": 100,
-            "hp": 2,
-            "splits_into": None,
-        },
-        "md": {
-            "speed": 100,
-            "hp": 4,
-            "splits_into": "sm",
-        },
-        "lg": {
-            "speed": 100,
-            "hp": 6,
-            "splits_into": "md",
-        },
-        "xl": {
-            "speed": 100,
-            "hp": 10,
-            "splits_into": "lg",
-        },
-        "rotation_speed_range": (-90, 90),
-        "split_angle": 30,
-        "split_velocity_factor": 1.2,
+ASTEROID = {
+    "sm": {
+        "speed": 100,
+        "hp": 2,
+        "splits_into": None,
     },
-    "enemy_drone": {
-        "speed": 150,
+    "md": {
+        "speed": 100,
         "hp": 4,
-        "shot_cooldown": 0.8,
-        "shot_offset": 4,
-        "blast_radius": 32,
+        "splits_into": "sm",
     },
-    "enemy_ship": {
-        "speed": 175,
-        "hp": 8,
-        "shot_cooldown": 0.6,
-        "shot_offset": 4,
-        "blast_radius": 48,
+    "lg": {
+        "speed": 100,
+        "hp": 6,
+        "splits_into": "md",
     },
-    "sub_boss": {
-        "speed": 200,
-        "hp": 256,
-        "shot_cooldown": 0.4,
-        "shot_offset": 4,
-        "blast_radius": 256,
+    "xl": {
+        "speed": 100,
+        "hp": 10,
+        "splits_into": "lg",
     },
-    "level_boss": {
-        "speed": 200,
-        "hp": 512,
-        "shot_cooldown": 0.4,
-        "shot_offset": 4,
-        "blast_radius": 512,
-    },
+    "rotation_speed_range": (-90, 90),
+    "split_angle": 30,
+    "split_velocity_factor": 1.2,
+}
+
+ENEMY_DRONE = {
+    "speed": 150,
+    "hp": 4,
+    "shot_cooldown": 0.8,
+    "shot_offset": 4,
+    "blast_radius": 32,
+}
+
+ENEMY_SHIP = {
+    "speed": 175,
+    "hp": 8,
+    "shot_cooldown": 0.6,
+    "shot_offset": 4,
+    "blast_radius": 48,
+}
+
+SUB_BOSS = {
+    "speed": 200,
+    "hp": 256,
+    "shot_cooldown": 0.4,
+    "shot_offset": 4,
+    "blast_radius": 256,
+}
+
+LEVEL_BOSS = {
+    "speed": 200,
+    "hp": 512,
+    "shot_cooldown": 0.4,
+    "shot_offset": 4,
+    "blast_radius": 512,
 }
 
 PROJECTILES = {
