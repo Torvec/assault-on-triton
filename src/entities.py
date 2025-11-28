@@ -1,7 +1,7 @@
 import random
 import pygame
 from data.assets import IMAGES, SOUNDS
-from data.settings import (
+from data.entities import (
     EXPLOSIONS,
     PICKUPS,
     PROJECTILES,
@@ -99,6 +99,9 @@ class Entity(pygame.sprite.Sprite):
             if self.hit_timer <= 0:
                 self.is_hit = False
                 self.hit_timer = self.HIT_TIMER
+    
+    def create_shots(self, shot):
+        pass
 
     def handle_behaviors(self, dt):
         from src import entity_behaviors
@@ -451,9 +454,7 @@ class EnemyDrone(Entity):
         self.hp = ENEMY_DRONE["hp"]
         self.blast_radius = ENEMY_DRONE["blast_radius"]
         self.score_value = self.hp
-        self.shoot_timer = 0
-        self.shoot_cooldown = ENEMY_DRONE["shot_cooldown"]
-        self.shot_offset_pos = ENEMY_DRONE["shot_offset"]
+        self.shot_origin = ENEMY_DRONE["shot_origin"]
 
     def take_damage(self, amount):
         self.hp -= amount
@@ -471,7 +472,6 @@ class EnemyDrone(Entity):
 
     def update(self, dt):
         super().update(dt)
-        self.shoot_timer -= dt
 
     def draw(self, surface):
         super().draw(surface)
@@ -488,9 +488,7 @@ class EnemyShip(Entity):
         self.hp = ENEMY_SHIP["hp"]
         self.blast_radius = ENEMY_SHIP["blast_radius"]
         self.score_value = self.hp
-        self.shoot_timer = 0
-        self.shoot_cooldown = ENEMY_SHIP["shot_cooldown"]
-        self.shot_offset_pos = ENEMY_SHIP["shot_offset"]
+        self.shot_origin = ENEMY_SHIP["shot_origin"]
 
     def take_damage(self, amount):
         self.hp -= amount
@@ -508,7 +506,6 @@ class EnemyShip(Entity):
 
     def update(self, dt):
         super().update(dt)
-        self.shoot_timer -= dt
 
     def draw(self, surface):
         super().draw(surface)
@@ -525,9 +522,7 @@ class SubBoss(Entity):
         self.hp = SUB_BOSS["hp"]
         self.blast_radius = SUB_BOSS["blast_radius"]
         self.score_value = self.hp
-        self.shoot_timer = 0
-        self.shoot_cooldown = SUB_BOSS["shot_cooldown"]
-        self.shot_offset_pos = SUB_BOSS["shot_offset"]
+        self.shot_origin = SUB_BOSS["shot_origin"]
 
     def take_damage(self, amount):
         self.hp -= amount
@@ -545,7 +540,6 @@ class SubBoss(Entity):
 
     def update(self, dt):
         super().update(dt)
-        self.shoot_timer -= dt
 
     def draw(self, surface):
         super().draw(surface)
@@ -562,9 +556,7 @@ class LevelBoss(Entity):
         self.hp = LEVEL_BOSS["hp"]
         self.blast_radius = LEVEL_BOSS["blast_radius"]
         self.score_value = self.hp
-        self.shoot_timer = 0
-        self.shoot_cooldown = LEVEL_BOSS["shot_cooldown"]
-        self.shot_offset_pos = LEVEL_BOSS["shot_offset"]
+        self.shot_origin = LEVEL_BOSS["shot_origin"]
 
     def take_damage(self, amount):
         self.hp -= amount
@@ -582,7 +574,6 @@ class LevelBoss(Entity):
 
     def update(self, dt):
         super().update(dt)
-        self.shoot_timer -= dt
 
     def draw(self, surface):
         super().draw(surface)
@@ -767,7 +758,7 @@ class Player(Entity):
         self.shoot_timer = PLAYER["shots"][self.power_level]["rate"]
         positions_to_fire = PLAYER["shots"][self.power_level]["active_pos"]
         for pos in positions_to_fire:
-            offset = PLAYER["shot_pos"][pos]
+            offset = PLAYER["shot_origin"][pos]
             shot = PlayerShot(
                 self.position.x + offset["x"],
                 self.position.y + offset["y"],

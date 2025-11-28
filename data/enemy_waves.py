@@ -97,7 +97,7 @@ WAVE = {
         # },
         {
             "time": 0,
-            "type": "enemy_ship",
+            "type": "enemy_drone",
             "location": "top_right_edge",
             "behaviors": [
                 {
@@ -110,13 +110,13 @@ WAVE = {
                 },
                 {
                     "action": "shoot",
-                    "params": {},
+                    "params": {"shoot_rate": 0.6},
                 },
             ],
         },
         {
             "time": 1,
-            "type": "enemy_ship",
+            "type": "enemy_drone",
             "location": "top_left_edge",
             "behaviors": [
                 {
@@ -129,13 +129,13 @@ WAVE = {
                 },
                 {
                     "action": "shoot",
-                    "params": {},
+                    "params": {"shoot_rate": 0.6},
                 },
             ],
         },
         {
             "time": 2,
-            "type": "enemy_ship",
+            "type": "enemy_drone",
             "location": "top_right_edge",
             "behaviors": [
                 {
@@ -148,13 +148,13 @@ WAVE = {
                 },
                 {
                     "action": "shoot",
-                    "params": {},
+                    "params": {"shoot_rate": 0.6},
                 },
             ],
         },
         {
             "time": 3,
-            "type": "enemy_ship",
+            "type": "enemy_drone",
             "location": "top_left_edge",
             "behaviors": [
                 {
@@ -167,13 +167,13 @@ WAVE = {
                 },
                 {
                     "action": "shoot",
-                    "params": {},
+                    "params": {"shoot_rate": 0.6},
                 },
             ],
         },
         {
             "time": 4,
-            "type": "enemy_ship",
+            "type": "enemy_drone",
             "location": "top_right_edge",
             "behaviors": [
                 {
@@ -186,13 +186,13 @@ WAVE = {
                 },
                 {
                     "action": "shoot",
-                    "params": {},
+                    "params": {"shoot_rate": 0.6},
                 },
             ],
         },
         {
             "time": 5,
-            "type": "enemy_ship",
+            "type": "enemy_drone",
             "location": "top_left_edge",
             "behaviors": [
                 {
@@ -205,13 +205,13 @@ WAVE = {
                 },
                 {
                     "action": "shoot",
-                    "params": {},
+                    "params": {"shoot_rate": 0.6},
                 },
             ],
         },
         {
             "time": 6,
-            "type": "enemy_ship",
+            "type": "enemy_drone",
             "location": "top_right_edge",
             "behaviors": [
                 {
@@ -224,7 +224,7 @@ WAVE = {
                 },
                 {
                     "action": "shoot",
-                    "params": {},
+                    "params": {"shoot_rate": 0.6},
                 },
             ],
         },

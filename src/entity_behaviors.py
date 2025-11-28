@@ -77,10 +77,7 @@ def move_sine_wave(entity, frequency, amplitude, speed, dt):
 
 
 def move_saw_wave(entity, x_speed, y_speed, init_direction, dt):
-    directions = {
-        "left": -1,
-        "right": 1,
-    }
+    directions = {"left": -1, "right": 1}
     if not hasattr(entity, "_saw_dir"):
         entity._saw_dir = directions[init_direction]
 
@@ -107,10 +104,7 @@ def move_circular(entity, radius_x, radius_y, center, direction, speed, dt):
         entity._circle_time = 0
 
     angular_speed = speed / max(radius_x, radius_y)
-    directions = {
-        "cw": angular_speed,
-        "ccw": -angular_speed
-    }
+    directions = {"cw": angular_speed, "ccw": -angular_speed}
 
     entity._circle_time += dt * directions[direction]
     angle = entity._circle_time
@@ -131,25 +125,27 @@ def rotate_constantly(entity, dt):
     entity.rotation += entity.rotation_speed * dt
 
 
-def shoot(entity, dt):
+def shoot(entity, shoot_rate, dt):
     """
-    - Change this to shift responsibility from the entity to this behavior as far as fire rate goes
-    - Change this to be able to accomodate at least one and more than two shot origins, 
-    the entity will define where the shots originate from and this will create them in the correct locations accordingly
     - define a method in the entity class to instantiate the shot instead of doing it here so this module doesn't require importing the EnemyShot
     """
+    if not hasattr(entity, "shoot_timer"):
+        entity.shoot_timer = 0
+
+    entity.shoot_timer -= dt
+
     if entity.shoot_timer > 0:
         return
 
-    entity.shoot_timer = entity.shoot_cooldown
+    entity.shoot_timer = shoot_rate
+    shot_origins = entity.shot_origin
 
-    shot_pos = entity.position + DIRECTION_DOWN * entity.rect.height * 0.5
-    shot_l = EnemyShot(
-        shot_pos.x - entity.shot_offset_pos, shot_pos.y, entity.gameplay, entity
-    )
-    shot_r = EnemyShot(
-        shot_pos.x + entity.shot_offset_pos, shot_pos.y, entity.gameplay, entity
-    )
-    shot_l.velocity = DIRECTION_DOWN * shot_l.speed
-    shot_r.velocity = DIRECTION_DOWN * shot_r.speed
-    shot_l.sound()
+    for origin in shot_origins.values():
+        shot = EnemyShot(
+            entity.position.x + origin["x"],
+            entity.position.y + origin["y"],
+            entity.gameplay,
+            entity,
+        )
+        shot.velocity = DIRECTION_DOWN * shot.speed
+    shot.sound()
