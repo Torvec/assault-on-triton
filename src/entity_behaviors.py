@@ -1,6 +1,6 @@
 import math
 import pygame
-from src.entities import DIRECTION_DOWN, EnemyShot
+from src.entities import DIRECTION_DOWN
 
 
 def move_straight(entity, angle=0, velocity_factor=1.0, dt=0):
@@ -125,10 +125,8 @@ def rotate_constantly(entity, dt):
     entity.rotation += entity.rotation_speed * dt
 
 
-def shoot(entity, shoot_rate, dt):
-    """
-    - define a method in the entity class to instantiate the shot instead of doing it here so this module doesn't require importing the EnemyShot
-    """
+def shoot(entity, shoot_rate, projectile_type,  dt):
+
     if not hasattr(entity, "shoot_timer"):
         entity.shoot_timer = 0
 
@@ -141,7 +139,8 @@ def shoot(entity, shoot_rate, dt):
     shot_origins = entity.shot_origin
 
     for origin in shot_origins.values():
-        shot = EnemyShot(
+        shot = entity.gameplay.spawn_manager.spawn_projectile(
+            projectile_type,
             entity.position.x + origin["x"],
             entity.position.y + origin["y"],
             entity.gameplay,

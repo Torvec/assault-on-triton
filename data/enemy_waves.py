@@ -110,7 +110,10 @@ WAVE = {
                 },
                 {
                     "action": "shoot",
-                    "params": {"shoot_rate": 0.6},
+                    "params": {
+                        "shoot_rate": 0.6,
+                        "projectile_type": "enemy_shot",
+                    },
                 },
             ],
         },
@@ -129,7 +132,10 @@ WAVE = {
                 },
                 {
                     "action": "shoot",
-                    "params": {"shoot_rate": 0.6},
+                    "params": {
+                        "shoot_rate": 0.6,
+                        "projectile_type": "enemy_shot",
+                    },
                 },
             ],
         },
@@ -148,7 +154,10 @@ WAVE = {
                 },
                 {
                     "action": "shoot",
-                    "params": {"shoot_rate": 0.6},
+                    "params": {
+                        "shoot_rate": 0.6,
+                        "projectile_type": "enemy_shot",
+                    },
                 },
             ],
         },
@@ -167,7 +176,10 @@ WAVE = {
                 },
                 {
                     "action": "shoot",
-                    "params": {"shoot_rate": 0.6},
+                    "params": {
+                        "shoot_rate": 0.6,
+                        "projectile_type": "enemy_shot",
+                    },
                 },
             ],
         },
@@ -186,7 +198,10 @@ WAVE = {
                 },
                 {
                     "action": "shoot",
-                    "params": {"shoot_rate": 0.6},
+                    "params": {
+                        "shoot_rate": 0.6,
+                        "projectile_type": "enemy_shot",
+                    },
                 },
             ],
         },
@@ -205,7 +220,10 @@ WAVE = {
                 },
                 {
                     "action": "shoot",
-                    "params": {"shoot_rate": 0.6},
+                    "params": {
+                        "shoot_rate": 0.6,
+                        "projectile_type": "enemy_shot",
+                    },
                 },
             ],
         },
@@ -224,7 +242,10 @@ WAVE = {
                 },
                 {
                     "action": "shoot",
-                    "params": {"shoot_rate": 0.6},
+                    "params": {
+                        "shoot_rate": 0.6,
+                        "projectile_type": "enemy_shot",
+                    },
                 },
             ],
         },

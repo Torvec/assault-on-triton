@@ -15,6 +15,7 @@ from src.entities import (
     OverdrivePickup,
     BombAmmoPickup,
     InvulnerabilityPickup,
+    EnemyShot,
 )
 from src.gameplay_states import GameplayState
 from data.settings import SCORING, SPAWN_LOCATIONS
@@ -172,7 +173,13 @@ class SpawnManager:
             "overdrive_pickup": OverdrivePickup,
             "bomb_ammo_pickup": BombAmmoPickup,
             "invulnerability_pickup": InvulnerabilityPickup,
+            "enemy_shot": EnemyShot,
         }
+
+    def spawn_projectile(self, projectile_class, x, y, gameplay, owner):
+        projectile_class = self.entities[projectile_class]
+        projectile = projectile_class(x, y, gameplay, owner)
+        return projectile
 
     def spawn_entity(self, entity_name, location, behaviors=None):
         position = self.calc_position(location)
@@ -228,7 +235,9 @@ class EventManager:
     def process_next(self):
         if self.current_index >= len(self.events):
             print("Event queue complete")
-            self.gameplay.game.change_screen("GamePlay") #! Should be Thanks, but doing this for testing now
+            self.gameplay.game.change_screen(
+                "GamePlay"
+            )  #! Should be Thanks, but doing this for testing now
             return
 
         self.current_event = self.events[self.current_index]

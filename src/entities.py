@@ -99,9 +99,6 @@ class Entity(pygame.sprite.Sprite):
             if self.hit_timer <= 0:
                 self.is_hit = False
                 self.hit_timer = self.HIT_TIMER
-    
-    def create_shots(self, shot):
-        pass
 
     def handle_behaviors(self, dt):
         from src import entity_behaviors
@@ -390,7 +387,10 @@ class Asteroid(Entity):
             return
 
         # Create split events (right and left)
-        for angle in [ASTEROID["split_angle"], -ASTEROID["split_angle"]]:
+        for angle in [
+            ASTEROID["split_angle"],
+            -ASTEROID["split_angle"],
+        ]:
             split_event = {
                 "type": self.splits_into_name,
                 "location": self.position,
