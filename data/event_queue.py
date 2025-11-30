@@ -7,15 +7,15 @@ EVENT_QUEUE = [
         },
     },
     #! FOR TESTING
-    {
-        "type": "trigger_wave",
-        "params": {"wave_id": "test_wave"},
-    },
-    #! FOR TESTING
     # {
-    #     "type": "trigger_cutscene",
-    #     "params": {"cutscene_id": "intro"},
+    #     "type": "trigger_wave",
+    #     "params": {"wave_id": "test_wave"},
     # },
+    #! FOR TESTING
+    {
+        "type": "trigger_cutscene",
+        "params": {"cutscene_id": "intro"},
+    },
     # {
     #     "type": "show_message",
     #     "params": {"message_id": "mission_start"},

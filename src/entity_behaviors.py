@@ -11,24 +11,23 @@ def move_straight(entity, angle=0, velocity_factor=1.0, dt=0):
         entity._angle_set = True
     entity.position += entity.velocity * dt
 
-
+# ! Need to modify handle_behaviors in the entity class to be able to detect when this behavior
+# ! is done so that it can be used during gameplay and cutscenes
 def move_to_location(entity, x, y, speed, dt):
     target = pygame.Vector2(x, y)
     direction = target - entity.position
     distance = direction.length()
 
-    if distance < 5:  # Threshold to prevent jittering
+    if distance < 5:
         entity.position = target.copy()
         entity.velocity = pygame.Vector2(0, 0)
-        if not hasattr(entity, "_location_reached"):
-            entity._location_reached = True
-            entity.gameplay.cutscene_manager.on_action_complete()
-        return
+        return "done"
 
-    if distance > 0:
-        direction.normalize_ip()
-        entity.velocity = direction * speed
-        entity.position += entity.velocity * dt
+    direction.normalize_ip()
+    entity.velocity = direction * speed
+    entity.position += entity.velocity * dt
+
+    return "running"
 
 
 def move_square_wave(entity, x_dist, y_dist, init_horizontal_dir, x_speed, y_speed, dt):
@@ -125,7 +124,7 @@ def rotate_constantly(entity, dt):
     entity.rotation += entity.rotation_speed * dt
 
 
-def shoot(entity, shoot_rate, projectile_type,  dt):
+def shoot(entity, shoot_rate, projectile_type, dt):
 
     if not hasattr(entity, "shoot_timer"):
         entity.shoot_timer = 0
