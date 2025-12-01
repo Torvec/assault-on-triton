@@ -6,16 +6,16 @@ EVENT_QUEUE = [
             "location": "player_spawn",
         },
     },
-    #! FOR TESTING
-    # {
-    #     "type": "trigger_wave",
-    #     "params": {"wave_id": "test_wave"},
-    # },
-    #! FOR TESTING
     {
         "type": "trigger_cutscene",
         "params": {"cutscene_id": "intro"},
     },
+    #! FOR TESTING
+    {
+        "type": "trigger_wave",
+        "params": {"wave_id": "test_wave"},
+    },
+    #! FOR TESTING
     # {
     #     "type": "show_message",
     #     "params": {"message_id": "mission_start"},
