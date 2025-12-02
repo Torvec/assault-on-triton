@@ -19,25 +19,52 @@ WAVE = {
         #         },
         #     ],
         # },
-        # {
-        #     "time": 4,
-        #     "type": "enemy_drone",
-        #     "location": "top_left_edge",
-        #     "behaviors": [
-        #         {
-        #             "action": "move_saw_wave",
-        #             "params": {
-        #                 "x_speed": 150,
-        #                 "y_speed": 100,
-        #                 "init_direction": "right",
-        #             },
-        #         },
-        #         {
-        #             "action": "shoot",
-        #             "params": {},
-        #         },
-        #     ],
-        # },
+        {
+            "time": 0,
+            "type": "enemy_drone",
+            "location": "top_center_left",
+            "behaviors": [
+                {
+                    "action": "move_saw_wave",
+                    "params": {
+                        "frequency": 2,
+                        "amplitude": 800,
+                        "y_speed": 150,
+                        "phase": 1,
+                    },
+                },
+                {
+                    "action": "shoot",
+                    "params": {
+                        "shoot_rate": 0.6,
+                        "projectile_type": "enemy_shot",
+                    },
+                },
+            ],
+        },
+        {
+            "time": 0,
+            "type": "enemy_drone",
+            "location": "top_center_right",
+            "behaviors": [
+                {
+                    "action": "move_saw_wave",
+                    "params": {
+                        "frequency": 2,
+                        "amplitude": 400,
+                        "y_speed": 150,
+                        "phase": -1,
+                    },
+                },
+                {
+                    "action": "shoot",
+                    "params": {
+                        "shoot_rate": 0.6,
+                        "projectile_type": "enemy_shot",
+                    },
+                },
+            ],
+        },
         # {
         #     "time": 6,
         #     "type": "enemy_ship",
@@ -95,160 +122,160 @@ WAVE = {
         #         },
         #     ],
         # },
-        {
-            "time": 0,
-            "type": "enemy_drone",
-            "location": "top_right_edge",
-            "behaviors": [
-                {
-                    "action": "move_arc",
-                    "params": {
-                        "pivot_point": (0, 0),
-                        "direction": "cw",
-                        "speed": 200,
-                    },
-                },
-                {
-                    "action": "shoot",
-                    "params": {
-                        "shoot_rate": 0.6,
-                        "projectile_type": "enemy_shot",
-                    },
-                },
-            ],
-        },
-        {
-            "time": 1,
-            "type": "enemy_drone",
-            "location": "top_left_edge",
-            "behaviors": [
-                {
-                    "action": "move_arc",
-                    "params": {
-                        "pivot_point": (608, 0),
-                        "direction": "ccw",
-                        "speed": 200,
-                    },
-                },
-                {
-                    "action": "shoot",
-                    "params": {
-                        "shoot_rate": 0.6,
-                        "projectile_type": "enemy_shot",
-                    },
-                },
-            ],
-        },
-        {
-            "time": 2,
-            "type": "enemy_drone",
-            "location": "top_right_edge",
-            "behaviors": [
-                {
-                    "action": "move_arc",
-                    "params": {
-                        "pivot_point": (0, 0),
-                        "direction": "cw",
-                        "speed": 200,
-                    },
-                },
-                {
-                    "action": "shoot",
-                    "params": {
-                        "shoot_rate": 0.6,
-                        "projectile_type": "enemy_shot",
-                    },
-                },
-            ],
-        },
-        {
-            "time": 3,
-            "type": "enemy_drone",
-            "location": "top_left_edge",
-            "behaviors": [
-                {
-                    "action": "move_arc",
-                    "params": {
-                        "pivot_point": (608, 0),
-                        "direction": "ccw",
-                        "speed": 200,
-                    },
-                },
-                {
-                    "action": "shoot",
-                    "params": {
-                        "shoot_rate": 0.6,
-                        "projectile_type": "enemy_shot",
-                    },
-                },
-            ],
-        },
-        {
-            "time": 4,
-            "type": "enemy_drone",
-            "location": "top_right_edge",
-            "behaviors": [
-                {
-                    "action": "move_arc",
-                    "params": {
-                        "pivot_point": (0, 0),
-                        "direction": "cw",
-                        "speed": 200,
-                    },
-                },
-                {
-                    "action": "shoot",
-                    "params": {
-                        "shoot_rate": 0.6,
-                        "projectile_type": "enemy_shot",
-                    },
-                },
-            ],
-        },
-        {
-            "time": 5,
-            "type": "enemy_drone",
-            "location": "top_left_edge",
-            "behaviors": [
-                {
-                    "action": "move_arc",
-                    "params": {
-                        "pivot_point": (608, 0),
-                        "direction": "ccw",
-                        "speed": 200,
-                    },
-                },
-                {
-                    "action": "shoot",
-                    "params": {
-                        "shoot_rate": 0.6,
-                        "projectile_type": "enemy_shot",
-                    },
-                },
-            ],
-        },
-        {
-            "time": 6,
-            "type": "enemy_drone",
-            "location": "top_right_edge",
-            "behaviors": [
-                {
-                    "action": "move_arc",
-                    "params": {
-                        "pivot_point": (0, 0),
-                        "direction": "cw",
-                        "speed": 200,
-                    },
-                },
-                {
-                    "action": "shoot",
-                    "params": {
-                        "shoot_rate": 0.6,
-                        "projectile_type": "enemy_shot",
-                    },
-                },
-            ],
-        },
+        # {
+        #     "time": 0,
+        #     "type": "enemy_drone",
+        #     "location": "top_right_edge",
+        #     "behaviors": [
+        #         {
+        #             "action": "move_arc",
+        #             "params": {
+        #                 "pivot_point": (0, 0),
+        #                 "direction": "cw",
+        #                 "speed": 200,
+        #             },
+        #         },
+        #         {
+        #             "action": "shoot",
+        #             "params": {
+        #                 "shoot_rate": 0.6,
+        #                 "projectile_type": "enemy_shot",
+        #             },
+        #         },
+        #     ],
+        # },
+        # {
+        #     "time": 1,
+        #     "type": "enemy_drone",
+        #     "location": "top_left_edge",
+        #     "behaviors": [
+        #         {
+        #             "action": "move_arc",
+        #             "params": {
+        #                 "pivot_point": (608, 0),
+        #                 "direction": "ccw",
+        #                 "speed": 200,
+        #             },
+        #         },
+        #         {
+        #             "action": "shoot",
+        #             "params": {
+        #                 "shoot_rate": 0.6,
+        #                 "projectile_type": "enemy_shot",
+        #             },
+        #         },
+        #     ],
+        # },
+        # {
+        #     "time": 2,
+        #     "type": "enemy_drone",
+        #     "location": "top_right_edge",
+        #     "behaviors": [
+        #         {
+        #             "action": "move_arc",
+        #             "params": {
+        #                 "pivot_point": (0, 0),
+        #                 "direction": "cw",
+        #                 "speed": 200,
+        #             },
+        #         },
+        #         {
+        #             "action": "shoot",
+        #             "params": {
+        #                 "shoot_rate": 0.6,
+        #                 "projectile_type": "enemy_shot",
+        #             },
+        #         },
+        #     ],
+        # },
+        # {
+        #     "time": 3,
+        #     "type": "enemy_drone",
+        #     "location": "top_left_edge",
+        #     "behaviors": [
+        #         {
+        #             "action": "move_arc",
+        #             "params": {
+        #                 "pivot_point": (608, 0),
+        #                 "direction": "ccw",
+        #                 "speed": 200,
+        #             },
+        #         },
+        #         {
+        #             "action": "shoot",
+        #             "params": {
+        #                 "shoot_rate": 0.6,
+        #                 "projectile_type": "enemy_shot",
+        #             },
+        #         },
+        #     ],
+        # },
+        # {
+        #     "time": 4,
+        #     "type": "enemy_drone",
+        #     "location": "top_right_edge",
+        #     "behaviors": [
+        #         {
+        #             "action": "move_arc",
+        #             "params": {
+        #                 "pivot_point": (0, 0),
+        #                 "direction": "cw",
+        #                 "speed": 200,
+        #             },
+        #         },
+        #         {
+        #             "action": "shoot",
+        #             "params": {
+        #                 "shoot_rate": 0.6,
+        #                 "projectile_type": "enemy_shot",
+        #             },
+        #         },
+        #     ],
+        # },
+        # {
+        #     "time": 5,
+        #     "type": "enemy_drone",
+        #     "location": "top_left_edge",
+        #     "behaviors": [
+        #         {
+        #             "action": "move_arc",
+        #             "params": {
+        #                 "pivot_point": (608, 0),
+        #                 "direction": "ccw",
+        #                 "speed": 200,
+        #             },
+        #         },
+        #         {
+        #             "action": "shoot",
+        #             "params": {
+        #                 "shoot_rate": 0.6,
+        #                 "projectile_type": "enemy_shot",
+        #             },
+        #         },
+        #     ],
+        # },
+        # {
+        #     "time": 6,
+        #     "type": "enemy_drone",
+        #     "location": "top_right_edge",
+        #     "behaviors": [
+        #         {
+        #             "action": "move_arc",
+        #             "params": {
+        #                 "pivot_point": (0, 0),
+        #                 "direction": "cw",
+        #                 "speed": 200,
+        #             },
+        #         },
+        #         {
+        #             "action": "shoot",
+        #             "params": {
+        #                 "shoot_rate": 0.6,
+        #                 "projectile_type": "enemy_shot",
+        #             },
+        #         },
+        #     ],
+        # },
         # {
         #     "time": 0,
         #     "type": "enemy_drone",

@@ -6,10 +6,10 @@ EVENT_QUEUE = [
             "location": "player_spawn",
         },
     },
-    {
-        "type": "trigger_cutscene",
-        "params": {"cutscene_id": "intro"},
-    },
+    # {
+    #     "type": "trigger_cutscene",
+    #     "params": {"cutscene_id": "intro"},
+    # },
     #! FOR TESTING
     {
         "type": "trigger_wave",

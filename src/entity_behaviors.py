@@ -79,17 +79,15 @@ def move_sine_wave(entity, frequency, amplitude, speed, dt):
     entity.position += entity.velocity * dt
 
 
-def move_saw_wave(entity, x_speed, y_speed, init_direction, dt):
-    directions = {"left": -1, "right": 1}
-    if not hasattr(entity, "_saw_dir"):
-        entity._saw_dir = directions[init_direction]
+def move_saw_wave(entity, frequency, amplitude, y_speed, dt, phase=0):
+    if not hasattr(entity, "_saw_time"):
+        entity._saw_time = 0
 
-    if entity.position.x <= 0:
-        entity._saw_dir = directions["right"]
-    elif entity.position.x >= entity.gameplay.play_area_rect.width:
-        entity._saw_dir = directions["left"]
+    entity._saw_time += dt
 
-    entity.velocity = pygame.Vector2(x_speed * entity._saw_dir, y_speed)
+    vx = amplitude * (2 * ((entity._saw_time * frequency * phase) % 1) - 1)
+    vy = y_speed
+    entity.velocity = pygame.Vector2(vx, vy)
     entity.position += entity.velocity * dt
 
 
