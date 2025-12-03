@@ -34,7 +34,19 @@ def move_to_location(entity, x, y, speed, dt):
         entity.position += entity.velocity * dt
 
 
-def move_square_wave(entity, x_dist, y_dist, init_horizontal_dir, x_speed, y_speed, dt):
+def move_square_wave(
+    entity,
+    x_dist,
+    y_dist,
+    init_horizontal_dir,
+    x_speed,
+    y_speed,
+    shoot_rate,
+    ammo_count,
+    reload_time,
+    projectile_type,
+    dt,
+):
     directions = {"left": -1, "right": 1}
     axis = ("x", "y")
 
@@ -59,6 +71,7 @@ def move_square_wave(entity, x_dist, y_dist, init_horizontal_dir, x_speed, y_spe
     elif state["current_axis"] == axis[0]:
         state["current_x_dist"] += x_speed * dt
         entity.velocity = pygame.Vector2(state["current_horizontal_dir"] * x_speed, 0)
+        shoot(entity, shoot_rate, ammo_count, reload_time, projectile_type, dt)
         if state["current_x_dist"] >= x_dist:
             state["current_axis"] = axis[1]
             state["current_horizontal_dir"] *= -1
@@ -128,13 +141,25 @@ def rotate_constantly(entity, dt):
     entity.rotation += entity.rotation_speed * dt
 
 
-def shoot(entity, shoot_rate, projectile_type, dt):
+def shoot(entity, shoot_rate, ammo_count, reload_time, projectile_type, dt):
 
     if entity.position.y < 0:
         return
 
     if not hasattr(entity, "shoot_timer"):
         entity.shoot_timer = 0
+    if not hasattr(entity, "burst_ammo"):
+        entity.burst_ammo = ammo_count
+    if not hasattr(entity, "reload_timer"):
+        entity.reload_timer = reload_time
+
+    if entity.burst_ammo == 0:
+        entity.reload_timer -= dt
+        if entity.reload_timer <= 0:
+            entity.burst_ammo = ammo_count
+            entity.reload_timer = reload_time
+        else:
+            return
 
     entity.shoot_timer -= dt
 
@@ -153,4 +178,5 @@ def shoot(entity, shoot_rate, projectile_type, dt):
             entity,
         )
         shot.velocity = DIRECTION_DOWN * shot.speed
+    entity.burst_ammo -= 1
     shot.sound()
