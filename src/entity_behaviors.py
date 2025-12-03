@@ -79,15 +79,17 @@ def move_sine_wave(entity, frequency, amplitude, speed, dt):
     entity.position += entity.velocity * dt
 
 
-def move_saw_wave(entity, frequency, amplitude, y_speed, dt, phase=0):
-    if not hasattr(entity, "_saw_time"):
-        entity._saw_time = 0
+def move_saw_wave(entity, x_speed, y_speed, init_direction, dt):
+    directions = {"left": -1, "right": 1}
+    if not hasattr(entity, "_saw_dir"):
+        entity._saw_dir = directions[init_direction]
 
-    entity._saw_time += dt
+    if entity.position.x <= entity.rect.width:
+        entity._saw_dir = directions["right"]
+    elif entity.position.x >= entity.gameplay.play_area_rect.width - entity.rect.width:
+        entity._saw_dir = directions["left"]
 
-    vx = amplitude * (2 * ((entity._saw_time * frequency * phase) % 1) - 1)
-    vy = y_speed
-    entity.velocity = pygame.Vector2(vx, vy)
+    entity.velocity = pygame.Vector2(x_speed * entity._saw_dir, y_speed)
     entity.position += entity.velocity * dt
 
 
@@ -127,6 +129,9 @@ def rotate_constantly(entity, dt):
 
 
 def shoot(entity, shoot_rate, projectile_type, dt):
+
+    if entity.position.y < 0:
+        return
 
     if not hasattr(entity, "shoot_timer"):
         entity.shoot_timer = 0

@@ -27,39 +27,37 @@ WAVE = {
                 {
                     "action": "move_saw_wave",
                     "params": {
-                        "frequency": 2,
-                        "amplitude": 800,
+                        "x_speed": 200,
                         "y_speed": 150,
-                        "phase": 1,
+                        "init_direction": "right",
                     },
                 },
                 {
                     "action": "shoot",
                     "params": {
-                        "shoot_rate": 0.6,
+                        "shoot_rate": 0.25,
                         "projectile_type": "enemy_shot",
                     },
                 },
             ],
         },
         {
-            "time": 0,
+            "time": 2,
             "type": "enemy_drone",
             "location": "top_center_right",
             "behaviors": [
                 {
                     "action": "move_saw_wave",
                     "params": {
-                        "frequency": 2,
-                        "amplitude": 400,
+                        "x_speed": 200,
                         "y_speed": 150,
-                        "phase": -1,
+                        "init_direction": "left",
                     },
                 },
                 {
                     "action": "shoot",
                     "params": {
-                        "shoot_rate": 0.6,
+                        "shoot_rate": 0.25,
                         "projectile_type": "enemy_shot",
                     },
                 },
