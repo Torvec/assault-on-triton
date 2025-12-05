@@ -63,7 +63,7 @@ class CutsceneState(State):
         for event in events:
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_ESCAPE:
-                    self.gameplay.change_state(GameplayState.PAUSED)
+                    self.gameplay.state_manager.change_state(GameplayState.PAUSED)
 
 
 class PlayState(State):
@@ -99,12 +99,12 @@ class PlayState(State):
         for event in events:
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_ESCAPE:
-                    self.gameplay.change_state(GameplayState.PAUSED)
+                    self.gameplay.state_manager.change_state(GameplayState.PAUSED)
 
     def update(self, dt):
         if not self.entity_manager.player_group.sprite:
             self.score_manager.store_score()
-            self.gameplay.change_state(GameplayState.GAME_OVER)
+            self.gameplay.state_manager.change_state(GameplayState.GAME_OVER)
             return
         self.gameplay.game_timer += dt
         self.collision_manager.update()
@@ -135,7 +135,9 @@ class PausedState(State):
         for event in events:
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_ESCAPE:
-                    self.gameplay.change_state(self.gameplay.previous_state)
+                    self.gameplay.state_manager.change_state(
+                        self.gameplay.state_manager.previous_state
+                    )
 
     def draw(self, surface):
         self.pause_modal.draw(surface)

@@ -18,8 +18,83 @@ from src.entities import (
     PlayerBomb,
     Explosion,
 )
-from src.gameplay_states import GameplayState
+from src.gameplay_states import (
+    GameplayState,
+    InitState,
+    PlayState,
+    CutsceneState,
+    PausedState,
+    GameOverState,
+    MissionCompleteState,
+)
 from data.settings import SCORING, SPAWN_LOCATIONS
+
+
+class StateManager:
+    def __init__(
+        self,
+        gameplay,
+        event_manager,
+        entity_manager,
+        collision_manager,
+        wave_manager,
+        battle_manager,
+        gameplay_ui,
+        pause_modal,
+        score_manager,
+    ):
+        self.gameplay = gameplay
+        self.event_manager = event_manager
+        self.entity_manager = entity_manager
+        self.collision_manager = collision_manager
+        self.wave_manager = wave_manager
+        self.battle_manager = battle_manager
+        self.gameplay_ui = gameplay_ui
+        self.pause_modal = pause_modal
+        self.score_manager = score_manager
+        self.current_state = None
+        self.previous_state = None
+        self.states = {
+            GameplayState.INIT: InitState(self.event_manager),
+            GameplayState.CUTSCENE: CutsceneState(
+                self.gameplay, self.entity_manager, self.collision_manager
+            ),
+            GameplayState.PLAY: PlayState(
+                self.gameplay,
+                self.entity_manager,
+                self.collision_manager,
+                self.wave_manager,
+                self.battle_manager,
+                self.score_manager,
+                self.gameplay_ui,
+            ),
+            GameplayState.PAUSED: PausedState(
+                self.gameplay, self.entity_manager, self.pause_modal
+            ),
+            GameplayState.GAME_OVER: GameOverState(self.gameplay),
+            GameplayState.MISSION_COMPLETE: MissionCompleteState(
+                self.gameplay, self.entity_manager, self.score_manager
+            ),
+        }
+
+    def change_state(self, new_state):
+        if self.current_state:
+            self.states[self.current_state].exit()
+            self.previous_state = self.current_state
+        self.current_state = new_state
+        self.states[self.current_state].enter()
+
+    def handle_event(self, events):
+        if self.current_state:
+            self.states[self.current_state].handle_event(events)
+
+    def update(self, dt):
+        if self.current_state:
+            self.states[self.current_state].update(dt)
+
+    def draw(self, surface):
+        if self.current_state:
+            self.states[self.current_state].draw(surface)
 
 
 class EntityManager:
@@ -442,21 +517,21 @@ class EventManager:
 
     def handle_cutscene(self, event):
         params = event.get("params", {})
-        self.gameplay.change_state(GameplayState.CUTSCENE)
+        self.gameplay.state_manager.change_state(GameplayState.CUTSCENE)
         self.gameplay.cutscene_manager.start_cutscene(params["cutscene_id"])
 
     def handle_wave(self, event):
         params = event.get("params", {})
-        self.gameplay.change_state(GameplayState.PLAY)
+        self.gameplay.state_manager.change_state(GameplayState.PLAY)
         self.gameplay.wave_manager.start_wave(params["wave_id"])
 
     def handle_battle(self, event):
         params = event.get("params", {})
-        self.gameplay.change_state(GameplayState.PLAY)
+        self.gameplay.state_manager.change_state(GameplayState.PLAY)
         self.gameplay.battle_manager.start_battle(params["battle_id"])
 
     def handle_mission_complete(self, event):
-        self.gameplay.change_state(GameplayState.MISSION_COMPLETE)
+        self.gameplay.state_manager.change_state(GameplayState.MISSION_COMPLETE)
 
     def handle_message(self, event):
         params = event.get("params", {})

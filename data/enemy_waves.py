@@ -16,8 +16,8 @@ WAVE = {
                 {
                     "action": "shoot",
                     "params": {
-                        "shoot_rate": 0.25,
-                        "ammo_count": 8,
+                        "shoot_rate": 0.1,
+                        "ammo_count": 18,
                         "reload_time": 1.5,
                         "projectile_type": "enemy_shot",
                     },
@@ -40,8 +40,8 @@ WAVE = {
                 {
                     "action": "shoot",
                     "params": {
-                        "shoot_rate": 0.25,
-                        "ammo_count": 8,
+                        "shoot_rate": 0.1,
+                        "ammo_count": 18,
                         "reload_time": 1.5,
                         "projectile_type": "enemy_shot",
                     },
@@ -51,7 +51,7 @@ WAVE = {
         {
             "time": 6,
             "type": "enemy_ship",
-            "location": "top_center_left",
+            "location": "top_center",
             "behaviors": [
                 {
                     "action": "move_sine_wave",
@@ -64,8 +64,8 @@ WAVE = {
                 {
                     "action": "shoot",
                     "params": {
-                        "shoot_rate": 0.3,
-                        "ammo_count": 8,
+                        "shoot_rate": 0.2,
+                        "ammo_count": 18,
                         "reload_time": 1.5,
                         "projectile_type": "enemy_shot",
                     },
@@ -75,12 +75,12 @@ WAVE = {
         {
             "time": 8,
             "type": "enemy_ship",
-            "location": "top_center_right",
+            "location": "top_center",
             "behaviors": [
                 {
                     "action": "move_sine_wave",
                     "params": {
-                        "frequency": 4,
+                        "frequency": -4,
                         "amplitude": 600,
                         "speed": 200,
                     },
@@ -88,8 +88,8 @@ WAVE = {
                 {
                     "action": "shoot",
                     "params": {
-                        "shoot_rate": 0.3,
-                        "ammo_count": 8,
+                        "shoot_rate": 0.2,
+                        "ammo_count": 18,
                         "reload_time": 1.5,
                         "projectile_type": "enemy_shot",
                     },
@@ -109,8 +109,8 @@ WAVE = {
                         "init_horizontal_dir": "left",
                         "x_speed": 200,
                         "y_speed": 300,
-                        "shoot_rate": 0.3,
-                        "ammo_count": 8,
+                        "shoot_rate": 0.1,
+                        "ammo_count": 28,
                         "reload_time": 1.5,
                         "projectile_type": "enemy_shot",
                     },
@@ -130,8 +130,8 @@ WAVE = {
                         "init_horizontal_dir": "right",
                         "x_speed": 200,
                         "y_speed": 300,
-                        "shoot_rate": 0.3,
-                        "ammo_count": 8,
+                        "shoot_rate": 0.1,
+                        "ammo_count": 28,
                         "reload_time": 1.5,
                         "projectile_type": "enemy_shot",
                     },
