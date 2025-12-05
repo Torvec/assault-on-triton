@@ -233,7 +233,7 @@ class GamePlayUI:
 
     def draw_top_right(self, surface):
         """Player stats: HP, lives, bombs, power level."""
-        if not self.gameplay.player_group.sprite:
+        if not self.gameplay.entity_manager.player_group.sprite:
             return
 
         rect = pygame.Rect(
@@ -254,7 +254,7 @@ class GamePlayUI:
         )
         render_text(
             screen=surface,
-            text=f"HP x {self.gameplay.player_group.sprite.hp}%",
+            text=f"HP x {self.gameplay.entity_manager.player_group.sprite.hp}%",
             font_size=UI["font_sizes"]["large"],
             color=UI["colors"]["primary"],
             pos=content_rect.topleft,
@@ -262,7 +262,7 @@ class GamePlayUI:
         )
         render_text(
             screen=surface,
-            text=f"LIVES x {self.gameplay.player_group.sprite.lives}",
+            text=f"LIVES x {self.gameplay.entity_manager.player_group.sprite.lives}",
             font_size=UI["font_sizes"]["large"],
             color=UI["colors"]["primary"],
             pos=content_rect.midleft,
@@ -270,14 +270,14 @@ class GamePlayUI:
         )
         render_text(
             screen=surface,
-            text=f"BOMBS x {self.gameplay.player_group.sprite.bomb_ammo}",
+            text=f"BOMBS x {self.gameplay.entity_manager.player_group.sprite.bomb_ammo}",
             font_size=UI["font_sizes"]["large"],
             color=UI["colors"]["primary"],
             pos=content_rect.center,
             align="center",
         )
         power_display = UI["power_levels"].get(
-            self.gameplay.player_group.sprite.power_level, "( ? )"
+            self.gameplay.entity_manager.player_group.sprite.power_level, "( ? )"
         )
         render_text(
             screen=surface,

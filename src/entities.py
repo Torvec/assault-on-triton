@@ -48,9 +48,11 @@ class Entity(pygame.sprite.Sprite):
             super().__init__(self.containers)
         else:
             super().__init__()
+
         # Image cache check so images only get loaded once instead of every time an entity is spawned
         if getattr(self, "img_path", None):
             self.image = self.load_image(self.img_path)
+
         # Sfx cache check so sound files only get loaded once instead of every time its used
         if getattr(self, "sfx_path", None):
             self.sfx = self.load_sound(self.sfx_path)
@@ -627,30 +629,6 @@ class HealthPickup(Pickup):
         super().draw(surface)
 
 
-class ExtraLifePickup(Pickup):
-
-    pickup_type = "life"
-
-    def __init__(self, x, y, gameplay):
-        self.img_path = IMAGES["life_pickup"]
-        super().__init__(x, y, gameplay)
-        self.fallback_score = PICKUPS["life"]["fallback_score"]
-
-    def apply(self):
-        if self.player.lives < PLAYER["max_lives"]:
-            self.player.lives += 1
-        else:
-            self.gameplay.score_manager.handle_score(self.fallback_score)
-            self.gameplay.score_manager.handle_streak_meter_inc(self.fallback_score)
-        self.kill()
-
-    def update(self, dt):
-        super().update(dt)
-
-    def draw(self, surface):
-        super().draw(surface)
-
-
 class PowerLevelPickup(Pickup):
 
     pickup_type = "power"
@@ -708,23 +686,6 @@ class BombAmmoPickup(Pickup):
         else:
             self.gameplay.score_manager.handle_score(self.fallback_score)
             self.gameplay.score_manager.handle_streak_meter_inc(self.fallback_score)
-        self.kill()
-
-    def update(self, dt):
-        super().update(dt)
-
-    def draw(self, surface):
-        super().draw(surface)
-
-
-class InvulnerabilityPickup(Pickup):
-
-    def __init__(self, x, y, gameplay):
-        self.img_path = IMAGES["invulnerable_pickup"]
-        super().__init__(x, y, gameplay)
-
-    def apply(self):
-        self.player.invincibleTime = PLAYER["invulnerable_duration"]
         self.kill()
 
     def update(self, dt):

@@ -10,58 +10,238 @@ from src.entities import (
     SubBoss,
     LevelBoss,
     HealthPickup,
-    ExtraLifePickup,
     PowerLevelPickup,
     OverdrivePickup,
     BombAmmoPickup,
-    InvulnerabilityPickup,
+    PlayerShot,
     EnemyShot,
+    PlayerBomb,
+    Explosion,
 )
 from src.gameplay_states import GameplayState
 from data.settings import SCORING, SPAWN_LOCATIONS
 
 
+class EntityManager:
+    def __init__(self):
+        self.setup_groups()
+        self.setup_registry()
+        self.setup_containers()
+
+    def setup_groups(self):
+        self.player_group = pygame.sprite.GroupSingle()
+        self.sub_boss_group = pygame.sprite.GroupSingle()
+        self.level_boss_group = pygame.sprite.GroupSingle()
+        self.asteroids = pygame.sprite.Group()
+        self.enemy_drones = pygame.sprite.Group()
+        self.enemy_ships = pygame.sprite.Group()
+        self.missiles = pygame.sprite.Group()
+        self.shots = pygame.sprite.Group()
+        self.bombs = pygame.sprite.Group()
+        self.explosions = pygame.sprite.Group()
+        self.pickups = pygame.sprite.Group()
+        self.active_targets = pygame.sprite.Group()
+        self.updateable = pygame.sprite.Group()
+        self.drawable = pygame.sprite.Group()
+
+    def setup_registry(self):
+        self.entity_registry = {
+            "player": {
+                "class": Player,
+                "containers": [self.player_group, self.updateable, self.drawable],
+            },
+            "asteroid_xl": {
+                "class": AsteroidXL,
+                "containers": [
+                    self.asteroids,
+                    self.updateable,
+                    self.drawable,
+                    self.active_targets,
+                ],
+            },
+            "asteroid_lg": {
+                "class": AsteroidLG,
+                "containers": [
+                    self.asteroids,
+                    self.updateable,
+                    self.drawable,
+                    self.active_targets,
+                ],
+            },
+            "asteroid_md": {
+                "class": AsteroidMD,
+                "containers": [
+                    self.asteroids,
+                    self.updateable,
+                    self.drawable,
+                    self.active_targets,
+                ],
+            },
+            "asteroid_sm": {
+                "class": AsteroidSM,
+                "containers": [
+                    self.asteroids,
+                    self.updateable,
+                    self.drawable,
+                    self.active_targets,
+                ],
+            },
+            "enemy_drone": {
+                "class": EnemyDrone,
+                "containers": [
+                    self.enemy_drones,
+                    self.updateable,
+                    self.drawable,
+                    self.active_targets,
+                ],
+            },
+            "enemy_ship": {
+                "class": EnemyShip,
+                "containers": [
+                    self.enemy_ships,
+                    self.updateable,
+                    self.drawable,
+                    self.active_targets,
+                ],
+            },
+            "sub_boss": {
+                "class": SubBoss,
+                "containers": [self.sub_boss_group, self.updateable, self.drawable],
+            },
+            "level_boss": {
+                "class": LevelBoss,
+                "containers": [self.level_boss_group, self.updateable, self.drawable],
+            },
+            "health_pickup": {
+                "class": HealthPickup,
+                "containers": [
+                    self.pickups,
+                    self.updateable,
+                    self.drawable,
+                    self.active_targets,
+                ],
+            },
+            "power_level_pickup": {
+                "class": PowerLevelPickup,
+                "containers": [
+                    self.pickups,
+                    self.updateable,
+                    self.drawable,
+                    self.active_targets,
+                ],
+            },
+            "overdrive_pickup": {
+                "class": OverdrivePickup,
+                "containers": [
+                    self.pickups,
+                    self.updateable,
+                    self.drawable,
+                    self.active_targets,
+                ],
+            },
+            "bomb_ammo_pickup": {
+                "class": BombAmmoPickup,
+                "containers": [
+                    self.pickups,
+                    self.updateable,
+                    self.drawable,
+                    self.active_targets,
+                ],
+            },
+            "player_shot": {
+                "class": PlayerShot,
+                "containers": [self.shots, self.updateable, self.drawable],
+            },
+            "enemy_shot": {
+                "class": EnemyShot,
+                "containers": [self.shots, self.updateable, self.drawable],
+            },
+            "player_bomb": {
+                "class": PlayerBomb,
+                "containers": [self.bombs, self.updateable, self.drawable],
+            },
+            "explosion": {
+                "class": Explosion,
+                "containers": [self.explosions, self.updateable, self.drawable],
+            },
+        }
+
+    def setup_containers(self):
+        for _, data in self.entity_registry.items():
+            entity_class = data["class"]
+            containers = tuple(data["containers"])
+            entity_class.containers = containers
+
+    def get_entity_class(self, entity_type):
+        if entity_type not in self.entity_registry:
+            raise ValueError(f"Unknown entity type: {entity_type}")
+        return self.entity_registry[entity_type]["class"]
+
+    def get_entity_container(self, entity_type):
+        if entity_type not in self.entity_registry:
+            raise ValueError(f"Unknown entity type: {entity_type}")
+        return self.entity_registry[entity_type]["containers"]
+
+    def get_entity_instance(self, entity_name):
+        if entity_name == "player":
+            return self.player_group.sprite
+        elif entity_name == "sub_boss":
+            return self.sub_boss_group.sprite
+        elif entity_name == "level_boss":
+            return self.level_boss_group.sprite
+        else:
+            print(f"Entity instance lookup for '{entity_name}' not implemented")
+            return None
+
+
 class CollisionManager:
 
-    def __init__(self, gameplay):
-        self.gameplay = gameplay
+    def __init__(self, entity_manager, play_area):
+        self.entity_manager = entity_manager
+        self.play_area = play_area
         self.boundary_handling_enabled = True
         self.sprite_groups = {
-            "asteroids": self.gameplay.asteroids,
-            "enemy_drones": self.gameplay.enemy_drones,
-            "enemy_ships": self.gameplay.enemy_ships,
-            "sub_boss": self.gameplay.sub_boss_group,
-            "level_boss": self.gameplay.level_boss_group,
-            "missiles": self.gameplay.missiles,
-            "shots": self.gameplay.shots,
-            "bombs": self.gameplay.bombs,
-            "explosions": self.gameplay.explosions,
-            "pickups": self.gameplay.pickups,
+            "asteroids": self.entity_manager.asteroids,
+            "enemy_drones": self.entity_manager.enemy_drones,
+            "enemy_ships": self.entity_manager.enemy_ships,
+            "missiles": self.entity_manager.missiles,
+            "shots": self.entity_manager.shots,
+            "bombs": self.entity_manager.bombs,
+            "explosions": self.entity_manager.explosions,
+            "pickups": self.entity_manager.pickups,
         }
 
     @property
     def player(self):
-        return self.gameplay.player_group.sprite
+        return self.entity_manager.player_group.sprite
+
+    @property
+    def sub_boss(self):
+        return self.entity_manager.sub_boss_group.sprite
+
+    @property
+    def level_boss(self):
+        return self.entity_manager.level_boss_group.sprite
 
     def handle_boundaries(self, entity, action="kill"):
         if not self.boundary_handling_enabled:
             return
 
-        play_area = self.gameplay.play_area_rect
-
         if action == "block":
             entity.position.x = max(
-                play_area.left + entity.rect.width * 0.5,
-                min(entity.position.x, play_area.right - entity.rect.width * 0.5),
+                self.play_area.left + entity.rect.width * 0.5,
+                min(entity.position.x, self.play_area.right - entity.rect.width * 0.5),
             )
             entity.position.y = max(
-                play_area.top + entity.rect.height * 0.5,
-                min(entity.position.y, play_area.bottom - entity.rect.height * 0.5),
+                self.play_area.top + entity.rect.height * 0.5,
+                min(
+                    entity.position.y, self.play_area.bottom - entity.rect.height * 0.5
+                ),
             )
         elif action == "kill" and (
-            entity.rect.right < play_area.left
-            or entity.rect.left > play_area.right
-            or entity.rect.top > play_area.bottom
+            entity.rect.right < self.play_area.left
+            or entity.rect.left > self.play_area.right
+            or entity.rect.top > self.play_area.bottom
         ):
             entity.kill()
 
@@ -98,20 +278,25 @@ class CollisionManager:
             *self.sprite_groups["asteroids"],
             *self.sprite_groups["enemy_drones"],
             *self.sprite_groups["enemy_ships"],
-            *self.sprite_groups["sub_boss"],
-            *self.sprite_groups["level_boss"],
+            self.sub_boss,
+            self.level_boss,
         ]
+
+        self.hostiles = [h for h in self.hostiles if h is not None]
+
         if self.hostiles:
             player_v_hostiles = self.player.collides_with(self.hostiles)
             if player_v_hostiles:
                 for hostile in player_v_hostiles:
                     self.player.take_damage(5)
                     hostile.take_damage(1)
+
         if self.sprite_groups["pickups"]:
             player_v_pickups = self.player.collides_with(self.sprite_groups["pickups"])
             if player_v_pickups:
                 for pickup in player_v_pickups:
                     pickup.apply()
+
         if not any(
             [
                 self.sprite_groups["shots"],
@@ -121,6 +306,7 @@ class CollisionManager:
             ]
         ):
             return
+
         player_shots = self.filter_by_owner("shots", is_player=True)
         enemy_shots = self.filter_by_owner("shots", is_player=False)
         player_bombs = self.filter_by_owner("bombs", is_player=True)
@@ -129,6 +315,7 @@ class CollisionManager:
         enemy_missiles = self.filter_by_owner("missiles", is_player=False)
         player_explosions = self.filter_by_owner("explosions", is_player=True)
         enemy_explosions = self.filter_by_owner("explosions", is_player=False)
+
         player_bomb_colliders = [
             *self.hostiles,
             *enemy_shots,
@@ -144,6 +331,7 @@ class CollisionManager:
             *player_explosions,
         ]
         enemy_missile_colliders = [self.player, *player_bombs, *player_explosions]
+
         self.handle_shots(player_shots, self.hostiles)
         self.handle_shots(enemy_shots, [self.player])
         self.handle_explosives(player_bombs, player_bomb_colliders)
@@ -155,42 +343,24 @@ class CollisionManager:
 
 class SpawnManager:
 
-    def __init__(self, gameplay):
+    def __init__(self, gameplay, play_area, entity_manager):
         self.gameplay = gameplay
-        self.entities = {
-            "player": Player,
-            "asteroid_xl": AsteroidXL,
-            "asteroid_lg": AsteroidLG,
-            "asteroid_md": AsteroidMD,
-            "asteroid_sm": AsteroidSM,
-            "enemy_drone": EnemyDrone,
-            "enemy_ship": EnemyShip,
-            "sub_boss": SubBoss,
-            "level_boss": LevelBoss,
-            "health_pickup": HealthPickup,
-            "extra_life_pickup": ExtraLifePickup,
-            "power_level_pickup": PowerLevelPickup,
-            "overdrive_pickup": OverdrivePickup,
-            "bomb_ammo_pickup": BombAmmoPickup,
-            "invulnerability_pickup": InvulnerabilityPickup,
-            "enemy_shot": EnemyShot,
-        }
+        self.play_area = play_area
+        self.entity_manager = entity_manager
 
-    def spawn_projectile(self, projectile_class, x, y, gameplay, owner):
-        projectile_class = self.entities[projectile_class]
-        projectile = projectile_class(x, y, gameplay, owner)
-        return projectile
+    def spawn_projectile(self, projectile_type, x, y, gameplay, owner):
+        projectile_class = self.entity_manager.get_entity_class(projectile_type)
+        return projectile_class(x, y, gameplay, owner)
 
-    def spawn_entity(self, entity_name, location, behaviors=None):
+    def spawn_entity(self, entity_type, location, behaviors=None):
         position = self.calc_position(location)
-        entity_class = self.entities[entity_name]
+        entity_class = self.entity_manager.get_entity_class(entity_type)
         entity = entity_class(position.x, position.y, self.gameplay)
         if behaviors:
             for behavior in behaviors:
                 entity.behaviors.append(behavior)
 
     def calc_position(self, location):
-        play_area = self.gameplay.play_area_rect
 
         if isinstance(location, str):
             offset_x, side_y = SPAWN_LOCATIONS[location]
@@ -198,13 +368,13 @@ class SpawnManager:
 
             if side_y == "top":
                 return pygame.Vector2(
-                    play_area.left + (offset_x * play_area.width),
-                    play_area.top - offset_y,
+                    self.play_area.left + (offset_x * self.play_area.width),
+                    self.play_area.top - offset_y,
                 )
             elif side_y == "btm":
                 return pygame.Vector2(
-                    play_area.left + (offset_x * play_area.width),
-                    play_area.bottom,
+                    self.play_area.left + (offset_x * self.play_area.width),
+                    self.play_area.bottom,
                 )
 
         elif isinstance(location, pygame.Vector2):
@@ -301,8 +471,10 @@ class EventManager:
 
 
 class CutsceneManager:
-    def __init__(self, gameplay):
-        self.gameplay = gameplay
+    def __init__(self, entity_manager, event_manager, gameplay_ui):
+        self.entity_manager = entity_manager
+        self.event_manager = event_manager
+        self.gameplay_ui = gameplay_ui
         self.current_cutscene_id = None
         self.current_actions = None
         self.current_index = 0
@@ -349,13 +521,13 @@ class CutsceneManager:
         self.current_cutscene_id = None
         self.current_actions = None
         self.current_index = 0
-        self.gameplay.event_manager.on_event_complete()
+        self.event_manager.on_event_complete()
 
     def handle_dialogue(self, dialogue_id):
-        self.gameplay.gameplay_ui.display_dialogue(dialogue_id)
+        self.gameplay_ui.display_dialogue(dialogue_id)
 
     def handle_move_entity_to_loc(self, entity_name, location, speed):
-        entity = self.get_entity(entity_name)
+        entity = self.entity_manager.get_entity_instance(entity_name)
         if entity is None:
             print(f"Entity '{entity_name}' not found")
             self.on_action_complete()
@@ -371,7 +543,7 @@ class CutsceneManager:
         entity.behaviors.append(move_behavior)
 
     def handle_explode_entity(self, entity_name):
-        entity = self.get_entity(entity_name)
+        entity = self.entity_manager.get_entity_instance(entity_name)
         if entity is None:
             print(f"Entity '{entity_name}' not found")
             self.on_action_complete()
@@ -379,19 +551,12 @@ class CutsceneManager:
         entity.explode()
         self.on_action_complete()
 
-    def get_entity(self, entity_name):
-        if entity_name == "player":
-            return self.gameplay.player_group.sprite
-        elif entity_name == "sub_boss":
-            return self.gameplay.sub_boss_group.sprite
-        elif entity_name == "level_boss":
-            return self.gameplay.level_boss_group.sprite
-        return None
-
 
 class WaveManager:
-    def __init__(self, gameplay):
-        self.gameplay = gameplay
+    def __init__(self, entity_manager, spawn_manager, event_manager):
+        self.entity_manager = entity_manager
+        self.spawn_manager = spawn_manager
+        self.event_manager = event_manager
         self.current_wave = None
         self.wave_data = None
         self.wave_time = 0.0
@@ -417,7 +582,7 @@ class WaveManager:
             self.wave_index += 1
 
     def spawn_enemy(self, event):
-        self.gameplay.spawn_manager.spawn_entity(
+        self.spawn_manager.spawn_entity(
             event["type"],
             event["location"],
             event.get("behaviors", []),
@@ -429,7 +594,7 @@ class WaveManager:
         self.wave_data = None
         self.wave_time = 0.0
         self.wave_index = 0
-        self.gameplay.event_manager.on_event_complete(delay=3)
+        self.event_manager.on_event_complete(delay=3)
 
     def update(self, dt):
         if not self.wave_data:
@@ -440,22 +605,23 @@ class WaveManager:
 
         if (
             self.wave_index >= len(self.wave_data)
-            and len(self.gameplay.active_targets) == 0
+            and len(self.entity_manager.active_targets) == 0
         ):
             self.end_wave()
 
 
 class BattleManager:
-    def __init__(self, gameplay):
-        self.gameplay = gameplay
+    def __init__(self, entity_manager, event_manager):
+        self.entity_manager = entity_manager
+        self.event_manager = event_manager
         self.current_battle = None
         self.battle_entity = None
 
     def start_battle(self, battle_id):
         if battle_id == "sub_boss":
-            self.battle_entity = self.gameplay.sub_boss_group.sprite
+            self.battle_entity = self.entity_manager.sub_boss_group.sprite
         elif battle_id == "level_boss":
-            self.battle_entity = self.gameplay.level_boss_group.sprite
+            self.battle_entity = self.entity_manager.level_boss_group.sprite
         else:
             print(f"Warning: Battle entity for {battle_id} not found!")
 
@@ -463,7 +629,7 @@ class BattleManager:
         print(f"Ending battle: {self.current_battle}")
         self.battle_entity = None
         self.current_battle = None
-        self.gameplay.event_manager.on_event_complete()
+        self.event_manager.on_event_complete()
 
     def update(self, dt):
         pass

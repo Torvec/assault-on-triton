@@ -5,20 +5,8 @@ from src.backgrounds import (
     PlanetTwo,
     StarField,
 )
-from src.entities import (
-    Asteroid,
-    EnemyDrone,
-    EnemyShip,
-    SubBoss,
-    LevelBoss,
-    Missile,
-    Shot,
-    Bomb,
-    Explosion,
-    Pickup,
-    Player,
-)
 from src.managers import (
+    EntityManager,
     CollisionManager,
     SpawnManager,
     EventManager,
@@ -73,99 +61,49 @@ class GamePlay(Screen):
             ),
         ]
 
-        self.player_group = pygame.sprite.GroupSingle()
-        self.asteroids = pygame.sprite.Group()
-        self.enemy_drones = pygame.sprite.Group()
-        self.enemy_ships = pygame.sprite.Group()
-        self.sub_boss_group = pygame.sprite.GroupSingle()
-        self.level_boss_group = pygame.sprite.GroupSingle()
-        self.missiles = pygame.sprite.Group()
-        self.shots = pygame.sprite.Group()
-        self.bombs = pygame.sprite.Group()
-        self.explosions = pygame.sprite.Group()
-        self.pickups = pygame.sprite.Group()
-        self.active_targets = pygame.sprite.Group()
-
-        Player.containers = (
-            self.player_group,
-            self.updateable,
-            self.drawable,
-        )
-        Asteroid.containers = (
-            self.asteroids,
-            self.updateable,
-            self.drawable,
-            self.active_targets,
-        )
-        EnemyDrone.containers = (
-            self.enemy_drones,
-            self.updateable,
-            self.drawable,
-            self.active_targets,
-        )
-        EnemyShip.containers = (
-            self.enemy_ships,
-            self.updateable,
-            self.drawable,
-            self.active_targets,
-        )
-        SubBoss.containers = (
-            self.sub_boss_group,
-            self.updateable,
-            self.drawable,
-        )
-        LevelBoss.containers = (
-            self.level_boss_group,
-            self.updateable,
-            self.drawable,
-        )
-        Missile.containers = (
-            self.missiles,
-            self.updateable,
-            self.drawable,
-        )
-        Shot.containers = (
-            self.shots,
-            self.updateable,
-            self.drawable,
-        )
-        Bomb.containers = (
-            self.bombs,
-            self.updateable,
-            self.drawable,
-        )
-        Explosion.containers = (
-            self.explosions,
-            self.updateable,
-            self.drawable,
-        )
-        Pickup.containers = (
-            self.pickups,
-            self.updateable,
-            self.drawable,
-            self.active_targets,
-        )
-
-        self.event_manager = EventManager(self, EVENT_QUEUE)
-        self.spawn_manager = SpawnManager(self)
-        self.wave_manager = WaveManager(self)
-        self.battle_manager = BattleManager(self)
-        self.cutscene_manager = CutsceneManager(self)
-        self.collision_manager = CollisionManager(self)
-        self.score_manager = ScoreManager(self.game.score_store)
-
         self.gameplay_ui = GamePlayUI(self.game, self)
         self.pause_modal = PauseModal(self)
+
+        self.entity_manager = EntityManager()
+        self.event_manager = EventManager(self, EVENT_QUEUE)
+        self.spawn_manager = SpawnManager(
+            self, self.play_area_rect, self.entity_manager
+        )
+        self.wave_manager = WaveManager(
+            self.entity_manager, self.spawn_manager, self.event_manager
+        )
+        self.battle_manager = BattleManager(self.entity_manager, self.event_manager)
+        self.cutscene_manager = CutsceneManager(
+            self.entity_manager, self.event_manager, self.gameplay_ui
+        )
+        self.collision_manager = CollisionManager(
+            self.entity_manager, self.play_area_rect
+        )
+        self.score_manager = ScoreManager(self.game.score_store)
 
         self.current_state = None
         self.previous_state = None
         self.states = {
-            GameplayState.INIT: InitState(self),
-            GameplayState.CUTSCENE: CutsceneState(self),
-            GameplayState.PLAY: PlayState(self),
-            GameplayState.PAUSED: PausedState(self),
+            GameplayState.INIT: InitState(self.event_manager),
+            GameplayState.CUTSCENE: CutsceneState(
+                self, self.entity_manager, self.collision_manager
+            ),
+            GameplayState.PLAY: PlayState(
+                self,
+                self.entity_manager,
+                self.collision_manager,
+                self.wave_manager,
+                self.battle_manager,
+                self.score_manager,
+                self.gameplay_ui,
+            ),
+            GameplayState.PAUSED: PausedState(
+                self, self.entity_manager, self.pause_modal
+            ),
             GameplayState.GAME_OVER: GameOverState(self),
-            GameplayState.MISSION_COMPLETE: MissionCompleteState(self),
+            GameplayState.MISSION_COMPLETE: MissionCompleteState(
+                self, self.entity_manager, self.score_manager
+            ),
         }
         self.change_state(GameplayState.INIT)
 
@@ -187,12 +125,21 @@ class GamePlay(Screen):
 
     def update(self, dt):
         if self.current_state != GameplayState.PAUSED:
-            super().update(dt)
+            for bg in self.backgrounds:
+                bg.update(dt)
+            self.entity_manager.updateable.update(dt)
             self.gameplay_ui.update(dt)
             self.event_manager.update(dt)
         self.states[self.current_state].update(dt)
 
     def draw(self, display_surface, game_surface):
         super().draw(display_surface, game_surface)
+
+        for bg in self.backgrounds:
+            bg.draw(game_surface)
+
+        for obj in self.entity_manager.drawable:
+            obj.draw(game_surface)
+
         self.gameplay_ui.draw(display_surface, game_surface)
         self.states[self.current_state].draw(game_surface)
