@@ -107,12 +107,7 @@ class EntityManager:
         self.player_group = pygame.sprite.GroupSingle()
         self.sub_boss_group = pygame.sprite.GroupSingle()
         self.level_boss_group = pygame.sprite.GroupSingle()
-        self.asteroids = pygame.sprite.Group()
-        self.enemy_drones = pygame.sprite.Group()
-        self.enemy_ships = pygame.sprite.Group()
-        self.missiles = pygame.sprite.Group()
-        self.shots = pygame.sprite.Group()
-        self.bombs = pygame.sprite.Group()
+        self.projectiles = pygame.sprite.Group()
         self.explosions = pygame.sprite.Group()
         self.pickups = pygame.sprite.Group()
         self.active_targets = pygame.sprite.Group()
@@ -127,113 +122,73 @@ class EntityManager:
             },
             "asteroid_xl": {
                 "class": AsteroidXL,
-                "containers": [
-                    self.asteroids,
-                    self.updateable,
-                    self.drawable,
-                    self.active_targets,
-                ],
+                "containers": [self.updateable, self.drawable, self.active_targets],
             },
             "asteroid_lg": {
                 "class": AsteroidLG,
-                "containers": [
-                    self.asteroids,
-                    self.updateable,
-                    self.drawable,
-                    self.active_targets,
-                ],
+                "containers": [self.updateable, self.drawable, self.active_targets],
             },
             "asteroid_md": {
                 "class": AsteroidMD,
-                "containers": [
-                    self.asteroids,
-                    self.updateable,
-                    self.drawable,
-                    self.active_targets,
-                ],
+                "containers": [self.updateable, self.drawable, self.active_targets],
             },
             "asteroid_sm": {
                 "class": AsteroidSM,
-                "containers": [
-                    self.asteroids,
-                    self.updateable,
-                    self.drawable,
-                    self.active_targets,
-                ],
+                "containers": [self.updateable, self.drawable, self.active_targets],
             },
             "enemy_drone": {
                 "class": EnemyDrone,
-                "containers": [
-                    self.enemy_drones,
-                    self.updateable,
-                    self.drawable,
-                    self.active_targets,
-                ],
+                "containers": [self.updateable, self.drawable, self.active_targets],
             },
             "enemy_ship": {
                 "class": EnemyShip,
-                "containers": [
-                    self.enemy_ships,
-                    self.updateable,
-                    self.drawable,
-                    self.active_targets,
-                ],
+                "containers": [self.updateable, self.drawable, self.active_targets],
             },
             "sub_boss": {
                 "class": SubBoss,
-                "containers": [self.sub_boss_group, self.updateable, self.drawable],
+                "containers": [
+                    self.sub_boss_group,
+                    self.updateable,
+                    self.drawable,
+                    self.active_targets,
+                ],
             },
             "level_boss": {
                 "class": LevelBoss,
-                "containers": [self.level_boss_group, self.updateable, self.drawable],
+                "containers": [
+                    self.level_boss_group,
+                    self.updateable,
+                    self.drawable,
+                    self.active_targets,
+                ],
             },
             "health_pickup": {
                 "class": HealthPickup,
-                "containers": [
-                    self.pickups,
-                    self.updateable,
-                    self.drawable,
-                    self.active_targets,
-                ],
+                "containers": [self.pickups, self.updateable, self.drawable],
             },
             "power_level_pickup": {
                 "class": PowerLevelPickup,
-                "containers": [
-                    self.pickups,
-                    self.updateable,
-                    self.drawable,
-                    self.active_targets,
-                ],
+                "containers": [self.pickups, self.updateable, self.drawable],
             },
             "overdrive_pickup": {
                 "class": OverdrivePickup,
-                "containers": [
-                    self.pickups,
-                    self.updateable,
-                    self.drawable,
-                    self.active_targets,
-                ],
+                "containers": [self.pickups, self.updateable, self.drawable],
             },
             "bomb_ammo_pickup": {
                 "class": BombAmmoPickup,
-                "containers": [
-                    self.pickups,
-                    self.updateable,
-                    self.drawable,
-                    self.active_targets,
-                ],
+                "containers": [self.pickups, self.updateable, self.drawable],
             },
             "player_shot": {
                 "class": PlayerShot,
-                "containers": [self.shots, self.updateable, self.drawable],
+                "containers": [self.projectiles, self.updateable, self.drawable],
             },
             "enemy_shot": {
                 "class": EnemyShot,
-                "containers": [self.shots, self.updateable, self.drawable],
+                "containers": [self.projectiles, self.updateable, self.drawable],
             },
             "player_bomb": {
                 "class": PlayerBomb,
-                "containers": [self.bombs, self.updateable, self.drawable],
+                "containers": [self.projectiles, self.updateable, self.drawable],
             },
             "explosion": {
                 "class": Explosion,
@@ -275,16 +230,6 @@ class CollisionManager:
         self.entity_manager = entity_manager
         self.play_area = play_area
         self.boundary_handling_enabled = True
-        self.sprite_groups = {
-            "asteroids": self.entity_manager.asteroids,
-            "enemy_drones": self.entity_manager.enemy_drones,
-            "enemy_ships": self.entity_manager.enemy_ships,
-            "missiles": self.entity_manager.missiles,
-            "shots": self.entity_manager.shots,
-            "bombs": self.entity_manager.bombs,
-            "explosions": self.entity_manager.explosions,
-            "pickups": self.entity_manager.pickups,
-        }
 
     @property
     def player(self):
@@ -340,79 +285,65 @@ class CollisionManager:
                 for collider in explosion_v_colliders:
                     collider.take_damage(explosion.damage)
 
-    def filter_by_owner(self, group, is_player=True):
+    def filter_projectiles(self, class_name):
+        return [p for p in self.entity_manager.projectiles if isinstance(p, class_name)]
+
+    def filter_explosions(self, is_player):
         if is_player:
-            return [e for e in self.sprite_groups[group] if e.owner == self.player]
-        return [e for e in self.sprite_groups[group] if e.owner != self.player]
+            return [
+                e
+                for e in self.entity_manager.explosions
+                if isinstance(e, Explosion) and e.owner == self.player
+            ]
+        return [
+            e
+            for e in self.entity_manager.explosions
+            if isinstance(e, Explosion) and e.owner != self.player
+        ]
 
     def update(self):
         if not self.player:
             return
 
-        self.hostiles = [
-            *self.sprite_groups["asteroids"],
-            *self.sprite_groups["enemy_drones"],
-            *self.sprite_groups["enemy_ships"],
-            self.sub_boss,
-            self.level_boss,
-        ]
-
-        self.hostiles = [h for h in self.hostiles if h is not None]
-
-        if self.hostiles:
-            player_v_hostiles = self.player.collides_with(self.hostiles)
-            if player_v_hostiles:
-                for hostile in player_v_hostiles:
+        if self.entity_manager.active_targets:
+            player_v_targets = self.player.collides_with(
+                self.entity_manager.active_targets
+            )
+            if player_v_targets:
+                for hostile in player_v_targets:
                     self.player.take_damage(5)
                     hostile.take_damage(1)
 
-        if self.sprite_groups["pickups"]:
-            player_v_pickups = self.player.collides_with(self.sprite_groups["pickups"])
+        if self.entity_manager.pickups:
+            player_v_pickups = self.player.collides_with(self.entity_manager.pickups)
             if player_v_pickups:
                 for pickup in player_v_pickups:
                     pickup.apply()
 
         if not any(
             [
-                self.sprite_groups["shots"],
-                self.sprite_groups["bombs"],
-                self.sprite_groups["missiles"],
-                self.sprite_groups["explosions"],
+                self.entity_manager.projectiles,
+                self.entity_manager.explosions,
             ]
         ):
             return
 
-        player_shots = self.filter_by_owner("shots", is_player=True)
-        enemy_shots = self.filter_by_owner("shots", is_player=False)
-        player_bombs = self.filter_by_owner("bombs", is_player=True)
-        enemy_bombs = self.filter_by_owner("bombs", is_player=False)
-        player_missiles = self.filter_by_owner("missiles", is_player=True)
-        enemy_missiles = self.filter_by_owner("missiles", is_player=False)
-        player_explosions = self.filter_by_owner("explosions", is_player=True)
-        enemy_explosions = self.filter_by_owner("explosions", is_player=False)
+        player_shots = self.filter_projectiles(PlayerShot)
+        enemy_shots = self.filter_projectiles(EnemyShot)
+        player_bombs = self.filter_projectiles(PlayerBomb)
+        player_explosions = self.filter_explosions(is_player=True)
+        enemy_explosions = self.filter_explosions(is_player=False)
 
         player_bomb_colliders = [
-            *self.hostiles,
+            *self.entity_manager.active_targets,
             *enemy_shots,
-            *enemy_bombs,
-            *enemy_missiles,
             *enemy_explosions,
         ]
-        enemy_bomb_colliders = [
-            self.player,
-            *player_shots,
-            *player_bombs,
-            *player_missiles,
-            *player_explosions,
-        ]
-        enemy_missile_colliders = [self.player, *player_bombs, *player_explosions]
 
-        self.handle_shots(player_shots, self.hostiles)
+        self.handle_shots(player_shots, self.entity_manager.active_targets)
         self.handle_shots(enemy_shots, [self.player])
         self.handle_explosives(player_bombs, player_bomb_colliders)
-        self.handle_explosives(enemy_bombs, enemy_bomb_colliders)
-        self.handle_explosives(enemy_missiles, enemy_missile_colliders)
-        self.handle_explosions(player_explosions, self.hostiles)
+        self.handle_explosions(player_explosions, self.entity_manager.active_targets)
         self.handle_explosions(enemy_explosions, [self.player])
 
 

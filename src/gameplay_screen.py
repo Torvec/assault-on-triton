@@ -45,30 +45,6 @@ class GamePlay(Screen):
         self.gameplay_ui = GamePlayUI(self.game, self)
         self.pause_modal = PauseModal(self)
 
-        self.init_managers()
-
-        self.state_manager.change_state(GameplayState.INIT)
-
-    def init_backgrounds(self):
-        self.backgrounds = [
-            StarField(0, 0, self.game),
-            Planet(
-                self.play_area_rect.midbottom[0],
-                self.play_area_rect.midbottom[1],
-                self.game,
-            ),
-            PlanetTwo(
-                self.play_area_rect.midtop[0],
-                self.play_area_rect.midtop[1] - 128,
-                self.game,
-            ),
-        ]
-
-    def handle_backgrounds(self, dt):
-        for bg in self.backgrounds:
-            bg.update(dt)
-
-    def init_managers(self):
         self.entity_manager = EntityManager()
         self.event_manager = EventManager(self, EVENT_QUEUE)
         self.spawn_manager = SpawnManager(
@@ -96,6 +72,27 @@ class GamePlay(Screen):
             self.pause_modal,
             self.score_manager,
         )
+
+        self.state_manager.change_state(GameplayState.INIT)
+
+    def init_backgrounds(self):
+        self.backgrounds = [
+            StarField(0, 0, self.game),
+            Planet(
+                self.play_area_rect.midbottom[0],
+                self.play_area_rect.midbottom[1],
+                self.game,
+            ),
+            PlanetTwo(
+                self.play_area_rect.midtop[0],
+                self.play_area_rect.midtop[1] - 128,
+                self.game,
+            ),
+        ]
+
+    def handle_backgrounds(self, dt):
+        for bg in self.backgrounds:
+            bg.update(dt)
 
     def create_game_over_modal(self):
         self.game_over_modal = GameOverModal(self)
