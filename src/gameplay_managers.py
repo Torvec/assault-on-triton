@@ -223,6 +223,10 @@ class EntityManager:
             print(f"Entity instance lookup for '{entity_name}' not implemented")
             return None
 
+    def draw(self, surface):
+        for entity in self.drawable:
+            entity.draw(surface)
+
 
 class CollisionManager:
 

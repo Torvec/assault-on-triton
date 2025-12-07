@@ -1,4 +1,3 @@
-import pygame
 from src.screens import Screen
 from src.backgrounds import Planet, PlanetTwo, StarField
 from src.gameplay_managers import (
@@ -25,12 +24,7 @@ class GamePlay(Screen):
 
         self.game_timer = 0
 
-        self.play_area_rect = pygame.Rect(
-            0,
-            0,
-            self.game.game_surface.get_width(),
-            self.game.game_surface.get_height(),
-        )
+        self.play_area_rect = self.game.game_surface.get_rect()
 
         self.backgrounds = [
             StarField(0, 0),
@@ -41,6 +35,7 @@ class GamePlay(Screen):
         ]
 
         self.gameplay_ui = GamePlayUI(self.game, self)
+
         self.pause_modal = PauseModal(self)
 
         self.entity_manager = EntityManager()
@@ -94,13 +89,20 @@ class GamePlay(Screen):
     def create_end_level_modal(self):
         self.end_level_modal = EndLevelModal(self)
 
+    def handle_bg_update(self, dt):
+        for bg in self.backgrounds:
+            bg.update(dt)
+
+    def handle_bg_draw(self, surface):
+        for bg in self.backgrounds:
+            bg.draw(surface)
+
     def handle_event(self, events):
         self.state_manager.handle_event(events)
 
     def update(self, dt):
         if self.state_manager.current_state != GameplayState.PAUSED:
-            for bg in self.backgrounds:
-                bg.update(dt)
+            self.handle_bg_update(dt)
             self.entity_manager.updateable.update(dt)
             self.gameplay_ui.update(dt)
             self.event_manager.update(dt)
@@ -108,12 +110,7 @@ class GamePlay(Screen):
 
     def draw(self, display_surface, game_surface):
         super().draw(display_surface, game_surface)
-
-        for bg in self.backgrounds:
-            bg.draw(game_surface)
-
-        for obj in self.entity_manager.drawable:
-            obj.draw(game_surface)
-
+        self.handle_bg_draw(game_surface)
+        self.entity_manager.draw(game_surface)
         self.gameplay_ui.draw(display_surface, game_surface)
         self.state_manager.draw(game_surface)
