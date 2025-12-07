@@ -4,9 +4,8 @@ from data.assets import IMAGES
 
 class Background:
 
-    def __init__(self, x, y, game):
+    def __init__(self, x, y):
         self.position = pygame.Vector2(x, y)
-        self.game = game
         self.velocity = pygame.Vector2(0, 0)
         self.scroll_speed = 0
 
@@ -42,9 +41,9 @@ class Background:
 
 class StarField(Background):
 
-    def __init__(self, x, y, game):
+    def __init__(self, x, y):
         self.img_path = IMAGES["starfield"]
-        super().__init__(x, y, game)
+        super().__init__(x, y)
         self.scroll_speed = 4
         self.image_height = self.image.get_height()
         self.offset_y = 0
@@ -60,9 +59,9 @@ class StarField(Background):
 
 class Planet(Background):
 
-    def __init__(self, x, y, game):
+    def __init__(self, x, y):
         self.img_path = IMAGES["planet"]
-        super().__init__(x, y, game)
+        super().__init__(x, y)
         self.scroll_speed = 8
         self.current_width = self.image.get_width() * 4
         self.current_height = self.image.get_height() * 4
@@ -83,9 +82,9 @@ class Planet(Background):
 
 class PlanetTwo(Background):
 
-    def __init__(self, x, y, game):
+    def __init__(self, x, y):
         self.img_path = IMAGES["planet_two"]
-        super().__init__(x, y, game)
+        super().__init__(x, y)
         self.scroll_speed = 2
         self.current_width = 2
         self.current_height = 2
