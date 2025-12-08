@@ -7,6 +7,7 @@ from src.entities import (
     AsteroidSM,
     EnemyDrone,
     EnemyShip,
+    EnemyDestroyer,
     SubBoss,
     LevelBoss,
     HealthPickup,
@@ -142,6 +143,10 @@ class EntityManager:
             },
             "enemy_ship": {
                 "class": EnemyShip,
+                "containers": [self.updateable, self.drawable, self.active_targets],
+            },
+            "enemy_destroyer": {
+                "class": EnemyDestroyer,
                 "containers": [self.updateable, self.drawable, self.active_targets],
             },
             "sub_boss": {

@@ -59,7 +59,6 @@ ASTEROID = {
 }
 
 ENEMY_DRONE = {
-    "speed": 150,
     "hp": 4,
     "blast_radius": 32,
     "shot_origin": {
@@ -69,7 +68,6 @@ ENEMY_DRONE = {
 }
 
 ENEMY_SHIP = {
-    "speed": 175,
     "hp": 8,
     "blast_radius": 48,
     "shot_origin": {
@@ -78,8 +76,18 @@ ENEMY_SHIP = {
     },
 }
 
+ENEMY_DESTROYER = {
+    "hp": 16,
+    "blast_radius": 320,
+    "shot_origin": {
+        1: {"x": 0, "y": 120},
+        2: {"x": 0, "y": 60},
+        3: {"x": 32, "y": -16},
+        4: {"x": -32, "y": -16},
+    }
+}
+
 SUB_BOSS = {
-    "speed": 200,
     "hp": 256,
     "blast_radius": 256,
     "shot_origin": {
@@ -89,7 +97,6 @@ SUB_BOSS = {
 }
 
 LEVEL_BOSS = {
-    "speed": 200,
     "hp": 512,
     "blast_radius": 512,
     "shot_origin": {

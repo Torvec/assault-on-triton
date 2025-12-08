@@ -9,6 +9,7 @@ from data.entities import (
     ASTEROID,
     ENEMY_DRONE,
     ENEMY_SHIP,
+    ENEMY_DESTROYER,
     SUB_BOSS,
     LEVEL_BOSS,
 )
@@ -452,7 +453,6 @@ class EnemyDrone(Entity):
     def __init__(self, x, y, gameplay):
         self.img_path = IMAGES["enemy_drone"]
         super().__init__(x, y, gameplay)
-        self.speed = ENEMY_DRONE["speed"]
         self.hp = ENEMY_DRONE["hp"]
         self.blast_radius = ENEMY_DRONE["blast_radius"]
         self.score_value = self.hp
@@ -486,7 +486,6 @@ class EnemyShip(Entity):
     def __init__(self, x, y, gameplay):
         self.img_path = IMAGES["enemy_ship"]
         super().__init__(x, y, gameplay)
-        self.speed = ENEMY_SHIP["speed"]
         self.hp = ENEMY_SHIP["hp"]
         self.blast_radius = ENEMY_SHIP["blast_radius"]
         self.score_value = self.hp
@@ -513,6 +512,46 @@ class EnemyShip(Entity):
         super().draw(surface)
         surface.blit(self.image, self.rect)
         self.flash_when_hit(surface, self.image, self.rect)
+
+
+class EnemyDestroyer(Entity):
+
+    def __init__(self, x, y, gameplay):
+        self.img_path = IMAGES["enemy_destroyer"]
+        super().__init__(x, y, gameplay)
+        self.hp = ENEMY_DESTROYER["hp"]
+        self.blast_radius = ENEMY_DESTROYER["blast_radius"]
+        self.score_value = self.hp
+        self.shot_origin = ENEMY_DESTROYER["shot_origin"]
+
+    def take_damage(self, amount):
+        self.hp -= amount
+        if self.hp <= 0:
+            self.gameplay.score_manager.handle_score(self.score_value)
+            self.gameplay.score_manager.handle_streak_meter_inc(self.score_value)
+            self.explode()
+        self.is_hit = True
+
+    def explode(self):
+        Explosion(
+            self.position.x, self.position.y, self.gameplay, self.blast_radius, None
+        )
+        self.kill()
+
+    def update(self, dt):
+        super().update(dt)
+
+    def draw(self, surface):
+        super().draw(surface)
+        surface.blit(self.image, self.rect)
+        self.flash_when_hit(surface, self.image, self.rect)
+
+
+"""
+Destroyer class - Has multiple turrets, maybe fires missiles also, has a bridge which is what kills it if you damage it enough, can also damage the turrets individually
+Turret class - Position is based off of the destroyer's position and it will always be facing toward the player when it shoots
+Gunship class - Tracks player location and fires at it with shots and missiles
+"""
 
 
 class SubBoss(Entity):

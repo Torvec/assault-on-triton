@@ -3,11 +3,11 @@ import pygame
 from src.entities import DIRECTION_DOWN
 
 
-def move_straight(entity, angle=0, velocity_factor=1.0, dt=0):
+def move_straight(entity, speed, angle=0, velocity_factor=1.0, dt=0):
     direction = DIRECTION_DOWN.rotate(angle)
 
     if not hasattr(entity, "_angle_set"):
-        entity.velocity = direction * entity.speed * velocity_factor
+        entity.velocity = direction * speed * velocity_factor
         entity._angle_set = True
     entity.position += entity.velocity * dt
 

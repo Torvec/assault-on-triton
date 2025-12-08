@@ -1,137 +1,157 @@
 WAVE = {
     "test_wave": [
+        # {
+        #     "time": 0,
+        #     "type": "enemy_drone",
+        #     "location": "top_center_left",
+        #     "behaviors": [
+        #         {
+        #             "action": "move_saw_wave",
+        #             "params": {
+        #                 "x_speed": 200,
+        #                 "y_speed": 150,
+        #                 "init_direction": "right",
+        #             },
+        #         },
+        #         {
+        #             "action": "shoot",
+        #             "params": {
+        #                 "shoot_rate": 0.1,
+        #                 "ammo_count": 18,
+        #                 "reload_time": 1.5,
+        #                 "projectile_type": "enemy_shot",
+        #             },
+        #         },
+        #     ],
+        # },
+        # {
+        #     "time": 2,
+        #     "type": "enemy_drone",
+        #     "location": "top_center_right",
+        #     "behaviors": [
+        #         {
+        #             "action": "move_saw_wave",
+        #             "params": {
+        #                 "x_speed": 200,
+        #                 "y_speed": 150,
+        #                 "init_direction": "left",
+        #             },
+        #         },
+        #         {
+        #             "action": "shoot",
+        #             "params": {
+        #                 "shoot_rate": 0.1,
+        #                 "ammo_count": 18,
+        #                 "reload_time": 1.5,
+        #                 "projectile_type": "enemy_shot",
+        #             },
+        #         },
+        #     ],
+        # },
+        # {
+        #     "time": 6,
+        #     "type": "enemy_ship",
+        #     "location": "top_center",
+        #     "behaviors": [
+        #         {
+        #             "action": "move_sine_wave",
+        #             "params": {
+        #                 "frequency": 4,
+        #                 "amplitude": 600,
+        #                 "speed": 200,
+        #             },
+        #         },
+        #         {
+        #             "action": "shoot",
+        #             "params": {
+        #                 "shoot_rate": 0.2,
+        #                 "ammo_count": 18,
+        #                 "reload_time": 1.5,
+        #                 "projectile_type": "enemy_shot",
+        #             },
+        #         },
+        #     ],
+        # },
+        # {
+        #     "time": 8,
+        #     "type": "enemy_ship",
+        #     "location": "top_center",
+        #     "behaviors": [
+        #         {
+        #             "action": "move_sine_wave",
+        #             "params": {
+        #                 "frequency": -4,
+        #                 "amplitude": 600,
+        #                 "speed": 200,
+        #             },
+        #         },
+        #         {
+        #             "action": "shoot",
+        #             "params": {
+        #                 "shoot_rate": 0.2,
+        #                 "ammo_count": 18,
+        #                 "reload_time": 1.5,
+        #                 "projectile_type": "enemy_shot",
+        #             },
+        #         },
+        #     ],
+        # },
+        # {
+        #     "time": 10,
+        #     "type": "enemy_drone",
+        #     "location": "top_right_edge",
+        #     "behaviors": [
+        #         {
+        #             "action": "move_square_wave",
+        #             "params": {
+        #                 "x_dist": 400,
+        #                 "y_dist": 200,
+        #                 "init_horizontal_dir": "left",
+        #                 "x_speed": 200,
+        #                 "y_speed": 300,
+        #                 "shoot_rate": 0.1,
+        #                 "ammo_count": 28,
+        #                 "reload_time": 1.5,
+        #                 "projectile_type": "enemy_shot",
+        #             },
+        #         },
+        #     ],
+        # },
+        # {
+        #     "time": 12,
+        #     "type": "enemy_drone",
+        #     "location": "top_left_edge",
+        #     "behaviors": [
+        #         {
+        #             "action": "move_square_wave",
+        #             "params": {
+        #                 "x_dist": 400,
+        #                 "y_dist": 200,
+        #                 "init_horizontal_dir": "right",
+        #                 "x_speed": 200,
+        #                 "y_speed": 300,
+        #                 "shoot_rate": 0.1,
+        #                 "ammo_count": 28,
+        #                 "reload_time": 1.5,
+        #                 "projectile_type": "enemy_shot",
+        #             },
+        #         },
+        #     ],
+        # },
         {
             "time": 0,
-            "type": "enemy_drone",
-            "location": "top_center_left",
-            "behaviors": [
-                {
-                    "action": "move_saw_wave",
-                    "params": {
-                        "x_speed": 200,
-                        "y_speed": 150,
-                        "init_direction": "right",
-                    },
-                },
-                {
-                    "action": "shoot",
-                    "params": {
-                        "shoot_rate": 0.1,
-                        "ammo_count": 18,
-                        "reload_time": 1.5,
-                        "projectile_type": "enemy_shot",
-                    },
-                },
-            ],
-        },
-        {
-            "time": 2,
-            "type": "enemy_drone",
-            "location": "top_center_right",
-            "behaviors": [
-                {
-                    "action": "move_saw_wave",
-                    "params": {
-                        "x_speed": 200,
-                        "y_speed": 150,
-                        "init_direction": "left",
-                    },
-                },
-                {
-                    "action": "shoot",
-                    "params": {
-                        "shoot_rate": 0.1,
-                        "ammo_count": 18,
-                        "reload_time": 1.5,
-                        "projectile_type": "enemy_shot",
-                    },
-                },
-            ],
-        },
-        {
-            "time": 6,
-            "type": "enemy_ship",
+            "type": "enemy_destroyer",
             "location": "top_center",
             "behaviors": [
                 {
-                    "action": "move_sine_wave",
-                    "params": {
-                        "frequency": 4,
-                        "amplitude": 600,
-                        "speed": 200,
-                    },
+                    "action": "move_straight",
+                    "params": {"speed": 100},
                 },
                 {
                     "action": "shoot",
                     "params": {
-                        "shoot_rate": 0.2,
-                        "ammo_count": 18,
-                        "reload_time": 1.5,
-                        "projectile_type": "enemy_shot",
-                    },
-                },
-            ],
-        },
-        {
-            "time": 8,
-            "type": "enemy_ship",
-            "location": "top_center",
-            "behaviors": [
-                {
-                    "action": "move_sine_wave",
-                    "params": {
-                        "frequency": -4,
-                        "amplitude": 600,
-                        "speed": 200,
-                    },
-                },
-                {
-                    "action": "shoot",
-                    "params": {
-                        "shoot_rate": 0.2,
-                        "ammo_count": 18,
-                        "reload_time": 1.5,
-                        "projectile_type": "enemy_shot",
-                    },
-                },
-            ],
-        },
-        {
-            "time": 10,
-            "type": "enemy_drone",
-            "location": "top_right_edge",
-            "behaviors": [
-                {
-                    "action": "move_square_wave",
-                    "params": {
-                        "x_dist": 400,
-                        "y_dist": 200,
-                        "init_horizontal_dir": "left",
-                        "x_speed": 200,
-                        "y_speed": 300,
                         "shoot_rate": 0.1,
-                        "ammo_count": 28,
-                        "reload_time": 1.5,
-                        "projectile_type": "enemy_shot",
-                    },
-                },
-            ],
-        },
-        {
-            "time": 12,
-            "type": "enemy_drone",
-            "location": "top_left_edge",
-            "behaviors": [
-                {
-                    "action": "move_square_wave",
-                    "params": {
-                        "x_dist": 400,
-                        "y_dist": 200,
-                        "init_horizontal_dir": "right",
-                        "x_speed": 200,
-                        "y_speed": 300,
-                        "shoot_rate": 0.1,
-                        "ammo_count": 28,
+                        "ammo_count": 18,
                         "reload_time": 1.5,
                         "projectile_type": "enemy_shot",
                     },
