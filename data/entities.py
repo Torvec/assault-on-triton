@@ -79,12 +79,18 @@ ENEMY_SHIP = {
 ENEMY_DESTROYER = {
     "hp": 16,
     "blast_radius": 320,
-    "shot_origin": {
-        1: {"x": 0, "y": 120},
-        2: {"x": 0, "y": 60},
-        3: {"x": 32, "y": -16},
-        4: {"x": -32, "y": -16},
-    }
+    "turret_positions": [
+        (0, 120),
+        (0, 60),
+        (32, -16),
+        (-32, -16),
+    ],
+}
+
+ENEMY_TURRET = {
+    "hp": 4,
+    "blast_radius": 64,
+    "shot_origin": {1: {"x": 0, "y": 24}},
 }
 
 SUB_BOSS = {

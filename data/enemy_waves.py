@@ -147,15 +147,6 @@ WAVE = {
                     "action": "move_straight",
                     "params": {"speed": 100},
                 },
-                {
-                    "action": "shoot",
-                    "params": {
-                        "shoot_rate": 0.1,
-                        "ammo_count": 18,
-                        "reload_time": 1.5,
-                        "projectile_type": "enemy_shot",
-                    },
-                },
             ],
         },
     ],

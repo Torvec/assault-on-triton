@@ -10,6 +10,7 @@ from data.entities import (
     ENEMY_DRONE,
     ENEMY_SHIP,
     ENEMY_DESTROYER,
+    ENEMY_TURRET,
     SUB_BOSS,
     LEVEL_BOSS,
 )
@@ -515,14 +516,48 @@ class EnemyShip(Entity):
 
 
 class EnemyDestroyer(Entity):
-
     def __init__(self, x, y, gameplay):
         self.img_path = IMAGES["enemy_destroyer"]
         super().__init__(x, y, gameplay)
         self.hp = ENEMY_DESTROYER["hp"]
         self.blast_radius = ENEMY_DESTROYER["blast_radius"]
         self.score_value = self.hp
-        self.shot_origin = ENEMY_DESTROYER["shot_origin"]
+        self.turret_positions = ENEMY_DESTROYER["turret_positions"]
+        self.turrets = []
+        self.create_turrets()
+
+    def create_turrets(self):
+        for _, (turret_x, turret_y) in enumerate(self.turret_positions):
+            world_x = self.position.x + turret_x
+            world_y = self.position.y + turret_y
+
+            self.gameplay.spawn_manager.spawn_entity(
+                "enemy_turret",
+                pygame.Vector2(world_x, world_y),
+                [
+                    {
+                        "action": "track_player_rotation",
+                        "params": {"rotation_speed": 180},
+                    },
+                    {
+                        "action": "follow_parent",
+                        "params": {
+                            "parent": self,
+                            "offset_x": turret_x,
+                            "offset_y": turret_y,
+                        },
+                    },
+                    {
+                        "action": "shoot",
+                        "params": {
+                            "shoot_rate": 0.3,
+                            "ammo_count": 6,
+                            "reload_time": 2.0,
+                            "projectile_type": "enemy_shot",
+                        },
+                    },
+                ],
+            )
 
     def take_damage(self, amount):
         self.hp -= amount
@@ -547,11 +582,34 @@ class EnemyDestroyer(Entity):
         self.flash_when_hit(surface, self.image, self.rect)
 
 
-"""
-Destroyer class - Has multiple turrets, maybe fires missiles also, has a bridge which is what kills it if you damage it enough, can also damage the turrets individually
-Turret class - Position is based off of the destroyer's position and it will always be facing toward the player when it shoots
-Gunship class - Tracks player location and fires at it with shots and missiles
-"""
+class EnemyTurret(Entity):
+    def __init__(self, x, y, gameplay):
+        self.img_path = IMAGES["enemy_turret"]
+        super().__init__(x, y, gameplay)
+        self.hp = ENEMY_TURRET["hp"]
+        self.blast_radius = ENEMY_TURRET["blast_radius"]
+        self.score_value = self.hp
+        self.shot_origin = ENEMY_TURRET["shot_origin"]
+
+    def take_damage(self, amount):
+        self.hp -= amount
+        if self.hp <= 0:
+            self.gameplay.score_manager.handle_score(self.score_value)
+            self.explode()
+        self.is_hit = True
+
+    def explode(self):
+        Explosion(
+            self.position.x, self.position.y, self.gameplay, self.blast_radius, None
+        )
+        self.kill()
+
+    def draw(self, surface):
+        super().draw(surface)
+        rotated_image = pygame.transform.rotate(self.image, -self.rotation)
+        rotated_rect = rotated_image.get_rect(center=self.rect.center)
+        surface.blit(rotated_image, rotated_rect)
+        self.flash_when_hit(surface, rotated_image, rotated_rect)
 
 
 class SubBoss(Entity):

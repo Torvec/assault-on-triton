@@ -180,3 +180,36 @@ def shoot(entity, shoot_rate, ammo_count, reload_time, projectile_type, dt):
         shot.velocity = DIRECTION_DOWN * shot.speed
     entity.burst_ammo -= 1
     shot.sound()
+
+
+def track_player_rotation(entity, rotation_speed, dt):
+    """Smoothly rotate turret to face player"""
+    player = entity.gameplay.entity_manager.player_group.sprite
+    if not player:
+        return
+
+    # Calculate angle to player
+    direction_to_player = player.position - entity.position
+    target_angle = math.degrees(
+        math.atan2(direction_to_player.y, direction_to_player.x)
+    )
+
+    # Calculate shortest rotation path
+    angle_diff = (target_angle - entity.rotation + 180) % 360 - 180
+
+    # Rotate towards target
+    max_rotation = rotation_speed * dt
+    if abs(angle_diff) <= max_rotation:
+        entity.rotation = target_angle
+    else:
+        entity.rotation += max_rotation if angle_diff > 0 else -max_rotation
+
+
+def follow_parent(entity, parent, offset_x, offset_y, dt):
+    """Keep turret position relative to parent destroyer"""
+    if parent and parent.alive():
+        entity.position.x = parent.position.x + offset_x
+        entity.position.y = parent.position.y + offset_y
+    else:
+        # Parent destroyed, kill turret
+        entity.kill()

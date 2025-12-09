@@ -8,6 +8,7 @@ from src.entities import (
     EnemyDrone,
     EnemyShip,
     EnemyDestroyer,
+    EnemyTurret,
     SubBoss,
     LevelBoss,
     HealthPickup,
@@ -147,6 +148,10 @@ class EntityManager:
             },
             "enemy_destroyer": {
                 "class": EnemyDestroyer,
+                "containers": [self.updateable, self.drawable, self.active_targets],
+            },
+            "enemy_turret": {
+                "class": EnemyTurret,
                 "containers": [self.updateable, self.drawable, self.active_targets],
             },
             "sub_boss": {
