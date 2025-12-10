@@ -139,13 +139,13 @@ WAVE = {
         #     ],
         # },
         {
-            "time": 0,
+            "time": 1,
             "type": "enemy_destroyer",
             "location": "top_center",
             "behaviors": [
                 {
                     "action": "move_straight",
-                    "params": {"speed": 100},
+                    "params": {"speed": 80},
                 },
             ],
         },

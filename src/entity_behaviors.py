@@ -170,43 +170,33 @@ def shoot(entity, shoot_rate, ammo_count, reload_time, projectile_type, dt):
     shot_origins = entity.shot_origin
 
     for origin in shot_origins.values():
+        origin_offset = pygame.Vector2(origin["x"], origin["y"])
+        rotated_offset = origin_offset.rotate(entity.rotation)
+
+        shot_x = entity.position.x + rotated_offset.x
+        shot_y = entity.position.y + rotated_offset.y
+
         shot = entity.gameplay.spawn_manager.spawn_projectile(
-            projectile_type,
-            entity.position.x + origin["x"],
-            entity.position.y + origin["y"],
-            entity.gameplay,
-            entity,
+            projectile_type, shot_x, shot_y, entity.gameplay, entity
         )
-        shot.velocity = DIRECTION_DOWN * shot.speed
+
+        forward_direction = pygame.Vector2(0, 1).rotate(entity.rotation)
+        shot.velocity = forward_direction * shot.speed
+
     entity.burst_ammo -= 1
     shot.sound()
 
 
-def track_player_rotation(entity, rotation_speed, dt):
-    """Smoothly rotate turret to face player"""
+def track_player(entity, dt):
     player = entity.gameplay.entity_manager.player_group.sprite
     if not player:
         return
 
-    # Calculate angle to player
-    direction_to_player = player.position - entity.position
-    target_angle = math.degrees(
-        math.atan2(direction_to_player.y, direction_to_player.x)
-    )
-
-    # Calculate shortest rotation path
-    angle_diff = (target_angle - entity.rotation + 180) % 360 - 180
-
-    # Rotate towards target
-    max_rotation = rotation_speed * dt
-    if abs(angle_diff) <= max_rotation:
-        entity.rotation = target_angle
-    else:
-        entity.rotation += max_rotation if angle_diff > 0 else -max_rotation
+    direction = player.position - entity.position
+    entity.rotation = DIRECTION_DOWN.angle_to(direction)
 
 
 def follow_parent(entity, parent, offset_x, offset_y, dt):
-    """Keep turret position relative to parent destroyer"""
     if parent and parent.alive():
         entity.position.x = parent.position.x + offset_x
         entity.position.y = parent.position.y + offset_y

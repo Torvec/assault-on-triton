@@ -536,8 +536,8 @@ class EnemyDestroyer(Entity):
                 pygame.Vector2(world_x, world_y),
                 [
                     {
-                        "action": "track_player_rotation",
-                        "params": {"rotation_speed": 180},
+                        "action": "track_player",
+                        "params": {},
                     },
                     {
                         "action": "follow_parent",
