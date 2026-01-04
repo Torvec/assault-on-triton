@@ -247,15 +247,15 @@ class CollisionManager:
 
     @property
     def player(self):
-        return self.entity_manager.player_group.sprite
+        return self.entity_manager.get_entity_instance("player")
 
     @property
     def sub_boss(self):
-        return self.entity_manager.sub_boss_group.sprite
+        return self.entity_manager.get_entity_instance("sub_boss")
 
     @property
     def level_boss(self):
-        return self.entity_manager.level_boss_group.sprite
+        return self.entity_manager.get_entity_instance("level_boss")
 
     def handle_boundaries(self, entity, action="kill"):
         if not self.boundary_handling_enabled:

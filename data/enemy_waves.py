@@ -13,15 +13,15 @@ WAVE = {
         #                 "init_direction": "right",
         #             },
         #         },
-        #         {
-        #             "action": "shoot",
-        #             "params": {
-        #                 "shoot_rate": 0.1,
-        #                 "ammo_count": 18,
-        #                 "reload_time": 1.5,
-        #                 "projectile_type": "enemy_shot",
-        #             },
-        #         },
+        # {
+        #     "action": "shoot",
+        #     "params": {
+        #         "shoot_rate": 0.1,
+        #         "ammo_count": 18,
+        #         "reload_time": 1.5,
+        #         "projectile_type": "enemy_shot",
+        #     },
+        # },
         #     ],
         # },
         # {
@@ -157,7 +157,10 @@ WAVE = {
             "type": "asteroid_sm",
             "location": "top_center",
             "behaviors": [
-                {"action": "move_straight", "params": {"direction": "down"}},
+                {
+                    "action": "move_straight",
+                    "params": {"speed": 80},
+                },
                 {"action": "rotate_constantly", "params": {}},
             ],
         },
@@ -166,7 +169,10 @@ WAVE = {
             "type": "asteroid_sm",
             "location": "top_right",
             "behaviors": [
-                {"action": "move_straight", "params": {"direction": "down"}},
+                {
+                    "action": "move_straight",
+                    "params": {"speed": 80},
+                },
                 {"action": "rotate_constantly", "params": {}},
             ],
         },
@@ -175,7 +181,10 @@ WAVE = {
             "type": "asteroid_md",
             "location": "top_center",
             "behaviors": [
-                {"action": "move_straight", "params": {"direction": "down"}},
+                {
+                    "action": "move_straight",
+                    "params": {"speed": 80},
+                },
                 {"action": "rotate_constantly", "params": {}},
             ],
         },
@@ -184,7 +193,10 @@ WAVE = {
             "type": "asteroid_sm",
             "location": "top_left",
             "behaviors": [
-                {"action": "move_straight", "params": {"direction": "down"}},
+                {
+                    "action": "move_straight",
+                    "params": {"speed": 80},
+                },
                 {"action": "rotate_constantly", "params": {}},
             ],
         },
@@ -193,7 +205,10 @@ WAVE = {
             "type": "asteroid_sm",
             "location": "top_far_right",
             "behaviors": [
-                {"action": "move_straight", "params": {"direction": "down"}},
+                {
+                    "action": "move_straight",
+                    "params": {"speed": 80},
+                },
                 {"action": "rotate_constantly", "params": {}},
             ],
         },
@@ -202,7 +217,10 @@ WAVE = {
             "type": "asteroid_sm",
             "location": "top_right_edge",
             "behaviors": [
-                {"action": "move_straight", "params": {"direction": "down"}},
+                {
+                    "action": "move_straight",
+                    "params": {"speed": 80},
+                },
                 {"action": "rotate_constantly", "params": {}},
             ],
         },
@@ -211,7 +229,10 @@ WAVE = {
             "type": "asteroid_sm",
             "location": "top_center_left",
             "behaviors": [
-                {"action": "move_straight", "params": {"direction": "down"}},
+                {
+                    "action": "move_straight",
+                    "params": {"speed": 80},
+                },
                 {"action": "rotate_constantly", "params": {}},
             ],
         },
@@ -220,7 +241,10 @@ WAVE = {
             "type": "asteroid_sm",
             "location": "top_left_edge",
             "behaviors": [
-                {"action": "move_straight", "params": {"direction": "down"}},
+                {
+                    "action": "move_straight",
+                    "params": {"speed": 80},
+                },
                 {"action": "rotate_constantly", "params": {}},
             ],
         },
@@ -229,7 +253,10 @@ WAVE = {
             "type": "asteroid_sm",
             "location": "top_right",
             "behaviors": [
-                {"action": "move_straight", "params": {"direction": "down"}},
+                {
+                    "action": "move_straight",
+                    "params": {"speed": 80},
+                },
                 {"action": "rotate_constantly", "params": {}},
             ],
         },
@@ -238,7 +265,10 @@ WAVE = {
             "type": "asteroid_md",
             "location": "top_far_left",
             "behaviors": [
-                {"action": "move_straight", "params": {"direction": "down"}},
+                {
+                    "action": "move_straight",
+                    "params": {"speed": 80},
+                },
                 {"action": "rotate_constantly", "params": {}},
             ],
         },
@@ -247,7 +277,10 @@ WAVE = {
             "type": "asteroid_sm",
             "location": "top_center_right",
             "behaviors": [
-                {"action": "move_straight", "params": {"direction": "down"}},
+                {
+                    "action": "move_straight",
+                    "params": {"speed": 80},
+                },
                 {"action": "rotate_constantly", "params": {}},
             ],
         },
@@ -256,7 +289,10 @@ WAVE = {
             "type": "asteroid_sm",
             "location": "top_left",
             "behaviors": [
-                {"action": "move_straight", "params": {"direction": "down"}},
+                {
+                    "action": "move_straight",
+                    "params": {"speed": 80},
+                },
                 {"action": "rotate_constantly", "params": {}},
             ],
         },
@@ -265,7 +301,10 @@ WAVE = {
             "type": "asteroid_md",
             "location": "top_right",
             "behaviors": [
-                {"action": "move_straight", "params": {"direction": "down"}},
+                {
+                    "action": "move_straight",
+                    "params": {"speed": 80},
+                },
                 {"action": "rotate_constantly", "params": {}},
             ],
         },
@@ -274,7 +313,10 @@ WAVE = {
             "type": "asteroid_md",
             "location": "top_center_left",
             "behaviors": [
-                {"action": "move_straight", "params": {"direction": "down"}},
+                {
+                    "action": "move_straight",
+                    "params": {"speed": 80},
+                },
                 {"action": "rotate_constantly", "params": {}},
             ],
         },
@@ -283,7 +325,10 @@ WAVE = {
             "type": "asteroid_sm",
             "location": "top_far_right",
             "behaviors": [
-                {"action": "move_straight", "params": {"direction": "down"}},
+                {
+                    "action": "move_straight",
+                    "params": {"speed": 80},
+                },
                 {"action": "rotate_constantly", "params": {}},
             ],
         },
@@ -292,7 +337,10 @@ WAVE = {
             "type": "asteroid_sm",
             "location": "top_center",
             "behaviors": [
-                {"action": "move_straight", "params": {"direction": "down"}},
+                {
+                    "action": "move_straight",
+                    "params": {"speed": 80},
+                },
                 {"action": "rotate_constantly", "params": {}},
             ],
         },
@@ -301,7 +349,10 @@ WAVE = {
             "type": "asteroid_md",
             "location": "top_far_left",
             "behaviors": [
-                {"action": "move_straight", "params": {"direction": "down"}},
+                {
+                    "action": "move_straight",
+                    "params": {"speed": 80},
+                },
                 {"action": "rotate_constantly", "params": {}},
             ],
         },
@@ -310,7 +361,10 @@ WAVE = {
             "type": "asteroid_md",
             "location": "top_center_right",
             "behaviors": [
-                {"action": "move_straight", "params": {"direction": "down"}},
+                {
+                    "action": "move_straight",
+                    "params": {"speed": 80},
+                },
                 {"action": "rotate_constantly", "params": {}},
             ],
         },
@@ -319,7 +373,10 @@ WAVE = {
             "type": "asteroid_md",
             "location": "top_center_left",
             "behaviors": [
-                {"action": "move_straight", "params": {"direction": "down"}},
+                {
+                    "action": "move_straight",
+                    "params": {"speed": 80},
+                },
                 {"action": "rotate_constantly", "params": {}},
             ],
         },
@@ -329,7 +386,10 @@ WAVE = {
             "type": "asteroid_lg",
             "location": "top_far_right",
             "behaviors": [
-                {"action": "move_straight", "params": {"direction": "down"}},
+                {
+                    "action": "move_straight",
+                    "params": {"speed": 80},
+                },
                 {"action": "rotate_constantly", "params": {}},
             ],
         },
@@ -338,7 +398,10 @@ WAVE = {
             "type": "asteroid_sm",
             "location": "top_center",
             "behaviors": [
-                {"action": "move_straight", "params": {"direction": "down"}},
+                {
+                    "action": "move_straight",
+                    "params": {"speed": 80},
+                },
                 {"action": "rotate_constantly", "params": {}},
             ],
         },
@@ -347,7 +410,10 @@ WAVE = {
             "type": "asteroid_lg",
             "location": "top_far_left",
             "behaviors": [
-                {"action": "move_straight", "params": {"direction": "down"}},
+                {
+                    "action": "move_straight",
+                    "params": {"speed": 80},
+                },
                 {"action": "rotate_constantly", "params": {}},
             ],
         },
@@ -356,7 +422,10 @@ WAVE = {
             "type": "asteroid_sm",
             "location": "top_left",
             "behaviors": [
-                {"action": "move_straight", "params": {"direction": "down"}},
+                {
+                    "action": "move_straight",
+                    "params": {"speed": 80},
+                },
                 {"action": "rotate_constantly", "params": {}},
             ],
         },
@@ -365,7 +434,10 @@ WAVE = {
             "type": "asteroid_lg",
             "location": "top_center",
             "behaviors": [
-                {"action": "move_straight", "params": {"direction": "down"}},
+                {
+                    "action": "move_straight",
+                    "params": {"speed": 80},
+                },
                 {"action": "rotate_constantly", "params": {}},
             ],
         },
@@ -374,7 +446,10 @@ WAVE = {
             "type": "asteroid_sm",
             "location": "top_right",
             "behaviors": [
-                {"action": "move_straight", "params": {"direction": "down"}},
+                {
+                    "action": "move_straight",
+                    "params": {"speed": 80},
+                },
                 {"action": "rotate_constantly", "params": {}},
             ],
         },
@@ -383,7 +458,10 @@ WAVE = {
             "type": "asteroid_md",
             "location": "top_far_left",
             "behaviors": [
-                {"action": "move_straight", "params": {"direction": "down"}},
+                {
+                    "action": "move_straight",
+                    "params": {"speed": 80},
+                },
                 {"action": "rotate_constantly", "params": {}},
             ],
         },
@@ -392,7 +470,10 @@ WAVE = {
             "type": "asteroid_sm",
             "location": "top_center",
             "behaviors": [
-                {"action": "move_straight", "params": {"direction": "down"}},
+                {
+                    "action": "move_straight",
+                    "params": {"speed": 80},
+                },
                 {"action": "rotate_constantly", "params": {}},
             ],
         },
@@ -401,7 +482,10 @@ WAVE = {
             "type": "asteroid_lg",
             "location": "top_far_right",
             "behaviors": [
-                {"action": "move_straight", "params": {"direction": "down"}},
+                {
+                    "action": "move_straight",
+                    "params": {"speed": 80},
+                },
                 {"action": "rotate_constantly", "params": {}},
             ],
         },
@@ -410,7 +494,10 @@ WAVE = {
             "type": "asteroid_sm",
             "location": "top_far_left",
             "behaviors": [
-                {"action": "move_straight", "params": {"direction": "down"}},
+                {
+                    "action": "move_straight",
+                    "params": {"speed": 80},
+                },
                 {"action": "rotate_constantly", "params": {}},
             ],
         },
@@ -419,7 +506,10 @@ WAVE = {
             "type": "asteroid_lg",
             "location": "top_center_right",
             "behaviors": [
-                {"action": "move_straight", "params": {"direction": "down"}},
+                {
+                    "action": "move_straight",
+                    "params": {"speed": 80},
+                },
                 {"action": "rotate_constantly", "params": {}},
             ],
         },
@@ -428,7 +518,10 @@ WAVE = {
             "type": "asteroid_md",
             "location": "top_center_left",
             "behaviors": [
-                {"action": "move_straight", "params": {"direction": "down"}},
+                {
+                    "action": "move_straight",
+                    "params": {"speed": 80},
+                },
                 {"action": "rotate_constantly", "params": {}},
             ],
         },
@@ -437,7 +530,10 @@ WAVE = {
             "type": "asteroid_md",
             "location": "top_right_edge",
             "behaviors": [
-                {"action": "move_straight", "params": {"direction": "down"}},
+                {
+                    "action": "move_straight",
+                    "params": {"speed": 80},
+                },
                 {"action": "rotate_constantly", "params": {}},
             ],
         },
@@ -446,7 +542,10 @@ WAVE = {
             "type": "asteroid_lg",
             "location": "top_left",
             "behaviors": [
-                {"action": "move_straight", "params": {"direction": "down"}},
+                {
+                    "action": "move_straight",
+                    "params": {"speed": 80},
+                },
                 {"action": "rotate_constantly", "params": {}},
             ],
         },
@@ -455,7 +554,10 @@ WAVE = {
             "type": "asteroid_md",
             "location": "top_left_edge",
             "behaviors": [
-                {"action": "move_straight", "params": {"direction": "down"}},
+                {
+                    "action": "move_straight",
+                    "params": {"speed": 80},
+                },
                 {"action": "rotate_constantly", "params": {}},
             ],
         },
@@ -464,7 +566,10 @@ WAVE = {
             "type": "asteroid_sm",
             "location": "top_center_left",
             "behaviors": [
-                {"action": "move_straight", "params": {"direction": "down"}},
+                {
+                    "action": "move_straight",
+                    "params": {"speed": 80},
+                },
                 {"action": "rotate_constantly", "params": {}},
             ],
         },
@@ -473,7 +578,10 @@ WAVE = {
             "type": "asteroid_lg",
             "location": "top_far_right",
             "behaviors": [
-                {"action": "move_straight", "params": {"direction": "down"}},
+                {
+                    "action": "move_straight",
+                    "params": {"speed": 80},
+                },
                 {"action": "rotate_constantly", "params": {}},
             ],
         },
@@ -482,7 +590,10 @@ WAVE = {
             "type": "asteroid_md",
             "location": "top_center_left",
             "behaviors": [
-                {"action": "move_straight", "params": {"direction": "down"}},
+                {
+                    "action": "move_straight",
+                    "params": {"speed": 80},
+                },
                 {"action": "rotate_constantly", "params": {}},
             ],
         },
@@ -491,7 +602,10 @@ WAVE = {
             "type": "asteroid_md",
             "location": "top_center_right",
             "behaviors": [
-                {"action": "move_straight", "params": {"direction": "down"}},
+                {
+                    "action": "move_straight",
+                    "params": {"speed": 80},
+                },
                 {"action": "rotate_constantly", "params": {}},
             ],
         },
@@ -501,7 +615,10 @@ WAVE = {
             "type": "asteroid_xl",
             "location": "top_far_left",
             "behaviors": [
-                {"action": "move_straight", "params": {"direction": "down"}},
+                {
+                    "action": "move_straight",
+                    "params": {"speed": 80},
+                },
                 {"action": "rotate_constantly", "params": {}},
             ],
         },
@@ -510,7 +627,10 @@ WAVE = {
             "type": "asteroid_xl",
             "location": "top_far_right",
             "behaviors": [
-                {"action": "move_straight", "params": {"direction": "down"}},
+                {
+                    "action": "move_straight",
+                    "params": {"speed": 80},
+                },
                 {"action": "rotate_constantly", "params": {}},
             ],
         },
@@ -519,7 +639,10 @@ WAVE = {
             "type": "asteroid_sm",
             "location": "top_center",
             "behaviors": [
-                {"action": "move_straight", "params": {"direction": "down"}},
+                {
+                    "action": "move_straight",
+                    "params": {"speed": 80},
+                },
                 {"action": "rotate_constantly", "params": {}},
             ],
         },
@@ -528,7 +651,10 @@ WAVE = {
             "type": "asteroid_sm",
             "location": "top_left",
             "behaviors": [
-                {"action": "move_straight", "params": {"direction": "down"}},
+                {
+                    "action": "move_straight",
+                    "params": {"speed": 80},
+                },
                 {"action": "rotate_constantly", "params": {}},
             ],
         },
@@ -537,7 +663,10 @@ WAVE = {
             "type": "asteroid_sm",
             "location": "top_center_right",
             "behaviors": [
-                {"action": "move_straight", "params": {"direction": "down"}},
+                {
+                    "action": "move_straight",
+                    "params": {"speed": 80},
+                },
                 {"action": "rotate_constantly", "params": {}},
             ],
         },
@@ -546,7 +675,10 @@ WAVE = {
             "type": "asteroid_md",
             "location": "top_right",
             "behaviors": [
-                {"action": "move_straight", "params": {"direction": "down"}},
+                {
+                    "action": "move_straight",
+                    "params": {"speed": 80},
+                },
                 {"action": "rotate_constantly", "params": {}},
             ],
         },
@@ -555,7 +687,10 @@ WAVE = {
             "type": "asteroid_xl",
             "location": "top_center_left",
             "behaviors": [
-                {"action": "move_straight", "params": {"direction": "down"}},
+                {
+                    "action": "move_straight",
+                    "params": {"speed": 80},
+                },
                 {"action": "rotate_constantly", "params": {}},
             ],
         },
@@ -564,7 +699,10 @@ WAVE = {
             "type": "asteroid_sm",
             "location": "top_center",
             "behaviors": [
-                {"action": "move_straight", "params": {"direction": "down"}},
+                {
+                    "action": "move_straight",
+                    "params": {"speed": 80},
+                },
                 {"action": "rotate_constantly", "params": {}},
             ],
         },
@@ -573,7 +711,10 @@ WAVE = {
             "type": "asteroid_md",
             "location": "top_far_right",
             "behaviors": [
-                {"action": "move_straight", "params": {"direction": "down"}},
+                {
+                    "action": "move_straight",
+                    "params": {"speed": 80},
+                },
                 {"action": "rotate_constantly", "params": {}},
             ],
         },
@@ -582,7 +723,10 @@ WAVE = {
             "type": "asteroid_sm",
             "location": "top_far_left",
             "behaviors": [
-                {"action": "move_straight", "params": {"direction": "down"}},
+                {
+                    "action": "move_straight",
+                    "params": {"speed": 80},
+                },
                 {"action": "rotate_constantly", "params": {}},
             ],
         },
@@ -591,7 +735,10 @@ WAVE = {
             "type": "asteroid_xl",
             "location": "top_center_right",
             "behaviors": [
-                {"action": "move_straight", "params": {"direction": "down"}},
+                {
+                    "action": "move_straight",
+                    "params": {"speed": 80},
+                },
                 {"action": "rotate_constantly", "params": {}},
             ],
         },
@@ -600,7 +747,10 @@ WAVE = {
             "type": "asteroid_sm",
             "location": "top_left",
             "behaviors": [
-                {"action": "move_straight", "params": {"direction": "down"}},
+                {
+                    "action": "move_straight",
+                    "params": {"speed": 80},
+                },
                 {"action": "rotate_constantly", "params": {}},
             ],
         },
@@ -609,7 +759,10 @@ WAVE = {
             "type": "asteroid_sm",
             "location": "top_right_edge",
             "behaviors": [
-                {"action": "move_straight", "params": {"direction": "down"}},
+                {
+                    "action": "move_straight",
+                    "params": {"speed": 80},
+                },
                 {"action": "rotate_constantly", "params": {}},
             ],
         },
@@ -619,7 +772,10 @@ WAVE = {
             "type": "asteroid_sm",
             "location": "top_center_right",
             "behaviors": [
-                {"action": "move_straight", "params": {"direction": "down"}},
+                {
+                    "action": "move_straight",
+                    "params": {"speed": 80},
+                },
                 {"action": "rotate_constantly", "params": {}},
             ],
         },
@@ -628,7 +784,10 @@ WAVE = {
             "type": "asteroid_lg",
             "location": "top_far_left",
             "behaviors": [
-                {"action": "move_straight", "params": {"direction": "down"}},
+                {
+                    "action": "move_straight",
+                    "params": {"speed": 80},
+                },
                 {"action": "rotate_constantly", "params": {}},
             ],
         },
@@ -637,7 +796,10 @@ WAVE = {
             "type": "asteroid_sm",
             "location": "top_far_right",
             "behaviors": [
-                {"action": "move_straight", "params": {"direction": "down"}},
+                {
+                    "action": "move_straight",
+                    "params": {"speed": 80},
+                },
                 {"action": "rotate_constantly", "params": {}},
             ],
         },
@@ -646,7 +808,10 @@ WAVE = {
             "type": "asteroid_sm",
             "location": "top_right",
             "behaviors": [
-                {"action": "move_straight", "params": {"direction": "down"}},
+                {
+                    "action": "move_straight",
+                    "params": {"speed": 80},
+                },
                 {"action": "rotate_constantly", "params": {}},
             ],
         },
@@ -655,7 +820,10 @@ WAVE = {
             "type": "asteroid_md",
             "location": "top_center_left",
             "behaviors": [
-                {"action": "move_straight", "params": {"direction": "down"}},
+                {
+                    "action": "move_straight",
+                    "params": {"speed": 80},
+                },
                 {"action": "rotate_constantly", "params": {}},
             ],
         },
@@ -664,7 +832,10 @@ WAVE = {
             "type": "asteroid_sm",
             "location": "top_left",
             "behaviors": [
-                {"action": "move_straight", "params": {"direction": "down"}},
+                {
+                    "action": "move_straight",
+                    "params": {"speed": 80},
+                },
                 {"action": "rotate_constantly", "params": {}},
             ],
         },
@@ -673,7 +844,10 @@ WAVE = {
             "type": "asteroid_sm",
             "location": "top_center",
             "behaviors": [
-                {"action": "move_straight", "params": {"direction": "down"}},
+                {
+                    "action": "move_straight",
+                    "params": {"speed": 80},
+                },
                 {"action": "rotate_constantly", "params": {}},
             ],
         },
@@ -682,7 +856,10 @@ WAVE = {
             "type": "asteroid_sm",
             "location": "top_far_right",
             "behaviors": [
-                {"action": "move_straight", "params": {"direction": "down"}},
+                {
+                    "action": "move_straight",
+                    "params": {"speed": 80},
+                },
                 {"action": "rotate_constantly", "params": {}},
             ],
         },
@@ -691,7 +868,10 @@ WAVE = {
             "type": "asteroid_md",
             "location": "top_center_right",
             "behaviors": [
-                {"action": "move_straight", "params": {"direction": "down"}},
+                {
+                    "action": "move_straight",
+                    "params": {"speed": 80},
+                },
                 {"action": "rotate_constantly", "params": {}},
             ],
         },
@@ -700,7 +880,10 @@ WAVE = {
             "type": "asteroid_md",
             "location": "top_far_left",
             "behaviors": [
-                {"action": "move_straight", "params": {"direction": "down"}},
+                {
+                    "action": "move_straight",
+                    "params": {"speed": 80},
+                },
                 {"action": "rotate_constantly", "params": {}},
             ],
         },
@@ -709,7 +892,10 @@ WAVE = {
             "type": "asteroid_md",
             "location": "top_far_right",
             "behaviors": [
-                {"action": "move_straight", "params": {"direction": "down"}},
+                {
+                    "action": "move_straight",
+                    "params": {"speed": 80},
+                },
                 {"action": "rotate_constantly", "params": {}},
             ],
         },
@@ -718,7 +904,10 @@ WAVE = {
             "type": "asteroid_sm",
             "location": "top_center_left",
             "behaviors": [
-                {"action": "move_straight", "params": {"direction": "down"}},
+                {
+                    "action": "move_straight",
+                    "params": {"speed": 80},
+                },
                 {"action": "rotate_constantly", "params": {}},
             ],
         },
@@ -727,7 +916,10 @@ WAVE = {
             "type": "asteroid_sm",
             "location": "top_left_edge",
             "behaviors": [
-                {"action": "move_straight", "params": {"direction": "down"}},
+                {
+                    "action": "move_straight",
+                    "params": {"speed": 80},
+                },
                 {"action": "rotate_constantly", "params": {}},
             ],
         },
@@ -736,7 +928,10 @@ WAVE = {
             "type": "asteroid_sm",
             "location": "top_right",
             "behaviors": [
-                {"action": "move_straight", "params": {"direction": "down"}},
+                {
+                    "action": "move_straight",
+                    "params": {"speed": 80},
+                },
                 {"action": "rotate_constantly", "params": {}},
             ],
         },
@@ -745,7 +940,10 @@ WAVE = {
             "type": "asteroid_sm",
             "location": "top_left",
             "behaviors": [
-                {"action": "move_straight", "params": {"direction": "down"}},
+                {
+                    "action": "move_straight",
+                    "params": {"speed": 80},
+                },
                 {"action": "rotate_constantly", "params": {}},
             ],
         },
@@ -754,7 +952,10 @@ WAVE = {
             "type": "asteroid_sm",
             "location": "top_center",
             "behaviors": [
-                {"action": "move_straight", "params": {"direction": "down"}},
+                {
+                    "action": "move_straight",
+                    "params": {"speed": 80},
+                },
                 {"action": "rotate_constantly", "params": {}},
             ],
         },
@@ -764,7 +965,10 @@ WAVE = {
             "type": "bomb_ammo_pickup",
             "location": "top_right",
             "behaviors": [
-                {"action": "move_straight", "params": {"direction": "down"}},
+                {
+                    "action": "move_straight",
+                    "params": {"speed": 80},
+                },
                 {"action": "rotate_constantly", "params": {}},
             ],
         },
@@ -774,8 +978,19 @@ WAVE = {
             "type": "enemy_drone",
             "location": "top_far_left",
             "behaviors": [
-                {"action": "move_straight", "params": {"direction": "down"}},
-                {"action": "shoot", "params": {}},
+                {
+                    "action": "move_straight",
+                    "params": {"speed": 80},
+                },
+                {
+                    "action": "shoot",
+                    "params": {
+                        "shoot_rate": 0.2,
+                        "ammo_count": 12,
+                        "reload_time": 2.0,
+                        "projectile_type": "enemy_shot",
+                    },
+                },
             ],
         },
         {
@@ -783,7 +998,10 @@ WAVE = {
             "type": "asteroid_md",
             "location": "top_center_left",
             "behaviors": [
-                {"action": "move_straight", "params": {"direction": "down"}},
+                {
+                    "action": "move_straight",
+                    "params": {"speed": 80},
+                },
                 {"action": "rotate_constantly", "params": {}},
             ],
         },
@@ -792,7 +1010,10 @@ WAVE = {
             "type": "asteroid_sm",
             "location": "top_center_right",
             "behaviors": [
-                {"action": "move_straight", "params": {"direction": "down"}},
+                {
+                    "action": "move_straight",
+                    "params": {"speed": 80},
+                },
                 {"action": "rotate_constantly", "params": {}},
             ],
         },
@@ -801,8 +1022,19 @@ WAVE = {
             "type": "enemy_drone",
             "location": "top_far_right",
             "behaviors": [
-                {"action": "move_straight", "params": {"direction": "down"}},
-                {"action": "shoot", "params": {}},
+                {
+                    "action": "move_straight",
+                    "params": {"speed": 80},
+                },
+                {
+                    "action": "shoot",
+                    "params": {
+                        "shoot_rate": 0.2,
+                        "ammo_count": 12,
+                        "reload_time": 2.0,
+                        "projectile_type": "enemy_shot",
+                    },
+                },
             ],
         },
         {
@@ -810,7 +1042,10 @@ WAVE = {
             "type": "asteroid_sm",
             "location": "top_center_left",
             "behaviors": [
-                {"action": "move_straight", "params": {"direction": "down"}},
+                {
+                    "action": "move_straight",
+                    "params": {"speed": 80},
+                },
                 {"action": "rotate_constantly", "params": {}},
             ],
         },
@@ -819,7 +1054,10 @@ WAVE = {
             "type": "asteroid_sm",
             "location": "top_right",
             "behaviors": [
-                {"action": "move_straight", "params": {"direction": "down"}},
+                {
+                    "action": "move_straight",
+                    "params": {"speed": 80},
+                },
                 {"action": "rotate_constantly", "params": {}},
             ],
         },
@@ -828,8 +1066,19 @@ WAVE = {
             "type": "enemy_drone",
             "location": "top_left",
             "behaviors": [
-                {"action": "move_straight", "params": {"direction": "down"}},
-                {"action": "shoot", "params": {}},
+                {
+                    "action": "move_straight",
+                    "params": {"speed": 80},
+                },
+                {
+                    "action": "shoot",
+                    "params": {
+                        "shoot_rate": 0.2,
+                        "ammo_count": 12,
+                        "reload_time": 2.0,
+                        "projectile_type": "enemy_shot",
+                    },
+                },
             ],
         },
         {
@@ -837,7 +1086,10 @@ WAVE = {
             "type": "asteroid_sm",
             "location": "top_center",
             "behaviors": [
-                {"action": "move_straight", "params": {"direction": "down"}},
+                {
+                    "action": "move_straight",
+                    "params": {"speed": 80},
+                },
                 {"action": "rotate_constantly", "params": {}},
             ],
         },
@@ -846,8 +1098,19 @@ WAVE = {
             "type": "enemy_drone",
             "location": "top_right",
             "behaviors": [
-                {"action": "move_straight", "params": {"direction": "down"}},
-                {"action": "shoot", "params": {}},
+                {
+                    "action": "move_straight",
+                    "params": {"speed": 80},
+                },
+                {
+                    "action": "shoot",
+                    "params": {
+                        "shoot_rate": 0.2,
+                        "ammo_count": 12,
+                        "reload_time": 2.0,
+                        "projectile_type": "enemy_shot",
+                    },
+                },
             ],
         },
         {
@@ -855,7 +1118,10 @@ WAVE = {
             "type": "asteroid_md",
             "location": "top_center",
             "behaviors": [
-                {"action": "move_straight", "params": {"direction": "down"}},
+                {
+                    "action": "move_straight",
+                    "params": {"speed": 80},
+                },
                 {"action": "rotate_constantly", "params": {}},
             ],
         },
@@ -864,7 +1130,10 @@ WAVE = {
             "type": "asteroid_sm",
             "location": "top_center",
             "behaviors": [
-                {"action": "move_straight", "params": {"direction": "down"}},
+                {
+                    "action": "move_straight",
+                    "params": {"speed": 80},
+                },
                 {"action": "rotate_constantly", "params": {}},
             ],
         },
@@ -873,8 +1142,19 @@ WAVE = {
             "type": "enemy_drone",
             "location": "top_center_left",
             "behaviors": [
-                {"action": "move_straight", "params": {"direction": "down"}},
-                {"action": "shoot", "params": {}},
+                {
+                    "action": "move_straight",
+                    "params": {"speed": 80},
+                },
+                {
+                    "action": "shoot",
+                    "params": {
+                        "shoot_rate": 0.2,
+                        "ammo_count": 12,
+                        "reload_time": 2.0,
+                        "projectile_type": "enemy_shot",
+                    },
+                },
             ],
         },
         {
@@ -882,7 +1162,10 @@ WAVE = {
             "type": "asteroid_sm",
             "location": "top_far_left",
             "behaviors": [
-                {"action": "move_straight", "params": {"direction": "down"}},
+                {
+                    "action": "move_straight",
+                    "params": {"speed": 80},
+                },
                 {"action": "rotate_constantly", "params": {}},
             ],
         },
@@ -891,8 +1174,19 @@ WAVE = {
             "type": "enemy_drone",
             "location": "top_center_right",
             "behaviors": [
-                {"action": "move_straight", "params": {"direction": "down"}},
-                {"action": "shoot", "params": {}},
+                {
+                    "action": "move_straight",
+                    "params": {"speed": 80},
+                },
+                {
+                    "action": "shoot",
+                    "params": {
+                        "shoot_rate": 0.2,
+                        "ammo_count": 12,
+                        "reload_time": 2.0,
+                        "projectile_type": "enemy_shot",
+                    },
+                },
             ],
         },
         {
@@ -900,8 +1194,19 @@ WAVE = {
             "type": "enemy_drone",
             "location": "top_right",
             "behaviors": [
-                {"action": "move_straight", "params": {"direction": "down"}},
-                {"action": "shoot", "params": {}},
+                {
+                    "action": "move_straight",
+                    "params": {"speed": 80},
+                },
+                {
+                    "action": "shoot",
+                    "params": {
+                        "shoot_rate": 0.2,
+                        "ammo_count": 12,
+                        "reload_time": 2.0,
+                        "projectile_type": "enemy_shot",
+                    },
+                },
             ],
         },
         {
@@ -909,8 +1214,19 @@ WAVE = {
             "type": "enemy_drone",
             "location": "top_center",
             "behaviors": [
-                {"action": "move_straight", "params": {"direction": "down"}},
-                {"action": "shoot", "params": {}},
+                {
+                    "action": "move_straight",
+                    "params": {"speed": 80},
+                },
+                {
+                    "action": "shoot",
+                    "params": {
+                        "shoot_rate": 0.2,
+                        "ammo_count": 12,
+                        "reload_time": 2.0,
+                        "projectile_type": "enemy_shot",
+                    },
+                },
             ],
         },
         {
@@ -918,7 +1234,10 @@ WAVE = {
             "type": "asteroid_sm",
             "location": "top_far_left",
             "behaviors": [
-                {"action": "move_straight", "params": {"direction": "down"}},
+                {
+                    "action": "move_straight",
+                    "params": {"speed": 80},
+                },
                 {"action": "rotate_constantly", "params": {}},
             ],
         },
@@ -927,8 +1246,19 @@ WAVE = {
             "type": "enemy_drone",
             "location": "top_far_left",
             "behaviors": [
-                {"action": "move_straight", "params": {"direction": "down"}},
-                {"action": "shoot", "params": {}},
+                {
+                    "action": "move_straight",
+                    "params": {"speed": 80},
+                },
+                {
+                    "action": "shoot",
+                    "params": {
+                        "shoot_rate": 0.2,
+                        "ammo_count": 12,
+                        "reload_time": 2.0,
+                        "projectile_type": "enemy_shot",
+                    },
+                },
             ],
         },
         {
@@ -936,8 +1266,19 @@ WAVE = {
             "type": "enemy_drone",
             "location": "top_left",
             "behaviors": [
-                {"action": "move_straight", "params": {"direction": "down"}},
-                {"action": "shoot", "params": {}},
+                {
+                    "action": "move_straight",
+                    "params": {"speed": 80},
+                },
+                {
+                    "action": "shoot",
+                    "params": {
+                        "shoot_rate": 0.2,
+                        "ammo_count": 12,
+                        "reload_time": 2.0,
+                        "projectile_type": "enemy_shot",
+                    },
+                },
             ],
         },
         {
@@ -945,8 +1286,19 @@ WAVE = {
             "type": "enemy_drone",
             "location": "top_left_edge",
             "behaviors": [
-                {"action": "move_straight", "params": {"direction": "down"}},
-                {"action": "shoot", "params": {}},
+                {
+                    "action": "move_straight",
+                    "params": {"speed": 80},
+                },
+                {
+                    "action": "shoot",
+                    "params": {
+                        "shoot_rate": 0.2,
+                        "ammo_count": 12,
+                        "reload_time": 2.0,
+                        "projectile_type": "enemy_shot",
+                    },
+                },
             ],
         },
         {
@@ -954,7 +1306,10 @@ WAVE = {
             "type": "asteroid_sm",
             "location": "top_center_left",
             "behaviors": [
-                {"action": "move_straight", "params": {"direction": "down"}},
+                {
+                    "action": "move_straight",
+                    "params": {"speed": 80},
+                },
                 {"action": "rotate_constantly", "params": {}},
             ],
         },
@@ -963,8 +1318,19 @@ WAVE = {
             "type": "enemy_drone",
             "location": "top_far_right",
             "behaviors": [
-                {"action": "move_straight", "params": {"direction": "down"}},
-                {"action": "shoot", "params": {}},
+                {
+                    "action": "move_straight",
+                    "params": {"speed": 80},
+                },
+                {
+                    "action": "shoot",
+                    "params": {
+                        "shoot_rate": 0.2,
+                        "ammo_count": 12,
+                        "reload_time": 2.0,
+                        "projectile_type": "enemy_shot",
+                    },
+                },
             ],
         },
         {
@@ -972,7 +1338,10 @@ WAVE = {
             "type": "asteroid_sm",
             "location": "top_far_left",
             "behaviors": [
-                {"action": "move_straight", "params": {"direction": "down"}},
+                {
+                    "action": "move_straight",
+                    "params": {"speed": 80},
+                },
                 {"action": "rotate_constantly", "params": {}},
             ],
         },
@@ -981,8 +1350,19 @@ WAVE = {
             "type": "enemy_drone",
             "location": "top_right_edge",
             "behaviors": [
-                {"action": "move_straight", "params": {"direction": "down"}},
-                {"action": "shoot", "params": {}},
+                {
+                    "action": "move_straight",
+                    "params": {"speed": 80},
+                },
+                {
+                    "action": "shoot",
+                    "params": {
+                        "shoot_rate": 0.2,
+                        "ammo_count": 12,
+                        "reload_time": 2.0,
+                        "projectile_type": "enemy_shot",
+                    },
+                },
             ],
         },
         {
@@ -990,8 +1370,19 @@ WAVE = {
             "type": "enemy_drone",
             "location": "top_right",
             "behaviors": [
-                {"action": "move_straight", "params": {"direction": "down"}},
-                {"action": "shoot", "params": {}},
+                {
+                    "action": "move_straight",
+                    "params": {"speed": 80},
+                },
+                {
+                    "action": "shoot",
+                    "params": {
+                        "shoot_rate": 0.2,
+                        "ammo_count": 12,
+                        "reload_time": 2.0,
+                        "projectile_type": "enemy_shot",
+                    },
+                },
             ],
         },
         {
@@ -999,7 +1390,10 @@ WAVE = {
             "type": "bomb_ammo_pickup",
             "location": "top_right",
             "behaviors": [
-                {"action": "move_straight", "params": {"direction": "down"}},
+                {
+                    "action": "move_straight",
+                    "params": {"speed": 80},
+                },
                 {"action": "rotate_constantly", "params": {}},
             ],
         },
@@ -1008,7 +1402,10 @@ WAVE = {
             "type": "health_pickup",
             "location": "top_center",
             "behaviors": [
-                {"action": "move_straight", "params": {"direction": "down"}},
+                {
+                    "action": "move_straight",
+                    "params": {"speed": 80},
+                },
                 {"action": "rotate_constantly", "params": {}},
             ],
         },
@@ -1017,7 +1414,10 @@ WAVE = {
             "type": "power_level_pickup",
             "location": "top_left",
             "behaviors": [
-                {"action": "move_straight", "params": {"direction": "down"}},
+                {
+                    "action": "move_straight",
+                    "params": {"speed": 80},
+                },
                 {"action": "rotate_constantly", "params": {}},
             ],
         },
@@ -1027,8 +1427,19 @@ WAVE = {
             "type": "enemy_ship",
             "location": "top_far_left",
             "behaviors": [
-                {"action": "move_straight", "params": {"direction": "down"}},
-                {"action": "shoot", "params": {}},
+                {
+                    "action": "move_straight",
+                    "params": {"speed": 80},
+                },
+                {
+                    "action": "shoot",
+                    "params": {
+                        "shoot_rate": 0.1,
+                        "ammo_count": 18,
+                        "reload_time": 1.5,
+                        "projectile_type": "enemy_shot",
+                    },
+                },
             ],
         },
         {
@@ -1036,8 +1447,19 @@ WAVE = {
             "type": "enemy_ship",
             "location": "top_left",
             "behaviors": [
-                {"action": "move_straight", "params": {"direction": "down"}},
-                {"action": "shoot", "params": {}},
+                {
+                    "action": "move_straight",
+                    "params": {"speed": 80},
+                },
+                {
+                    "action": "shoot",
+                    "params": {
+                        "shoot_rate": 0.1,
+                        "ammo_count": 18,
+                        "reload_time": 1.5,
+                        "projectile_type": "enemy_shot",
+                    },
+                },
             ],
         },
         {
@@ -1045,8 +1467,19 @@ WAVE = {
             "type": "enemy_ship",
             "location": "top_center_left",
             "behaviors": [
-                {"action": "move_straight", "params": {"direction": "down"}},
-                {"action": "shoot", "params": {}},
+                {
+                    "action": "move_straight",
+                    "params": {"speed": 80},
+                },
+                {
+                    "action": "shoot",
+                    "params": {
+                        "shoot_rate": 0.1,
+                        "ammo_count": 18,
+                        "reload_time": 1.5,
+                        "projectile_type": "enemy_shot",
+                    },
+                },
             ],
         },
         {
@@ -1054,8 +1487,19 @@ WAVE = {
             "type": "enemy_ship",
             "location": "top_center",
             "behaviors": [
-                {"action": "move_straight", "params": {"direction": "down"}},
-                {"action": "shoot", "params": {}},
+                {
+                    "action": "move_straight",
+                    "params": {"speed": 80},
+                },
+                {
+                    "action": "shoot",
+                    "params": {
+                        "shoot_rate": 0.1,
+                        "ammo_count": 18,
+                        "reload_time": 1.5,
+                        "projectile_type": "enemy_shot",
+                    },
+                },
             ],
         },
         {
@@ -1063,8 +1507,19 @@ WAVE = {
             "type": "enemy_ship",
             "location": "top_center_right",
             "behaviors": [
-                {"action": "move_straight", "params": {"direction": "down"}},
-                {"action": "shoot", "params": {}},
+                {
+                    "action": "move_straight",
+                    "params": {"speed": 80},
+                },
+                {
+                    "action": "shoot",
+                    "params": {
+                        "shoot_rate": 0.1,
+                        "ammo_count": 18,
+                        "reload_time": 1.5,
+                        "projectile_type": "enemy_shot",
+                    },
+                },
             ],
         },
         {
@@ -1072,8 +1527,19 @@ WAVE = {
             "type": "enemy_ship",
             "location": "top_right",
             "behaviors": [
-                {"action": "move_straight", "params": {"direction": "down"}},
-                {"action": "shoot", "params": {}},
+                {
+                    "action": "move_straight",
+                    "params": {"speed": 80},
+                },
+                {
+                    "action": "shoot",
+                    "params": {
+                        "shoot_rate": 0.1,
+                        "ammo_count": 18,
+                        "reload_time": 1.5,
+                        "projectile_type": "enemy_shot",
+                    },
+                },
             ],
         },
         {
@@ -1081,8 +1547,19 @@ WAVE = {
             "type": "enemy_ship",
             "location": "top_far_right",
             "behaviors": [
-                {"action": "move_straight", "params": {"direction": "down"}},
-                {"action": "shoot", "params": {}},
+                {
+                    "action": "move_straight",
+                    "params": {"speed": 80},
+                },
+                {
+                    "action": "shoot",
+                    "params": {
+                        "shoot_rate": 0.1,
+                        "ammo_count": 18,
+                        "reload_time": 1.5,
+                        "projectile_type": "enemy_shot",
+                    },
+                },
             ],
         },
         {
@@ -1090,8 +1567,19 @@ WAVE = {
             "type": "enemy_ship",
             "location": "top_right_edge",
             "behaviors": [
-                {"action": "move_straight", "params": {"direction": "down"}},
-                {"action": "shoot", "params": {}},
+                {
+                    "action": "move_straight",
+                    "params": {"speed": 80},
+                },
+                {
+                    "action": "shoot",
+                    "params": {
+                        "shoot_rate": 0.1,
+                        "ammo_count": 18,
+                        "reload_time": 1.5,
+                        "projectile_type": "enemy_shot",
+                    },
+                },
             ],
         },
         {
@@ -1099,8 +1587,19 @@ WAVE = {
             "type": "enemy_ship",
             "location": "top_far_right",
             "behaviors": [
-                {"action": "move_straight", "params": {"direction": "down"}},
-                {"action": "shoot", "params": {}},
+                {
+                    "action": "move_straight",
+                    "params": {"speed": 80},
+                },
+                {
+                    "action": "shoot",
+                    "params": {
+                        "shoot_rate": 0.1,
+                        "ammo_count": 18,
+                        "reload_time": 1.5,
+                        "projectile_type": "enemy_shot",
+                    },
+                },
             ],
         },
         {
@@ -1108,8 +1607,19 @@ WAVE = {
             "type": "enemy_ship",
             "location": "top_right",
             "behaviors": [
-                {"action": "move_straight", "params": {"direction": "down"}},
-                {"action": "shoot", "params": {}},
+                {
+                    "action": "move_straight",
+                    "params": {"speed": 80},
+                },
+                {
+                    "action": "shoot",
+                    "params": {
+                        "shoot_rate": 0.1,
+                        "ammo_count": 18,
+                        "reload_time": 1.5,
+                        "projectile_type": "enemy_shot",
+                    },
+                },
             ],
         },
         {
@@ -1117,8 +1627,19 @@ WAVE = {
             "type": "enemy_ship",
             "location": "top_center_right",
             "behaviors": [
-                {"action": "move_straight", "params": {"direction": "down"}},
-                {"action": "shoot", "params": {}},
+                {
+                    "action": "move_straight",
+                    "params": {"speed": 80},
+                },
+                {
+                    "action": "shoot",
+                    "params": {
+                        "shoot_rate": 0.1,
+                        "ammo_count": 18,
+                        "reload_time": 1.5,
+                        "projectile_type": "enemy_shot",
+                    },
+                },
             ],
         },
         {
@@ -1126,8 +1647,19 @@ WAVE = {
             "type": "enemy_ship",
             "location": "top_center",
             "behaviors": [
-                {"action": "move_straight", "params": {"direction": "down"}},
-                {"action": "shoot", "params": {}},
+                {
+                    "action": "move_straight",
+                    "params": {"speed": 80},
+                },
+                {
+                    "action": "shoot",
+                    "params": {
+                        "shoot_rate": 0.1,
+                        "ammo_count": 18,
+                        "reload_time": 1.5,
+                        "projectile_type": "enemy_shot",
+                    },
+                },
             ],
         },
         {
@@ -1135,8 +1667,19 @@ WAVE = {
             "type": "enemy_ship",
             "location": "top_center_left",
             "behaviors": [
-                {"action": "move_straight", "params": {"direction": "down"}},
-                {"action": "shoot", "params": {}},
+                {
+                    "action": "move_straight",
+                    "params": {"speed": 80},
+                },
+                {
+                    "action": "shoot",
+                    "params": {
+                        "shoot_rate": 0.1,
+                        "ammo_count": 18,
+                        "reload_time": 1.5,
+                        "projectile_type": "enemy_shot",
+                    },
+                },
             ],
         },
         {
@@ -1144,8 +1687,19 @@ WAVE = {
             "type": "enemy_ship",
             "location": "top_left",
             "behaviors": [
-                {"action": "move_straight", "params": {"direction": "down"}},
-                {"action": "shoot", "params": {}},
+                {
+                    "action": "move_straight",
+                    "params": {"speed": 80},
+                },
+                {
+                    "action": "shoot",
+                    "params": {
+                        "shoot_rate": 0.1,
+                        "ammo_count": 18,
+                        "reload_time": 1.5,
+                        "projectile_type": "enemy_shot",
+                    },
+                },
             ],
         },
         {
@@ -1153,8 +1707,19 @@ WAVE = {
             "type": "enemy_ship",
             "location": "top_far_left",
             "behaviors": [
-                {"action": "move_straight", "params": {"direction": "down"}},
-                {"action": "shoot", "params": {}},
+                {
+                    "action": "move_straight",
+                    "params": {"speed": 80},
+                },
+                {
+                    "action": "shoot",
+                    "params": {
+                        "shoot_rate": 0.1,
+                        "ammo_count": 18,
+                        "reload_time": 1.5,
+                        "projectile_type": "enemy_shot",
+                    },
+                },
             ],
         },
         {
@@ -1162,8 +1727,19 @@ WAVE = {
             "type": "enemy_ship",
             "location": "top_left_edge",
             "behaviors": [
-                {"action": "move_straight", "params": {"direction": "down"}},
-                {"action": "shoot", "params": {}},
+                {
+                    "action": "move_straight",
+                    "params": {"speed": 80},
+                },
+                {
+                    "action": "shoot",
+                    "params": {
+                        "shoot_rate": 0.1,
+                        "ammo_count": 18,
+                        "reload_time": 1.5,
+                        "projectile_type": "enemy_shot",
+                    },
+                },
             ],
         },
         {
@@ -1171,7 +1747,10 @@ WAVE = {
             "type": "bomb_ammo_pickup",
             "location": "top_center_right",
             "behaviors": [
-                {"action": "move_straight", "params": {"direction": "down"}},
+                {
+                    "action": "move_straight",
+                    "params": {"speed": 80},
+                },
                 {"action": "rotate_constantly", "params": {}},
             ],
         },
@@ -1180,7 +1759,10 @@ WAVE = {
             "type": "health_pickup",
             "location": "top_center",
             "behaviors": [
-                {"action": "move_straight", "params": {"direction": "down"}},
+                {
+                    "action": "move_straight",
+                    "params": {"speed": 80},
+                },
                 {"action": "rotate_constantly", "params": {}},
             ],
         },
@@ -1190,8 +1772,19 @@ WAVE = {
             "type": "enemy_ship",
             "location": "top_center",
             "behaviors": [
-                {"action": "move_straight", "params": {"direction": "down"}},
-                {"action": "shoot", "params": {}},
+                {
+                    "action": "move_straight",
+                    "params": {"speed": 80},
+                },
+                {
+                    "action": "shoot",
+                    "params": {
+                        "shoot_rate": 0.1,
+                        "ammo_count": 18,
+                        "reload_time": 1.5,
+                        "projectile_type": "enemy_shot",
+                    },
+                },
             ],
         },
         {
@@ -1199,8 +1792,19 @@ WAVE = {
             "type": "enemy_drone",
             "location": "top_center_right",
             "behaviors": [
-                {"action": "move_straight", "params": {"direction": "down"}},
-                {"action": "shoot", "params": {}},
+                {
+                    "action": "move_straight",
+                    "params": {"speed": 80},
+                },
+                {
+                    "action": "shoot",
+                    "params": {
+                        "shoot_rate": 0.2,
+                        "ammo_count": 12,
+                        "reload_time": 2.0,
+                        "projectile_type": "enemy_shot",
+                    },
+                },
             ],
         },
         {
@@ -1208,8 +1812,19 @@ WAVE = {
             "type": "enemy_drone",
             "location": "top_center_left",
             "behaviors": [
-                {"action": "move_straight", "params": {"direction": "down"}},
-                {"action": "shoot", "params": {}},
+                {
+                    "action": "move_straight",
+                    "params": {"speed": 80},
+                },
+                {
+                    "action": "shoot",
+                    "params": {
+                        "shoot_rate": 0.2,
+                        "ammo_count": 12,
+                        "reload_time": 2.0,
+                        "projectile_type": "enemy_shot",
+                    },
+                },
             ],
         },
         {
@@ -1217,8 +1832,19 @@ WAVE = {
             "type": "enemy_ship",
             "location": "top_far_right",
             "behaviors": [
-                {"action": "move_straight", "params": {"direction": "down"}},
-                {"action": "shoot", "params": {}},
+                {
+                    "action": "move_straight",
+                    "params": {"speed": 80},
+                },
+                {
+                    "action": "shoot",
+                    "params": {
+                        "shoot_rate": 0.1,
+                        "ammo_count": 18,
+                        "reload_time": 1.5,
+                        "projectile_type": "enemy_shot",
+                    },
+                },
             ],
         },
         {
@@ -1226,8 +1852,19 @@ WAVE = {
             "type": "enemy_ship",
             "location": "top_far_left",
             "behaviors": [
-                {"action": "move_straight", "params": {"direction": "down"}},
-                {"action": "shoot", "params": {}},
+                {
+                    "action": "move_straight",
+                    "params": {"speed": 80},
+                },
+                {
+                    "action": "shoot",
+                    "params": {
+                        "shoot_rate": 0.1,
+                        "ammo_count": 18,
+                        "reload_time": 1.5,
+                        "projectile_type": "enemy_shot",
+                    },
+                },
             ],
         },
         {
@@ -1235,8 +1872,19 @@ WAVE = {
             "type": "enemy_ship",
             "location": "top_center",
             "behaviors": [
-                {"action": "move_straight", "params": {"direction": "down"}},
-                {"action": "shoot", "params": {}},
+                {
+                    "action": "move_straight",
+                    "params": {"speed": 80},
+                },
+                {
+                    "action": "shoot",
+                    "params": {
+                        "shoot_rate": 0.1,
+                        "ammo_count": 18,
+                        "reload_time": 1.5,
+                        "projectile_type": "enemy_shot",
+                    },
+                },
             ],
         },
         {
@@ -1244,8 +1892,19 @@ WAVE = {
             "type": "enemy_drone",
             "location": "top_right",
             "behaviors": [
-                {"action": "move_straight", "params": {"direction": "down"}},
-                {"action": "shoot", "params": {}},
+                {
+                    "action": "move_straight",
+                    "params": {"speed": 80},
+                },
+                {
+                    "action": "shoot",
+                    "params": {
+                        "shoot_rate": 0.2,
+                        "ammo_count": 12,
+                        "reload_time": 2.0,
+                        "projectile_type": "enemy_shot",
+                    },
+                },
             ],
         },
         {
@@ -1253,8 +1912,19 @@ WAVE = {
             "type": "enemy_drone",
             "location": "top_left",
             "behaviors": [
-                {"action": "move_straight", "params": {"direction": "down"}},
-                {"action": "shoot", "params": {}},
+                {
+                    "action": "move_straight",
+                    "params": {"speed": 80},
+                },
+                {
+                    "action": "shoot",
+                    "params": {
+                        "shoot_rate": 0.2,
+                        "ammo_count": 12,
+                        "reload_time": 2.0,
+                        "projectile_type": "enemy_shot",
+                    },
+                },
             ],
         },
         {
@@ -1262,8 +1932,19 @@ WAVE = {
             "type": "enemy_ship",
             "location": "top_center",
             "behaviors": [
-                {"action": "move_straight", "params": {"direction": "down"}},
-                {"action": "shoot", "params": {}},
+                {
+                    "action": "move_straight",
+                    "params": {"speed": 80},
+                },
+                {
+                    "action": "shoot",
+                    "params": {
+                        "shoot_rate": 0.1,
+                        "ammo_count": 18,
+                        "reload_time": 1.5,
+                        "projectile_type": "enemy_shot",
+                    },
+                },
             ],
         },
         {
@@ -1271,8 +1952,19 @@ WAVE = {
             "type": "enemy_ship",
             "location": "top_center",
             "behaviors": [
-                {"action": "move_straight", "params": {"direction": "down"}},
-                {"action": "shoot", "params": {}},
+                {
+                    "action": "move_straight",
+                    "params": {"speed": 80},
+                },
+                {
+                    "action": "shoot",
+                    "params": {
+                        "shoot_rate": 0.1,
+                        "ammo_count": 18,
+                        "reload_time": 1.5,
+                        "projectile_type": "enemy_shot",
+                    },
+                },
             ],
         },
         {
@@ -1280,8 +1972,19 @@ WAVE = {
             "type": "enemy_drone",
             "location": "top_center_right",
             "behaviors": [
-                {"action": "move_straight", "params": {"direction": "down"}},
-                {"action": "shoot", "params": {}},
+                {
+                    "action": "move_straight",
+                    "params": {"speed": 80},
+                },
+                {
+                    "action": "shoot",
+                    "params": {
+                        "shoot_rate": 0.2,
+                        "ammo_count": 12,
+                        "reload_time": 2.0,
+                        "projectile_type": "enemy_shot",
+                    },
+                },
             ],
         },
         {
@@ -1289,8 +1992,19 @@ WAVE = {
             "type": "enemy_drone",
             "location": "top_center_left",
             "behaviors": [
-                {"action": "move_straight", "params": {"direction": "down"}},
-                {"action": "shoot", "params": {}},
+                {
+                    "action": "move_straight",
+                    "params": {"speed": 80},
+                },
+                {
+                    "action": "shoot",
+                    "params": {
+                        "shoot_rate": 0.2,
+                        "ammo_count": 12,
+                        "reload_time": 2.0,
+                        "projectile_type": "enemy_shot",
+                    },
+                },
             ],
         },
         {
@@ -1298,8 +2012,19 @@ WAVE = {
             "type": "enemy_ship",
             "location": "top_far_right",
             "behaviors": [
-                {"action": "move_straight", "params": {"direction": "down"}},
-                {"action": "shoot", "params": {}},
+                {
+                    "action": "move_straight",
+                    "params": {"speed": 80},
+                },
+                {
+                    "action": "shoot",
+                    "params": {
+                        "shoot_rate": 0.1,
+                        "ammo_count": 18,
+                        "reload_time": 1.5,
+                        "projectile_type": "enemy_shot",
+                    },
+                },
             ],
         },
         {
@@ -1307,8 +2032,19 @@ WAVE = {
             "type": "enemy_ship",
             "location": "top_far_left",
             "behaviors": [
-                {"action": "move_straight", "params": {"direction": "down"}},
-                {"action": "shoot", "params": {}},
+                {
+                    "action": "move_straight",
+                    "params": {"speed": 80},
+                },
+                {
+                    "action": "shoot",
+                    "params": {
+                        "shoot_rate": 0.1,
+                        "ammo_count": 18,
+                        "reload_time": 1.5,
+                        "projectile_type": "enemy_shot",
+                    },
+                },
             ],
         },
         {
@@ -1316,8 +2052,19 @@ WAVE = {
             "type": "enemy_ship",
             "location": "top_center_right",
             "behaviors": [
-                {"action": "move_straight", "params": {"direction": "down"}},
-                {"action": "shoot", "params": {}},
+                {
+                    "action": "move_straight",
+                    "params": {"speed": 80},
+                },
+                {
+                    "action": "shoot",
+                    "params": {
+                        "shoot_rate": 0.1,
+                        "ammo_count": 18,
+                        "reload_time": 1.5,
+                        "projectile_type": "enemy_shot",
+                    },
+                },
             ],
         },
         {
@@ -1325,8 +2072,19 @@ WAVE = {
             "type": "enemy_ship",
             "location": "top_center_left",
             "behaviors": [
-                {"action": "move_straight", "params": {"direction": "down"}},
-                {"action": "shoot", "params": {}},
+                {
+                    "action": "move_straight",
+                    "params": {"speed": 80},
+                },
+                {
+                    "action": "shoot",
+                    "params": {
+                        "shoot_rate": 0.1,
+                        "ammo_count": 18,
+                        "reload_time": 1.5,
+                        "projectile_type": "enemy_shot",
+                    },
+                },
             ],
         },
         {
@@ -1334,8 +2092,19 @@ WAVE = {
             "type": "enemy_drone",
             "location": "top_far_right",
             "behaviors": [
-                {"action": "move_straight", "params": {"direction": "down"}},
-                {"action": "shoot", "params": {}},
+                {
+                    "action": "move_straight",
+                    "params": {"speed": 80},
+                },
+                {
+                    "action": "shoot",
+                    "params": {
+                        "shoot_rate": 0.2,
+                        "ammo_count": 12,
+                        "reload_time": 2.0,
+                        "projectile_type": "enemy_shot",
+                    },
+                },
             ],
         },
         {
@@ -1343,8 +2112,19 @@ WAVE = {
             "type": "enemy_drone",
             "location": "top_far_left",
             "behaviors": [
-                {"action": "move_straight", "params": {"direction": "down"}},
-                {"action": "shoot", "params": {}},
+                {
+                    "action": "move_straight",
+                    "params": {"speed": 80},
+                },
+                {
+                    "action": "shoot",
+                    "params": {
+                        "shoot_rate": 0.2,
+                        "ammo_count": 12,
+                        "reload_time": 2.0,
+                        "projectile_type": "enemy_shot",
+                    },
+                },
             ],
         },
         {
@@ -1352,8 +2132,19 @@ WAVE = {
             "type": "enemy_drone",
             "location": "top_center",
             "behaviors": [
-                {"action": "move_straight", "params": {"direction": "down"}},
-                {"action": "shoot", "params": {}},
+                {
+                    "action": "move_straight",
+                    "params": {"speed": 80},
+                },
+                {
+                    "action": "shoot",
+                    "params": {
+                        "shoot_rate": 0.2,
+                        "ammo_count": 12,
+                        "reload_time": 2.0,
+                        "projectile_type": "enemy_shot",
+                    },
+                },
             ],
         },
         {
@@ -1361,8 +2152,19 @@ WAVE = {
             "type": "enemy_drone",
             "location": "top_center",
             "behaviors": [
-                {"action": "move_straight", "params": {"direction": "down"}},
-                {"action": "shoot", "params": {}},
+                {
+                    "action": "move_straight",
+                    "params": {"speed": 80},
+                },
+                {
+                    "action": "shoot",
+                    "params": {
+                        "shoot_rate": 0.2,
+                        "ammo_count": 12,
+                        "reload_time": 2.0,
+                        "projectile_type": "enemy_shot",
+                    },
+                },
             ],
         },
         {
@@ -1370,8 +2172,19 @@ WAVE = {
             "type": "enemy_drone",
             "location": "top_center_right",
             "behaviors": [
-                {"action": "move_straight", "params": {"direction": "down"}},
-                {"action": "shoot", "params": {}},
+                {
+                    "action": "move_straight",
+                    "params": {"speed": 80},
+                },
+                {
+                    "action": "shoot",
+                    "params": {
+                        "shoot_rate": 0.2,
+                        "ammo_count": 12,
+                        "reload_time": 2.0,
+                        "projectile_type": "enemy_shot",
+                    },
+                },
             ],
         },
         {
@@ -1379,8 +2192,19 @@ WAVE = {
             "type": "enemy_drone",
             "location": "top_center_left",
             "behaviors": [
-                {"action": "move_straight", "params": {"direction": "down"}},
-                {"action": "shoot", "params": {}},
+                {
+                    "action": "move_straight",
+                    "params": {"speed": 80},
+                },
+                {
+                    "action": "shoot",
+                    "params": {
+                        "shoot_rate": 0.2,
+                        "ammo_count": 12,
+                        "reload_time": 2.0,
+                        "projectile_type": "enemy_shot",
+                    },
+                },
             ],
         },
         {
@@ -1388,8 +2212,19 @@ WAVE = {
             "type": "enemy_ship",
             "location": "top_far_right",
             "behaviors": [
-                {"action": "move_straight", "params": {"direction": "down"}},
-                {"action": "shoot", "params": {}},
+                {
+                    "action": "move_straight",
+                    "params": {"speed": 80},
+                },
+                {
+                    "action": "shoot",
+                    "params": {
+                        "shoot_rate": 0.1,
+                        "ammo_count": 18,
+                        "reload_time": 1.5,
+                        "projectile_type": "enemy_shot",
+                    },
+                },
             ],
         },
         {
@@ -1397,8 +2232,19 @@ WAVE = {
             "type": "enemy_ship",
             "location": "top_center",
             "behaviors": [
-                {"action": "move_straight", "params": {"direction": "down"}},
-                {"action": "shoot", "params": {}},
+                {
+                    "action": "move_straight",
+                    "params": {"speed": 80},
+                },
+                {
+                    "action": "shoot",
+                    "params": {
+                        "shoot_rate": 0.1,
+                        "ammo_count": 18,
+                        "reload_time": 1.5,
+                        "projectile_type": "enemy_shot",
+                    },
+                },
             ],
         },
         {
@@ -1406,8 +2252,19 @@ WAVE = {
             "type": "enemy_ship",
             "location": "top_far_left",
             "behaviors": [
-                {"action": "move_straight", "params": {"direction": "down"}},
-                {"action": "shoot", "params": {}},
+                {
+                    "action": "move_straight",
+                    "params": {"speed": 80},
+                },
+                {
+                    "action": "shoot",
+                    "params": {
+                        "shoot_rate": 0.1,
+                        "ammo_count": 18,
+                        "reload_time": 1.5,
+                        "projectile_type": "enemy_shot",
+                    },
+                },
             ],
         },
         {
@@ -1415,8 +2272,19 @@ WAVE = {
             "type": "enemy_ship",
             "location": "top_center_right",
             "behaviors": [
-                {"action": "move_straight", "params": {"direction": "down"}},
-                {"action": "shoot", "params": {}},
+                {
+                    "action": "move_straight",
+                    "params": {"speed": 80},
+                },
+                {
+                    "action": "shoot",
+                    "params": {
+                        "shoot_rate": 0.1,
+                        "ammo_count": 18,
+                        "reload_time": 1.5,
+                        "projectile_type": "enemy_shot",
+                    },
+                },
             ],
         },
         {
@@ -1424,8 +2292,19 @@ WAVE = {
             "type": "enemy_ship",
             "location": "top_center_left",
             "behaviors": [
-                {"action": "move_straight", "params": {"direction": "down"}},
-                {"action": "shoot", "params": {}},
+                {
+                    "action": "move_straight",
+                    "params": {"speed": 80},
+                },
+                {
+                    "action": "shoot",
+                    "params": {
+                        "shoot_rate": 0.1,
+                        "ammo_count": 18,
+                        "reload_time": 1.5,
+                        "projectile_type": "enemy_shot",
+                    },
+                },
             ],
         },
         {
@@ -1433,8 +2312,19 @@ WAVE = {
             "type": "enemy_drone",
             "location": "top_far_right",
             "behaviors": [
-                {"action": "move_straight", "params": {"direction": "down"}},
-                {"action": "shoot", "params": {}},
+                {
+                    "action": "move_straight",
+                    "params": {"speed": 80},
+                },
+                {
+                    "action": "shoot",
+                    "params": {
+                        "shoot_rate": 0.2,
+                        "ammo_count": 12,
+                        "reload_time": 2.0,
+                        "projectile_type": "enemy_shot",
+                    },
+                },
             ],
         },
         {
@@ -1442,8 +2332,19 @@ WAVE = {
             "type": "enemy_drone",
             "location": "top_center",
             "behaviors": [
-                {"action": "move_straight", "params": {"direction": "down"}},
-                {"action": "shoot", "params": {}},
+                {
+                    "action": "move_straight",
+                    "params": {"speed": 80},
+                },
+                {
+                    "action": "shoot",
+                    "params": {
+                        "shoot_rate": 0.2,
+                        "ammo_count": 12,
+                        "reload_time": 2.0,
+                        "projectile_type": "enemy_shot",
+                    },
+                },
             ],
         },
         {
@@ -1451,8 +2352,19 @@ WAVE = {
             "type": "enemy_drone",
             "location": "top_far_left",
             "behaviors": [
-                {"action": "move_straight", "params": {"direction": "down"}},
-                {"action": "shoot", "params": {}},
+                {
+                    "action": "move_straight",
+                    "params": {"speed": 80},
+                },
+                {
+                    "action": "shoot",
+                    "params": {
+                        "shoot_rate": 0.2,
+                        "ammo_count": 12,
+                        "reload_time": 2.0,
+                        "projectile_type": "enemy_shot",
+                    },
+                },
             ],
         },
         {
@@ -1460,8 +2372,19 @@ WAVE = {
             "type": "enemy_drone",
             "location": "top_center_right",
             "behaviors": [
-                {"action": "move_straight", "params": {"direction": "down"}},
-                {"action": "shoot", "params": {}},
+                {
+                    "action": "move_straight",
+                    "params": {"speed": 80},
+                },
+                {
+                    "action": "shoot",
+                    "params": {
+                        "shoot_rate": 0.2,
+                        "ammo_count": 12,
+                        "reload_time": 2.0,
+                        "projectile_type": "enemy_shot",
+                    },
+                },
             ],
         },
         {
@@ -1469,8 +2392,19 @@ WAVE = {
             "type": "enemy_drone",
             "location": "top_center_left",
             "behaviors": [
-                {"action": "move_straight", "params": {"direction": "down"}},
-                {"action": "shoot", "params": {}},
+                {
+                    "action": "move_straight",
+                    "params": {"speed": 80},
+                },
+                {
+                    "action": "shoot",
+                    "params": {
+                        "shoot_rate": 0.2,
+                        "ammo_count": 12,
+                        "reload_time": 2.0,
+                        "projectile_type": "enemy_shot",
+                    },
+                },
             ],
         },
         {
@@ -1478,8 +2412,19 @@ WAVE = {
             "type": "enemy_ship",
             "location": "top_center",
             "behaviors": [
-                {"action": "move_straight", "params": {"direction": "down"}},
-                {"action": "shoot", "params": {}},
+                {
+                    "action": "move_straight",
+                    "params": {"speed": 80},
+                },
+                {
+                    "action": "shoot",
+                    "params": {
+                        "shoot_rate": 0.1,
+                        "ammo_count": 18,
+                        "reload_time": 1.5,
+                        "projectile_type": "enemy_shot",
+                    },
+                },
             ],
         },
         {
@@ -1487,8 +2432,19 @@ WAVE = {
             "type": "enemy_ship",
             "location": "top_right_edge",
             "behaviors": [
-                {"action": "move_straight", "params": {"direction": "down"}},
-                {"action": "shoot", "params": {}},
+                {
+                    "action": "move_straight",
+                    "params": {"speed": 80},
+                },
+                {
+                    "action": "shoot",
+                    "params": {
+                        "shoot_rate": 0.1,
+                        "ammo_count": 18,
+                        "reload_time": 1.5,
+                        "projectile_type": "enemy_shot",
+                    },
+                },
             ],
         },
         {
@@ -1496,8 +2452,19 @@ WAVE = {
             "type": "enemy_ship",
             "location": "top_left_edge",
             "behaviors": [
-                {"action": "move_straight", "params": {"direction": "down"}},
-                {"action": "shoot", "params": {}},
+                {
+                    "action": "move_straight",
+                    "params": {"speed": 80},
+                },
+                {
+                    "action": "shoot",
+                    "params": {
+                        "shoot_rate": 0.1,
+                        "ammo_count": 18,
+                        "reload_time": 1.5,
+                        "projectile_type": "enemy_shot",
+                    },
+                },
             ],
         },
         {
@@ -1505,8 +2472,19 @@ WAVE = {
             "type": "enemy_ship",
             "location": "top_far_right",
             "behaviors": [
-                {"action": "move_straight", "params": {"direction": "down"}},
-                {"action": "shoot", "params": {}},
+                {
+                    "action": "move_straight",
+                    "params": {"speed": 80},
+                },
+                {
+                    "action": "shoot",
+                    "params": {
+                        "shoot_rate": 0.1,
+                        "ammo_count": 18,
+                        "reload_time": 1.5,
+                        "projectile_type": "enemy_shot",
+                    },
+                },
             ],
         },
         {
@@ -1514,8 +2492,19 @@ WAVE = {
             "type": "enemy_ship",
             "location": "top_far_left",
             "behaviors": [
-                {"action": "move_straight", "params": {"direction": "down"}},
-                {"action": "shoot", "params": {}},
+                {
+                    "action": "move_straight",
+                    "params": {"speed": 80},
+                },
+                {
+                    "action": "shoot",
+                    "params": {
+                        "shoot_rate": 0.1,
+                        "ammo_count": 18,
+                        "reload_time": 1.5,
+                        "projectile_type": "enemy_shot",
+                    },
+                },
             ],
         },
         {
@@ -1523,8 +2512,19 @@ WAVE = {
             "type": "enemy_ship",
             "location": "top_right",
             "behaviors": [
-                {"action": "move_straight", "params": {"direction": "down"}},
-                {"action": "shoot", "params": {}},
+                {
+                    "action": "move_straight",
+                    "params": {"speed": 80},
+                },
+                {
+                    "action": "shoot",
+                    "params": {
+                        "shoot_rate": 0.1,
+                        "ammo_count": 18,
+                        "reload_time": 1.5,
+                        "projectile_type": "enemy_shot",
+                    },
+                },
             ],
         },
         {
@@ -1532,8 +2532,19 @@ WAVE = {
             "type": "enemy_ship",
             "location": "top_left",
             "behaviors": [
-                {"action": "move_straight", "params": {"direction": "down"}},
-                {"action": "shoot", "params": {}},
+                {
+                    "action": "move_straight",
+                    "params": {"speed": 80},
+                },
+                {
+                    "action": "shoot",
+                    "params": {
+                        "shoot_rate": 0.1,
+                        "ammo_count": 18,
+                        "reload_time": 1.5,
+                        "projectile_type": "enemy_shot",
+                    },
+                },
             ],
         },
         {
@@ -1541,8 +2552,19 @@ WAVE = {
             "type": "enemy_ship",
             "location": "top_center_right",
             "behaviors": [
-                {"action": "move_straight", "params": {"direction": "down"}},
-                {"action": "shoot", "params": {}},
+                {
+                    "action": "move_straight",
+                    "params": {"speed": 80},
+                },
+                {
+                    "action": "shoot",
+                    "params": {
+                        "shoot_rate": 0.1,
+                        "ammo_count": 18,
+                        "reload_time": 1.5,
+                        "projectile_type": "enemy_shot",
+                    },
+                },
             ],
         },
         {
@@ -1550,8 +2572,19 @@ WAVE = {
             "type": "enemy_ship",
             "location": "top_center_left",
             "behaviors": [
-                {"action": "move_straight", "params": {"direction": "down"}},
-                {"action": "shoot", "params": {}},
+                {
+                    "action": "move_straight",
+                    "params": {"speed": 80},
+                },
+                {
+                    "action": "shoot",
+                    "params": {
+                        "shoot_rate": 0.1,
+                        "ammo_count": 18,
+                        "reload_time": 1.5,
+                        "projectile_type": "enemy_shot",
+                    },
+                },
             ],
         },
         {
@@ -1559,8 +2592,19 @@ WAVE = {
             "type": "enemy_ship",
             "location": "top_center",
             "behaviors": [
-                {"action": "move_straight", "params": {"direction": "down"}},
-                {"action": "shoot", "params": {}},
+                {
+                    "action": "move_straight",
+                    "params": {"speed": 80},
+                },
+                {
+                    "action": "shoot",
+                    "params": {
+                        "shoot_rate": 0.1,
+                        "ammo_count": 18,
+                        "reload_time": 1.5,
+                        "projectile_type": "enemy_shot",
+                    },
+                },
             ],
         },
         {
@@ -1568,8 +2612,19 @@ WAVE = {
             "type": "enemy_drone",
             "location": "top_center",
             "behaviors": [
-                {"action": "move_straight", "params": {"direction": "down"}},
-                {"action": "shoot", "params": {}},
+                {
+                    "action": "move_straight",
+                    "params": {"speed": 80},
+                },
+                {
+                    "action": "shoot",
+                    "params": {
+                        "shoot_rate": 0.2,
+                        "ammo_count": 12,
+                        "reload_time": 2.0,
+                        "projectile_type": "enemy_shot",
+                    },
+                },
             ],
         },
         {
@@ -1577,8 +2632,19 @@ WAVE = {
             "type": "enemy_drone",
             "location": "top_center_right",
             "behaviors": [
-                {"action": "move_straight", "params": {"direction": "down"}},
-                {"action": "shoot", "params": {}},
+                {
+                    "action": "move_straight",
+                    "params": {"speed": 80},
+                },
+                {
+                    "action": "shoot",
+                    "params": {
+                        "shoot_rate": 0.2,
+                        "ammo_count": 12,
+                        "reload_time": 2.0,
+                        "projectile_type": "enemy_shot",
+                    },
+                },
             ],
         },
         {
@@ -1586,8 +2652,19 @@ WAVE = {
             "type": "enemy_drone",
             "location": "top_center_left",
             "behaviors": [
-                {"action": "move_straight", "params": {"direction": "down"}},
-                {"action": "shoot", "params": {}},
+                {
+                    "action": "move_straight",
+                    "params": {"speed": 80},
+                },
+                {
+                    "action": "shoot",
+                    "params": {
+                        "shoot_rate": 0.2,
+                        "ammo_count": 12,
+                        "reload_time": 2.0,
+                        "projectile_type": "enemy_shot",
+                    },
+                },
             ],
         },
         {
@@ -1595,8 +2672,19 @@ WAVE = {
             "type": "enemy_drone",
             "location": "top_right",
             "behaviors": [
-                {"action": "move_straight", "params": {"direction": "down"}},
-                {"action": "shoot", "params": {}},
+                {
+                    "action": "move_straight",
+                    "params": {"speed": 80},
+                },
+                {
+                    "action": "shoot",
+                    "params": {
+                        "shoot_rate": 0.2,
+                        "ammo_count": 12,
+                        "reload_time": 2.0,
+                        "projectile_type": "enemy_shot",
+                    },
+                },
             ],
         },
         {
@@ -1604,8 +2692,19 @@ WAVE = {
             "type": "enemy_drone",
             "location": "top_left",
             "behaviors": [
-                {"action": "move_straight", "params": {"direction": "down"}},
-                {"action": "shoot", "params": {}},
+                {
+                    "action": "move_straight",
+                    "params": {"speed": 80},
+                },
+                {
+                    "action": "shoot",
+                    "params": {
+                        "shoot_rate": 0.2,
+                        "ammo_count": 12,
+                        "reload_time": 2.0,
+                        "projectile_type": "enemy_shot",
+                    },
+                },
             ],
         },
         {
@@ -1613,8 +2712,19 @@ WAVE = {
             "type": "enemy_drone",
             "location": "top_far_right",
             "behaviors": [
-                {"action": "move_straight", "params": {"direction": "down"}},
-                {"action": "shoot", "params": {}},
+                {
+                    "action": "move_straight",
+                    "params": {"speed": 80},
+                },
+                {
+                    "action": "shoot",
+                    "params": {
+                        "shoot_rate": 0.2,
+                        "ammo_count": 12,
+                        "reload_time": 2.0,
+                        "projectile_type": "enemy_shot",
+                    },
+                },
             ],
         },
         {
@@ -1622,8 +2732,19 @@ WAVE = {
             "type": "enemy_drone",
             "location": "top_far_left",
             "behaviors": [
-                {"action": "move_straight", "params": {"direction": "down"}},
-                {"action": "shoot", "params": {}},
+                {
+                    "action": "move_straight",
+                    "params": {"speed": 80},
+                },
+                {
+                    "action": "shoot",
+                    "params": {
+                        "shoot_rate": 0.2,
+                        "ammo_count": 12,
+                        "reload_time": 2.0,
+                        "projectile_type": "enemy_shot",
+                    },
+                },
             ],
         },
         {
@@ -1631,8 +2752,19 @@ WAVE = {
             "type": "enemy_drone",
             "location": "top_right_edge",
             "behaviors": [
-                {"action": "move_straight", "params": {"direction": "down"}},
-                {"action": "shoot", "params": {}},
+                {
+                    "action": "move_straight",
+                    "params": {"speed": 80},
+                },
+                {
+                    "action": "shoot",
+                    "params": {
+                        "shoot_rate": 0.2,
+                        "ammo_count": 12,
+                        "reload_time": 2.0,
+                        "projectile_type": "enemy_shot",
+                    },
+                },
             ],
         },
         {
@@ -1640,8 +2772,19 @@ WAVE = {
             "type": "enemy_drone",
             "location": "top_left_edge",
             "behaviors": [
-                {"action": "move_straight", "params": {"direction": "down"}},
-                {"action": "shoot", "params": {}},
+                {
+                    "action": "move_straight",
+                    "params": {"speed": 80},
+                },
+                {
+                    "action": "shoot",
+                    "params": {
+                        "shoot_rate": 0.2,
+                        "ammo_count": 12,
+                        "reload_time": 2.0,
+                        "projectile_type": "enemy_shot",
+                    },
+                },
             ],
         },
         {
@@ -1649,8 +2792,19 @@ WAVE = {
             "type": "enemy_ship",
             "location": "top_right_edge",
             "behaviors": [
-                {"action": "move_straight", "params": {"direction": "down"}},
-                {"action": "shoot", "params": {}},
+                {
+                    "action": "move_straight",
+                    "params": {"speed": 80},
+                },
+                {
+                    "action": "shoot",
+                    "params": {
+                        "shoot_rate": 0.1,
+                        "ammo_count": 18,
+                        "reload_time": 1.5,
+                        "projectile_type": "enemy_shot",
+                    },
+                },
             ],
         },
         {
@@ -1658,8 +2812,19 @@ WAVE = {
             "type": "enemy_ship",
             "location": "top_far_right",
             "behaviors": [
-                {"action": "move_straight", "params": {"direction": "down"}},
-                {"action": "shoot", "params": {}},
+                {
+                    "action": "move_straight",
+                    "params": {"speed": 80},
+                },
+                {
+                    "action": "shoot",
+                    "params": {
+                        "shoot_rate": 0.1,
+                        "ammo_count": 18,
+                        "reload_time": 1.5,
+                        "projectile_type": "enemy_shot",
+                    },
+                },
             ],
         },
         {
@@ -1667,8 +2832,19 @@ WAVE = {
             "type": "enemy_ship",
             "location": "top_right",
             "behaviors": [
-                {"action": "move_straight", "params": {"direction": "down"}},
-                {"action": "shoot", "params": {}},
+                {
+                    "action": "move_straight",
+                    "params": {"speed": 80},
+                },
+                {
+                    "action": "shoot",
+                    "params": {
+                        "shoot_rate": 0.1,
+                        "ammo_count": 18,
+                        "reload_time": 1.5,
+                        "projectile_type": "enemy_shot",
+                    },
+                },
             ],
         },
         {
@@ -1676,8 +2852,19 @@ WAVE = {
             "type": "enemy_ship",
             "location": "top_center_right",
             "behaviors": [
-                {"action": "move_straight", "params": {"direction": "down"}},
-                {"action": "shoot", "params": {}},
+                {
+                    "action": "move_straight",
+                    "params": {"speed": 80},
+                },
+                {
+                    "action": "shoot",
+                    "params": {
+                        "shoot_rate": 0.1,
+                        "ammo_count": 18,
+                        "reload_time": 1.5,
+                        "projectile_type": "enemy_shot",
+                    },
+                },
             ],
         },
         {
@@ -1685,8 +2872,19 @@ WAVE = {
             "type": "enemy_ship",
             "location": "top_center",
             "behaviors": [
-                {"action": "move_straight", "params": {"direction": "down"}},
-                {"action": "shoot", "params": {}},
+                {
+                    "action": "move_straight",
+                    "params": {"speed": 80},
+                },
+                {
+                    "action": "shoot",
+                    "params": {
+                        "shoot_rate": 0.1,
+                        "ammo_count": 18,
+                        "reload_time": 1.5,
+                        "projectile_type": "enemy_shot",
+                    },
+                },
             ],
         },
         {
@@ -1694,8 +2892,19 @@ WAVE = {
             "type": "enemy_ship",
             "location": "top_center_left",
             "behaviors": [
-                {"action": "move_straight", "params": {"direction": "down"}},
-                {"action": "shoot", "params": {}},
+                {
+                    "action": "move_straight",
+                    "params": {"speed": 80},
+                },
+                {
+                    "action": "shoot",
+                    "params": {
+                        "shoot_rate": 0.1,
+                        "ammo_count": 18,
+                        "reload_time": 1.5,
+                        "projectile_type": "enemy_shot",
+                    },
+                },
             ],
         },
         {
@@ -1703,8 +2912,19 @@ WAVE = {
             "type": "enemy_ship",
             "location": "top_left",
             "behaviors": [
-                {"action": "move_straight", "params": {"direction": "down"}},
-                {"action": "shoot", "params": {}},
+                {
+                    "action": "move_straight",
+                    "params": {"speed": 80},
+                },
+                {
+                    "action": "shoot",
+                    "params": {
+                        "shoot_rate": 0.1,
+                        "ammo_count": 18,
+                        "reload_time": 1.5,
+                        "projectile_type": "enemy_shot",
+                    },
+                },
             ],
         },
         {
@@ -1712,8 +2932,19 @@ WAVE = {
             "type": "enemy_ship",
             "location": "top_far_left",
             "behaviors": [
-                {"action": "move_straight", "params": {"direction": "down"}},
-                {"action": "shoot", "params": {}},
+                {
+                    "action": "move_straight",
+                    "params": {"speed": 80},
+                },
+                {
+                    "action": "shoot",
+                    "params": {
+                        "shoot_rate": 0.1,
+                        "ammo_count": 18,
+                        "reload_time": 1.5,
+                        "projectile_type": "enemy_shot",
+                    },
+                },
             ],
         },
         {
@@ -1721,8 +2952,19 @@ WAVE = {
             "type": "enemy_ship",
             "location": "top_left_edge",
             "behaviors": [
-                {"action": "move_straight", "params": {"direction": "down"}},
-                {"action": "shoot", "params": {}},
+                {
+                    "action": "move_straight",
+                    "params": {"speed": 80},
+                },
+                {
+                    "action": "shoot",
+                    "params": {
+                        "shoot_rate": 0.1,
+                        "ammo_count": 18,
+                        "reload_time": 1.5,
+                        "projectile_type": "enemy_shot",
+                    },
+                },
             ],
         },
         {
@@ -1730,7 +2972,10 @@ WAVE = {
             "type": "bomb_ammo_pickup",
             "location": "top_right",
             "behaviors": [
-                {"action": "move_straight", "params": {"direction": "down"}},
+                {
+                    "action": "move_straight",
+                    "params": {"speed": 80},
+                },
                 {"action": "rotate_constantly", "params": {}},
             ],
         },
@@ -1741,7 +2986,10 @@ WAVE = {
             "type": "bomb_ammo_pickup",
             "location": "top_right",
             "behaviors": [
-                {"action": "move_straight", "params": {"direction": "down"}},
+                {
+                    "action": "move_straight",
+                    "params": {"speed": 80},
+                },
                 {"action": "rotate_constantly", "params": {}},
             ],
         },
@@ -1750,7 +2998,10 @@ WAVE = {
             "type": "power_level_pickup",
             "location": "top_left",
             "behaviors": [
-                {"action": "move_straight", "params": {"direction": "down"}},
+                {
+                    "action": "move_straight",
+                    "params": {"speed": 80},
+                },
                 {"action": "rotate_constantly", "params": {}},
             ],
         },
@@ -1762,8 +3013,19 @@ WAVE = {
             "type": "enemy_ship",
             "location": "top_center",
             "behaviors": [
-                {"action": "move_straight", "params": {"direction": "down"}},
-                {"action": "shoot", "params": {}},
+                {
+                    "action": "move_straight",
+                    "params": {"speed": 80},
+                },
+                {
+                    "action": "shoot",
+                    "params": {
+                        "shoot_rate": 0.1,
+                        "ammo_count": 18,
+                        "reload_time": 1.5,
+                        "projectile_type": "enemy_shot",
+                    },
+                },
             ],
         },
         {
@@ -1771,8 +3033,19 @@ WAVE = {
             "type": "enemy_ship",
             "location": "top_center_left",
             "behaviors": [
-                {"action": "move_straight", "params": {"direction": "down"}},
-                {"action": "shoot", "params": {}},
+                {
+                    "action": "move_straight",
+                    "params": {"speed": 80},
+                },
+                {
+                    "action": "shoot",
+                    "params": {
+                        "shoot_rate": 0.1,
+                        "ammo_count": 18,
+                        "reload_time": 1.5,
+                        "projectile_type": "enemy_shot",
+                    },
+                },
             ],
         },
         {
@@ -1780,8 +3053,19 @@ WAVE = {
             "type": "enemy_ship",
             "location": "top_center_right",
             "behaviors": [
-                {"action": "move_straight", "params": {"direction": "down"}},
-                {"action": "shoot", "params": {}},
+                {
+                    "action": "move_straight",
+                    "params": {"speed": 80},
+                },
+                {
+                    "action": "shoot",
+                    "params": {
+                        "shoot_rate": 0.1,
+                        "ammo_count": 18,
+                        "reload_time": 1.5,
+                        "projectile_type": "enemy_shot",
+                    },
+                },
             ],
         },
         #! Destroyers
@@ -1790,7 +3074,10 @@ WAVE = {
             "type": "bomb_ammo_pickup",
             "location": "top_far_left",
             "behaviors": [
-                {"action": "move_straight", "params": {"direction": "down"}},
+                {
+                    "action": "move_straight",
+                    "params": {"speed": 80},
+                },
                 {"action": "rotate_constantly", "params": {}},
             ],
         },
@@ -1799,7 +3086,10 @@ WAVE = {
             "type": "overdrive_pickup",
             "location": "top_far_right",
             "behaviors": [
-                {"action": "move_straight", "params": {"direction": "down"}},
+                {
+                    "action": "move_straight",
+                    "params": {"speed": 80},
+                },
                 {"action": "rotate_constantly", "params": {}},
             ],
         },

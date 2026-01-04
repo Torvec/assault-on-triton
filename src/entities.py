@@ -91,9 +91,12 @@ class Entity(pygame.sprite.Sprite):
     def flash_when_hit(self, screen, entity_surface, entity_rect):
         if self.is_hit:
             flash = pygame.Surface(entity_surface.get_size(), pygame.SRCALPHA)
-            center = (flash.get_width() // 2, flash.get_height() // 2)
+            center = (flash.get_width() * 0.5, flash.get_height() * 0.5)
             pygame.draw.circle(
-                flash, (255, 255, 255, 180), center, self.rect.width // 2
+                flash,
+                (255, 255, 255, 180),
+                center,
+                self.rect.width * 0.5,
             )
             screen.blit(flash, entity_rect)
 
@@ -402,6 +405,7 @@ class Asteroid(Entity):
                     {
                         "action": "move_straight",
                         "params": {
+                            "speed": 100,
                             "angle": angle,
                             "velocity_factor": ASTEROID["split_velocity_factor"],
                         },
@@ -516,6 +520,13 @@ class EnemyShip(Entity):
 
 
 class EnemyDestroyer(Entity):
+
+    """
+    Need to define the area where the destroyer itself can be damaged which is the bridge only, turrets have their own separate hit detection. 
+    Destroying the bridge is the only thing that destroyes the destroyer.
+    The destroyer sprite will have the bridge on it rather than it being a separate sprite like the turrets and missile launchers are
+    """
+
     def __init__(self, x, y, gameplay):
         self.img_path = IMAGES["enemy_destroyer"]
         super().__init__(x, y, gameplay)
@@ -528,12 +539,12 @@ class EnemyDestroyer(Entity):
 
     def create_turrets(self):
         for _, (turret_x, turret_y) in enumerate(self.turret_positions):
-            world_x = self.position.x + turret_x
-            world_y = self.position.y + turret_y
+            rel_x = self.position.x + turret_x
+            rel_y = self.position.y + turret_y
 
             self.gameplay.spawn_manager.spawn_entity(
                 "enemy_turret",
-                pygame.Vector2(world_x, world_y),
+                pygame.Vector2(rel_x, rel_y),
                 [
                     {
                         "action": "track_player",
@@ -684,7 +695,9 @@ class Pickup(Entity):
 
     def __init__(self, x, y, gameplay):
         super().__init__(x, y, gameplay)
-        self.player = self.gameplay.player_group.sprite
+        self.player = (
+            self.gameplay.entity_manager.get_entity_instance("player")
+        )
         pickup_type = getattr(self, "pickup_type", "health")
         data = PICKUPS.get(pickup_type, PICKUPS["health"])
         self.speed = data["speed"]

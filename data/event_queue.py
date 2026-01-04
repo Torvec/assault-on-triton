@@ -6,24 +6,18 @@ EVENT_QUEUE = [
             "location": "player_spawn",
         },
     },
-    # {
-    #     "type": "trigger_cutscene",
-    #     "params": {"cutscene_id": "intro"},
-    # },
-    #! FOR TESTING
+    {
+        "type": "trigger_cutscene",
+        "params": {"cutscene_id": "intro"},
+    },
+    {
+        "type": "show_message",
+        "params": {"message_id": "mission_start"},
+    },
     {
         "type": "trigger_wave",
-        "params": {"wave_id": "test_wave"},
+        "params": {"wave_id": "wave_sequence_1"},
     },
-    #! FOR TESTING
-    # {
-    #     "type": "show_message",
-    #     "params": {"message_id": "mission_start"},
-    # },
-    # {
-    #     "type": "trigger_wave",
-    #     "params": {"wave_id": "wave_sequence_1"},
-    # },
     # {
     #     "type": "show_message",
     #     "params": {"message_id": "sub_boss_incoming"},
@@ -47,12 +41,12 @@ EVENT_QUEUE = [
     #     "type": "trigger_cutscene",
     #     "params": {"cutscene_id": "sub_boss_defeat"},
     # },
-    # {
-    #     "type": "trigger_wave",
-    #     "params": {
-    #         "wave_id": "wave_sequence_2",
-    #     },
-    # },
+    {
+        "type": "trigger_wave",
+        "params": {
+            "wave_id": "wave_sequence_2",
+        },
+    },
     # {
     #     "type": "show_message",
     #     "params": {"message_id": "level_boss_incoming"},
@@ -76,16 +70,16 @@ EVENT_QUEUE = [
     #     "type": "trigger_cutscene",
     #     "params": {"cutscene_id": "level_boss_defeat"},
     # },
-    # {
-    #     "type": "trigger_mission_complete",
-    #     "params": {},
-    # },
-    # {
-    #     "type": "trigger_cutscene",
-    #     "params": {"cutscene_id": "outro"},
-    # },
-    # {
-    #     "type": "show_message",
-    #     "params": {"message_id": "to_be_continued"},
-    # },
+    {
+        "type": "trigger_mission_complete",
+        "params": {},
+    },
+    {
+        "type": "trigger_cutscene",
+        "params": {"cutscene_id": "outro"},
+    },
+    {
+        "type": "show_message",
+        "params": {"message_id": "to_be_continued"},
+    },
 ]
