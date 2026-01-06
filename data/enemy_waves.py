@@ -17,7 +17,7 @@ WAVE = {
         #     "action": "shoot",
         #     "params": {
         #         "shoot_rate": 0.1,
-        #         "ammo_count": 18,
+        #         "ammo_count": 6,
         #         "reload_time": 1.5,
         #         "projectile_type": "enemy_shot",
         #     },
@@ -41,7 +41,7 @@ WAVE = {
         #             "action": "shoot",
         #             "params": {
         #                 "shoot_rate": 0.1,
-        #                 "ammo_count": 18,
+        #                 "ammo_count": 6,
         #                 "reload_time": 1.5,
         #                 "projectile_type": "enemy_shot",
         #             },
@@ -65,7 +65,7 @@ WAVE = {
         #             "action": "shoot",
         #             "params": {
         #                 "shoot_rate": 0.2,
-        #                 "ammo_count": 18,
+        #                 "ammo_count": 6,
         #                 "reload_time": 1.5,
         #                 "projectile_type": "enemy_shot",
         #             },
@@ -89,7 +89,7 @@ WAVE = {
         #             "action": "shoot",
         #             "params": {
         #                 "shoot_rate": 0.2,
-        #                 "ammo_count": 18,
+        #                 "ammo_count": 6,
         #                 "reload_time": 1.5,
         #                 "projectile_type": "enemy_shot",
         #             },
@@ -159,7 +159,7 @@ WAVE = {
             "behaviors": [
                 {
                     "action": "move_straight",
-                    "params": {"speed": 80},
+                    "params": {"speed": 100},
                 },
                 {"action": "rotate_constantly", "params": {}},
             ],
@@ -171,7 +171,7 @@ WAVE = {
             "behaviors": [
                 {
                     "action": "move_straight",
-                    "params": {"speed": 80},
+                    "params": {"speed": 100},
                 },
                 {"action": "rotate_constantly", "params": {}},
             ],
@@ -183,7 +183,7 @@ WAVE = {
             "behaviors": [
                 {
                     "action": "move_straight",
-                    "params": {"speed": 80},
+                    "params": {"speed": 100},
                 },
                 {"action": "rotate_constantly", "params": {}},
             ],
@@ -195,7 +195,7 @@ WAVE = {
             "behaviors": [
                 {
                     "action": "move_straight",
-                    "params": {"speed": 80},
+                    "params": {"speed": 100},
                 },
                 {"action": "rotate_constantly", "params": {}},
             ],
@@ -207,7 +207,7 @@ WAVE = {
             "behaviors": [
                 {
                     "action": "move_straight",
-                    "params": {"speed": 80},
+                    "params": {"speed": 100},
                 },
                 {"action": "rotate_constantly", "params": {}},
             ],
@@ -219,7 +219,7 @@ WAVE = {
             "behaviors": [
                 {
                     "action": "move_straight",
-                    "params": {"speed": 80},
+                    "params": {"speed": 100},
                 },
                 {"action": "rotate_constantly", "params": {}},
             ],
@@ -231,7 +231,7 @@ WAVE = {
             "behaviors": [
                 {
                     "action": "move_straight",
-                    "params": {"speed": 80},
+                    "params": {"speed": 100},
                 },
                 {"action": "rotate_constantly", "params": {}},
             ],
@@ -243,7 +243,7 @@ WAVE = {
             "behaviors": [
                 {
                     "action": "move_straight",
-                    "params": {"speed": 80},
+                    "params": {"speed": 100},
                 },
                 {"action": "rotate_constantly", "params": {}},
             ],
@@ -255,7 +255,7 @@ WAVE = {
             "behaviors": [
                 {
                     "action": "move_straight",
-                    "params": {"speed": 80},
+                    "params": {"speed": 100},
                 },
                 {"action": "rotate_constantly", "params": {}},
             ],
@@ -267,7 +267,7 @@ WAVE = {
             "behaviors": [
                 {
                     "action": "move_straight",
-                    "params": {"speed": 80},
+                    "params": {"speed": 100},
                 },
                 {"action": "rotate_constantly", "params": {}},
             ],
@@ -279,7 +279,7 @@ WAVE = {
             "behaviors": [
                 {
                     "action": "move_straight",
-                    "params": {"speed": 80},
+                    "params": {"speed": 100},
                 },
                 {"action": "rotate_constantly", "params": {}},
             ],
@@ -291,7 +291,7 @@ WAVE = {
             "behaviors": [
                 {
                     "action": "move_straight",
-                    "params": {"speed": 80},
+                    "params": {"speed": 100},
                 },
                 {"action": "rotate_constantly", "params": {}},
             ],
@@ -303,7 +303,7 @@ WAVE = {
             "behaviors": [
                 {
                     "action": "move_straight",
-                    "params": {"speed": 80},
+                    "params": {"speed": 100},
                 },
                 {"action": "rotate_constantly", "params": {}},
             ],
@@ -315,7 +315,7 @@ WAVE = {
             "behaviors": [
                 {
                     "action": "move_straight",
-                    "params": {"speed": 80},
+                    "params": {"speed": 100},
                 },
                 {"action": "rotate_constantly", "params": {}},
             ],
@@ -327,7 +327,7 @@ WAVE = {
             "behaviors": [
                 {
                     "action": "move_straight",
-                    "params": {"speed": 80},
+                    "params": {"speed": 100},
                 },
                 {"action": "rotate_constantly", "params": {}},
             ],
@@ -339,7 +339,7 @@ WAVE = {
             "behaviors": [
                 {
                     "action": "move_straight",
-                    "params": {"speed": 80},
+                    "params": {"speed": 100},
                 },
                 {"action": "rotate_constantly", "params": {}},
             ],
@@ -351,7 +351,7 @@ WAVE = {
             "behaviors": [
                 {
                     "action": "move_straight",
-                    "params": {"speed": 80},
+                    "params": {"speed": 100},
                 },
                 {"action": "rotate_constantly", "params": {}},
             ],
@@ -363,7 +363,7 @@ WAVE = {
             "behaviors": [
                 {
                     "action": "move_straight",
-                    "params": {"speed": 80},
+                    "params": {"speed": 100},
                 },
                 {"action": "rotate_constantly", "params": {}},
             ],
@@ -375,7 +375,7 @@ WAVE = {
             "behaviors": [
                 {
                     "action": "move_straight",
-                    "params": {"speed": 80},
+                    "params": {"speed": 100},
                 },
                 {"action": "rotate_constantly", "params": {}},
             ],
@@ -388,7 +388,7 @@ WAVE = {
             "behaviors": [
                 {
                     "action": "move_straight",
-                    "params": {"speed": 80},
+                    "params": {"speed": 100},
                 },
                 {"action": "rotate_constantly", "params": {}},
             ],
@@ -400,7 +400,7 @@ WAVE = {
             "behaviors": [
                 {
                     "action": "move_straight",
-                    "params": {"speed": 80},
+                    "params": {"speed": 100},
                 },
                 {"action": "rotate_constantly", "params": {}},
             ],
@@ -412,7 +412,7 @@ WAVE = {
             "behaviors": [
                 {
                     "action": "move_straight",
-                    "params": {"speed": 80},
+                    "params": {"speed": 100},
                 },
                 {"action": "rotate_constantly", "params": {}},
             ],
@@ -424,7 +424,7 @@ WAVE = {
             "behaviors": [
                 {
                     "action": "move_straight",
-                    "params": {"speed": 80},
+                    "params": {"speed": 100},
                 },
                 {"action": "rotate_constantly", "params": {}},
             ],
@@ -436,7 +436,7 @@ WAVE = {
             "behaviors": [
                 {
                     "action": "move_straight",
-                    "params": {"speed": 80},
+                    "params": {"speed": 100},
                 },
                 {"action": "rotate_constantly", "params": {}},
             ],
@@ -448,7 +448,7 @@ WAVE = {
             "behaviors": [
                 {
                     "action": "move_straight",
-                    "params": {"speed": 80},
+                    "params": {"speed": 100},
                 },
                 {"action": "rotate_constantly", "params": {}},
             ],
@@ -460,7 +460,7 @@ WAVE = {
             "behaviors": [
                 {
                     "action": "move_straight",
-                    "params": {"speed": 80},
+                    "params": {"speed": 100},
                 },
                 {"action": "rotate_constantly", "params": {}},
             ],
@@ -472,7 +472,7 @@ WAVE = {
             "behaviors": [
                 {
                     "action": "move_straight",
-                    "params": {"speed": 80},
+                    "params": {"speed": 100},
                 },
                 {"action": "rotate_constantly", "params": {}},
             ],
@@ -484,7 +484,7 @@ WAVE = {
             "behaviors": [
                 {
                     "action": "move_straight",
-                    "params": {"speed": 80},
+                    "params": {"speed": 100},
                 },
                 {"action": "rotate_constantly", "params": {}},
             ],
@@ -496,7 +496,7 @@ WAVE = {
             "behaviors": [
                 {
                     "action": "move_straight",
-                    "params": {"speed": 80},
+                    "params": {"speed": 100},
                 },
                 {"action": "rotate_constantly", "params": {}},
             ],
@@ -508,7 +508,7 @@ WAVE = {
             "behaviors": [
                 {
                     "action": "move_straight",
-                    "params": {"speed": 80},
+                    "params": {"speed": 100},
                 },
                 {"action": "rotate_constantly", "params": {}},
             ],
@@ -520,7 +520,7 @@ WAVE = {
             "behaviors": [
                 {
                     "action": "move_straight",
-                    "params": {"speed": 80},
+                    "params": {"speed": 100},
                 },
                 {"action": "rotate_constantly", "params": {}},
             ],
@@ -532,7 +532,7 @@ WAVE = {
             "behaviors": [
                 {
                     "action": "move_straight",
-                    "params": {"speed": 80},
+                    "params": {"speed": 100},
                 },
                 {"action": "rotate_constantly", "params": {}},
             ],
@@ -544,7 +544,7 @@ WAVE = {
             "behaviors": [
                 {
                     "action": "move_straight",
-                    "params": {"speed": 80},
+                    "params": {"speed": 100},
                 },
                 {"action": "rotate_constantly", "params": {}},
             ],
@@ -556,7 +556,7 @@ WAVE = {
             "behaviors": [
                 {
                     "action": "move_straight",
-                    "params": {"speed": 80},
+                    "params": {"speed": 100},
                 },
                 {"action": "rotate_constantly", "params": {}},
             ],
@@ -568,7 +568,7 @@ WAVE = {
             "behaviors": [
                 {
                     "action": "move_straight",
-                    "params": {"speed": 80},
+                    "params": {"speed": 100},
                 },
                 {"action": "rotate_constantly", "params": {}},
             ],
@@ -580,7 +580,7 @@ WAVE = {
             "behaviors": [
                 {
                     "action": "move_straight",
-                    "params": {"speed": 80},
+                    "params": {"speed": 100},
                 },
                 {"action": "rotate_constantly", "params": {}},
             ],
@@ -592,7 +592,7 @@ WAVE = {
             "behaviors": [
                 {
                     "action": "move_straight",
-                    "params": {"speed": 80},
+                    "params": {"speed": 100},
                 },
                 {"action": "rotate_constantly", "params": {}},
             ],
@@ -604,7 +604,7 @@ WAVE = {
             "behaviors": [
                 {
                     "action": "move_straight",
-                    "params": {"speed": 80},
+                    "params": {"speed": 100},
                 },
                 {"action": "rotate_constantly", "params": {}},
             ],
@@ -617,7 +617,7 @@ WAVE = {
             "behaviors": [
                 {
                     "action": "move_straight",
-                    "params": {"speed": 80},
+                    "params": {"speed": 100},
                 },
                 {"action": "rotate_constantly", "params": {}},
             ],
@@ -629,7 +629,7 @@ WAVE = {
             "behaviors": [
                 {
                     "action": "move_straight",
-                    "params": {"speed": 80},
+                    "params": {"speed": 100},
                 },
                 {"action": "rotate_constantly", "params": {}},
             ],
@@ -641,7 +641,7 @@ WAVE = {
             "behaviors": [
                 {
                     "action": "move_straight",
-                    "params": {"speed": 80},
+                    "params": {"speed": 100},
                 },
                 {"action": "rotate_constantly", "params": {}},
             ],
@@ -653,7 +653,7 @@ WAVE = {
             "behaviors": [
                 {
                     "action": "move_straight",
-                    "params": {"speed": 80},
+                    "params": {"speed": 100},
                 },
                 {"action": "rotate_constantly", "params": {}},
             ],
@@ -665,7 +665,7 @@ WAVE = {
             "behaviors": [
                 {
                     "action": "move_straight",
-                    "params": {"speed": 80},
+                    "params": {"speed": 100},
                 },
                 {"action": "rotate_constantly", "params": {}},
             ],
@@ -677,7 +677,7 @@ WAVE = {
             "behaviors": [
                 {
                     "action": "move_straight",
-                    "params": {"speed": 80},
+                    "params": {"speed": 100},
                 },
                 {"action": "rotate_constantly", "params": {}},
             ],
@@ -689,7 +689,7 @@ WAVE = {
             "behaviors": [
                 {
                     "action": "move_straight",
-                    "params": {"speed": 80},
+                    "params": {"speed": 100},
                 },
                 {"action": "rotate_constantly", "params": {}},
             ],
@@ -701,7 +701,7 @@ WAVE = {
             "behaviors": [
                 {
                     "action": "move_straight",
-                    "params": {"speed": 80},
+                    "params": {"speed": 100},
                 },
                 {"action": "rotate_constantly", "params": {}},
             ],
@@ -713,7 +713,7 @@ WAVE = {
             "behaviors": [
                 {
                     "action": "move_straight",
-                    "params": {"speed": 80},
+                    "params": {"speed": 100},
                 },
                 {"action": "rotate_constantly", "params": {}},
             ],
@@ -725,7 +725,7 @@ WAVE = {
             "behaviors": [
                 {
                     "action": "move_straight",
-                    "params": {"speed": 80},
+                    "params": {"speed": 100},
                 },
                 {"action": "rotate_constantly", "params": {}},
             ],
@@ -737,7 +737,7 @@ WAVE = {
             "behaviors": [
                 {
                     "action": "move_straight",
-                    "params": {"speed": 80},
+                    "params": {"speed": 100},
                 },
                 {"action": "rotate_constantly", "params": {}},
             ],
@@ -749,7 +749,7 @@ WAVE = {
             "behaviors": [
                 {
                     "action": "move_straight",
-                    "params": {"speed": 80},
+                    "params": {"speed": 100},
                 },
                 {"action": "rotate_constantly", "params": {}},
             ],
@@ -761,7 +761,7 @@ WAVE = {
             "behaviors": [
                 {
                     "action": "move_straight",
-                    "params": {"speed": 80},
+                    "params": {"speed": 100},
                 },
                 {"action": "rotate_constantly", "params": {}},
             ],
@@ -774,7 +774,7 @@ WAVE = {
             "behaviors": [
                 {
                     "action": "move_straight",
-                    "params": {"speed": 80},
+                    "params": {"speed": 100},
                 },
                 {"action": "rotate_constantly", "params": {}},
             ],
@@ -786,7 +786,7 @@ WAVE = {
             "behaviors": [
                 {
                     "action": "move_straight",
-                    "params": {"speed": 80},
+                    "params": {"speed": 100},
                 },
                 {"action": "rotate_constantly", "params": {}},
             ],
@@ -798,7 +798,7 @@ WAVE = {
             "behaviors": [
                 {
                     "action": "move_straight",
-                    "params": {"speed": 80},
+                    "params": {"speed": 100},
                 },
                 {"action": "rotate_constantly", "params": {}},
             ],
@@ -810,7 +810,7 @@ WAVE = {
             "behaviors": [
                 {
                     "action": "move_straight",
-                    "params": {"speed": 80},
+                    "params": {"speed": 100},
                 },
                 {"action": "rotate_constantly", "params": {}},
             ],
@@ -822,7 +822,7 @@ WAVE = {
             "behaviors": [
                 {
                     "action": "move_straight",
-                    "params": {"speed": 80},
+                    "params": {"speed": 100},
                 },
                 {"action": "rotate_constantly", "params": {}},
             ],
@@ -834,7 +834,7 @@ WAVE = {
             "behaviors": [
                 {
                     "action": "move_straight",
-                    "params": {"speed": 80},
+                    "params": {"speed": 100},
                 },
                 {"action": "rotate_constantly", "params": {}},
             ],
@@ -846,7 +846,7 @@ WAVE = {
             "behaviors": [
                 {
                     "action": "move_straight",
-                    "params": {"speed": 80},
+                    "params": {"speed": 100},
                 },
                 {"action": "rotate_constantly", "params": {}},
             ],
@@ -858,7 +858,7 @@ WAVE = {
             "behaviors": [
                 {
                     "action": "move_straight",
-                    "params": {"speed": 80},
+                    "params": {"speed": 100},
                 },
                 {"action": "rotate_constantly", "params": {}},
             ],
@@ -870,7 +870,7 @@ WAVE = {
             "behaviors": [
                 {
                     "action": "move_straight",
-                    "params": {"speed": 80},
+                    "params": {"speed": 100},
                 },
                 {"action": "rotate_constantly", "params": {}},
             ],
@@ -882,7 +882,7 @@ WAVE = {
             "behaviors": [
                 {
                     "action": "move_straight",
-                    "params": {"speed": 80},
+                    "params": {"speed": 100},
                 },
                 {"action": "rotate_constantly", "params": {}},
             ],
@@ -894,7 +894,7 @@ WAVE = {
             "behaviors": [
                 {
                     "action": "move_straight",
-                    "params": {"speed": 80},
+                    "params": {"speed": 100},
                 },
                 {"action": "rotate_constantly", "params": {}},
             ],
@@ -906,7 +906,7 @@ WAVE = {
             "behaviors": [
                 {
                     "action": "move_straight",
-                    "params": {"speed": 80},
+                    "params": {"speed": 100},
                 },
                 {"action": "rotate_constantly", "params": {}},
             ],
@@ -918,7 +918,7 @@ WAVE = {
             "behaviors": [
                 {
                     "action": "move_straight",
-                    "params": {"speed": 80},
+                    "params": {"speed": 100},
                 },
                 {"action": "rotate_constantly", "params": {}},
             ],
@@ -930,7 +930,7 @@ WAVE = {
             "behaviors": [
                 {
                     "action": "move_straight",
-                    "params": {"speed": 80},
+                    "params": {"speed": 100},
                 },
                 {"action": "rotate_constantly", "params": {}},
             ],
@@ -942,7 +942,7 @@ WAVE = {
             "behaviors": [
                 {
                     "action": "move_straight",
-                    "params": {"speed": 80},
+                    "params": {"speed": 100},
                 },
                 {"action": "rotate_constantly", "params": {}},
             ],
@@ -954,7 +954,7 @@ WAVE = {
             "behaviors": [
                 {
                     "action": "move_straight",
-                    "params": {"speed": 80},
+                    "params": {"speed": 100},
                 },
                 {"action": "rotate_constantly", "params": {}},
             ],
@@ -967,7 +967,7 @@ WAVE = {
             "behaviors": [
                 {
                     "action": "move_straight",
-                    "params": {"speed": 80},
+                    "params": {"speed": 100},
                 },
                 {"action": "rotate_constantly", "params": {}},
             ],
@@ -980,13 +980,13 @@ WAVE = {
             "behaviors": [
                 {
                     "action": "move_straight",
-                    "params": {"speed": 80},
+                    "params": {"speed": 120},
                 },
                 {
                     "action": "shoot",
                     "params": {
                         "shoot_rate": 0.2,
-                        "ammo_count": 12,
+                        "ammo_count": 6,
                         "reload_time": 2.0,
                         "projectile_type": "enemy_shot",
                     },
@@ -1000,7 +1000,7 @@ WAVE = {
             "behaviors": [
                 {
                     "action": "move_straight",
-                    "params": {"speed": 80},
+                    "params": {"speed": 100},
                 },
                 {"action": "rotate_constantly", "params": {}},
             ],
@@ -1012,7 +1012,7 @@ WAVE = {
             "behaviors": [
                 {
                     "action": "move_straight",
-                    "params": {"speed": 80},
+                    "params": {"speed": 100},
                 },
                 {"action": "rotate_constantly", "params": {}},
             ],
@@ -1024,13 +1024,13 @@ WAVE = {
             "behaviors": [
                 {
                     "action": "move_straight",
-                    "params": {"speed": 80},
+                    "params": {"speed": 120},
                 },
                 {
                     "action": "shoot",
                     "params": {
                         "shoot_rate": 0.2,
-                        "ammo_count": 12,
+                        "ammo_count": 6,
                         "reload_time": 2.0,
                         "projectile_type": "enemy_shot",
                     },
@@ -1044,7 +1044,7 @@ WAVE = {
             "behaviors": [
                 {
                     "action": "move_straight",
-                    "params": {"speed": 80},
+                    "params": {"speed": 100},
                 },
                 {"action": "rotate_constantly", "params": {}},
             ],
@@ -1056,7 +1056,7 @@ WAVE = {
             "behaviors": [
                 {
                     "action": "move_straight",
-                    "params": {"speed": 80},
+                    "params": {"speed": 100},
                 },
                 {"action": "rotate_constantly", "params": {}},
             ],
@@ -1068,13 +1068,13 @@ WAVE = {
             "behaviors": [
                 {
                     "action": "move_straight",
-                    "params": {"speed": 80},
+                    "params": {"speed": 120},
                 },
                 {
                     "action": "shoot",
                     "params": {
                         "shoot_rate": 0.2,
-                        "ammo_count": 12,
+                        "ammo_count": 6,
                         "reload_time": 2.0,
                         "projectile_type": "enemy_shot",
                     },
@@ -1088,7 +1088,7 @@ WAVE = {
             "behaviors": [
                 {
                     "action": "move_straight",
-                    "params": {"speed": 80},
+                    "params": {"speed": 100},
                 },
                 {"action": "rotate_constantly", "params": {}},
             ],
@@ -1100,13 +1100,13 @@ WAVE = {
             "behaviors": [
                 {
                     "action": "move_straight",
-                    "params": {"speed": 80},
+                    "params": {"speed": 120},
                 },
                 {
                     "action": "shoot",
                     "params": {
                         "shoot_rate": 0.2,
-                        "ammo_count": 12,
+                        "ammo_count": 6,
                         "reload_time": 2.0,
                         "projectile_type": "enemy_shot",
                     },
@@ -1120,7 +1120,7 @@ WAVE = {
             "behaviors": [
                 {
                     "action": "move_straight",
-                    "params": {"speed": 80},
+                    "params": {"speed": 100},
                 },
                 {"action": "rotate_constantly", "params": {}},
             ],
@@ -1132,7 +1132,7 @@ WAVE = {
             "behaviors": [
                 {
                     "action": "move_straight",
-                    "params": {"speed": 80},
+                    "params": {"speed": 100},
                 },
                 {"action": "rotate_constantly", "params": {}},
             ],
@@ -1144,13 +1144,13 @@ WAVE = {
             "behaviors": [
                 {
                     "action": "move_straight",
-                    "params": {"speed": 80},
+                    "params": {"speed": 120},
                 },
                 {
                     "action": "shoot",
                     "params": {
                         "shoot_rate": 0.2,
-                        "ammo_count": 12,
+                        "ammo_count": 6,
                         "reload_time": 2.0,
                         "projectile_type": "enemy_shot",
                     },
@@ -1164,7 +1164,7 @@ WAVE = {
             "behaviors": [
                 {
                     "action": "move_straight",
-                    "params": {"speed": 80},
+                    "params": {"speed": 100},
                 },
                 {"action": "rotate_constantly", "params": {}},
             ],
@@ -1176,13 +1176,13 @@ WAVE = {
             "behaviors": [
                 {
                     "action": "move_straight",
-                    "params": {"speed": 80},
+                    "params": {"speed": 120},
                 },
                 {
                     "action": "shoot",
                     "params": {
                         "shoot_rate": 0.2,
-                        "ammo_count": 12,
+                        "ammo_count": 6,
                         "reload_time": 2.0,
                         "projectile_type": "enemy_shot",
                     },
@@ -1196,13 +1196,13 @@ WAVE = {
             "behaviors": [
                 {
                     "action": "move_straight",
-                    "params": {"speed": 80},
+                    "params": {"speed": 120},
                 },
                 {
                     "action": "shoot",
                     "params": {
                         "shoot_rate": 0.2,
-                        "ammo_count": 12,
+                        "ammo_count": 6,
                         "reload_time": 2.0,
                         "projectile_type": "enemy_shot",
                     },
@@ -1216,13 +1216,13 @@ WAVE = {
             "behaviors": [
                 {
                     "action": "move_straight",
-                    "params": {"speed": 80},
+                    "params": {"speed": 120},
                 },
                 {
                     "action": "shoot",
                     "params": {
                         "shoot_rate": 0.2,
-                        "ammo_count": 12,
+                        "ammo_count": 6,
                         "reload_time": 2.0,
                         "projectile_type": "enemy_shot",
                     },
@@ -1236,7 +1236,7 @@ WAVE = {
             "behaviors": [
                 {
                     "action": "move_straight",
-                    "params": {"speed": 80},
+                    "params": {"speed": 100},
                 },
                 {"action": "rotate_constantly", "params": {}},
             ],
@@ -1248,13 +1248,13 @@ WAVE = {
             "behaviors": [
                 {
                     "action": "move_straight",
-                    "params": {"speed": 80},
+                    "params": {"speed": 120},
                 },
                 {
                     "action": "shoot",
                     "params": {
                         "shoot_rate": 0.2,
-                        "ammo_count": 12,
+                        "ammo_count": 6,
                         "reload_time": 2.0,
                         "projectile_type": "enemy_shot",
                     },
@@ -1268,13 +1268,13 @@ WAVE = {
             "behaviors": [
                 {
                     "action": "move_straight",
-                    "params": {"speed": 80},
+                    "params": {"speed": 120},
                 },
                 {
                     "action": "shoot",
                     "params": {
                         "shoot_rate": 0.2,
-                        "ammo_count": 12,
+                        "ammo_count": 6,
                         "reload_time": 2.0,
                         "projectile_type": "enemy_shot",
                     },
@@ -1288,13 +1288,13 @@ WAVE = {
             "behaviors": [
                 {
                     "action": "move_straight",
-                    "params": {"speed": 80},
+                    "params": {"speed": 120},
                 },
                 {
                     "action": "shoot",
                     "params": {
                         "shoot_rate": 0.2,
-                        "ammo_count": 12,
+                        "ammo_count": 6,
                         "reload_time": 2.0,
                         "projectile_type": "enemy_shot",
                     },
@@ -1308,7 +1308,7 @@ WAVE = {
             "behaviors": [
                 {
                     "action": "move_straight",
-                    "params": {"speed": 80},
+                    "params": {"speed": 100},
                 },
                 {"action": "rotate_constantly", "params": {}},
             ],
@@ -1320,13 +1320,13 @@ WAVE = {
             "behaviors": [
                 {
                     "action": "move_straight",
-                    "params": {"speed": 80},
+                    "params": {"speed": 120},
                 },
                 {
                     "action": "shoot",
                     "params": {
                         "shoot_rate": 0.2,
-                        "ammo_count": 12,
+                        "ammo_count": 6,
                         "reload_time": 2.0,
                         "projectile_type": "enemy_shot",
                     },
@@ -1340,7 +1340,7 @@ WAVE = {
             "behaviors": [
                 {
                     "action": "move_straight",
-                    "params": {"speed": 80},
+                    "params": {"speed": 100},
                 },
                 {"action": "rotate_constantly", "params": {}},
             ],
@@ -1352,13 +1352,13 @@ WAVE = {
             "behaviors": [
                 {
                     "action": "move_straight",
-                    "params": {"speed": 80},
+                    "params": {"speed": 120},
                 },
                 {
                     "action": "shoot",
                     "params": {
                         "shoot_rate": 0.2,
-                        "ammo_count": 12,
+                        "ammo_count": 6,
                         "reload_time": 2.0,
                         "projectile_type": "enemy_shot",
                     },
@@ -1372,13 +1372,13 @@ WAVE = {
             "behaviors": [
                 {
                     "action": "move_straight",
-                    "params": {"speed": 80},
+                    "params": {"speed": 120},
                 },
                 {
                     "action": "shoot",
                     "params": {
                         "shoot_rate": 0.2,
-                        "ammo_count": 12,
+                        "ammo_count": 6,
                         "reload_time": 2.0,
                         "projectile_type": "enemy_shot",
                     },
@@ -1392,7 +1392,7 @@ WAVE = {
             "behaviors": [
                 {
                     "action": "move_straight",
-                    "params": {"speed": 80},
+                    "params": {"speed": 100},
                 },
                 {"action": "rotate_constantly", "params": {}},
             ],
@@ -1404,7 +1404,7 @@ WAVE = {
             "behaviors": [
                 {
                     "action": "move_straight",
-                    "params": {"speed": 80},
+                    "params": {"speed": 100},
                 },
                 {"action": "rotate_constantly", "params": {}},
             ],
@@ -1416,7 +1416,7 @@ WAVE = {
             "behaviors": [
                 {
                     "action": "move_straight",
-                    "params": {"speed": 80},
+                    "params": {"speed": 100},
                 },
                 {"action": "rotate_constantly", "params": {}},
             ],
@@ -1429,13 +1429,13 @@ WAVE = {
             "behaviors": [
                 {
                     "action": "move_straight",
-                    "params": {"speed": 80},
+                    "params": {"speed": 140},
                 },
                 {
                     "action": "shoot",
                     "params": {
                         "shoot_rate": 0.1,
-                        "ammo_count": 18,
+                        "ammo_count": 6,
                         "reload_time": 1.5,
                         "projectile_type": "enemy_shot",
                     },
@@ -1449,13 +1449,13 @@ WAVE = {
             "behaviors": [
                 {
                     "action": "move_straight",
-                    "params": {"speed": 80},
+                    "params": {"speed": 140},
                 },
                 {
                     "action": "shoot",
                     "params": {
                         "shoot_rate": 0.1,
-                        "ammo_count": 18,
+                        "ammo_count": 6,
                         "reload_time": 1.5,
                         "projectile_type": "enemy_shot",
                     },
@@ -1469,13 +1469,13 @@ WAVE = {
             "behaviors": [
                 {
                     "action": "move_straight",
-                    "params": {"speed": 80},
+                    "params": {"speed": 140},
                 },
                 {
                     "action": "shoot",
                     "params": {
                         "shoot_rate": 0.1,
-                        "ammo_count": 18,
+                        "ammo_count": 6,
                         "reload_time": 1.5,
                         "projectile_type": "enemy_shot",
                     },
@@ -1489,13 +1489,13 @@ WAVE = {
             "behaviors": [
                 {
                     "action": "move_straight",
-                    "params": {"speed": 80},
+                    "params": {"speed": 140},
                 },
                 {
                     "action": "shoot",
                     "params": {
                         "shoot_rate": 0.1,
-                        "ammo_count": 18,
+                        "ammo_count": 6,
                         "reload_time": 1.5,
                         "projectile_type": "enemy_shot",
                     },
@@ -1509,13 +1509,13 @@ WAVE = {
             "behaviors": [
                 {
                     "action": "move_straight",
-                    "params": {"speed": 80},
+                    "params": {"speed": 140},
                 },
                 {
                     "action": "shoot",
                     "params": {
                         "shoot_rate": 0.1,
-                        "ammo_count": 18,
+                        "ammo_count": 6,
                         "reload_time": 1.5,
                         "projectile_type": "enemy_shot",
                     },
@@ -1529,13 +1529,13 @@ WAVE = {
             "behaviors": [
                 {
                     "action": "move_straight",
-                    "params": {"speed": 80},
+                    "params": {"speed": 140},
                 },
                 {
                     "action": "shoot",
                     "params": {
                         "shoot_rate": 0.1,
-                        "ammo_count": 18,
+                        "ammo_count": 6,
                         "reload_time": 1.5,
                         "projectile_type": "enemy_shot",
                     },
@@ -1549,13 +1549,13 @@ WAVE = {
             "behaviors": [
                 {
                     "action": "move_straight",
-                    "params": {"speed": 80},
+                    "params": {"speed": 140},
                 },
                 {
                     "action": "shoot",
                     "params": {
                         "shoot_rate": 0.1,
-                        "ammo_count": 18,
+                        "ammo_count": 6,
                         "reload_time": 1.5,
                         "projectile_type": "enemy_shot",
                     },
@@ -1569,13 +1569,13 @@ WAVE = {
             "behaviors": [
                 {
                     "action": "move_straight",
-                    "params": {"speed": 80},
+                    "params": {"speed": 140},
                 },
                 {
                     "action": "shoot",
                     "params": {
                         "shoot_rate": 0.1,
-                        "ammo_count": 18,
+                        "ammo_count": 6,
                         "reload_time": 1.5,
                         "projectile_type": "enemy_shot",
                     },
@@ -1589,13 +1589,13 @@ WAVE = {
             "behaviors": [
                 {
                     "action": "move_straight",
-                    "params": {"speed": 80},
+                    "params": {"speed": 140},
                 },
                 {
                     "action": "shoot",
                     "params": {
                         "shoot_rate": 0.1,
-                        "ammo_count": 18,
+                        "ammo_count": 6,
                         "reload_time": 1.5,
                         "projectile_type": "enemy_shot",
                     },
@@ -1609,13 +1609,13 @@ WAVE = {
             "behaviors": [
                 {
                     "action": "move_straight",
-                    "params": {"speed": 80},
+                    "params": {"speed": 140},
                 },
                 {
                     "action": "shoot",
                     "params": {
                         "shoot_rate": 0.1,
-                        "ammo_count": 18,
+                        "ammo_count": 6,
                         "reload_time": 1.5,
                         "projectile_type": "enemy_shot",
                     },
@@ -1629,13 +1629,13 @@ WAVE = {
             "behaviors": [
                 {
                     "action": "move_straight",
-                    "params": {"speed": 80},
+                    "params": {"speed": 140},
                 },
                 {
                     "action": "shoot",
                     "params": {
                         "shoot_rate": 0.1,
-                        "ammo_count": 18,
+                        "ammo_count": 6,
                         "reload_time": 1.5,
                         "projectile_type": "enemy_shot",
                     },
@@ -1649,13 +1649,13 @@ WAVE = {
             "behaviors": [
                 {
                     "action": "move_straight",
-                    "params": {"speed": 80},
+                    "params": {"speed": 140},
                 },
                 {
                     "action": "shoot",
                     "params": {
                         "shoot_rate": 0.1,
-                        "ammo_count": 18,
+                        "ammo_count": 6,
                         "reload_time": 1.5,
                         "projectile_type": "enemy_shot",
                     },
@@ -1669,13 +1669,13 @@ WAVE = {
             "behaviors": [
                 {
                     "action": "move_straight",
-                    "params": {"speed": 80},
+                    "params": {"speed": 140},
                 },
                 {
                     "action": "shoot",
                     "params": {
                         "shoot_rate": 0.1,
-                        "ammo_count": 18,
+                        "ammo_count": 6,
                         "reload_time": 1.5,
                         "projectile_type": "enemy_shot",
                     },
@@ -1689,13 +1689,13 @@ WAVE = {
             "behaviors": [
                 {
                     "action": "move_straight",
-                    "params": {"speed": 80},
+                    "params": {"speed": 140},
                 },
                 {
                     "action": "shoot",
                     "params": {
                         "shoot_rate": 0.1,
-                        "ammo_count": 18,
+                        "ammo_count": 6,
                         "reload_time": 1.5,
                         "projectile_type": "enemy_shot",
                     },
@@ -1709,13 +1709,13 @@ WAVE = {
             "behaviors": [
                 {
                     "action": "move_straight",
-                    "params": {"speed": 80},
+                    "params": {"speed": 140},
                 },
                 {
                     "action": "shoot",
                     "params": {
                         "shoot_rate": 0.1,
-                        "ammo_count": 18,
+                        "ammo_count": 6,
                         "reload_time": 1.5,
                         "projectile_type": "enemy_shot",
                     },
@@ -1729,13 +1729,13 @@ WAVE = {
             "behaviors": [
                 {
                     "action": "move_straight",
-                    "params": {"speed": 80},
+                    "params": {"speed": 140},
                 },
                 {
                     "action": "shoot",
                     "params": {
                         "shoot_rate": 0.1,
-                        "ammo_count": 18,
+                        "ammo_count": 6,
                         "reload_time": 1.5,
                         "projectile_type": "enemy_shot",
                     },
@@ -1749,7 +1749,7 @@ WAVE = {
             "behaviors": [
                 {
                     "action": "move_straight",
-                    "params": {"speed": 80},
+                    "params": {"speed": 100},
                 },
                 {"action": "rotate_constantly", "params": {}},
             ],
@@ -1761,7 +1761,7 @@ WAVE = {
             "behaviors": [
                 {
                     "action": "move_straight",
-                    "params": {"speed": 80},
+                    "params": {"speed": 100},
                 },
                 {"action": "rotate_constantly", "params": {}},
             ],
@@ -1774,13 +1774,13 @@ WAVE = {
             "behaviors": [
                 {
                     "action": "move_straight",
-                    "params": {"speed": 80},
+                    "params": {"speed": 140},
                 },
                 {
                     "action": "shoot",
                     "params": {
                         "shoot_rate": 0.1,
-                        "ammo_count": 18,
+                        "ammo_count": 6,
                         "reload_time": 1.5,
                         "projectile_type": "enemy_shot",
                     },
@@ -1794,13 +1794,13 @@ WAVE = {
             "behaviors": [
                 {
                     "action": "move_straight",
-                    "params": {"speed": 80},
+                    "params": {"speed": 120},
                 },
                 {
                     "action": "shoot",
                     "params": {
                         "shoot_rate": 0.2,
-                        "ammo_count": 12,
+                        "ammo_count": 6,
                         "reload_time": 2.0,
                         "projectile_type": "enemy_shot",
                     },
@@ -1814,13 +1814,13 @@ WAVE = {
             "behaviors": [
                 {
                     "action": "move_straight",
-                    "params": {"speed": 80},
+                    "params": {"speed": 120},
                 },
                 {
                     "action": "shoot",
                     "params": {
                         "shoot_rate": 0.2,
-                        "ammo_count": 12,
+                        "ammo_count": 6,
                         "reload_time": 2.0,
                         "projectile_type": "enemy_shot",
                     },
@@ -1834,13 +1834,13 @@ WAVE = {
             "behaviors": [
                 {
                     "action": "move_straight",
-                    "params": {"speed": 80},
+                    "params": {"speed": 140},
                 },
                 {
                     "action": "shoot",
                     "params": {
                         "shoot_rate": 0.1,
-                        "ammo_count": 18,
+                        "ammo_count": 6,
                         "reload_time": 1.5,
                         "projectile_type": "enemy_shot",
                     },
@@ -1854,13 +1854,13 @@ WAVE = {
             "behaviors": [
                 {
                     "action": "move_straight",
-                    "params": {"speed": 80},
+                    "params": {"speed": 140},
                 },
                 {
                     "action": "shoot",
                     "params": {
                         "shoot_rate": 0.1,
-                        "ammo_count": 18,
+                        "ammo_count": 6,
                         "reload_time": 1.5,
                         "projectile_type": "enemy_shot",
                     },
@@ -1874,13 +1874,13 @@ WAVE = {
             "behaviors": [
                 {
                     "action": "move_straight",
-                    "params": {"speed": 80},
+                    "params": {"speed": 140},
                 },
                 {
                     "action": "shoot",
                     "params": {
                         "shoot_rate": 0.1,
-                        "ammo_count": 18,
+                        "ammo_count": 6,
                         "reload_time": 1.5,
                         "projectile_type": "enemy_shot",
                     },
@@ -1894,13 +1894,13 @@ WAVE = {
             "behaviors": [
                 {
                     "action": "move_straight",
-                    "params": {"speed": 80},
+                    "params": {"speed": 120},
                 },
                 {
                     "action": "shoot",
                     "params": {
                         "shoot_rate": 0.2,
-                        "ammo_count": 12,
+                        "ammo_count": 6,
                         "reload_time": 2.0,
                         "projectile_type": "enemy_shot",
                     },
@@ -1914,13 +1914,13 @@ WAVE = {
             "behaviors": [
                 {
                     "action": "move_straight",
-                    "params": {"speed": 80},
+                    "params": {"speed": 120},
                 },
                 {
                     "action": "shoot",
                     "params": {
                         "shoot_rate": 0.2,
-                        "ammo_count": 12,
+                        "ammo_count": 6,
                         "reload_time": 2.0,
                         "projectile_type": "enemy_shot",
                     },
@@ -1934,13 +1934,13 @@ WAVE = {
             "behaviors": [
                 {
                     "action": "move_straight",
-                    "params": {"speed": 80},
+                    "params": {"speed": 140},
                 },
                 {
                     "action": "shoot",
                     "params": {
                         "shoot_rate": 0.1,
-                        "ammo_count": 18,
+                        "ammo_count": 6,
                         "reload_time": 1.5,
                         "projectile_type": "enemy_shot",
                     },
@@ -1954,13 +1954,13 @@ WAVE = {
             "behaviors": [
                 {
                     "action": "move_straight",
-                    "params": {"speed": 80},
+                    "params": {"speed": 140},
                 },
                 {
                     "action": "shoot",
                     "params": {
                         "shoot_rate": 0.1,
-                        "ammo_count": 18,
+                        "ammo_count": 6,
                         "reload_time": 1.5,
                         "projectile_type": "enemy_shot",
                     },
@@ -1974,13 +1974,13 @@ WAVE = {
             "behaviors": [
                 {
                     "action": "move_straight",
-                    "params": {"speed": 80},
+                    "params": {"speed": 120},
                 },
                 {
                     "action": "shoot",
                     "params": {
                         "shoot_rate": 0.2,
-                        "ammo_count": 12,
+                        "ammo_count": 6,
                         "reload_time": 2.0,
                         "projectile_type": "enemy_shot",
                     },
@@ -1994,13 +1994,13 @@ WAVE = {
             "behaviors": [
                 {
                     "action": "move_straight",
-                    "params": {"speed": 80},
+                    "params": {"speed": 120},
                 },
                 {
                     "action": "shoot",
                     "params": {
                         "shoot_rate": 0.2,
-                        "ammo_count": 12,
+                        "ammo_count": 6,
                         "reload_time": 2.0,
                         "projectile_type": "enemy_shot",
                     },
@@ -2014,13 +2014,13 @@ WAVE = {
             "behaviors": [
                 {
                     "action": "move_straight",
-                    "params": {"speed": 80},
+                    "params": {"speed": 140},
                 },
                 {
                     "action": "shoot",
                     "params": {
                         "shoot_rate": 0.1,
-                        "ammo_count": 18,
+                        "ammo_count": 6,
                         "reload_time": 1.5,
                         "projectile_type": "enemy_shot",
                     },
@@ -2034,13 +2034,13 @@ WAVE = {
             "behaviors": [
                 {
                     "action": "move_straight",
-                    "params": {"speed": 80},
+                    "params": {"speed": 140},
                 },
                 {
                     "action": "shoot",
                     "params": {
                         "shoot_rate": 0.1,
-                        "ammo_count": 18,
+                        "ammo_count": 6,
                         "reload_time": 1.5,
                         "projectile_type": "enemy_shot",
                     },
@@ -2054,13 +2054,13 @@ WAVE = {
             "behaviors": [
                 {
                     "action": "move_straight",
-                    "params": {"speed": 80},
+                    "params": {"speed": 140},
                 },
                 {
                     "action": "shoot",
                     "params": {
                         "shoot_rate": 0.1,
-                        "ammo_count": 18,
+                        "ammo_count": 6,
                         "reload_time": 1.5,
                         "projectile_type": "enemy_shot",
                     },
@@ -2074,13 +2074,13 @@ WAVE = {
             "behaviors": [
                 {
                     "action": "move_straight",
-                    "params": {"speed": 80},
+                    "params": {"speed": 140},
                 },
                 {
                     "action": "shoot",
                     "params": {
                         "shoot_rate": 0.1,
-                        "ammo_count": 18,
+                        "ammo_count": 6,
                         "reload_time": 1.5,
                         "projectile_type": "enemy_shot",
                     },
@@ -2094,13 +2094,13 @@ WAVE = {
             "behaviors": [
                 {
                     "action": "move_straight",
-                    "params": {"speed": 80},
+                    "params": {"speed": 140},
                 },
                 {
                     "action": "shoot",
                     "params": {
                         "shoot_rate": 0.2,
-                        "ammo_count": 12,
+                        "ammo_count": 6,
                         "reload_time": 2.0,
                         "projectile_type": "enemy_shot",
                     },
@@ -2114,13 +2114,13 @@ WAVE = {
             "behaviors": [
                 {
                     "action": "move_straight",
-                    "params": {"speed": 80},
+                    "params": {"speed": 120},
                 },
                 {
                     "action": "shoot",
                     "params": {
                         "shoot_rate": 0.2,
-                        "ammo_count": 12,
+                        "ammo_count": 6,
                         "reload_time": 2.0,
                         "projectile_type": "enemy_shot",
                     },
@@ -2134,13 +2134,13 @@ WAVE = {
             "behaviors": [
                 {
                     "action": "move_straight",
-                    "params": {"speed": 80},
+                    "params": {"speed": 120},
                 },
                 {
                     "action": "shoot",
                     "params": {
                         "shoot_rate": 0.2,
-                        "ammo_count": 12,
+                        "ammo_count": 6,
                         "reload_time": 2.0,
                         "projectile_type": "enemy_shot",
                     },
@@ -2154,13 +2154,13 @@ WAVE = {
             "behaviors": [
                 {
                     "action": "move_straight",
-                    "params": {"speed": 80},
+                    "params": {"speed": 120},
                 },
                 {
                     "action": "shoot",
                     "params": {
                         "shoot_rate": 0.2,
-                        "ammo_count": 12,
+                        "ammo_count": 6,
                         "reload_time": 2.0,
                         "projectile_type": "enemy_shot",
                     },
@@ -2174,13 +2174,13 @@ WAVE = {
             "behaviors": [
                 {
                     "action": "move_straight",
-                    "params": {"speed": 80},
+                    "params": {"speed": 120},
                 },
                 {
                     "action": "shoot",
                     "params": {
                         "shoot_rate": 0.2,
-                        "ammo_count": 12,
+                        "ammo_count": 6,
                         "reload_time": 2.0,
                         "projectile_type": "enemy_shot",
                     },
@@ -2194,13 +2194,13 @@ WAVE = {
             "behaviors": [
                 {
                     "action": "move_straight",
-                    "params": {"speed": 80},
+                    "params": {"speed": 120},
                 },
                 {
                     "action": "shoot",
                     "params": {
                         "shoot_rate": 0.2,
-                        "ammo_count": 12,
+                        "ammo_count": 6,
                         "reload_time": 2.0,
                         "projectile_type": "enemy_shot",
                     },
@@ -2214,13 +2214,13 @@ WAVE = {
             "behaviors": [
                 {
                     "action": "move_straight",
-                    "params": {"speed": 80},
+                    "params": {"speed": 140},
                 },
                 {
                     "action": "shoot",
                     "params": {
                         "shoot_rate": 0.1,
-                        "ammo_count": 18,
+                        "ammo_count": 6,
                         "reload_time": 1.5,
                         "projectile_type": "enemy_shot",
                     },
@@ -2234,13 +2234,13 @@ WAVE = {
             "behaviors": [
                 {
                     "action": "move_straight",
-                    "params": {"speed": 80},
+                    "params": {"speed": 140},
                 },
                 {
                     "action": "shoot",
                     "params": {
                         "shoot_rate": 0.1,
-                        "ammo_count": 18,
+                        "ammo_count": 6,
                         "reload_time": 1.5,
                         "projectile_type": "enemy_shot",
                     },
@@ -2254,13 +2254,13 @@ WAVE = {
             "behaviors": [
                 {
                     "action": "move_straight",
-                    "params": {"speed": 80},
+                    "params": {"speed": 140},
                 },
                 {
                     "action": "shoot",
                     "params": {
                         "shoot_rate": 0.1,
-                        "ammo_count": 18,
+                        "ammo_count": 6,
                         "reload_time": 1.5,
                         "projectile_type": "enemy_shot",
                     },
@@ -2274,13 +2274,13 @@ WAVE = {
             "behaviors": [
                 {
                     "action": "move_straight",
-                    "params": {"speed": 80},
+                    "params": {"speed": 140},
                 },
                 {
                     "action": "shoot",
                     "params": {
                         "shoot_rate": 0.1,
-                        "ammo_count": 18,
+                        "ammo_count": 6,
                         "reload_time": 1.5,
                         "projectile_type": "enemy_shot",
                     },
@@ -2294,13 +2294,13 @@ WAVE = {
             "behaviors": [
                 {
                     "action": "move_straight",
-                    "params": {"speed": 80},
+                    "params": {"speed": 140},
                 },
                 {
                     "action": "shoot",
                     "params": {
                         "shoot_rate": 0.1,
-                        "ammo_count": 18,
+                        "ammo_count": 6,
                         "reload_time": 1.5,
                         "projectile_type": "enemy_shot",
                     },
@@ -2314,13 +2314,13 @@ WAVE = {
             "behaviors": [
                 {
                     "action": "move_straight",
-                    "params": {"speed": 80},
+                    "params": {"speed": 120},
                 },
                 {
                     "action": "shoot",
                     "params": {
                         "shoot_rate": 0.2,
-                        "ammo_count": 12,
+                        "ammo_count": 6,
                         "reload_time": 2.0,
                         "projectile_type": "enemy_shot",
                     },
@@ -2334,13 +2334,13 @@ WAVE = {
             "behaviors": [
                 {
                     "action": "move_straight",
-                    "params": {"speed": 80},
+                    "params": {"speed": 120},
                 },
                 {
                     "action": "shoot",
                     "params": {
                         "shoot_rate": 0.2,
-                        "ammo_count": 12,
+                        "ammo_count": 6,
                         "reload_time": 2.0,
                         "projectile_type": "enemy_shot",
                     },
@@ -2354,13 +2354,13 @@ WAVE = {
             "behaviors": [
                 {
                     "action": "move_straight",
-                    "params": {"speed": 80},
+                    "params": {"speed": 120},
                 },
                 {
                     "action": "shoot",
                     "params": {
                         "shoot_rate": 0.2,
-                        "ammo_count": 12,
+                        "ammo_count": 6,
                         "reload_time": 2.0,
                         "projectile_type": "enemy_shot",
                     },
@@ -2374,13 +2374,13 @@ WAVE = {
             "behaviors": [
                 {
                     "action": "move_straight",
-                    "params": {"speed": 80},
+                    "params": {"speed": 120},
                 },
                 {
                     "action": "shoot",
                     "params": {
                         "shoot_rate": 0.2,
-                        "ammo_count": 12,
+                        "ammo_count": 6,
                         "reload_time": 2.0,
                         "projectile_type": "enemy_shot",
                     },
@@ -2394,13 +2394,13 @@ WAVE = {
             "behaviors": [
                 {
                     "action": "move_straight",
-                    "params": {"speed": 80},
+                    "params": {"speed": 120},
                 },
                 {
                     "action": "shoot",
                     "params": {
                         "shoot_rate": 0.2,
-                        "ammo_count": 12,
+                        "ammo_count": 6,
                         "reload_time": 2.0,
                         "projectile_type": "enemy_shot",
                     },
@@ -2414,13 +2414,13 @@ WAVE = {
             "behaviors": [
                 {
                     "action": "move_straight",
-                    "params": {"speed": 80},
+                    "params": {"speed": 140},
                 },
                 {
                     "action": "shoot",
                     "params": {
                         "shoot_rate": 0.1,
-                        "ammo_count": 18,
+                        "ammo_count": 6,
                         "reload_time": 1.5,
                         "projectile_type": "enemy_shot",
                     },
@@ -2434,13 +2434,13 @@ WAVE = {
             "behaviors": [
                 {
                     "action": "move_straight",
-                    "params": {"speed": 80},
+                    "params": {"speed": 140},
                 },
                 {
                     "action": "shoot",
                     "params": {
                         "shoot_rate": 0.1,
-                        "ammo_count": 18,
+                        "ammo_count": 6,
                         "reload_time": 1.5,
                         "projectile_type": "enemy_shot",
                     },
@@ -2454,13 +2454,13 @@ WAVE = {
             "behaviors": [
                 {
                     "action": "move_straight",
-                    "params": {"speed": 80},
+                    "params": {"speed": 140},
                 },
                 {
                     "action": "shoot",
                     "params": {
                         "shoot_rate": 0.1,
-                        "ammo_count": 18,
+                        "ammo_count": 6,
                         "reload_time": 1.5,
                         "projectile_type": "enemy_shot",
                     },
@@ -2474,13 +2474,13 @@ WAVE = {
             "behaviors": [
                 {
                     "action": "move_straight",
-                    "params": {"speed": 80},
+                    "params": {"speed": 140},
                 },
                 {
                     "action": "shoot",
                     "params": {
                         "shoot_rate": 0.1,
-                        "ammo_count": 18,
+                        "ammo_count": 6,
                         "reload_time": 1.5,
                         "projectile_type": "enemy_shot",
                     },
@@ -2494,13 +2494,13 @@ WAVE = {
             "behaviors": [
                 {
                     "action": "move_straight",
-                    "params": {"speed": 80},
+                    "params": {"speed": 140},
                 },
                 {
                     "action": "shoot",
                     "params": {
                         "shoot_rate": 0.1,
-                        "ammo_count": 18,
+                        "ammo_count": 6,
                         "reload_time": 1.5,
                         "projectile_type": "enemy_shot",
                     },
@@ -2514,13 +2514,13 @@ WAVE = {
             "behaviors": [
                 {
                     "action": "move_straight",
-                    "params": {"speed": 80},
+                    "params": {"speed": 140},
                 },
                 {
                     "action": "shoot",
                     "params": {
                         "shoot_rate": 0.1,
-                        "ammo_count": 18,
+                        "ammo_count": 6,
                         "reload_time": 1.5,
                         "projectile_type": "enemy_shot",
                     },
@@ -2534,13 +2534,13 @@ WAVE = {
             "behaviors": [
                 {
                     "action": "move_straight",
-                    "params": {"speed": 80},
+                    "params": {"speed": 140},
                 },
                 {
                     "action": "shoot",
                     "params": {
                         "shoot_rate": 0.1,
-                        "ammo_count": 18,
+                        "ammo_count": 6,
                         "reload_time": 1.5,
                         "projectile_type": "enemy_shot",
                     },
@@ -2554,13 +2554,13 @@ WAVE = {
             "behaviors": [
                 {
                     "action": "move_straight",
-                    "params": {"speed": 80},
+                    "params": {"speed": 140},
                 },
                 {
                     "action": "shoot",
                     "params": {
                         "shoot_rate": 0.1,
-                        "ammo_count": 18,
+                        "ammo_count": 6,
                         "reload_time": 1.5,
                         "projectile_type": "enemy_shot",
                     },
@@ -2574,13 +2574,13 @@ WAVE = {
             "behaviors": [
                 {
                     "action": "move_straight",
-                    "params": {"speed": 80},
+                    "params": {"speed": 140},
                 },
                 {
                     "action": "shoot",
                     "params": {
                         "shoot_rate": 0.1,
-                        "ammo_count": 18,
+                        "ammo_count": 6,
                         "reload_time": 1.5,
                         "projectile_type": "enemy_shot",
                     },
@@ -2594,13 +2594,13 @@ WAVE = {
             "behaviors": [
                 {
                     "action": "move_straight",
-                    "params": {"speed": 80},
+                    "params": {"speed": 140},
                 },
                 {
                     "action": "shoot",
                     "params": {
                         "shoot_rate": 0.1,
-                        "ammo_count": 18,
+                        "ammo_count": 6,
                         "reload_time": 1.5,
                         "projectile_type": "enemy_shot",
                     },
@@ -2614,13 +2614,13 @@ WAVE = {
             "behaviors": [
                 {
                     "action": "move_straight",
-                    "params": {"speed": 80},
+                    "params": {"speed": 120},
                 },
                 {
                     "action": "shoot",
                     "params": {
                         "shoot_rate": 0.2,
-                        "ammo_count": 12,
+                        "ammo_count": 6,
                         "reload_time": 2.0,
                         "projectile_type": "enemy_shot",
                     },
@@ -2634,13 +2634,13 @@ WAVE = {
             "behaviors": [
                 {
                     "action": "move_straight",
-                    "params": {"speed": 80},
+                    "params": {"speed": 120},
                 },
                 {
                     "action": "shoot",
                     "params": {
                         "shoot_rate": 0.2,
-                        "ammo_count": 12,
+                        "ammo_count": 6,
                         "reload_time": 2.0,
                         "projectile_type": "enemy_shot",
                     },
@@ -2654,13 +2654,13 @@ WAVE = {
             "behaviors": [
                 {
                     "action": "move_straight",
-                    "params": {"speed": 80},
+                    "params": {"speed": 120},
                 },
                 {
                     "action": "shoot",
                     "params": {
                         "shoot_rate": 0.2,
-                        "ammo_count": 12,
+                        "ammo_count": 6,
                         "reload_time": 2.0,
                         "projectile_type": "enemy_shot",
                     },
@@ -2674,13 +2674,13 @@ WAVE = {
             "behaviors": [
                 {
                     "action": "move_straight",
-                    "params": {"speed": 80},
+                    "params": {"speed": 120},
                 },
                 {
                     "action": "shoot",
                     "params": {
                         "shoot_rate": 0.2,
-                        "ammo_count": 12,
+                        "ammo_count": 6,
                         "reload_time": 2.0,
                         "projectile_type": "enemy_shot",
                     },
@@ -2694,13 +2694,13 @@ WAVE = {
             "behaviors": [
                 {
                     "action": "move_straight",
-                    "params": {"speed": 80},
+                    "params": {"speed": 120},
                 },
                 {
                     "action": "shoot",
                     "params": {
                         "shoot_rate": 0.2,
-                        "ammo_count": 12,
+                        "ammo_count": 6,
                         "reload_time": 2.0,
                         "projectile_type": "enemy_shot",
                     },
@@ -2714,13 +2714,13 @@ WAVE = {
             "behaviors": [
                 {
                     "action": "move_straight",
-                    "params": {"speed": 80},
+                    "params": {"speed": 120},
                 },
                 {
                     "action": "shoot",
                     "params": {
                         "shoot_rate": 0.2,
-                        "ammo_count": 12,
+                        "ammo_count": 6,
                         "reload_time": 2.0,
                         "projectile_type": "enemy_shot",
                     },
@@ -2734,13 +2734,13 @@ WAVE = {
             "behaviors": [
                 {
                     "action": "move_straight",
-                    "params": {"speed": 80},
+                    "params": {"speed": 120},
                 },
                 {
                     "action": "shoot",
                     "params": {
                         "shoot_rate": 0.2,
-                        "ammo_count": 12,
+                        "ammo_count": 6,
                         "reload_time": 2.0,
                         "projectile_type": "enemy_shot",
                     },
@@ -2754,13 +2754,13 @@ WAVE = {
             "behaviors": [
                 {
                     "action": "move_straight",
-                    "params": {"speed": 80},
+                    "params": {"speed": 120},
                 },
                 {
                     "action": "shoot",
                     "params": {
                         "shoot_rate": 0.2,
-                        "ammo_count": 12,
+                        "ammo_count": 6,
                         "reload_time": 2.0,
                         "projectile_type": "enemy_shot",
                     },
@@ -2774,13 +2774,13 @@ WAVE = {
             "behaviors": [
                 {
                     "action": "move_straight",
-                    "params": {"speed": 80},
+                    "params": {"speed": 120},
                 },
                 {
                     "action": "shoot",
                     "params": {
                         "shoot_rate": 0.2,
-                        "ammo_count": 12,
+                        "ammo_count": 6,
                         "reload_time": 2.0,
                         "projectile_type": "enemy_shot",
                     },
@@ -2794,13 +2794,13 @@ WAVE = {
             "behaviors": [
                 {
                     "action": "move_straight",
-                    "params": {"speed": 80},
+                    "params": {"speed": 140},
                 },
                 {
                     "action": "shoot",
                     "params": {
                         "shoot_rate": 0.1,
-                        "ammo_count": 18,
+                        "ammo_count": 6,
                         "reload_time": 1.5,
                         "projectile_type": "enemy_shot",
                     },
@@ -2814,13 +2814,13 @@ WAVE = {
             "behaviors": [
                 {
                     "action": "move_straight",
-                    "params": {"speed": 80},
+                    "params": {"speed": 140},
                 },
                 {
                     "action": "shoot",
                     "params": {
                         "shoot_rate": 0.1,
-                        "ammo_count": 18,
+                        "ammo_count": 6,
                         "reload_time": 1.5,
                         "projectile_type": "enemy_shot",
                     },
@@ -2834,13 +2834,13 @@ WAVE = {
             "behaviors": [
                 {
                     "action": "move_straight",
-                    "params": {"speed": 80},
+                    "params": {"speed": 140},
                 },
                 {
                     "action": "shoot",
                     "params": {
                         "shoot_rate": 0.1,
-                        "ammo_count": 18,
+                        "ammo_count": 6,
                         "reload_time": 1.5,
                         "projectile_type": "enemy_shot",
                     },
@@ -2854,13 +2854,13 @@ WAVE = {
             "behaviors": [
                 {
                     "action": "move_straight",
-                    "params": {"speed": 80},
+                    "params": {"speed": 140},
                 },
                 {
                     "action": "shoot",
                     "params": {
                         "shoot_rate": 0.1,
-                        "ammo_count": 18,
+                        "ammo_count": 6,
                         "reload_time": 1.5,
                         "projectile_type": "enemy_shot",
                     },
@@ -2874,13 +2874,13 @@ WAVE = {
             "behaviors": [
                 {
                     "action": "move_straight",
-                    "params": {"speed": 80},
+                    "params": {"speed": 140},
                 },
                 {
                     "action": "shoot",
                     "params": {
                         "shoot_rate": 0.1,
-                        "ammo_count": 18,
+                        "ammo_count": 6,
                         "reload_time": 1.5,
                         "projectile_type": "enemy_shot",
                     },
@@ -2894,13 +2894,13 @@ WAVE = {
             "behaviors": [
                 {
                     "action": "move_straight",
-                    "params": {"speed": 80},
+                    "params": {"speed": 140},
                 },
                 {
                     "action": "shoot",
                     "params": {
                         "shoot_rate": 0.1,
-                        "ammo_count": 18,
+                        "ammo_count": 6,
                         "reload_time": 1.5,
                         "projectile_type": "enemy_shot",
                     },
@@ -2914,13 +2914,13 @@ WAVE = {
             "behaviors": [
                 {
                     "action": "move_straight",
-                    "params": {"speed": 80},
+                    "params": {"speed": 140},
                 },
                 {
                     "action": "shoot",
                     "params": {
                         "shoot_rate": 0.1,
-                        "ammo_count": 18,
+                        "ammo_count": 6,
                         "reload_time": 1.5,
                         "projectile_type": "enemy_shot",
                     },
@@ -2934,13 +2934,13 @@ WAVE = {
             "behaviors": [
                 {
                     "action": "move_straight",
-                    "params": {"speed": 80},
+                    "params": {"speed": 140},
                 },
                 {
                     "action": "shoot",
                     "params": {
                         "shoot_rate": 0.1,
-                        "ammo_count": 18,
+                        "ammo_count": 6,
                         "reload_time": 1.5,
                         "projectile_type": "enemy_shot",
                     },
@@ -2954,13 +2954,13 @@ WAVE = {
             "behaviors": [
                 {
                     "action": "move_straight",
-                    "params": {"speed": 80},
+                    "params": {"speed": 140},
                 },
                 {
                     "action": "shoot",
                     "params": {
                         "shoot_rate": 0.1,
-                        "ammo_count": 18,
+                        "ammo_count": 6,
                         "reload_time": 1.5,
                         "projectile_type": "enemy_shot",
                     },
@@ -2974,7 +2974,7 @@ WAVE = {
             "behaviors": [
                 {
                     "action": "move_straight",
-                    "params": {"speed": 80},
+                    "params": {"speed": 100},
                 },
                 {"action": "rotate_constantly", "params": {}},
             ],
@@ -2988,7 +2988,7 @@ WAVE = {
             "behaviors": [
                 {
                     "action": "move_straight",
-                    "params": {"speed": 80},
+                    "params": {"speed": 100},
                 },
                 {"action": "rotate_constantly", "params": {}},
             ],
@@ -3000,7 +3000,7 @@ WAVE = {
             "behaviors": [
                 {
                     "action": "move_straight",
-                    "params": {"speed": 80},
+                    "params": {"speed": 100},
                 },
                 {"action": "rotate_constantly", "params": {}},
             ],
@@ -3015,13 +3015,13 @@ WAVE = {
             "behaviors": [
                 {
                     "action": "move_straight",
-                    "params": {"speed": 80},
+                    "params": {"speed": 140},
                 },
                 {
                     "action": "shoot",
                     "params": {
                         "shoot_rate": 0.1,
-                        "ammo_count": 18,
+                        "ammo_count": 6,
                         "reload_time": 1.5,
                         "projectile_type": "enemy_shot",
                     },
@@ -3035,13 +3035,13 @@ WAVE = {
             "behaviors": [
                 {
                     "action": "move_straight",
-                    "params": {"speed": 80},
+                    "params": {"speed": 140},
                 },
                 {
                     "action": "shoot",
                     "params": {
                         "shoot_rate": 0.1,
-                        "ammo_count": 18,
+                        "ammo_count": 6,
                         "reload_time": 1.5,
                         "projectile_type": "enemy_shot",
                     },
@@ -3055,13 +3055,13 @@ WAVE = {
             "behaviors": [
                 {
                     "action": "move_straight",
-                    "params": {"speed": 80},
+                    "params": {"speed": 140},
                 },
                 {
                     "action": "shoot",
                     "params": {
                         "shoot_rate": 0.1,
-                        "ammo_count": 18,
+                        "ammo_count": 6,
                         "reload_time": 1.5,
                         "projectile_type": "enemy_shot",
                     },
@@ -3076,7 +3076,7 @@ WAVE = {
             "behaviors": [
                 {
                     "action": "move_straight",
-                    "params": {"speed": 80},
+                    "params": {"speed": 100},
                 },
                 {"action": "rotate_constantly", "params": {}},
             ],
@@ -3088,7 +3088,7 @@ WAVE = {
             "behaviors": [
                 {
                     "action": "move_straight",
-                    "params": {"speed": 80},
+                    "params": {"speed": 100},
                 },
                 {"action": "rotate_constantly", "params": {}},
             ],

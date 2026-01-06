@@ -12,13 +12,13 @@ class Game:
         self.game_surface = pygame.Surface(
             (DISPLAY["game_surface_width"], DISPLAY["screen_height"])
         )
+        self.scaled_surface = self.scale_surface(self.game_surface)
         self.game_surface_offset = {
-            "x": (self.display_surface.get_width() - self.game_surface.get_width())
+            "x": (self.display_surface.get_width() - self.scaled_surface.get_width())
             // 2,
-            "y": (self.display_surface.get_height() - self.game_surface.get_height())
+            "y": (self.display_surface.get_height() - self.scaled_surface.get_height())
             // 2,
         }
-        self.scaled_surface = self.scale_surface(self.game_surface)
         self.clock = pygame.time.Clock()
         self.dt = 0
         self.score_store = ScoreStore()
