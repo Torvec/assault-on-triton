@@ -1,7 +1,5 @@
-import traceback
 import pygame
 from src.game import Game
-from data.settings import DISPLAY
 from data.assets import IMAGES
 
 
@@ -10,17 +8,10 @@ def main():
     pygame.mixer.init()
     pygame.display.set_caption("Assault On Triton")
     pygame.display.set_icon(pygame.image.load(IMAGES["icon"]))
-    display_surface = pygame.display.set_mode(
-        (DISPLAY["screen_width"], DISPLAY["screen_height"])
-    )
-    try:
-        game = Game(display_surface)
-        game.run()
-    except Exception as e:
-        print(f"An error occurred: {e}")
-        traceback.print_exc()
-    finally:
-        pygame.quit()
+    display_surface = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
+
+    game = Game(display_surface)
+    game.run()
 
 
 if __name__ == "__main__":
