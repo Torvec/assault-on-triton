@@ -13,12 +13,10 @@ class Game:
             (DISPLAY["game_surface_width"], DISPLAY["screen_height"])
         )
         self.scaled_surface = self.scale_surface(self.game_surface)
-        self.game_surface_offset = {
-            "x": (self.display_surface.get_width() - self.scaled_surface.get_width())
-            // 2,
-            "y": (self.display_surface.get_height() - self.scaled_surface.get_height())
-            // 2,
-        }
+        self.scaled_surface_offset = (
+            self.display_surface.get_width() - self.scaled_surface.get_width()
+        ) // 2
+
         self.clock = pygame.time.Clock()
         self.dt = 0
         self.score_store = ScoreStore()
@@ -58,7 +56,7 @@ class Game:
             self.current_screen.draw(self.display_surface, self.scaled_surface)
             self.display_surface.blit(
                 self.scaled_surface,
-                (self.game_surface_offset["x"], 0),
+                (self.scaled_surface_offset, 0),
             )
             pygame.display.flip()
             self.dt = self.clock.tick(DISPLAY["target_fps"]) / 1000
