@@ -1,11 +1,6 @@
 DISPLAY = {
-    "screen_width": 1920,
-    "screen_height": 1080,
-    "game_surface_width": 608,
-    "sidebar_width": 608,
-    "sidebar_left_offset": 48,
-    "game_surface_offset": 48 + 608,
-    "sidebar_right_offset": 48 + 608 + 608,
+    "base_gs_w": 216,
+    "base_gs_h": 360,
     "target_fps": 60,
 }
 

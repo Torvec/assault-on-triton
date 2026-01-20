@@ -9,14 +9,10 @@ class Game:
 
     def __init__(self, display_surface):
         self.display_surface = display_surface
-        self.game_surface = pygame.Surface(
-            (DISPLAY["game_surface_width"], DISPLAY["screen_height"])
-        )
-        self.scaled_surface = self.scale_surface(self.game_surface)
-        self.scaled_surface_offset = (
-            self.display_surface.get_width() - self.scaled_surface.get_width()
-        ) // 2
-
+        self.game_surface = pygame.Surface((DISPLAY["base_gs_w"], DISPLAY["base_gs_h"]))
+        self.scaled_gs = self.scale_surface(self.game_surface)
+        self.scaled_gs_center = self.display_surface.get_rect().center
+        self.scaled_gs_rect = self.scaled_gs.get_rect(center=self.scaled_gs_center)
         self.clock = pygame.time.Clock()
         self.dt = 0
         self.score_store = ScoreStore()
@@ -37,11 +33,14 @@ class Game:
         self.current_screen = self.screens[screen_name](self)
 
     def scale_surface(self, game_surface):
+        scale_w = self.display_surface.get_width() // DISPLAY["base_gs_w"]
+        scale_h = self.display_surface.get_height() // DISPLAY["base_gs_h"]
+        scale = max(1, min(scale_w, scale_h))
         return pygame.transform.scale(
             game_surface,
             (
-                self.display_surface.get_height() * 9 / 16,
-                self.display_surface.get_height(),
+                self.game_surface.get_width() * scale,
+                self.game_surface.get_height() * scale,
             ),
         )
 
@@ -53,11 +52,8 @@ class Game:
                     self.running = False
             self.current_screen.handle_event(events)
             self.current_screen.update(self.dt)
-            self.current_screen.draw(self.display_surface, self.scaled_surface)
-            self.display_surface.blit(
-                self.scaled_surface,
-                (self.scaled_surface_offset, 0),
-            )
+            self.current_screen.draw(self.display_surface, self.scaled_gs)
+            self.display_surface.blit(self.scaled_gs, (self.scaled_gs_rect))
             pygame.display.flip()
             self.dt = self.clock.tick(DISPLAY["target_fps"]) / 1000
         pygame.quit()

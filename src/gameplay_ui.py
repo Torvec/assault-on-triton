@@ -11,9 +11,7 @@ class GamePlayUI:
     def __init__(self, game, gameplay):
         self.game = game
         self.gameplay = gameplay
-        self.game_surface_rect = self.game.scaled_surface.get_rect(
-            center=self.game.display_surface.get_rect().center
-        )
+        self.game_surface_rect = self.game.scaled_gs_rect
         self.current_speaker = None
         self.current_dialogue = None
         self.dialogue_duration = 0
@@ -75,7 +73,10 @@ class GamePlayUI:
     def draw_top_left(self, surface):
         """Score, multiplier, high score"""
         rect = pygame.Rect(0, 0, 384, 128)
-        rect.topright = (self.game_surface_rect.left - 16, 16)
+        rect.topright = (
+            self.game_surface_rect.left - 16,
+            self.game_surface_rect.top + 16,
+        )
         pygame.draw.rect(surface, UI["colors"]["background"], rect)
         content_rect = pygame.Rect(
             rect.x + 16,
@@ -225,7 +226,10 @@ class GamePlayUI:
             return
 
         rect = pygame.Rect(0, 0, 384, 128)
-        rect.topleft = (self.game_surface_rect.right + 16, 16)
+        rect.topleft = (
+            self.game_surface_rect.right + 16,
+            self.game_surface_rect.top + 16,
+        )
         pygame.draw.rect(surface, UI["colors"]["background"], rect)
         content_rect = pygame.Rect(
             rect.x + 16,
