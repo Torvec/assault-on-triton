@@ -10,7 +10,8 @@ class Game:
     def __init__(self, display_surface):
         self.display_surface = display_surface
         self.game_surface = pygame.Surface((DISPLAY["base_gs_w"], DISPLAY["base_gs_h"]))
-        self.scaled_gs = self.scale_surface(self.game_surface)
+        self.scale_factor = self.get_scale_factor()
+        self.scaled_gs = self.scale_game_surface(self.scale_factor)
         self.scaled_gs_center = self.display_surface.get_rect().center
         self.scaled_gs_rect = self.scaled_gs.get_rect(center=self.scaled_gs_center)
         self.clock = pygame.time.Clock()
@@ -32,12 +33,14 @@ class Game:
             raise ValueError(f"Unknown scene: {screen_name}")
         self.current_screen = self.screens[screen_name](self)
 
-    def scale_surface(self, game_surface):
+    def get_scale_factor(self):
         scale_w = self.display_surface.get_width() // DISPLAY["base_gs_w"]
         scale_h = self.display_surface.get_height() // DISPLAY["base_gs_h"]
-        scale = max(1, min(scale_w, scale_h))
+        return max(1, min(scale_w, scale_h))
+
+    def scale_game_surface(self, scale):
         return pygame.transform.scale(
-            game_surface,
+            self.game_surface,
             (
                 self.game_surface.get_width() * scale,
                 self.game_surface.get_height() * scale,
