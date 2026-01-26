@@ -123,6 +123,11 @@ class Entity(pygame.sprite.Sprite):
             params["dt"] = dt
             behavior_fn(self, **params)
 
+    def scale_entity_surface(self, surface, scale):
+        return pygame.transform.scale(
+            surface, (surface.get_width() * scale, surface.get_height() * scale)
+        )
+
     def update(self, dt):
         self.rect.center = (self.position.x, self.position.y)
         self.handle_behaviors(dt)
@@ -520,9 +525,8 @@ class EnemyShip(Entity):
 
 
 class EnemyDestroyer(Entity):
-
     """
-    Need to define the area where the destroyer itself can be damaged which is the bridge only, turrets have their own separate hit detection. 
+    Need to define the area where the destroyer itself can be damaged which is the bridge only, turrets have their own separate hit detection.
     Destroying the bridge is the only thing that destroyes the destroyer.
     The destroyer sprite will have the bridge on it rather than it being a separate sprite like the turrets and missile launchers are
     """
@@ -695,9 +699,7 @@ class Pickup(Entity):
 
     def __init__(self, x, y, gameplay):
         super().__init__(x, y, gameplay)
-        self.player = (
-            self.gameplay.entity_manager.get_entity_instance("player")
-        )
+        self.player = self.gameplay.entity_manager.get_entity_instance("player")
         pickup_type = getattr(self, "pickup_type", "health")
         data = PICKUPS.get(pickup_type, PICKUPS["health"])
         self.speed = data["speed"]
@@ -810,6 +812,9 @@ class Player(Entity):
     def __init__(self, x, y, gameplay):
         self.img_path = IMAGES["player_ship"]
         super().__init__(x, y, gameplay)
+        self.scaled_surface = self.scale_entity_surface(
+            self.image, self.gameplay.game.scale_factor
+        )
         self.acceleration = PLAYER["base_acceleration"]
         self.speed = PLAYER["base_speed"]
         self.lives = PLAYER["base_lives"]
@@ -925,5 +930,5 @@ class Player(Entity):
 
     def draw(self, surface):
         super().draw(surface)
-        surface.blit(self.image, self.rect)
+        surface.blit(self.scaled_surface, self.rect)
         self.flash_when_hit(surface, self.image, self.rect)

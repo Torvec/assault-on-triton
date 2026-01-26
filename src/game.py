@@ -12,8 +12,9 @@ class Game:
         self.game_surface = pygame.Surface((DISPLAY["base_gs_w"], DISPLAY["base_gs_h"]))
         self.scale_factor = self.get_scale_factor()
         self.scaled_gs = self.scale_game_surface(self.scale_factor)
-        self.scaled_gs_center = self.display_surface.get_rect().center
-        self.scaled_gs_rect = self.scaled_gs.get_rect(center=self.scaled_gs_center)
+        self.scaled_gs_rect = self.scaled_gs.get_rect(
+            center=self.display_surface.get_rect().center
+        )
         self.clock = pygame.time.Clock()
         self.dt = 0
         self.score_store = ScoreStore()

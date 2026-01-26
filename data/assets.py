@@ -1,7 +1,8 @@
 IMAGES = {
     "icon": "assets/entities/icon.png",
     # Player
-    "player_ship": "assets/entities/player_spaceship.png",
+    # "player_ship": "assets/entities/player_spaceship.png",
+    "player_ship": "assets/entities/player_ship.png",
     # Enemies
     "asteroid_sm": "assets/entities/asteroid_sm.png",
     "asteroid_md": "assets/entities/asteroid_md.png",
