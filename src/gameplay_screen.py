@@ -24,7 +24,7 @@ class GamePlay(Screen):
 
         self.game_timer = 0
 
-        self.play_area_rect = self.game.scaled_gs.get_rect()
+        self.play_area_rect = self.game.game_surface.get_rect()
 
         self.backgrounds = [
             StarField(0, 0),

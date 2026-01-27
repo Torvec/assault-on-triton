@@ -123,11 +123,6 @@ class Entity(pygame.sprite.Sprite):
             params["dt"] = dt
             behavior_fn(self, **params)
 
-    def scale_entity_surface(self, surface, scale):
-        return pygame.transform.scale(
-            surface, (surface.get_width() * scale, surface.get_height() * scale)
-        )
-
     def update(self, dt):
         self.rect.center = (self.position.x, self.position.y)
         self.handle_behaviors(dt)
@@ -812,9 +807,6 @@ class Player(Entity):
     def __init__(self, x, y, gameplay):
         self.img_path = IMAGES["player_ship"]
         super().__init__(x, y, gameplay)
-        self.scaled_surface = self.scale_entity_surface(
-            self.image, self.gameplay.game.scale_factor
-        )
         self.acceleration = PLAYER["base_acceleration"]
         self.speed = PLAYER["base_speed"]
         self.lives = PLAYER["base_lives"]
@@ -870,11 +862,8 @@ class Player(Entity):
         self.hp -= amount
         if self.hp <= 0:
             self.lives -= 1
-            if self.lives <= 0:
-                self.explode()
-                return
-            # else:
-            #     self.respawn()
+            self.explode()
+            return
         self.invincibleTime = PLAYER["invincible_duration"]
         self.is_hit = True
 
@@ -893,12 +882,6 @@ class Player(Entity):
             None,
         )
         self.kill()
-
-    def respawn(self):
-        self.invincibleTime = PLAYER["invincible_duration"]
-        self.position.x = self.gameplay.play_area_rect.width // 2
-        self.position.y = self.gameplay.play_area_rect.height - 100
-        self.hp = PLAYER["base_hp"]
 
     def controls(self, dt):
         if not self.controls_enabled:
@@ -930,5 +913,5 @@ class Player(Entity):
 
     def draw(self, surface):
         super().draw(surface)
-        surface.blit(self.scaled_surface, self.rect)
+        surface.blit(self.image, self.rect)
         self.flash_when_hit(surface, self.image, self.rect)

@@ -20,18 +20,18 @@ class Modal:
         rect = pygame.Rect(
             0,
             0,
-            surface.get_width() - 16,
-            surface.get_height() * 0.4,
+            surface.get_width() - 4,
+            surface.get_height() * 0.55,
         )
         rect.center = surface.get_rect().center
-        pygame.draw.rect(surface, "grey4", rect, border_radius=24)
-        pygame.draw.rect(surface, "grey70", rect, width=4, border_radius=24)
+        pygame.draw.rect(surface, "grey4", rect, border_radius=12)
+        pygame.draw.rect(surface, "grey70", rect, width=2, border_radius=12)
 
         render_text(
             screen=surface,
             text=self.title,
             font_name="zendots",
-            font_size=48,
+            font_size=22,
             pos=(rect.midtop[0], rect.midtop[1] + 8),
             align="midtop",
         )
@@ -41,9 +41,9 @@ class Modal:
                 screen=surface,
                 text=item,
                 font_name="spacegrotesk_semibold",
-                font_size=32,
+                font_size=18,
                 color="grey",
-                pos=(rect.midtop[0], rect.midtop[1] + 96 + (i * 48)),
+                pos=(rect.midtop[0], rect.midtop[1] + 40 + (i * 24)),
                 align="midtop",
             )
 

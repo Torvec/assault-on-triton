@@ -5,7 +5,7 @@ from data.assets import FONTS
 def render_text(
     screen,
     text,
-    font_size=36,
+    font_size=18,
     color="white",
     pos=(0, 0),
     align="center",
