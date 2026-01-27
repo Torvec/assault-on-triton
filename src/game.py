@@ -54,10 +54,18 @@ class Game:
             for event in events:
                 if event.type == pygame.QUIT:
                     self.running = False
+
             self.current_screen.handle_event(events)
             self.current_screen.update(self.dt)
-            self.current_screen.draw(self.display_surface, self.scaled_gs)
-            self.display_surface.blit(self.scaled_gs, (self.scaled_gs_rect))
+            self.current_screen.draw(self.game_surface)
+
+            pygame.transform.scale(
+                self.game_surface, self.scaled_gs.get_size(), self.scaled_gs
+            )
+
+            self.display_surface.fill("black")
+            self.display_surface.blit(self.scaled_gs, self.scaled_gs_rect)
+
             pygame.display.flip()
             self.dt = self.clock.tick(DISPLAY["target_fps"]) / 1000
         pygame.quit()

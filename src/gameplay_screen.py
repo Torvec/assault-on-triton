@@ -108,8 +108,8 @@ class GamePlay(Screen):
             self.event_manager.update(dt)
         self.state_manager.update(dt)
 
-    def draw(self, display_surface, game_surface):
-        super().draw(display_surface, game_surface)
+    def draw(self, game_surface):
+        super().draw(game_surface)
         self.handle_bg_draw(game_surface)
         self.entity_manager.draw(game_surface)
         self.gameplay_ui.draw(game_surface)

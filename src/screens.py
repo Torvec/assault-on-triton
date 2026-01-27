@@ -15,8 +15,7 @@ class Screen:
     def update(self, dt):
         pass
 
-    def draw(self, display_surface, game_surface):
-        display_surface.fill("black")
+    def draw(self, game_surface):
         game_surface.fill("#0c0c12")
 
 
@@ -52,8 +51,8 @@ class Start(Screen):
     def update(self, dt):
         super().update(dt)
 
-    def draw(self, display_surface, game_surface):
-        super().draw(display_surface, game_surface)
+    def draw(self, game_surface):
+        super().draw(game_surface)
         render_text(
             screen=game_surface,
             text="ASSAULT",
@@ -121,8 +120,8 @@ class Options(Screen):
     def update(self, dt):
         super().update(dt)
 
-    def draw(self, display_surface, game_surface):
-        super().draw(display_surface, game_surface)
+    def draw(self, game_surface):
+        super().draw(game_surface)
         render_text(
             screen=game_surface,
             text="Options",
@@ -152,8 +151,8 @@ class Scoreboard(Screen):
     def update(self, dt):
         super().update(dt)
 
-    def draw(self, display_surface, game_surface):
-        super().draw(display_surface, game_surface)
+    def draw(self, game_surface):
+        super().draw(game_surface)
         render_text(
             screen=game_surface,
             text="High Scores",
@@ -183,8 +182,8 @@ class Credits(Screen):
     def update(self, dt):
         super().update(dt)
 
-    def draw(self, display_surface, game_surface):
-        super().draw(display_surface, game_surface)
+    def draw(self, game_surface):
+        super().draw(game_surface)
         render_text(
             screen=game_surface,
             text="Credits",
@@ -211,8 +210,8 @@ class Thanks(Screen):
             if event.type == pygame.KEYDOWN and event.key == pygame.K_RETURN:
                 self.game.change_screen("Credits")
 
-    def draw(self, display_surface, game_surface):
-        super().draw(display_surface, game_surface)
+    def draw(self, game_surface):
+        super().draw(game_surface)
         render_text(
             screen=game_surface,
             text="Thanks For Playing!",
