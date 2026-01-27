@@ -112,5 +112,5 @@ class GamePlay(Screen):
         super().draw(display_surface, game_surface)
         self.handle_bg_draw(game_surface)
         self.entity_manager.draw(game_surface)
-        self.gameplay_ui.draw(display_surface, game_surface)
+        self.gameplay_ui.draw(game_surface)
         self.state_manager.draw(game_surface)

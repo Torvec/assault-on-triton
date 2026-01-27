@@ -11,13 +11,18 @@ class GamePlayUI:
     def __init__(self, game, gameplay):
         self.game = game
         self.gameplay = gameplay
-        self.game_surface_rect = self.game.scaled_gs_rect
+        self.game_surface_rect = self.game.game_surface.get_rect()
+
+        # dialogue state
         self.current_speaker = None
         self.current_dialogue = None
+        self.current_portrait = None
         self.dialogue_duration = 0
-        self.dialogue_location = None
+
+        # message state
         self.current_message = None
         self.message_duration = 0
+        self.message_is_blocking = False
 
     def display_dialogue(self, dialogue_id):
         dialogue = SCRIPTED[dialogue_id]
@@ -25,7 +30,6 @@ class GamePlayUI:
         self.current_portrait = IMAGES[dialogue["portrait"]]
         self.current_dialogue = dialogue["text"]
         self.dialogue_duration = dialogue["duration"]
-        self.dialogue_location = dialogue["location"]
 
     def handle_dialogue_duration(self, dt):
         if self.dialogue_duration > 0:
@@ -33,7 +37,8 @@ class GamePlayUI:
             if self.dialogue_duration <= 0:
                 self.current_speaker = None
                 self.current_text = None
-                self.dialogue_location = None
+                self.current_portrait = None
+                self.dialogue_duration = 0
                 self.gameplay.cutscene_manager.on_action_complete()
 
     def display_message(self, message_id):
@@ -56,42 +61,30 @@ class GamePlayUI:
                 if self.message_is_blocking:
                     self.gameplay.event_manager.on_event_complete()
 
-    def draw_streak_meter(self, surface, rect):
-        meter_border_rect = pygame.Rect(0, 0, rect.width, 16)
-        meter_border_rect.midleft = rect.midleft
-        pygame.draw.rect(surface, "white", meter_border_rect, 2, 4)
-        fill_percent = (
-            self.gameplay.score_manager.streak_meter
-            / self.gameplay.score_manager.streak_meter_threshold
-        )
-        fill_width = int((rect.width - 4) * fill_percent)
-        meter_fill_rect = pygame.Rect(0, 0, fill_width, 12)
-        meter_fill_rect.midleft = meter_border_rect.midleft
-        meter_fill_rect.x += 2
-        pygame.draw.rect(surface, "grey50", meter_fill_rect)
+    def draw_score(self, surface):
+        gs_rect = surface.get_rect()
 
-    def draw_top_left(self, surface):
-        """Score, multiplier, high score"""
-        rect = pygame.Rect(0, 0, 384, 128)
-        rect.topright = (
-            self.game_surface_rect.left - 16,
-            self.game_surface_rect.top + 16,
-        )
-        pygame.draw.rect(surface, UI["colors"]["background"], rect)
+        hud_height = 64
+        hud_width = gs_rect.width - 32
+
+        rect = pygame.Rect(0, 0, hud_width, hud_height)
+        rect.topleft = (gs_rect.left + 16, gs_rect.top + 16)
+
         content_rect = pygame.Rect(
             rect.x + 16,
             rect.y + 16,
             rect.width - 32,
             rect.height - 32,
         )
+
         render_text(
             screen=surface,
             text=f"SCORE: {self.gameplay.score_manager.score:09}",
             font_name="zendots",
             font_size=UI["font_sizes"]["small"],
             color=UI["colors"]["primary"],
-            pos=content_rect.topleft,
-            align="topleft",
+            pos=content_rect.midleft,
+            align="midleft",
         )
         render_text(
             screen=surface,
@@ -99,69 +92,11 @@ class GamePlayUI:
             font_name="zendots",
             font_size=UI["font_sizes"]["small"],
             color=UI["colors"]["primary"],
-            pos=content_rect.topright,
-            align="topright",
-        )
-        self.draw_streak_meter(surface, content_rect)
-        render_text(
-            screen=surface,
-            text=f"HI SCORE: {self.game.score_store.high_score:09}",
-            font_name="zendots",
-            font_size=UI["font_sizes"]["small"],
-            color=UI["colors"]["primary"],
-            pos=content_rect.bottomleft,
-            align="bottomleft",
+            pos=content_rect.midright,
+            align="midright",
         )
 
-    def draw_top_center(self, surface):
-        """Enemy dialogue box."""
-        if self.dialogue_location == "top":
-            rect = pygame.Rect(
-                0,
-                0,
-                surface.get_width() - 32,
-                192,
-            )
-            rect.topleft = surface.get_rect().topleft
-            rect.x += 16
-            rect.y += 16
-            pygame.draw.rect(surface, UI["colors"]["background"], rect)
-            content_rect = pygame.Rect(
-                rect.x + 16,
-                rect.y + 16,
-                rect.width - 16,
-                rect.height - 16,
-            )
-            portrait = pygame.image.load(self.current_portrait)
-            portrait_rect = portrait.get_rect()
-            portrait_rect.topleft = content_rect.topleft
-            surface.blit(portrait, portrait_rect)
-            render_text(
-                screen=surface,
-                text=self.current_speaker,
-                font_name="zendots",
-                font_size=UI["font_sizes"]["large"],
-                color=UI["colors"]["secondary"],
-                pos=(
-                    content_rect.topleft[0] + portrait.get_width() + 16,
-                    content_rect.topleft[1],
-                ),
-                align="topleft",
-            )
-            render_text(
-                screen=surface,
-                text=self.current_dialogue,
-                font_size=UI["font_sizes"]["large"],
-                color=UI["colors"]["secondary"],
-                pos=(
-                    content_rect.midleft[0] + portrait.get_width() + 16,
-                    content_rect.midleft[1],
-                ),
-                align="bottomleft",
-            )
-
-    def draw_mid_center(self, surface):
-        """For message overlays"""
+    def draw_message_overlay(self, surface):
         if self.current_message:
             render_text(
                 screen=surface,
@@ -173,115 +108,114 @@ class GamePlayUI:
                 align="center",
             )
 
-    def draw_btm_center(self, surface):
-        """Hero/Ally Dialogue Box"""
-        if self.dialogue_location == "bottom":
-            rect = pygame.Rect(
-                0,
-                0,
-                surface.get_width() - 32,
-                192,
-            )
-            rect.bottomleft = surface.get_rect().bottomleft
-            rect.x += 16
-            rect.y -= 16
-            pygame.draw.rect(surface, UI["colors"]["background"], rect)
-            content_rect = pygame.Rect(
-                rect.x + 16,
-                rect.y + 16,
-                rect.width - 16,
-                rect.height - 16,
-            )
-            portrait = pygame.image.load(self.current_portrait)
-            portrait_rect = portrait.get_rect()
-            portrait_rect.topleft = content_rect.topleft
-            surface.blit(portrait, portrait_rect)
-            render_text(
-                screen=surface,
-                text=self.current_speaker,
-                font_name="zendots",
-                font_size=UI["font_sizes"]["large"],
-                color=UI["colors"]["secondary"],
-                pos=(
-                    content_rect.topleft[0] + portrait.get_width() + 16,
-                    content_rect.topleft[1],
-                ),
-                align="topleft",
-            )
-            render_text(
-                screen=surface,
-                text=self.current_dialogue,
-                font_size=UI["font_sizes"]["large"],
-                color=UI["colors"]["secondary"],
-                pos=(
-                    content_rect.midleft[0] + portrait.get_width() + 16,
-                    content_rect.midleft[1],
-                ),
-                align="midleft",
-            )
-
-    def draw_top_right(self, surface):
-        """Player stats: HP, lives, bombs, power level."""
-        if not self.gameplay.entity_manager.player_group.sprite:
+    def draw_dialogue_box(self, surface):
+        if not (
+            self.current_speaker and self.current_dialogue and self.current_portrait
+        ):
             return
 
-        rect = pygame.Rect(0, 0, 384, 128)
-        rect.topleft = (
-            self.game_surface_rect.right + 16,
-            self.game_surface_rect.top + 16,
+        rect = pygame.Rect(
+            0,
+            0,
+            surface.get_width() - 32,
+            192,
         )
+        rect.bottomleft = surface.get_rect().bottomleft
+        rect.x += 16
+        rect.y -= 64
+
         pygame.draw.rect(surface, UI["colors"]["background"], rect)
+
         content_rect = pygame.Rect(
             rect.x + 16,
             rect.y + 16,
-            rect.width - 32,
-            rect.height - 32,
+            rect.width - 16,
+            rect.height - 16,
         )
+
+        portrait = pygame.image.load(self.current_portrait)
+        portrait_rect = portrait.get_rect()
+        portrait_rect.topleft = content_rect.topleft
+        surface.blit(portrait, portrait_rect)
+
         render_text(
             screen=surface,
-            text=f"HP x {self.gameplay.entity_manager.player_group.sprite.hp}%",
+            text=self.current_speaker,
+            font_name="zendots",
             font_size=UI["font_sizes"]["large"],
-            color=UI["colors"]["primary"],
-            pos=content_rect.topleft,
+            color=UI["colors"]["secondary"],
+            pos=(
+                content_rect.topleft[0] + portrait.get_width() + 16,
+                content_rect.topleft[1],
+            ),
             align="topleft",
         )
         render_text(
             screen=surface,
-            text=f"LIVES x {self.gameplay.entity_manager.player_group.sprite.lives}",
+            text=self.current_dialogue,
+            font_size=UI["font_sizes"]["large"],
+            color=UI["colors"]["secondary"],
+            pos=(
+                content_rect.midleft[0] + portrait.get_width() + 16,
+                content_rect.midleft[1],
+            ),
+            align="midleft",
+        )
+
+    def draw_player_status_hud(self, surface):
+        if not self.gameplay.entity_manager.player_group.sprite:
+            return
+
+        gs_rect = surface.get_rect()
+
+        hud_height = 64
+        hud_width = gs_rect.width - 32
+
+        rect = pygame.Rect(0, 0, hud_width, hud_height)
+        rect.midbottom = (gs_rect.centerx, gs_rect.bottom - 16)
+
+        player = self.gameplay.entity_manager.player_group.sprite
+
+        render_text(
+            screen=surface,
+            text=f"HP x {player.hp}%",
             font_size=UI["font_sizes"]["large"],
             color=UI["colors"]["primary"],
-            pos=content_rect.midleft,
+            pos=rect.midleft,
             align="midleft",
         )
         render_text(
             screen=surface,
-            text=f"BOMBS x {self.gameplay.entity_manager.player_group.sprite.bomb_ammo}",
+            text=f"LIVES x {player.lives}",
             font_size=UI["font_sizes"]["large"],
             color=UI["colors"]["primary"],
-            pos=content_rect.center,
-            align="center",
+            pos=(rect.center[0] - 16, rect.center[1]),
+            align="midright",
         )
-        power_display = UI["power_levels"].get(
-            self.gameplay.entity_manager.player_group.sprite.power_level, "( ? )"
+        render_text(
+            screen=surface,
+            text=f"BOMBS x {player.bomb_ammo}",
+            font_size=UI["font_sizes"]["large"],
+            color=UI["colors"]["primary"],
+            pos=(rect.center[0] + 16, rect.center[1]),
+            align="midleft",
         )
+        power_display = UI["power_levels"].get(player.power_level, "( ? )")
         render_text(
             screen=surface,
             text=f"PWR LVL {power_display}",
             font_size=UI["font_sizes"]["large"],
             color=UI["colors"]["primary"],
-            pos=content_rect.bottomleft,
-            align="bottomleft",
+            pos=rect.midright,
+            align="midright",
         )
 
     def update(self, dt):
         self.handle_dialogue_duration(dt)
         self.handle_message_duration(dt)
 
-    def draw(self, display_surface, game_surface):
-        self.draw_top_left(display_surface)
-
-        self.draw_top_center(game_surface)
-        self.draw_mid_center(game_surface)
-        self.draw_btm_center(game_surface)
-
-        self.draw_top_right(display_surface)
+    def draw(self, game_surface):
+        self.draw_score(game_surface)
+        self.draw_message_overlay(game_surface)
+        self.draw_dialogue_box(game_surface)
+        self.draw_player_status_hud(game_surface)
