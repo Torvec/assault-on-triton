@@ -64,18 +64,11 @@ class GamePlayUI:
     def draw_score(self, surface):
         gs_rect = surface.get_rect()
 
-        hud_height = 64
-        hud_width = gs_rect.width - 32
+        height = 64
+        width = gs_rect.width - 32
 
-        rect = pygame.Rect(0, 0, hud_width, hud_height)
+        rect = pygame.Rect(0, 0, width, height)
         rect.topleft = (gs_rect.left + 16, gs_rect.top + 16)
-
-        content_rect = pygame.Rect(
-            rect.x + 16,
-            rect.y + 16,
-            rect.width - 32,
-            rect.height - 32,
-        )
 
         render_text(
             screen=surface,
@@ -83,8 +76,8 @@ class GamePlayUI:
             font_name="zendots",
             font_size=UI["font_sizes"]["small"],
             color=UI["colors"]["primary"],
-            pos=content_rect.midleft,
-            align="midleft",
+            pos=rect.topleft,
+            align="topleft",
         )
         render_text(
             screen=surface,
@@ -92,8 +85,8 @@ class GamePlayUI:
             font_name="zendots",
             font_size=UI["font_sizes"]["small"],
             color=UI["colors"]["primary"],
-            pos=content_rect.midright,
-            align="midright",
+            pos=rect.topright,
+            align="topright",
         )
 
     def draw_message_overlay(self, surface):
@@ -181,24 +174,24 @@ class GamePlayUI:
             text=f"HP x {player.hp}%",
             font_size=UI["font_sizes"]["large"],
             color=UI["colors"]["primary"],
-            pos=rect.midleft,
-            align="midleft",
+            pos=rect.bottomleft,
+            align="bottomleft",
         )
         render_text(
             screen=surface,
             text=f"LIVES x {player.lives}",
             font_size=UI["font_sizes"]["large"],
             color=UI["colors"]["primary"],
-            pos=(rect.center[0] - 16, rect.center[1]),
-            align="midright",
+            pos=(rect.bottomleft[0] + 256, rect.bottomleft[1]),
+            align="bottomleft",
         )
         render_text(
             screen=surface,
             text=f"BOMBS x {player.bomb_ammo}",
             font_size=UI["font_sizes"]["large"],
             color=UI["colors"]["primary"],
-            pos=(rect.center[0] + 16, rect.center[1]),
-            align="midleft",
+            pos=(rect.bottomright[0] - 256, rect.bottomright[1]),
+            align="bottomright",
         )
         power_display = UI["power_levels"].get(player.power_level, "( ? )")
         render_text(
@@ -206,8 +199,8 @@ class GamePlayUI:
             text=f"PWR LVL {power_display}",
             font_size=UI["font_sizes"]["large"],
             color=UI["colors"]["primary"],
-            pos=rect.midright,
-            align="midright",
+            pos=rect.bottomright,
+            align="bottomright",
         )
 
     def update(self, dt):
