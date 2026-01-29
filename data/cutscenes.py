@@ -5,7 +5,7 @@ CUTSCENE = {
             "params": {
                 "entity_name": "player",
                 "location": {"x": 108, "y": 180},
-                "speed": 150,
+                "speed": 100,
             },
         },
         {
@@ -31,7 +31,7 @@ CUTSCENE = {
             "params": {
                 "entity_name": "player",
                 "location": {"x": 108, "y": 200},
-                "speed": 150,
+                "speed": 100,
             },
         },
         {
@@ -43,7 +43,7 @@ CUTSCENE = {
             "params": {
                 "entity_name": "sub_boss",
                 "location": {"x": 108, "y": 90},
-                "speed": 150,
+                "speed": 100,
             },
         },
         {
@@ -69,7 +69,7 @@ CUTSCENE = {
             "params": {
                 "entity_name": "player",
                 "location": {"x": 108, "y": 200},
-                "speed": 150,
+                "speed": 100,
             },
         },
         {
@@ -107,7 +107,7 @@ CUTSCENE = {
             "params": {
                 "entity_name": "player",
                 "location": {"x": 108, "y": 200},
-                "speed": 150,
+                "speed": 100,
             },
         },
         {
@@ -119,7 +119,7 @@ CUTSCENE = {
             "params": {
                 "entity_name": "level_boss",
                 "location": {"x": 108, "y": 90},
-                "speed": 150,
+                "speed": 100,
             },
         },
         {
@@ -137,7 +137,7 @@ CUTSCENE = {
             "params": {
                 "entity_name": "player",
                 "location": {"x": 108, "y": 200},
-                "speed": 150,
+                "speed": 100,
             },
         },
         {
@@ -170,8 +170,8 @@ CUTSCENE = {
             "action": "move_entity_to_loc",
             "params": {
                 "entity_name": "player",
-                "location": {"x": 108, "y": -90},
-                "speed": 200,
+                "location": {"x": 108, "y": -40},
+                "speed": 100,
             },
         },
     ],

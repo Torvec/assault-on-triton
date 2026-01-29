@@ -1,6 +1,6 @@
 PLAYER = {
     "base_acceleration": 600,
-    "base_speed": 350,
+    "base_speed": 200,
     "base_lives": 1,
     "max_lives": 3,
     "base_hp": 100,
@@ -16,12 +16,12 @@ PLAYER = {
     "velocity_decay": 0.99,
     "shot_origin": {
         1: {"x": 0, "y": -20},
-        2: {"x": -7, "y": -56},
-        3: {"x": 7, "y": -56},
-        4: {"x": -20, "y": -55},
-        5: {"x": 20, "y": -55},
-        6: {"x": -25, "y": -20},
-        7: {"x": 25, "y": -20},
+        2: {"x": -6, "y": -16},
+        3: {"x": 6, "y": -16},
+        4: {"x": -10, "y": -4},
+        5: {"x": 10, "y": -4},
+        6: {"x": -22, "y": -4},
+        7: {"x": 22, "y": -4},
     },
     "shots": {
         1: {"rate": 0.16, "active_pos": [1]},
@@ -34,22 +34,22 @@ PLAYER = {
 
 ASTEROID = {
     "sm": {
-        "speed": 100,
+        "speed": 80,
         "hp": 2,
         "splits_into": None,
     },
     "md": {
-        "speed": 100,
+        "speed": 80,
         "hp": 4,
         "splits_into": "sm",
     },
     "lg": {
-        "speed": 100,
+        "speed": 80,
         "hp": 6,
         "splits_into": "md",
     },
     "xl": {
-        "speed": 100,
+        "speed": 80,
         "hp": 10,
         "splits_into": "lg",
     },
@@ -60,25 +60,25 @@ ASTEROID = {
 
 ENEMY_DRONE = {
     "hp": 4,
-    "blast_radius": 32,
+    "blast_radius": 48,
     "shot_origin": {
-        1: {"x": 10, "y": 0},
-        2: {"x": -10, "y": 0},
+        1: {"x": 11, "y": 11},
+        2: {"x": -11, "y": 11},
     },
 }
 
 ENEMY_FIGHTER = {
     "hp": 8,
-    "blast_radius": 48,
+    "blast_radius": 64,
     "shot_origin": {
-        1: {"x": 16, "y": 0},
-        2: {"x": -16, "y": 0},
+        1: {"x": 13, "y": 6},
+        2: {"x": -13, "y": 6},
     },
 }
 
 ENEMY_DESTROYER = {
     "hp": 16,
-    "blast_radius": 320,
+    "blast_radius": 216,
     "turret_positions": [
         (0, 120),
         (0, 60),
@@ -114,55 +114,55 @@ LEVEL_BOSS = {
 PROJECTILES = {
     "player_shot": {
         1: {
-            "range": 768,
-            "speed": 700,
+            "range": 300,
+            "speed": 500,
             "damage": 2,
         },
         2: {
-            "range": 768,
-            "speed": 700,
+            "range": 300,
+            "speed": 500,
             "damage": 2,
         },
         3: {
-            "range": 1024,
-            "speed": 700,
+            "range": 360,
+            "speed": 500,
             "damage": 3,
         },
         4: {
-            "range": 1024,
-            "speed": 700,
+            "range": 360,
+            "speed": 500,
             "damage": 4,
         },
         5: {
-            "range": 1024,
-            "speed": 700,
+            "range": 360,
+            "speed": 500,
             "damage": 6,
         },
     },
     "enemy_shot": {
-        "range": 768,
-        "speed": 400,
+        "range": 200,
+        "speed": 300,
         "damage": 5,
     },
     "player_bomb": {
-        "speed": 250,
-        "trigger_distance": 256,
+        "speed": 200,
+        "trigger_distance": 128,
         "blast_radius": {
-            1: 192,
-            2: 256,
-            3: 384,
-            4: 512,
-            5: 512,
+            1: 96,
+            2: 128,
+            3: 192,
+            4: 256,
+            5: 360,
         },
     },
     "enemy_bomb": {
-        "speed": 250,
-        "trigger_distance": 256,
-        "blast_radius": 384,
+        "speed": 200,
+        "trigger_distance": 128,
+        "blast_radius": 128,
     },
     "enemy_missile": {
         "speed": 200,
-        "trigger_distance": 256,
+        "trigger_distance": 128,
         "blast_radius": 64,
     },
 }
@@ -192,6 +192,6 @@ PICKUPS = {
 
 EXPLOSIONS = {
     "initial_radius": 4,
-    "expansion_rate": 256,
+    "expansion_rate": 128,
     "damage": 5,
 }

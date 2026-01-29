@@ -384,7 +384,7 @@ class SpawnManager:
 
         if isinstance(location, str):
             offset_x, side_y = SPAWN_LOCATIONS[location]
-            offset_y = 128
+            offset_y = 64
 
             if side_y == "top":
                 return pygame.Vector2(
