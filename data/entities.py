@@ -67,7 +67,7 @@ ENEMY_DRONE = {
     },
 }
 
-ENEMY_SHIP = {
+ENEMY_FIGHTER = {
     "hp": 8,
     "blast_radius": 48,
     "shot_origin": {

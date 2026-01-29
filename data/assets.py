@@ -9,7 +9,7 @@ IMAGES = {
     "asteroid_lg": "assets/entities/asteroid_lg.png",
     "asteroid_xl": "assets/entities/asteroid_xl.png",
     "enemy_drone": "assets/entities/enemy_drone.png",
-    "enemy_ship": "assets/entities/enemy_ship.png",
+    "enemy_fighter": "assets/entities/enemy_fighter.png",
     "enemy_destroyer": "assets/entities/enemy_destroyer.png",
     "enemy_turret": "assets/entities/enemy_turret.png",
     "sub_boss": "assets/entities/enemy_ship.png",  #! Placeholder sprite, replace when actual sprite is ready

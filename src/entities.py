@@ -8,7 +8,7 @@ from data.entities import (
     PLAYER,
     ASTEROID,
     ENEMY_DRONE,
-    ENEMY_SHIP,
+    ENEMY_FIGHTER,
     ENEMY_DESTROYER,
     ENEMY_TURRET,
     SUB_BOSS,
@@ -486,15 +486,15 @@ class EnemyDrone(Entity):
         self.flash_when_hit(surface, self.image, self.rect)
 
 
-class EnemyShip(Entity):
+class EnemyFighter(Entity):
 
     def __init__(self, x, y, gameplay):
-        self.img_path = IMAGES["enemy_ship"]
+        self.img_path = IMAGES["enemy_fighter"]
         super().__init__(x, y, gameplay)
-        self.hp = ENEMY_SHIP["hp"]
-        self.blast_radius = ENEMY_SHIP["blast_radius"]
+        self.hp = ENEMY_FIGHTER["hp"]
+        self.blast_radius = ENEMY_FIGHTER["blast_radius"]
         self.score_value = self.hp
-        self.shot_origin = ENEMY_SHIP["shot_origin"]
+        self.shot_origin = ENEMY_FIGHTER["shot_origin"]
 
     def take_damage(self, amount):
         self.hp -= amount

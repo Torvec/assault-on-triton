@@ -44,7 +44,7 @@ class StarField(Background):
     def __init__(self, x, y):
         self.img_path = IMAGES["starfield"]
         super().__init__(x, y)
-        self.scroll_speed = 4
+        self.scroll_speed = 1
         self.image_height = self.image.get_height()
         self.offset_y = 0
 
@@ -62,11 +62,11 @@ class Planet(Background):
     def __init__(self, x, y):
         self.img_path = IMAGES["planet"]
         super().__init__(x, y)
-        self.scroll_speed = 8
-        self.current_width = self.image.get_width() * 4
-        self.current_height = self.image.get_height() * 4
-        self.target_size = 16
-        self.change_rate = 10
+        self.scroll_speed = 4
+        self.current_width = self.image.get_width()
+        self.current_height = self.image.get_height()
+        self.target_size = 32
+        self.change_rate = 8
 
     def update(self, dt):
         self.scroll_vertically(dt, direction=1)
@@ -86,9 +86,9 @@ class PlanetTwo(Background):
         self.img_path = IMAGES["planet_two"]
         super().__init__(x, y)
         self.scroll_speed = 2
-        self.current_width = 2
-        self.current_height = 2
-        self.target_size = 1024
+        self.current_width = 4
+        self.current_height = 4
+        self.target_size = 432
         self.change_rate = 4
 
     def update(self, dt):

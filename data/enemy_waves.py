@@ -50,7 +50,7 @@ WAVE = {
         # },
         # {
         #     "time": 6,
-        #     "type": "enemy_ship",
+        #     "type": "enemy_fighter",
         #     "location": "top_center",
         #     "behaviors": [
         #         {
@@ -74,7 +74,7 @@ WAVE = {
         # },
         # {
         #     "time": 8,
-        #     "type": "enemy_ship",
+        #     "type": "enemy_fighter",
         #     "location": "top_center",
         #     "behaviors": [
         #         {
@@ -1424,7 +1424,7 @@ WAVE = {
         #! Enemy Ships Wave
         {
             "time": 72,
-            "type": "enemy_ship",
+            "type": "enemy_fighter",
             "location": "top_far_left",
             "behaviors": [
                 {
@@ -1444,7 +1444,7 @@ WAVE = {
         },
         {
             "time": 73,
-            "type": "enemy_ship",
+            "type": "enemy_fighter",
             "location": "top_left",
             "behaviors": [
                 {
@@ -1464,7 +1464,7 @@ WAVE = {
         },
         {
             "time": 74,
-            "type": "enemy_ship",
+            "type": "enemy_fighter",
             "location": "top_center_left",
             "behaviors": [
                 {
@@ -1484,7 +1484,7 @@ WAVE = {
         },
         {
             "time": 75,
-            "type": "enemy_ship",
+            "type": "enemy_fighter",
             "location": "top_center",
             "behaviors": [
                 {
@@ -1504,7 +1504,7 @@ WAVE = {
         },
         {
             "time": 76,
-            "type": "enemy_ship",
+            "type": "enemy_fighter",
             "location": "top_center_right",
             "behaviors": [
                 {
@@ -1524,7 +1524,7 @@ WAVE = {
         },
         {
             "time": 77,
-            "type": "enemy_ship",
+            "type": "enemy_fighter",
             "location": "top_right",
             "behaviors": [
                 {
@@ -1544,7 +1544,7 @@ WAVE = {
         },
         {
             "time": 78,
-            "type": "enemy_ship",
+            "type": "enemy_fighter",
             "location": "top_far_right",
             "behaviors": [
                 {
@@ -1564,7 +1564,7 @@ WAVE = {
         },
         {
             "time": 79,
-            "type": "enemy_ship",
+            "type": "enemy_fighter",
             "location": "top_right_edge",
             "behaviors": [
                 {
@@ -1584,7 +1584,7 @@ WAVE = {
         },
         {
             "time": 82,
-            "type": "enemy_ship",
+            "type": "enemy_fighter",
             "location": "top_far_right",
             "behaviors": [
                 {
@@ -1604,7 +1604,7 @@ WAVE = {
         },
         {
             "time": 83,
-            "type": "enemy_ship",
+            "type": "enemy_fighter",
             "location": "top_right",
             "behaviors": [
                 {
@@ -1624,7 +1624,7 @@ WAVE = {
         },
         {
             "time": 84,
-            "type": "enemy_ship",
+            "type": "enemy_fighter",
             "location": "top_center_right",
             "behaviors": [
                 {
@@ -1644,7 +1644,7 @@ WAVE = {
         },
         {
             "time": 85,
-            "type": "enemy_ship",
+            "type": "enemy_fighter",
             "location": "top_center",
             "behaviors": [
                 {
@@ -1664,7 +1664,7 @@ WAVE = {
         },
         {
             "time": 86,
-            "type": "enemy_ship",
+            "type": "enemy_fighter",
             "location": "top_center_left",
             "behaviors": [
                 {
@@ -1684,7 +1684,7 @@ WAVE = {
         },
         {
             "time": 87,
-            "type": "enemy_ship",
+            "type": "enemy_fighter",
             "location": "top_left",
             "behaviors": [
                 {
@@ -1704,7 +1704,7 @@ WAVE = {
         },
         {
             "time": 88,
-            "type": "enemy_ship",
+            "type": "enemy_fighter",
             "location": "top_far_left",
             "behaviors": [
                 {
@@ -1724,7 +1724,7 @@ WAVE = {
         },
         {
             "time": 89,
-            "type": "enemy_ship",
+            "type": "enemy_fighter",
             "location": "top_left_edge",
             "behaviors": [
                 {
@@ -1769,7 +1769,7 @@ WAVE = {
         #! Drones + Ships Wave
         {
             "time": 96,
-            "type": "enemy_ship",
+            "type": "enemy_fighter",
             "location": "top_center",
             "behaviors": [
                 {
@@ -1829,7 +1829,7 @@ WAVE = {
         },
         {
             "time": 98.5,
-            "type": "enemy_ship",
+            "type": "enemy_fighter",
             "location": "top_far_right",
             "behaviors": [
                 {
@@ -1849,7 +1849,7 @@ WAVE = {
         },
         {
             "time": 98.5,
-            "type": "enemy_ship",
+            "type": "enemy_fighter",
             "location": "top_far_left",
             "behaviors": [
                 {
@@ -1869,7 +1869,7 @@ WAVE = {
         },
         {
             "time": 100,
-            "type": "enemy_ship",
+            "type": "enemy_fighter",
             "location": "top_center",
             "behaviors": [
                 {
@@ -1929,7 +1929,7 @@ WAVE = {
         },
         {
             "time": 102.5,
-            "type": "enemy_ship",
+            "type": "enemy_fighter",
             "location": "top_center",
             "behaviors": [
                 {
@@ -1949,7 +1949,7 @@ WAVE = {
         },
         {
             "time": 103.5,
-            "type": "enemy_ship",
+            "type": "enemy_fighter",
             "location": "top_center",
             "behaviors": [
                 {
@@ -2009,7 +2009,7 @@ WAVE = {
         },
         {
             "time": 107,
-            "type": "enemy_ship",
+            "type": "enemy_fighter",
             "location": "top_far_right",
             "behaviors": [
                 {
@@ -2029,7 +2029,7 @@ WAVE = {
         },
         {
             "time": 107,
-            "type": "enemy_ship",
+            "type": "enemy_fighter",
             "location": "top_far_left",
             "behaviors": [
                 {
@@ -2049,7 +2049,7 @@ WAVE = {
         },
         {
             "time": 109,
-            "type": "enemy_ship",
+            "type": "enemy_fighter",
             "location": "top_center_right",
             "behaviors": [
                 {
@@ -2069,7 +2069,7 @@ WAVE = {
         },
         {
             "time": 109,
-            "type": "enemy_ship",
+            "type": "enemy_fighter",
             "location": "top_center_left",
             "behaviors": [
                 {
@@ -2209,7 +2209,7 @@ WAVE = {
         },
         {
             "time": 116,
-            "type": "enemy_ship",
+            "type": "enemy_fighter",
             "location": "top_far_right",
             "behaviors": [
                 {
@@ -2229,7 +2229,7 @@ WAVE = {
         },
         {
             "time": 116,
-            "type": "enemy_ship",
+            "type": "enemy_fighter",
             "location": "top_center",
             "behaviors": [
                 {
@@ -2249,7 +2249,7 @@ WAVE = {
         },
         {
             "time": 116,
-            "type": "enemy_ship",
+            "type": "enemy_fighter",
             "location": "top_far_left",
             "behaviors": [
                 {
@@ -2269,7 +2269,7 @@ WAVE = {
         },
         {
             "time": 119,
-            "type": "enemy_ship",
+            "type": "enemy_fighter",
             "location": "top_center_right",
             "behaviors": [
                 {
@@ -2289,7 +2289,7 @@ WAVE = {
         },
         {
             "time": 119,
-            "type": "enemy_ship",
+            "type": "enemy_fighter",
             "location": "top_center_left",
             "behaviors": [
                 {
@@ -2409,7 +2409,7 @@ WAVE = {
         },
         {
             "time": 121,
-            "type": "enemy_ship",
+            "type": "enemy_fighter",
             "location": "top_center",
             "behaviors": [
                 {
@@ -2429,7 +2429,7 @@ WAVE = {
         },
         {
             "time": 123,
-            "type": "enemy_ship",
+            "type": "enemy_fighter",
             "location": "top_right_edge",
             "behaviors": [
                 {
@@ -2449,7 +2449,7 @@ WAVE = {
         },
         {
             "time": 123,
-            "type": "enemy_ship",
+            "type": "enemy_fighter",
             "location": "top_left_edge",
             "behaviors": [
                 {
@@ -2469,7 +2469,7 @@ WAVE = {
         },
         {
             "time": 124,
-            "type": "enemy_ship",
+            "type": "enemy_fighter",
             "location": "top_far_right",
             "behaviors": [
                 {
@@ -2489,7 +2489,7 @@ WAVE = {
         },
         {
             "time": 124,
-            "type": "enemy_ship",
+            "type": "enemy_fighter",
             "location": "top_far_left",
             "behaviors": [
                 {
@@ -2509,7 +2509,7 @@ WAVE = {
         },
         {
             "time": 124.5,
-            "type": "enemy_ship",
+            "type": "enemy_fighter",
             "location": "top_right",
             "behaviors": [
                 {
@@ -2529,7 +2529,7 @@ WAVE = {
         },
         {
             "time": 124.5,
-            "type": "enemy_ship",
+            "type": "enemy_fighter",
             "location": "top_left",
             "behaviors": [
                 {
@@ -2549,7 +2549,7 @@ WAVE = {
         },
         {
             "time": 125,
-            "type": "enemy_ship",
+            "type": "enemy_fighter",
             "location": "top_center_right",
             "behaviors": [
                 {
@@ -2569,7 +2569,7 @@ WAVE = {
         },
         {
             "time": 125,
-            "type": "enemy_ship",
+            "type": "enemy_fighter",
             "location": "top_center_left",
             "behaviors": [
                 {
@@ -2589,7 +2589,7 @@ WAVE = {
         },
         {
             "time": 125.5,
-            "type": "enemy_ship",
+            "type": "enemy_fighter",
             "location": "top_center",
             "behaviors": [
                 {
@@ -2789,7 +2789,7 @@ WAVE = {
         },
         {
             "time": 131,
-            "type": "enemy_ship",
+            "type": "enemy_fighter",
             "location": "top_right_edge",
             "behaviors": [
                 {
@@ -2809,7 +2809,7 @@ WAVE = {
         },
         {
             "time": 131,
-            "type": "enemy_ship",
+            "type": "enemy_fighter",
             "location": "top_far_right",
             "behaviors": [
                 {
@@ -2829,7 +2829,7 @@ WAVE = {
         },
         {
             "time": 131,
-            "type": "enemy_ship",
+            "type": "enemy_fighter",
             "location": "top_right",
             "behaviors": [
                 {
@@ -2849,7 +2849,7 @@ WAVE = {
         },
         {
             "time": 131,
-            "type": "enemy_ship",
+            "type": "enemy_fighter",
             "location": "top_center_right",
             "behaviors": [
                 {
@@ -2869,7 +2869,7 @@ WAVE = {
         },
         {
             "time": 131,
-            "type": "enemy_ship",
+            "type": "enemy_fighter",
             "location": "top_center",
             "behaviors": [
                 {
@@ -2889,7 +2889,7 @@ WAVE = {
         },
         {
             "time": 131,
-            "type": "enemy_ship",
+            "type": "enemy_fighter",
             "location": "top_center_left",
             "behaviors": [
                 {
@@ -2909,7 +2909,7 @@ WAVE = {
         },
         {
             "time": 131,
-            "type": "enemy_ship",
+            "type": "enemy_fighter",
             "location": "top_left",
             "behaviors": [
                 {
@@ -2929,7 +2929,7 @@ WAVE = {
         },
         {
             "time": 131,
-            "type": "enemy_ship",
+            "type": "enemy_fighter",
             "location": "top_far_left",
             "behaviors": [
                 {
@@ -2949,7 +2949,7 @@ WAVE = {
         },
         {
             "time": 131,
-            "type": "enemy_ship",
+            "type": "enemy_fighter",
             "location": "top_left_edge",
             "behaviors": [
                 {
@@ -3010,7 +3010,7 @@ WAVE = {
         #! Gunships + Ships Wave
         {
             "time": 5,
-            "type": "enemy_ship",
+            "type": "enemy_fighter",
             "location": "top_center",
             "behaviors": [
                 {
@@ -3030,7 +3030,7 @@ WAVE = {
         },
         {
             "time": 6,
-            "type": "enemy_ship",
+            "type": "enemy_fighter",
             "location": "top_center_left",
             "behaviors": [
                 {
@@ -3050,7 +3050,7 @@ WAVE = {
         },
         {
             "time": 7,
-            "type": "enemy_ship",
+            "type": "enemy_fighter",
             "location": "top_center_right",
             "behaviors": [
                 {
