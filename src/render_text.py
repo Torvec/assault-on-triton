@@ -6,6 +6,7 @@ def render_text(
     screen,
     text,
     font_size=18,
+    scale_factor=1,
     color="white",
     pos=(0, 0),
     align="center",
@@ -22,7 +23,7 @@ def render_text(
             f"Unknown font_name '{font_name}'. Available fonts: {', '.join(FONTS.keys())}"
         )
 
-    font = pygame.font.Font(font_path, font_size)
+    font = pygame.font.Font(font_path, font_size * scale_factor)
     text_surface = font.render(text, antialias, color)
     text_rect = text_surface.get_rect()
 

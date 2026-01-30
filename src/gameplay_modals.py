@@ -13,7 +13,7 @@ class Modal:
     def handle_event(self, events):
         pass
 
-    def draw(self, surface):
+    def draw_ui(self, surface, scale_factor):
         if not self.is_visible:
             return
 
@@ -32,7 +32,8 @@ class Modal:
             text=self.title,
             font_name="zendots",
             font_size=22,
-            pos=(rect.midtop[0], rect.midtop[1] + 8),
+            scale_factor=scale_factor,
+            pos=(rect.midtop[0], rect.midtop[1] + 8 * scale_factor),
             align="midtop",
         )
 
@@ -42,8 +43,12 @@ class Modal:
                 text=item,
                 font_name="spacegrotesk_semibold",
                 font_size=18,
+                scale_factor=scale_factor,
                 color="grey",
-                pos=(rect.midtop[0], rect.midtop[1] + 40 + (i * 24)),
+                pos=(
+                    rect.midtop[0],
+                    rect.midtop[1] + 40 * scale_factor + (i * 24 * scale_factor),
+                ),
                 align="midtop",
             )
 

@@ -30,6 +30,9 @@ class State:
     def draw(self, surface):
         pass
 
+    def draw_ui(self, surface, scale_factor):
+        pass
+
 
 class InitState(State):
 
@@ -139,8 +142,8 @@ class PausedState(State):
                         self.gameplay.state_manager.previous_state
                     )
 
-    def draw(self, surface):
-        self.pause_modal.draw(surface)
+    def draw_ui(self, surface, scale_factor):
+        self.pause_modal.draw_ui(surface, scale_factor)
 
 
 class GameOverState(State):
@@ -160,8 +163,8 @@ class GameOverState(State):
     def handle_event(self, events):
         self.gameplay.game_over_modal.handle_event(events)
 
-    def draw(self, surface):
-        self.gameplay.game_over_modal.draw(surface)
+    def draw_ui(self, surface, scale_factor):
+        self.gameplay.game_over_modal.draw_ui(surface, scale_factor)
 
 
 class MissionCompleteState(State):
@@ -185,5 +188,5 @@ class MissionCompleteState(State):
     def handle_event(self, events):
         self.gameplay.end_level_modal.handle_event(events)
 
-    def draw(self, surface):
-        self.gameplay.end_level_modal.draw(surface)
+    def draw_ui(self, surface, scale_factor):
+        self.gameplay.end_level_modal.draw_ui(surface, scale_factor)

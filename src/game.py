@@ -15,6 +15,10 @@ class Game:
         self.scaled_gs_rect = self.scaled_gs.get_rect(
             center=self.display_surface.get_rect().center
         )
+        self.ui_surface = pygame.Surface(self.scaled_gs.get_size(), pygame.SRCALPHA)
+        self.ui_surface_rect = self.ui_surface.get_rect(
+            topleft=self.scaled_gs_rect.topleft
+        )
         self.clock = pygame.time.Clock()
         self.dt = 0
         self.score_store = ScoreStore()
@@ -49,6 +53,19 @@ class Game:
         )
 
     def run(self):
+        """
+        Main game loop that handles events, updates game state, and renders.
+        
+        The loop performs the following steps each frame:
+        1. Process pygame events (quit, input, etc.)
+        2. Handle screen-specific events
+        3. Update current screen state
+        4. Render game objects to low-res game surface
+        5. Scale game surface to display resolution
+        6. Render UI elements to high-res UI surface
+        7. Composite both surfaces to display
+        8. Maintain target framerate
+        """
         while self.running:
             events = pygame.event.get()
             for event in events:
@@ -64,7 +81,12 @@ class Game:
             )
 
             self.display_surface.fill("black")
+            self.ui_surface.fill((0, 0, 0, 0))
+
             self.display_surface.blit(self.scaled_gs, self.scaled_gs_rect)
+
+            self.current_screen.draw_ui(self.ui_surface, self.scale_factor)
+            self.display_surface.blit(self.ui_surface, self.ui_surface_rect)
 
             pygame.display.flip()
             self.dt = self.clock.tick(DISPLAY["target_fps"]) / 1000

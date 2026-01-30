@@ -97,6 +97,10 @@ class StateManager:
     def draw(self, surface):
         if self.current_state:
             self.states[self.current_state].draw(surface)
+    
+    def draw_ui(self, surface, scale_factor):
+        if self.current_state:
+            self.states[self.current_state].draw_ui(surface, scale_factor)
 
 
 class EntityManager:
