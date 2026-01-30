@@ -64,17 +64,18 @@ class GamePlayUI:
     def draw_score(self, surface, scale_factor):
         gs_rect = surface.get_rect()
 
-        height = 16
-        width = gs_rect.width - 8
+        height = 16 * scale_factor
+        width = gs_rect.width - 8 * scale_factor
 
         rect = pygame.Rect(0, 0, width, height)
-        rect.topleft = (gs_rect.left + 4, gs_rect.top + 4)
+        rect.x = 4 * scale_factor
+        rect.y = 4 * scale_factor
 
         render_text(
             screen=surface,
             text=f"SCORE: {self.gameplay.score_manager.score:09}",
             font_name="zendots",
-            font_size=10,
+            font_size=8,
             scale_factor=scale_factor,
             color="#E6D819",
             pos=rect.topleft,
@@ -84,7 +85,7 @@ class GamePlayUI:
             screen=surface,
             text=f"x{self.gameplay.score_manager.multiplier}",
             font_name="zendots",
-            font_size=10,
+            font_size=8,
             scale_factor=scale_factor,
             color="#E6D819",
             pos=rect.topright,
@@ -113,7 +114,7 @@ class GamePlayUI:
         rect = pygame.Rect(
             0,
             0,
-            surface.get_width() - 8,
+            surface.get_width() - 8 * scale_factor,
             48 * scale_factor,
         )
         rect.bottomleft = surface.get_rect().bottomleft
@@ -123,10 +124,10 @@ class GamePlayUI:
         pygame.draw.rect(surface, "grey10", rect)
 
         content_rect = pygame.Rect(
-            rect.x + 4,
-            rect.y + 4,
-            rect.width - 4,
-            rect.height - 4,
+            rect.x + 4 * scale_factor,
+            rect.y + 4 * scale_factor,
+            rect.width - 4 * scale_factor,
+            rect.height - 4 * scale_factor,
         )
 
         portrait = pygame.image.load(self.current_portrait)
@@ -138,11 +139,11 @@ class GamePlayUI:
             screen=surface,
             text=self.current_speaker,
             font_name="zendots",
-            font_size=16,
+            font_size=10,
             scale_factor=scale_factor,
             color="gray80",
             pos=(
-                content_rect.topleft[0] + portrait.get_width() + 4,
+                content_rect.topleft[0] + portrait.get_width() + 4 * scale_factor,
                 content_rect.topleft[1],
             ),
             align="topleft",
@@ -150,11 +151,11 @@ class GamePlayUI:
         render_text(
             screen=surface,
             text=self.current_dialogue,
-            font_size=16,
+            font_size=8,
             scale_factor=scale_factor,
             color="gray80",
             pos=(
-                content_rect.midleft[0] + portrait.get_width() + 4,
+                content_rect.midleft[0] + portrait.get_width() + 4 * scale_factor,
                 content_rect.midleft[1],
             ),
             align="midleft",
@@ -166,11 +167,11 @@ class GamePlayUI:
 
         gs_rect = surface.get_rect()
 
-        hud_height = 16
-        hud_width = gs_rect.width - 8
+        hud_height = 16 * scale_factor
+        hud_width = gs_rect.width - 8 * scale_factor
 
         rect = pygame.Rect(0, 0, hud_width, hud_height)
-        rect.midbottom = (gs_rect.centerx, gs_rect.bottom - 4)
+        rect.midbottom = (gs_rect.centerx, gs_rect.bottom - 4 * scale_factor)
 
         player = self.gameplay.entity_manager.player_group.sprite
 

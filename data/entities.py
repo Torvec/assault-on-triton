@@ -15,20 +15,20 @@ PLAYER = {
     "death_blast_radius": 128,
     "velocity_decay": 0.99,
     "shot_origin": {
-        1: {"x": 0, "y": -20},
-        2: {"x": -6, "y": -16},
-        3: {"x": 6, "y": -16},
-        4: {"x": -10, "y": -4},
-        5: {"x": 10, "y": -4},
-        6: {"x": -22, "y": -4},
-        7: {"x": 22, "y": -4},
+        1: {"x": 0, "y": -24},
+        2: {"x": -6, "y": -20},
+        3: {"x": 6, "y": -20},
+        4: {"x": -12, "y": -12},
+        5: {"x": 12, "y": -12},
+        6: {"x": -18, "y": -8},
+        7: {"x": 18, "y": -8},
     },
     "shots": {
-        1: {"rate": 0.16, "active_pos": [1]},
-        2: {"rate": 0.16, "active_pos": [2, 3]},
-        3: {"rate": 0.16, "active_pos": [1, 2, 3]},
-        4: {"rate": 0.16, "active_pos": [1, 2, 3, 4, 5]},
-        5: {"rate": 0.16, "active_pos": [1, 2, 3, 4, 5, 6, 7]},
+        1: {"rate": 0.28, "active_pos": [1]},
+        2: {"rate": 0.24, "active_pos": [2, 3]},
+        3: {"rate": 0.20, "active_pos": [2, 3, 4, 5]},
+        4: {"rate": 0.16, "active_pos": [2, 3, 4, 5, 6, 7]},
+        5: {"rate": 0.12, "active_pos": [1, 2, 3, 4, 5, 6, 7]},
     },
 }
 
@@ -114,22 +114,22 @@ LEVEL_BOSS = {
 PROJECTILES = {
     "player_shot": {
         1: {
-            "range": 300,
+            "range": 180,
             "speed": 500,
             "damage": 2,
         },
         2: {
-            "range": 300,
+            "range": 220,
             "speed": 500,
             "damage": 2,
         },
         3: {
-            "range": 360,
+            "range": 260,
             "speed": 500,
             "damage": 3,
         },
         4: {
-            "range": 360,
+            "range": 300,
             "speed": 500,
             "damage": 4,
         },
@@ -148,7 +148,7 @@ PROJECTILES = {
         "speed": 200,
         "trigger_distance": 128,
         "blast_radius": {
-            1: 96,
+            1: 64,
             2: 128,
             3: 192,
             4: 256,

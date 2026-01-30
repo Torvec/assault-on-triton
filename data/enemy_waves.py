@@ -154,6 +154,18 @@ WAVE = {
         #! Asteroids Wave
         {
             "time": 0,
+            "type": "power_level_pickup",
+            "location": "top_center",
+            "behaviors": [
+                {
+                    "action": "move_straight",
+                    "params": {"speed": 80},
+                },
+                {"action": "rotate_constantly", "params": {}},
+            ],
+        },
+        {
+            "time": 0.5,
             "type": "asteroid_sm",
             "location": "top_center",
             "behaviors": [
