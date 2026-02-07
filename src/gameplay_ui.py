@@ -73,13 +73,23 @@ class GamePlayUI:
 
         render_text(
             screen=surface,
-            text=f"SCORE: {self.gameplay.score_manager.score:09}",
+            text="P1:",
             font_name="zendots",
             font_size=8,
             scale_factor=scale_factor,
             color="#E6D819",
             pos=rect.topleft,
             align="topleft",
+        )
+        render_text(
+            screen=surface,
+            text=f"{self.gameplay.score_manager.score:09}",
+            font_name="zendots",
+            font_size=8,
+            scale_factor=scale_factor,
+            color="white",
+            pos=(rect.topleft[0] + 16 * scale_factor, rect.topleft[1]),
+            align="topleft"
         )
         render_text(
             screen=surface,
@@ -175,29 +185,32 @@ class GamePlayUI:
 
         player = self.gameplay.entity_manager.player_group.sprite
 
+        # TODO: Render the HP ui icon instead of HP
         render_text(
             screen=surface,
-            text=f"HP x {player.hp}%",
-            font_size=12,
+            text=f"HP {player.hp}%",
+            font_size=10,
             scale_factor=scale_factor,
             color="#E6D819",
             pos=rect.bottomleft,
             align="bottomleft",
         )
+        # TODO: Render the bomb ui Icon instead of the B
         render_text(
             screen=surface,
-            text=f"BOMBS x {player.bomb_ammo}",
-            font_size=12,
+            text=f"B x {player.bomb_ammo}",
+            font_size=10,
             scale_factor=scale_factor,
             color="#E6D819",
             pos=rect.midbottom,
             align="midbottom",
         )
+        # TODO: Render the power level ui icon instead of a P
         power_display = UI["power_levels"].get(player.power_level, "( ? )")
         render_text(
             screen=surface,
-            text=f"PWR LVL {power_display}",
-            font_size=12,
+            text=f"P Lv. {power_display}",
+            font_size=10,
             scale_factor=scale_factor,
             color="#E6D819",
             pos=rect.bottomright,
