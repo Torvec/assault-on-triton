@@ -73,9 +73,9 @@ class GamePlayUI:
 
         render_text(
             screen=surface,
-            text="P1:",
+            text="SCORE:",
             font_name="zendots",
-            font_size=8,
+            font_size=6,
             scale_factor=scale_factor,
             color="#E6D819",
             pos=rect.topleft,
@@ -85,17 +85,17 @@ class GamePlayUI:
             screen=surface,
             text=f"{self.gameplay.score_manager.score:09}",
             font_name="zendots",
-            font_size=8,
+            font_size=6,
             scale_factor=scale_factor,
             color="white",
-            pos=(rect.topleft[0] + 16 * scale_factor, rect.topleft[1]),
+            pos=(rect.topleft[0] + 32 * scale_factor, rect.topleft[1]),
             align="topleft"
         )
         render_text(
             screen=surface,
             text=f"x{self.gameplay.score_manager.multiplier}",
             font_name="zendots",
-            font_size=8,
+            font_size=6,
             scale_factor=scale_factor,
             color="#E6D819",
             pos=rect.topright,
@@ -189,7 +189,8 @@ class GamePlayUI:
         render_text(
             screen=surface,
             text=f"HP {player.hp}%",
-            font_size=10,
+            font_name="zendots",
+            font_size=6,
             scale_factor=scale_factor,
             color="#E6D819",
             pos=rect.bottomleft,
@@ -199,7 +200,8 @@ class GamePlayUI:
         render_text(
             screen=surface,
             text=f"B x {player.bomb_ammo}",
-            font_size=10,
+            font_name="zendots",
+            font_size=6,
             scale_factor=scale_factor,
             color="#E6D819",
             pos=rect.midbottom,
@@ -210,7 +212,8 @@ class GamePlayUI:
         render_text(
             screen=surface,
             text=f"P Lv. {power_display}",
-            font_size=10,
+            font_name="zendots",
+            font_size=6,
             scale_factor=scale_factor,
             color="#E6D819",
             pos=rect.bottomright,

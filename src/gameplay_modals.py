@@ -31,7 +31,7 @@ class Modal:
             screen=surface,
             text=self.title,
             font_name="zendots",
-            font_size=22,
+            font_size=18,
             scale_factor=scale_factor,
             pos=(rect.midtop[0], rect.midtop[1] + 8 * scale_factor),
             align="midtop",
@@ -42,7 +42,7 @@ class Modal:
                 screen=surface,
                 text=item,
                 font_name="spacegrotesk_semibold",
-                font_size=18,
+                font_size=16,
                 scale_factor=scale_factor,
                 color="grey",
                 pos=(
