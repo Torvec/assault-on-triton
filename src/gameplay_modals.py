@@ -1,5 +1,6 @@
 import sys
 import pygame
+import data.assets as assets
 from src.render_text import render_text
 
 
@@ -30,7 +31,7 @@ class Modal:
         render_text(
             screen=surface,
             text=self.title,
-            font_name="zendots",
+            font_path=assets.ZENDOTS_FONT,
             font_size=18,
             scale_factor=scale_factor,
             pos=(rect.midtop[0], rect.midtop[1] + 8 * scale_factor),
@@ -41,7 +42,7 @@ class Modal:
             render_text(
                 screen=surface,
                 text=item,
-                font_name="spacegrotesk_semibold",
+                font_path=assets.SPACEGROTESK_SEMIBOLD_FONT,
                 font_size=16,
                 scale_factor=scale_factor,
                 color="grey",

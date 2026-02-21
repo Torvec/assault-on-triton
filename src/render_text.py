@@ -1,5 +1,4 @@
 import pygame
-from data.assets import FONTS
 
 
 def render_text(
@@ -10,18 +9,9 @@ def render_text(
     color="white",
     pos=(0, 0),
     align="center",
-    font_name=None,
+    font_path=None,
     antialias=False,
 ):
-
-    if font_name is None:
-        font_path = None
-    elif font_name in FONTS:
-        font_path = FONTS[font_name]
-    else:
-        raise ValueError(
-            f"Unknown font_name '{font_name}'. Available fonts: {', '.join(FONTS.keys())}"
-        )
 
     font = pygame.font.Font(font_path, font_size * scale_factor)
     text_surface = font.render(text, antialias, color)

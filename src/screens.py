@@ -1,5 +1,6 @@
 import sys
 import pygame
+import data.assets as assets
 from src.render_text import render_text
 
 
@@ -62,7 +63,7 @@ class Start(Screen):
         render_text(
             screen=ui_surface,
             text="ASSAULT",
-            font_name="zendots",
+            font_path=assets.ZENDOTS_FONT,
             font_size=32,
             scale_factor=scale_factor,
             antialias=True,
@@ -75,7 +76,7 @@ class Start(Screen):
         render_text(
             screen=ui_surface,
             text="ON",
-            font_name="zendots",
+            font_path=assets.ZENDOTS_FONT,
             font_size=24,
             scale_factor=scale_factor,
             antialias=True,
@@ -88,7 +89,7 @@ class Start(Screen):
         render_text(
             screen=ui_surface,
             text="TRITON",
-            font_name="zendots",
+            font_path=assets.ZENDOTS_FONT,
             font_size=32,
             scale_factor=scale_factor,
             antialias=True,
@@ -108,7 +109,7 @@ class Start(Screen):
             render_text(
                 screen=ui_surface,
                 text=item,
-                font_name="spacegrotesk_semibold",
+                font_path=assets.SPACEGROTESK_SEMIBOLD_FONT,
                 font_size=18,
                 scale_factor=scale_factor,
                 color="grey",
@@ -141,7 +142,7 @@ class Options(Screen):
         render_text(
             screen=ui_surface,
             text="Options",
-            font_name="zendots",
+            font_path=assets.ZENDOTS_FONT,
             font_size=32,
             scale_factor=scale_factor,
             pos=(ui_surface.get_width() * 0.5, 32 * scale_factor),
@@ -177,7 +178,7 @@ class Scoreboard(Screen):
         render_text(
             screen=ui_surface,
             text="High Scores",
-            font_name="zendots",
+            font_path=assets.ZENDOTS_FONT,
             font_size=24,
             scale_factor=scale_factor,
             pos=(ui_surface.get_width() * 0.5, 32 * scale_factor),
@@ -213,7 +214,7 @@ class Credits(Screen):
         render_text(
             screen=ui_surface,
             text="Credits",
-            font_name="zendots",
+            font_path=assets.ZENDOTS_FONT,
             font_size=32,
             scale_factor=scale_factor,
             pos=(ui_surface.get_width() * 0.5, 32 * scale_factor),
@@ -246,7 +247,7 @@ class Thanks(Screen):
         render_text(
             screen=ui_surface,
             text="Thanks For Playing!",
-            font_name="zendots",
+            font_path=assets.ZENDOTS_FONT,
             font_size=32,
             scale_factor=scale_factor,
             pos=(
@@ -257,7 +258,7 @@ class Thanks(Screen):
         render_text(
             screen=ui_surface,
             text="[Enter] Credits",
-            font_name="spacegrotesk_semibold",
+            font_path=assets.SPACEGROTESK_SEMIBOLD_FONT,
             font_size=24,
             scale_factor=scale_factor,
             pos=(

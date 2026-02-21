@@ -1,6 +1,6 @@
 import random
 import pygame
-from data.assets import IMAGES, SOUNDS
+import data.assets as assets
 from data.entities import (
     EXPLOSIONS,
     PICKUPS,
@@ -140,7 +140,7 @@ class Entity(pygame.sprite.Sprite):
 class Explosion(Entity):
 
     def __init__(self, x, y, gameplay, blast_radius, owner):
-        self.img_path = IMAGES["explosion"]
+        self.img_path = assets.EXPLOSION_IMG
         super().__init__(x, y, gameplay)
         self.blast_radius = blast_radius
         self.owner = owner
@@ -237,12 +237,18 @@ class Shot(Projectile):
 class PlayerShot(Shot):
 
     def __init__(self, x, y, gameplay, owner, power_level):
-        if power_level == 5:
-            image_key = "player_shot_ov"
-        else:
-            image_key = f"player_shot_lv{power_level}"
-        self.img_path = IMAGES[image_key]
-        self.sfx_path = SOUNDS["player_shoot"]
+        if power_level == 1:
+            self.img_path = assets.PLAYER_SHOT_LV1_IMG
+        elif power_level == 2:
+            self.img_path = assets.PLAYER_SHOT_LV2_IMG
+        elif power_level == 3:
+            self.img_path = assets.PLAYER_SHOT_LV3_IMG
+        elif power_level == 4:
+            self.img_path = assets.PLAYER_SHOT_LV4_IMG
+        elif power_level == 5:
+            self.img_path = assets.PLAYER_SHOT_OV_IMG
+        
+        self.sfx_path = assets.PLAYER_SHOOT_SFX
         super().__init__(x, y, gameplay, owner)
         self.max_range = PROJECTILES["player_shot"][power_level]["range"]
         self.speed = PROJECTILES["player_shot"][power_level]["speed"]
@@ -252,8 +258,8 @@ class PlayerShot(Shot):
 class EnemyShot(Shot):
 
     def __init__(self, x, y, gameplay, owner):
-        self.img_path = IMAGES["enemy_shot"]
-        self.sfx_path = SOUNDS["player_shoot"]
+        self.img_path = assets.ENEMY_SHOT_IMG
+        self.sfx_path = assets.PLAYER_SHOOT_SFX
         super().__init__(x, y, gameplay, owner)
         self.max_range = PROJECTILES["enemy_shot"]["range"]
         self.speed = PROJECTILES["enemy_shot"]["speed"]
@@ -317,7 +323,7 @@ class Bomb(ExplosiveProjectile):
 class PlayerBomb(Bomb):
 
     def __init__(self, x, y, gameplay, owner):
-        self.img_path = IMAGES["player_bomb"]
+        self.img_path = assets.PLAYER_BOMB_IMG
         #! Add sfx_path when sound is available
         super().__init__(x, y, gameplay, owner)
         self.speed = PROJECTILES["player_bomb"]["speed"]
@@ -330,7 +336,7 @@ class PlayerBomb(Bomb):
 class EnemyBomb(Bomb):
 
     def __init__(self, x, y, gameplay, owner):
-        self.img_path = IMAGES["enemy_bomb"]
+        self.img_path = assets.ENEMY_BOMB_IMG
         #! Add sfx_path when sound is available
         super().__init__(x, y, gameplay, owner)
         self.speed = PROJECTILES["enemy_bomb"]["speed"]
@@ -341,7 +347,7 @@ class EnemyBomb(Bomb):
 class Missile(ExplosiveProjectile):
 
     def __init__(self, x, y, gameplay, owner):
-        self.img_path = IMAGES["enemy_missile"]
+        self.img_path = assets.ENEMY_MISSILE_IMG
         #! Add sfx_path when sound is available
         super().__init__(x, y, gameplay, owner)
         self.speed = PROJECTILES["enemy_missile"]["speed"]
@@ -367,7 +373,15 @@ class Missile(ExplosiveProjectile):
 class Asteroid(Entity):
 
     def __init__(self, x, y, gameplay, asteroid_size="md"):
-        self.img_path = IMAGES[f"asteroid_{asteroid_size}"]
+        if asteroid_size == "sm":
+            self.img_path = assets.ASTEROID_SM_IMG
+        elif asteroid_size == "md":
+            self.img_path = assets.ASTEROID_MD_IMG
+        elif asteroid_size == "lg":
+            self.img_path = assets.ASTEROID_LG_IMG
+        elif asteroid_size == "xl":
+            self.img_path = assets.ASTEROID_XL_IMG
+        
         super().__init__(x, y, gameplay)
         self.speed = ASTEROID[asteroid_size]["speed"]
         self.hp = ASTEROID[asteroid_size]["hp"]
@@ -456,7 +470,7 @@ class AsteroidXL(Asteroid):
 class EnemyDrone(Entity):
 
     def __init__(self, x, y, gameplay):
-        self.img_path = IMAGES["enemy_drone"]
+        self.img_path = assets.ENEMY_DRONE_IMG
         super().__init__(x, y, gameplay)
         self.hp = ENEMY_DRONE["hp"]
         self.blast_radius = ENEMY_DRONE["blast_radius"]
@@ -489,7 +503,7 @@ class EnemyDrone(Entity):
 class EnemyFighter(Entity):
 
     def __init__(self, x, y, gameplay):
-        self.img_path = IMAGES["enemy_fighter"]
+        self.img_path = assets.ENEMY_FIGHTER_IMG
         super().__init__(x, y, gameplay)
         self.hp = ENEMY_FIGHTER["hp"]
         self.blast_radius = ENEMY_FIGHTER["blast_radius"]
@@ -527,7 +541,7 @@ class EnemyDestroyer(Entity):
     """
 
     def __init__(self, x, y, gameplay):
-        self.img_path = IMAGES["enemy_destroyer"]
+        self.img_path = assets.ENEMY_DESTROYER_IMG
         super().__init__(x, y, gameplay)
         self.hp = ENEMY_DESTROYER["hp"]
         self.blast_radius = ENEMY_DESTROYER["blast_radius"]
@@ -594,7 +608,7 @@ class EnemyDestroyer(Entity):
 
 class EnemyTurret(Entity):
     def __init__(self, x, y, gameplay):
-        self.img_path = IMAGES["enemy_turret"]
+        self.img_path = assets.ENEMY_TURRET_IMG
         super().__init__(x, y, gameplay)
         self.hp = ENEMY_TURRET["hp"]
         self.blast_radius = ENEMY_TURRET["blast_radius"]
@@ -625,7 +639,7 @@ class EnemyTurret(Entity):
 class SubBoss(Entity):
 
     def __init__(self, x, y, gameplay):
-        self.img_path = IMAGES["sub_boss"]
+        self.img_path = assets.SUB_BOSS_IMG
         super().__init__(x, y, gameplay)
         self.speed = SUB_BOSS["speed"]
         self.hp = SUB_BOSS["hp"]
@@ -659,7 +673,7 @@ class SubBoss(Entity):
 class LevelBoss(Entity):
 
     def __init__(self, x, y, gameplay):
-        self.img_path = IMAGES["level_boss"]
+        self.img_path = assets.LEVEL_BOSS_IMG
         super().__init__(x, y, gameplay)
         self.speed = LEVEL_BOSS["speed"]
         self.hp = LEVEL_BOSS["hp"]
@@ -718,7 +732,7 @@ class HealthPickup(Pickup):
     pickup_type = "health"
 
     def __init__(self, x, y, gameplay):
-        self.img_path = IMAGES["health_pickup"]
+        self.img_path = assets.HEALTH_PICKUP_IMG
         super().__init__(x, y, gameplay)
         self.heal_amount = PICKUPS["health"]["heal_amount"]
 
@@ -741,7 +755,7 @@ class PowerLevelPickup(Pickup):
     pickup_type = "power"
 
     def __init__(self, x, y, gameplay):
-        self.img_path = IMAGES["power_pickup"]
+        self.img_path = assets.POWER_PICKUP_IMG
         super().__init__(x, y, gameplay)
         self.fallback_score = PICKUPS["power"]["fallback_score"]
 
@@ -763,7 +777,7 @@ class PowerLevelPickup(Pickup):
 class OverdrivePickup(Pickup):
 
     def __init__(self, x, y, gameplay):
-        self.img_path = IMAGES["overdrive_pickup"]
+        self.img_path = assets.OVERDRIVE_PICKUP_IMG
         super().__init__(x, y, gameplay)
 
     def apply(self):
@@ -783,7 +797,7 @@ class BombAmmoPickup(Pickup):
     pickup_type = "bomb"
 
     def __init__(self, x, y, gameplay):
-        self.img_path = IMAGES["bomb_pickup"]
+        self.img_path = assets.BOMB_PICKUP_IMG
         super().__init__(x, y, gameplay)
         self.fallback_score = PICKUPS["bomb"]["fallback_score"]
 
@@ -805,7 +819,7 @@ class BombAmmoPickup(Pickup):
 class Player(Entity):
 
     def __init__(self, x, y, gameplay):
-        self.img_path = IMAGES["player_ship"]
+        self.img_path = assets.PLAYER_SHIP_IMG
         super().__init__(x, y, gameplay)
         self.acceleration = PLAYER["base_acceleration"]
         self.speed = PLAYER["base_speed"]

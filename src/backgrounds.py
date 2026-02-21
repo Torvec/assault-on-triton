@@ -1,5 +1,5 @@
 import pygame
-from data.assets import IMAGES
+import data.assets as assets
 
 
 class Background:
@@ -42,7 +42,7 @@ class Background:
 class StarField(Background):
 
     def __init__(self, x, y):
-        self.img_path = IMAGES["starfield"]
+        self.img_path = assets.STARFIELD_IMG
         super().__init__(x, y)
         self.scroll_speed = 1
         self.image_height = self.image.get_height()
@@ -60,7 +60,7 @@ class StarField(Background):
 class Planet(Background):
 
     def __init__(self, x, y):
-        self.img_path = IMAGES["planet"]
+        self.img_path = assets.PLANET_IMG
         super().__init__(x, y)
         self.scroll_speed = 4
         self.current_width = self.image.get_width()
@@ -83,7 +83,7 @@ class Planet(Background):
 class PlanetTwo(Background):
 
     def __init__(self, x, y):
-        self.img_path = IMAGES["planet_two"]
+        self.img_path = assets.PLANET_TWO_IMG
         super().__init__(x, y)
         self.scroll_speed = 2
         self.current_width = 4

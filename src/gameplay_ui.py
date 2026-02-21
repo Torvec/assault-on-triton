@@ -3,7 +3,7 @@ from src.render_text import render_text
 from data.settings import UI
 from data.dialogue import SCRIPTED
 from data.messages import MESSAGES
-from data.assets import IMAGES
+import data.assets as assets
 
 
 class GamePlayUI:
@@ -27,7 +27,7 @@ class GamePlayUI:
     def display_dialogue(self, dialogue_id):
         dialogue = SCRIPTED[dialogue_id]
         self.current_speaker = dialogue["speaker"]
-        self.current_portrait = IMAGES[dialogue["portrait"]]
+        self.current_portrait = dialogue["portrait"]
         self.current_dialogue = dialogue["text"]
         self.dialogue_duration = dialogue["duration"]
 
@@ -74,7 +74,7 @@ class GamePlayUI:
         render_text(
             screen=surface,
             text="SCORE:",
-            font_name="zendots",
+            font_path=assets.ZENDOTS_FONT,
             font_size=6,
             scale_factor=scale_factor,
             color="#E6D819",
@@ -84,7 +84,7 @@ class GamePlayUI:
         render_text(
             screen=surface,
             text=f"{self.gameplay.score_manager.score:09}",
-            font_name="zendots",
+            font_path=assets.ZENDOTS_FONT,
             font_size=6,
             scale_factor=scale_factor,
             color="white",
@@ -94,7 +94,7 @@ class GamePlayUI:
         render_text(
             screen=surface,
             text=f"x{self.gameplay.score_manager.multiplier}",
-            font_name="zendots",
+            font_path=assets.ZENDOTS_FONT,
             font_size=6,
             scale_factor=scale_factor,
             color="#E6D819",
@@ -107,7 +107,7 @@ class GamePlayUI:
             render_text(
                 screen=surface,
                 text=self.current_message,
-                font_name="zendots",
+                font_path=assets.ZENDOTS_FONT,
                 font_size=18,
                 scale_factor=scale_factor,
                 color="#E6D819",
@@ -148,7 +148,7 @@ class GamePlayUI:
         render_text(
             screen=surface,
             text=self.current_speaker,
-            font_name="zendots",
+            font_path=assets.ZENDOTS_FONT,
             font_size=10,
             scale_factor=scale_factor,
             color="gray80",
@@ -189,7 +189,7 @@ class GamePlayUI:
         render_text(
             screen=surface,
             text=f"HP {player.hp}%",
-            font_name="zendots",
+            font_path=assets.ZENDOTS_FONT,
             font_size=6,
             scale_factor=scale_factor,
             color="#E6D819",
@@ -200,7 +200,7 @@ class GamePlayUI:
         render_text(
             screen=surface,
             text=f"B x {player.bomb_ammo}",
-            font_name="zendots",
+            font_path=assets.ZENDOTS_FONT,
             font_size=6,
             scale_factor=scale_factor,
             color="#E6D819",
@@ -212,7 +212,7 @@ class GamePlayUI:
         render_text(
             screen=surface,
             text=f"P Lv. {power_display}",
-            font_name="zendots",
+            font_path=assets.ZENDOTS_FONT,
             font_size=6,
             scale_factor=scale_factor,
             color="#E6D819",

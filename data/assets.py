@@ -1,56 +1,59 @@
-IMAGES = {
-    "icon": "assets/entities/icon.png",
-    # Player
-    # "player_ship": "assets/entities/player_spaceship.png",
-    "player_ship": "assets/entities/player_ship.png",
-    # Enemies
-    "asteroid_sm": "assets/entities/asteroid_sm.png",
-    "asteroid_md": "assets/entities/asteroid_md.png",
-    "asteroid_lg": "assets/entities/asteroid_lg.png",
-    "asteroid_xl": "assets/entities/asteroid_xl.png",
-    "enemy_drone": "assets/entities/enemy_drone.png",
-    "enemy_fighter": "assets/entities/enemy_fighter.png",
-    "enemy_destroyer": "assets/entities/enemy_destroyer.png",
-    "enemy_turret": "assets/entities/enemy_turret.png",
-    "sub_boss": "assets/entities/enemy_ship.png",  #! Placeholder sprite, replace when actual sprite is ready
-    "level_boss": "assets/entities/asteroid_xl.png",  #! Placeholder sprite, replace when actual sprite is ready
-    # Projectiles
-    "player_shot_lv1": "assets/entities/player_shot_lv1.png",
-    "player_shot_lv2": "assets/entities/player_shot_lv2.png",
-    "player_shot_lv3": "assets/entities/player_shot_lv3.png",
-    "player_shot_lv4": "assets/entities/player_shot_lv4.png",
-    "player_shot_ov": "assets/entities/player_shot_ov.png",
-    "player_bomb": "assets/entities/player_bomb.png",
-    "enemy_shot": "assets/entities/enemy_shot.png",
-    "enemy_bomb": "assets/entities/enemy_bomb.png",
-    "enemy_missile": "assets/entities/enemy_missile.png",
-    # Pickups
-    "health_pickup": "assets/entities/pickup_health.png",
-    "life_pickup": "assets/entities/pickup_life_up.png",
-    "power_pickup": "assets/entities/pickup_power_up.png",
-    "overdrive_pickup": "assets/entities/pickup_overdrive.png",
-    "bomb_pickup": "assets/entities/pickup_bomb_ammo.png",
-    "invulnerable_pickup": "assets/entities/pickup_invincibility.png",
-    # Explosions
-    "explosion": "assets/entities/explosion.png",
-    # Backgrounds
-    "starfield": "assets/backgrounds/starfield_bg.png",
-    "planet": "assets/backgrounds/planet.png",
-    "planet_two": "assets/backgrounds/planet_two.png",
-    # Portraits
-    "hero_portrait": "assets/portraits/hero_portrait.png",
-    "commander_portrait": "assets/portraits/commander_portrait.png",
-}
+# Window Icon
+ICON_IMG = "assets/entities/icon.png"
 
-SOUNDS = {
-    "player_shoot": "assets/sounds/720118__baggonotes__player_shoot1.wav",
-}
+# Player
+PLAYER_SHIP_IMG = "assets/entities/player_ship.png"
 
-FONTS = {
-    "spacegrotesk_bold": "assets/fonts/spacegrotesk_bold.ttf",
-    "spacegrotesk_light": "assets/fonts/spacegrotesk_light.ttf",
-    "spacegrotesk_medium": "assets/fonts/spacegrotesk_medium.ttf",
-    "spacegrotesk_regular": "assets/fonts/spacegrotesk_regular.ttf",
-    "spacegrotesk_semibold": "assets/fonts/spacegrotesk_semibold.ttf",
-    "zendots": "assets/fonts/zendots_regular.ttf",
-}
+# Enemies
+ASTEROID_SM_IMG = "assets/entities/asteroid_sm.png"
+ASTEROID_MD_IMG = "assets/entities/asteroid_md.png"
+ASTEROID_LG_IMG = "assets/entities/asteroid_lg.png"
+ASTEROID_XL_IMG = "assets/entities/asteroid_xl.png"
+ENEMY_DRONE_IMG = "assets/entities/enemy_drone.png"
+ENEMY_FIGHTER_IMG = "assets/entities/enemy_fighter.png"
+ENEMY_DESTROYER_IMG = "assets/entities/enemy_destroyer.png"
+ENEMY_TURRET_IMG = "assets/entities/enemy_turret.png"
+SUB_BOSS_IMG = "assets/entities/enemy_ship.png"  #! Placeholder sprite
+LEVEL_BOSS_IMG = "assets/entities/asteroid_xl.png"  #! Placeholder sprite
+
+# Projectiles
+PLAYER_SHOT_LV1_IMG = "assets/entities/player_shot_lv1.png"
+PLAYER_SHOT_LV2_IMG = "assets/entities/player_shot_lv2.png"
+PLAYER_SHOT_LV3_IMG = "assets/entities/player_shot_lv3.png"
+PLAYER_SHOT_LV4_IMG = "assets/entities/player_shot_lv4.png"
+PLAYER_SHOT_OV_IMG = "assets/entities/player_shot_ov.png"
+PLAYER_BOMB_IMG = "assets/entities/player_bomb.png"
+ENEMY_SHOT_IMG = "assets/entities/enemy_shot.png"
+ENEMY_BOMB_IMG = "assets/entities/enemy_bomb.png"
+ENEMY_MISSILE_IMG = "assets/entities/enemy_missile.png"
+
+# Pickups
+HEALTH_PICKUP_IMG = "assets/entities/pickup_health.png"
+LIFE_PICKUP_IMG = "assets/entities/pickup_life_up.png"
+POWER_PICKUP_IMG = "assets/entities/pickup_power_up.png"
+OVERDRIVE_PICKUP_IMG = "assets/entities/pickup_overdrive.png"
+BOMB_PICKUP_IMG = "assets/entities/pickup_bomb_ammo.png"
+INVULNERABLE_PICKUP_IMG = "assets/entities/pickup_invincibility.png"
+
+# Explosions
+EXPLOSION_IMG = "assets/entities/explosion.png"
+
+# Backgrounds
+STARFIELD_IMG = "assets/backgrounds/starfield_bg.png"
+PLANET_IMG = "assets/backgrounds/planet.png"
+PLANET_TWO_IMG = "assets/backgrounds/planet_two.png"
+
+# Portraits
+HERO_PORTRAIT_IMG = "assets/portraits/hero_portrait.png"
+COMMANDER_PORTRAIT_IMG = "assets/portraits/commander_portrait.png"
+
+# Sound
+PLAYER_SHOOT_SFX = "assets/sounds/720118__baggonotes__player_shoot1.wav"
+
+# Fonts
+SPACEGROTESK_BOLD_FONT = "assets/fonts/spacegrotesk_bold.ttf"
+SPACEGROTESK_LIGHT_FONT = "assets/fonts/spacegrotesk_light.ttf"
+SPACEGROTESK_MEDIUM_FONT = "assets/fonts/spacegrotesk_medium.ttf"
+SPACEGROTESK_REGULAR_FONT = "assets/fonts/spacegrotesk_regular.ttf"
+SPACEGROTESK_SEMIBOLD_FONT = "assets/fonts/spacegrotesk_semibold.ttf"
+ZENDOTS_FONT = "assets/fonts/zendots_regular.ttf"
