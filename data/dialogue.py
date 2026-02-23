@@ -105,32 +105,32 @@ SCRIPTED = {
     "end_boss_intro_1_1": {
         "speaker": CMDR_NAME,
         "portrait": assets.COMMANDER_PORTRAIT_IMG,
-        "text": "Test Text 1",
+        "text": "The enemies battle station is approaching!",
         "duration": 2.0,
     },
     "end_boss_intro_1_2": {
         "speaker": END_BOSS_NAME,
-        "portrait": assets.COMMANDER_PORTRAIT_IMG,  #! Temp
-        "text": "Test Text 2",
+        "portrait": assets.COMMANDER_PORTRAIT_IMG,
+        "text": "This worm thinks he can stop us?!",
         "duration": 2.0,
     },
     "end_boss_intro_1_3": {
         "speaker": HERO_NAME,
         "portrait": assets.HERO_PORTRAIT_IMG,
-        "text": "Test Text 3",
+        "text": "You're about to find out!",
         "duration": 2.0,
     },
     #! End Boss Defeat
     "end_boss_defeat_1_1": {
         "speaker": END_BOSS_NAME,
-        "portrait": assets.COMMANDER_PORTRAIT_IMG,  #! Temp
-        "text": "Test Text 1",
+        "portrait": assets.COMMANDER_PORTRAIT_IMG,
+        "text": "All systems are malfunctioning! How could this be?!",
         "duration": 2.0,
     },
     "end_boss_defeat_1_2": {
         "speaker": HERO_NAME,
         "portrait": assets.HERO_PORTRAIT_IMG,
-        "text": "Test Text 2",
+        "text": "I'm just getting started!",
         "duration": 2.0,
     },
     "end_boss_defeat_1_3": {

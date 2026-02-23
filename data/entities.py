@@ -93,7 +93,7 @@ ENEMY_TURRET = {
     "shot_origin": {1: {"x": 0, "y": 24}},
 }
 
-SUB_BOSS = {
+MID_BOSS = {
     "hp": 256,
     "blast_radius": 256,
     "shot_origin": {
@@ -102,7 +102,7 @@ SUB_BOSS = {
     },
 }
 
-LEVEL_BOSS = {
+END_BOSS = {
     "hp": 512,
     "blast_radius": 512,
     "shot_origin": {

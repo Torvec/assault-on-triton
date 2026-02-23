@@ -252,7 +252,7 @@ class Thanks(Screen):
             scale_factor=scale_factor,
             pos=(
                 ui_surface.get_width() * 0.5,
-                ui_surface.get_height() * 0.5 * scale_factor,
+                ui_surface.get_height() * 0.5,
             ),
         )
         render_text(

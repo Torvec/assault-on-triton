@@ -11,8 +11,8 @@ from data.entities import (
     ENEMY_FIGHTER,
     ENEMY_DESTROYER,
     ENEMY_TURRET,
-    SUB_BOSS,
-    LEVEL_BOSS,
+    MID_BOSS,
+    END_BOSS,
 )
 
 DIRECTION_UP = pygame.Vector2(0, -1)
@@ -636,16 +636,16 @@ class EnemyTurret(Entity):
         self.flash_when_hit(surface, rotated_image, rotated_rect)
 
 
-class SubBoss(Entity):
+class MidBoss(Entity):
 
     def __init__(self, x, y, gameplay):
-        self.img_path = assets.SUB_BOSS_IMG
+        self.img_path = assets.MID_BOSS_IMG
         super().__init__(x, y, gameplay)
-        self.speed = SUB_BOSS["speed"]
-        self.hp = SUB_BOSS["hp"]
-        self.blast_radius = SUB_BOSS["blast_radius"]
+        self.speed = MID_BOSS["speed"]
+        self.hp = MID_BOSS["hp"]
+        self.blast_radius = MID_BOSS["blast_radius"]
         self.score_value = self.hp
-        self.shot_origin = SUB_BOSS["shot_origin"]
+        self.shot_origin = MID_BOSS["shot_origin"]
 
     def take_damage(self, amount):
         self.hp -= amount
@@ -670,16 +670,16 @@ class SubBoss(Entity):
         self.flash_when_hit(surface, self.image, self.rect)
 
 
-class LevelBoss(Entity):
+class EndBoss(Entity):
 
     def __init__(self, x, y, gameplay):
-        self.img_path = assets.LEVEL_BOSS_IMG
+        self.img_path = assets.END_BOSS_IMG
         super().__init__(x, y, gameplay)
-        self.speed = LEVEL_BOSS["speed"]
-        self.hp = LEVEL_BOSS["hp"]
-        self.blast_radius = LEVEL_BOSS["blast_radius"]
+        self.speed = END_BOSS["speed"]
+        self.hp = END_BOSS["hp"]
+        self.blast_radius = END_BOSS["blast_radius"]
         self.score_value = self.hp
-        self.shot_origin = LEVEL_BOSS["shot_origin"]
+        self.shot_origin = END_BOSS["shot_origin"]
 
     def take_damage(self, amount):
         self.hp -= amount

@@ -25,7 +25,7 @@ CUTSCENE = {
             "params": {"dialogue_id": "intro_1_4"},
         },
     ],
-    "sub_boss_intro": [
+    "mid_boss_intro": [
         {
             "action": "move_entity_to_loc",
             "params": {
@@ -36,34 +36,34 @@ CUTSCENE = {
         },
         {
             "action": "show_dialogue",
-            "params": {"dialogue_id": "sub_boss_intro_1_1"},
+            "params": {"dialogue_id": "mid_boss_intro_1_1"},
         },
+        # {
+        #     "action": "move_entity_to_loc",
+        #     "params": {
+        #         "entity_name": "mid_boss",
+        #         "location": {"x": 108, "y": 90},
+        #         "speed": 100,
+        #     },
+        # },
         {
-            "action": "move_entity_to_loc",
-            "params": {
-                "entity_name": "sub_boss",
-                "location": {"x": 108, "y": 90},
-                "speed": 100,
-            },
+            "action": "show_dialogue",
+            "params": {"dialogue_id": "mid_boss_intro_1_2"},
         },
         {
             "action": "show_dialogue",
-            "params": {"dialogue_id": "sub_boss_intro_1_2"},
+            "params": {"dialogue_id": "mid_boss_intro_1_3"},
         },
         {
             "action": "show_dialogue",
-            "params": {"dialogue_id": "sub_boss_intro_1_3"},
+            "params": {"dialogue_id": "mid_boss_intro_1_4"},
         },
         {
             "action": "show_dialogue",
-            "params": {"dialogue_id": "sub_boss_intro_1_4"},
-        },
-        {
-            "action": "show_dialogue",
-            "params": {"dialogue_id": "sub_boss_intro_1_5"},
+            "params": {"dialogue_id": "mid_boss_intro_1_5"},
         },
     ],
-    "sub_boss_defeat": [
+    "mid_boss_defeat": [
         {
             "action": "move_entity_to_loc",
             "params": {
@@ -74,34 +74,34 @@ CUTSCENE = {
         },
         {
             "action": "show_dialogue",
-            "params": {"dialogue_id": "sub_boss_defeat_1_1"},
+            "params": {"dialogue_id": "mid_boss_defeat_1_1"},
         },
         {
             "action": "show_dialogue",
-            "params": {"dialogue_id": "sub_boss_defeat_1_2"},
+            "params": {"dialogue_id": "mid_boss_defeat_1_2"},
         },
+        # {
+        #     "action": "explode_entity",
+        #     "params": {"entity_name": "mid_boss"},
+        # },
         {
-            "action": "explode_entity",
-            "params": {"entity_name": "sub_boss"},
+            "action": "show_dialogue",
+            "params": {"dialogue_id": "mid_boss_defeat_1_3"},
         },
         {
             "action": "show_dialogue",
-            "params": {"dialogue_id": "sub_boss_defeat_1_3"},
+            "params": {"dialogue_id": "mid_boss_defeat_1_4"},
         },
         {
             "action": "show_dialogue",
-            "params": {"dialogue_id": "sub_boss_defeat_1_4"},
+            "params": {"dialogue_id": "mid_boss_defeat_1_5"},
         },
         {
             "action": "show_dialogue",
-            "params": {"dialogue_id": "sub_boss_defeat_1_5"},
-        },
-        {
-            "action": "show_dialogue",
-            "params": {"dialogue_id": "sub_boss_defeat_1_6"},
+            "params": {"dialogue_id": "mid_boss_defeat_1_6"},
         },
     ],
-    "level_boss_intro": [
+    "end_boss_intro": [
         {
             "action": "move_entity_to_loc",
             "params": {
@@ -112,26 +112,26 @@ CUTSCENE = {
         },
         {
             "action": "show_dialogue",
-            "params": {"dialogue_id": "level_boss_intro_1_1"},
+            "params": {"dialogue_id": "end_boss_intro_1_1"},
         },
+        # {
+        #     "action": "move_entity_to_loc",
+        #     "params": {
+        #         "entity_name": "end_boss",
+        #         "location": {"x": 108, "y": 90},
+        #         "speed": 100,
+        #     },
+        # },
         {
-            "action": "move_entity_to_loc",
-            "params": {
-                "entity_name": "level_boss",
-                "location": {"x": 108, "y": 90},
-                "speed": 100,
-            },
+            "action": "show_dialogue",
+            "params": {"dialogue_id": "end_boss_intro_1_2"},
         },
         {
             "action": "show_dialogue",
-            "params": {"dialogue_id": "level_boss_intro_1_2"},
-        },
-        {
-            "action": "show_dialogue",
-            "params": {"dialogue_id": "level_boss_intro_1_3"},
+            "params": {"dialogue_id": "end_boss_intro_1_3"},
         },
     ],
-    "level_boss_defeat": [
+    "end_boss_defeat": [
         {
             "action": "move_entity_to_loc",
             "params": {
@@ -142,20 +142,20 @@ CUTSCENE = {
         },
         {
             "action": "show_dialogue",
-            "params": {"dialogue_id": "level_boss_defeat_1_1"},
+            "params": {"dialogue_id": "end_boss_defeat_1_1"},
         },
         {
             "action": "show_dialogue",
-            "params": {"dialogue_id": "level_boss_defeat_1_2"},
+            "params": {"dialogue_id": "end_boss_defeat_1_2"},
         },
-        {
-            "action": "explode_entity",
-            "params": {"entity_name": "level_boss"},
-        },
-        {
-            "action": "show_dialogue",
-            "params": {"dialogue_id": "level_boss_defeat_1_3"},
-        },
+        # {
+        #     "action": "explode_entity",
+        #     "params": {"entity_name": "end_boss"},
+        # },
+        # {
+        #     "action": "show_dialogue",
+        #     "params": {"dialogue_id": "end_boss_defeat_1_3"},
+        # },
     ],
     "outro": [
         {

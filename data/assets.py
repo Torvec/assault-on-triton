@@ -13,8 +13,8 @@ ENEMY_DRONE_IMG = "assets/entities/enemy_drone.png"
 ENEMY_FIGHTER_IMG = "assets/entities/enemy_fighter.png"
 ENEMY_DESTROYER_IMG = "assets/entities/enemy_destroyer.png"
 ENEMY_TURRET_IMG = "assets/entities/enemy_turret.png"
-SUB_BOSS_IMG = "assets/entities/enemy_ship.png"  #! Placeholder sprite
-LEVEL_BOSS_IMG = "assets/entities/asteroid_xl.png"  #! Placeholder sprite
+MID_BOSS_IMG = "assets/entities/enemy_ship.png"  #! Placeholder sprite
+END_BOSS_IMG = "assets/entities/asteroid_xl.png"  #! Placeholder sprite
 
 # Projectiles
 PLAYER_SHOT_LV1_IMG = "assets/entities/player_shot_lv1.png"

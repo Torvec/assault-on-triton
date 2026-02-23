@@ -17,15 +17,16 @@ def move_to_location(entity, x, y, speed, dt):
     direction = target - entity.position
     distance = direction.length()
 
-    if distance < 5:  # Threshold to prevent jittering
+    if distance < 5:
         entity.position = target.copy()
         entity.velocity = pygame.Vector2(0, 0)
-        if not hasattr(entity, "_location_reached"):
+        if not getattr(entity, "_location_reached", False):
             entity._location_reached = True
             entity.behaviors = [
                 b for b in entity.behaviors if b.get("action") != "move_to_location"
             ]
             entity.gameplay.cutscene_manager.on_action_complete()
+            entity._location_reached = False
         return
 
     if distance > 0:

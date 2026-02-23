@@ -9,8 +9,8 @@ from src.entities import (
     EnemyFighter,
     EnemyDestroyer,
     EnemyTurret,
-    SubBoss,
-    LevelBoss,
+    MidBoss,
+    EndBoss,
     HealthPickup,
     PowerLevelPickup,
     OverdrivePickup,
@@ -97,7 +97,7 @@ class StateManager:
     def draw(self, surface):
         if self.current_state:
             self.states[self.current_state].draw(surface)
-    
+
     def draw_ui(self, surface, scale_factor):
         if self.current_state:
             self.states[self.current_state].draw_ui(surface, scale_factor)
@@ -111,8 +111,8 @@ class EntityManager:
 
     def setup_groups(self):
         self.player_group = pygame.sprite.GroupSingle()
-        self.sub_boss_group = pygame.sprite.GroupSingle()
-        self.level_boss_group = pygame.sprite.GroupSingle()
+        self.mid_boss_group = pygame.sprite.GroupSingle()
+        self.end_boss_group = pygame.sprite.GroupSingle()
         self.projectiles = pygame.sprite.Group()
         self.explosions = pygame.sprite.Group()
         self.pickups = pygame.sprite.Group()
@@ -158,19 +158,19 @@ class EntityManager:
                 "class": EnemyTurret,
                 "containers": [self.updateable, self.drawable, self.active_targets],
             },
-            "sub_boss": {
-                "class": SubBoss,
+            "mid_boss": {
+                "class": MidBoss,
                 "containers": [
-                    self.sub_boss_group,
+                    self.mid_boss_group,
                     self.updateable,
                     self.drawable,
                     self.active_targets,
                 ],
             },
-            "level_boss": {
-                "class": LevelBoss,
+            "end_boss": {
+                "class": EndBoss,
                 "containers": [
-                    self.level_boss_group,
+                    self.end_boss_group,
                     self.updateable,
                     self.drawable,
                     self.active_targets,
@@ -229,10 +229,10 @@ class EntityManager:
     def get_entity_instance(self, entity_name):
         if entity_name == "player":
             return self.player_group.sprite
-        elif entity_name == "sub_boss":
-            return self.sub_boss_group.sprite
-        elif entity_name == "level_boss":
-            return self.level_boss_group.sprite
+        elif entity_name == "mid_boss":
+            return self.mid_boss_group.sprite
+        elif entity_name == "end_boss":
+            return self.end_boss_group.sprite
         else:
             print(f"Entity instance lookup for '{entity_name}' not implemented")
             return None
@@ -254,12 +254,12 @@ class CollisionManager:
         return self.entity_manager.get_entity_instance("player")
 
     @property
-    def sub_boss(self):
-        return self.entity_manager.get_entity_instance("sub_boss")
+    def mid_boss(self):
+        return self.entity_manager.get_entity_instance("mid_boss")
 
     @property
-    def level_boss(self):
-        return self.entity_manager.get_entity_instance("level_boss")
+    def end_boss(self):
+        return self.entity_manager.get_entity_instance("end_boss")
 
     def handle_boundaries(self, entity, action="kill"):
         if not self.boundary_handling_enabled:
@@ -429,9 +429,7 @@ class EventManager:
     def process_next(self):
         if self.current_index >= len(self.events):
             print("Event queue complete")
-            self.gameplay.game.change_screen(
-                "GamePlay"
-            )  #! Should be Thanks, but doing this for testing now
+            self.gameplay.game.change_screen("Thanks")
             return
 
         self.current_event = self.events[self.current_index]
@@ -642,10 +640,10 @@ class BattleManager:
         self.battle_entity = None
 
     def start_battle(self, battle_id):
-        if battle_id == "sub_boss":
-            self.battle_entity = self.entity_manager.sub_boss_group.sprite
-        elif battle_id == "level_boss":
-            self.battle_entity = self.entity_manager.level_boss_group.sprite
+        if battle_id == "mid_boss":
+            self.battle_entity = self.entity_manager.mid_boss_group.sprite
+        elif battle_id == "end_boss":
+            self.battle_entity = self.entity_manager.end_boss_group.sprite
         else:
             print(f"Warning: Battle entity for {battle_id} not found!")
 
