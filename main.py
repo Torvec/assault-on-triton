@@ -1,9 +1,22 @@
+import platform
 import pygame
 from src.game import Game
 from data.assets import ICON_IMG
 
 
+def handle_windows_dpi():
+    if platform.system() == "Windows":
+        try:
+            import ctypes
+
+            ctypes.windll.shcore.SetProcessDpiAwareness(1)
+        except Exception as e:
+            print(f"Could not set DPI awareness: {e}")
+
+
 def main():
+
+    handle_windows_dpi()
     pygame.init()
     pygame.mixer.init()
     pygame.display.set_caption("Assault On Triton")
