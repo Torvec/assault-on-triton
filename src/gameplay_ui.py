@@ -122,6 +122,11 @@ class GamePlayUI:
                 align="center",
             )
 
+    def scale_img(self, icon, scale_factor):
+        w = int(icon.get_width() * scale_factor)
+        h = int(icon.get_height() * scale_factor)
+        return pygame.transform.scale(icon, (w, h))
+
     def draw_dialogue_box(self, surface, scale_factor):
         if not (
             self.current_speaker and self.current_dialogue and self.current_portrait
@@ -132,7 +137,7 @@ class GamePlayUI:
             0,
             0,
             surface.get_width() - 8 * scale_factor,
-            48 * scale_factor,
+            72 * scale_factor,
         )
         rect.bottomleft = surface.get_rect().bottomleft
         rect.x += 4 * scale_factor
@@ -148,6 +153,7 @@ class GamePlayUI:
         )
 
         portrait = pygame.image.load(self.current_portrait)
+        portrait = self.scale_img(portrait, scale_factor)
         portrait_rect = portrait.get_rect()
         portrait_rect.topleft = content_rect.topleft
         surface.blit(portrait, portrait_rect)
@@ -178,11 +184,6 @@ class GamePlayUI:
             align="midleft",
         )
 
-    def scale_icon(self, icon, scale_factor):
-        w = int(icon.get_width() * scale_factor)
-        h = int(icon.get_height() * scale_factor)
-        return pygame.transform.scale(icon, (w, h))
-
     def draw_player_status_hud(self, surface, scale_factor):
         if not self.gameplay.entity_manager.player_group.sprite:
             return
@@ -197,13 +198,13 @@ class GamePlayUI:
 
         power_display = ui.UI["power_levels"].get(player.power_level, "?")
         sections = [
-            (self.scale_icon(self.hp_hud_icon, scale_factor), f"{player.hp}%"),
+            (self.scale_img(self.hp_hud_icon, scale_factor), f"{player.hp}%"),
             (
-                self.scale_icon(self.bomb_ammo_hud_icon, scale_factor),
+                self.scale_img(self.bomb_ammo_hud_icon, scale_factor),
                 f"x {player.bomb_ammo}",
             ),
             (
-                self.scale_icon(self.pwr_lvl_hud_icon, scale_factor),
+                self.scale_img(self.pwr_lvl_hud_icon, scale_factor),
                 f"Lv. {power_display}",
             ),
         ]
