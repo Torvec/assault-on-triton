@@ -821,7 +821,6 @@ class Player(Entity):
     def __init__(self, x, y, gameplay):
         self.img_path = assets.PLAYER_SHIP_IMG
         super().__init__(x, y, gameplay)
-        self.acceleration = PLAYER["base_acceleration"]
         self.speed = PLAYER["base_speed"]
         self.lives = PLAYER["base_lives"]
         self.hp = PLAYER["base_hp"]

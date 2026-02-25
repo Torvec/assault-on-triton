@@ -1,40 +1,21 @@
-DISPLAY = {
-    "base_gs_w": 216,
-    "base_gs_h": 360,
-    "target_fps": 60,
-}
+# Display
+BASE_GS_WIDTH = 216
+BASE_GS_HEIGHT = 360
+TARGET_FPS = 60
 
+# Audio
+MASTER_VOL = 1.0
+SFX_VOL = 0.5
+MUSIC_VOL = 0.7
 
-AUDIO = {
-    "master_volume": 1.0,
-    "sfx_volume": 0.5,
-    "music_volume": 0.7,
-}
-
-SCORING = {
-    "streak_threshold_base": 10,
-    "streak_decay_base": 1,
-    "streak_delay": 3,  # seconds before decay starts
-    "init_multiplier": 1,
-    "init_streak_meter": 0,
-}
+# Scoring
+STREAK_THESHOLD_BASE = 10
+STREAK_DECAY_BASE = 1
+STREAK_DELAY_BASE = 3
+STREAK_MULTIPLIER_INIT = 1
+STREAK_METER_INIT = 0
 
 UI = {
-    "hud_padding": 16,
-    "hud_inner_padding": 16,
-    "hud_top_section_height": 128,
-    "hud_mid_section_height": 256,
-    "hud_bottom_section_height": 48,
-    "hud_meter_height": 16,
-    "hud_meter_y_offset": 24,
-    "hud_meter_border_width": 2,
-    "hud_meter_inner_padding": 2,
-    "hud_meter_inner_height": 12,
-    "font_sizes": {
-        "large": 24,
-        "medium": 20,
-        "small": 16,
-    },
     "colors": {
         "primary": "#E6D819",
         "secondary": "gray80",
@@ -43,11 +24,11 @@ UI = {
         "meter_fill": "grey50",
     },
     "power_levels": {
-        1: "( I )",
-        2: "( II )",
-        3: "( III )",
-        4: "( IV )",
-        5: "( OV )",
+        1: "1",
+        2: "2",
+        3: "3",
+        4: "4",
+        5: "OV",
     },
 }
 

@@ -1,5 +1,5 @@
 # Window Icon
-ICON_IMG = "assets/entities/icon.png"
+ICON_IMG = "assets/ui/icon.png"
 
 # Player
 PLAYER_SHIP_IMG = "assets/entities/player_ship.png"
@@ -46,6 +46,11 @@ PLANET_TWO_IMG = "assets/backgrounds/planet_two.png"
 # Portraits
 HERO_PORTRAIT_IMG = "assets/portraits/hero_portrait.png"
 COMMANDER_PORTRAIT_IMG = "assets/portraits/commander_portrait.png"
+
+# UI
+HP_HUD_ICON = "assets/ui/hp_hud_icon.png"
+BOMB_AMMO_HUD_ICON = "assets/ui/bomb_ammo_hud_icon.png"
+PWR_LVL_HUD_ICON = "assets/ui/pwr_lvl_hud_icon.png"
 
 # Sound
 PLAYER_SHOOT_SFX = "assets/sounds/720118__baggonotes__player_shoot1.wav"

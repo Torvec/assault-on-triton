@@ -39,36 +39,21 @@ class GamePlay(Screen):
         self.pause_modal = PauseModal(self)
 
         self.entity_manager = EntityManager()
-        self.event_manager = EventManager(
-            self,
-            EVENT_QUEUE,
-        )
+        self.event_manager = EventManager(self, EVENT_QUEUE)
         self.spawn_manager = SpawnManager(
-            self,
-            self.play_area_rect,
-            self.entity_manager,
+            self, self.play_area_rect, self.entity_manager
         )
         self.wave_manager = WaveManager(
-            self.entity_manager,
-            self.spawn_manager,
-            self.event_manager,
+            self.entity_manager, self.spawn_manager, self.event_manager
         )
-        self.battle_manager = BattleManager(
-            self.entity_manager,
-            self.event_manager,
-        )
+        self.battle_manager = BattleManager(self.entity_manager, self.event_manager)
         self.cutscene_manager = CutsceneManager(
-            self.entity_manager,
-            self.event_manager,
-            self.gameplay_ui,
+            self.entity_manager, self.event_manager, self.gameplay_ui
         )
         self.collision_manager = CollisionManager(
-            self.entity_manager,
-            self.play_area_rect,
+            self.entity_manager, self.play_area_rect
         )
-        self.score_manager = ScoreManager(
-            self.game.score_store,
-        )
+        self.score_manager = ScoreManager(self.game.score_store)
         self.state_manager = StateManager(
             self,
             self.event_manager,

@@ -1,11 +1,9 @@
 PLAYER = {
-    "base_acceleration": 600,
     "base_speed": 200,
     "base_lives": 1,
     "max_lives": 3,
     "base_hp": 100,
     "invincible_duration": 2,
-    "invulnerable_duration": 30,
     "overdrive_duration": 20,
     "base_bomb_ammo": 3,
     "max_bomb_ammo": 6,
@@ -13,7 +11,6 @@ PLAYER = {
     "base_power_level": 1,
     "max_power_level": 4,
     "death_blast_radius": 128,
-    "velocity_decay": 0.99,
     "shot_origin": {
         1: {"x": 0, "y": -24},
         2: {"x": -6, "y": -20},
@@ -27,7 +24,7 @@ PLAYER = {
         1: {"rate": 0.28, "active_pos": [1]},
         2: {"rate": 0.24, "active_pos": [2, 3]},
         3: {"rate": 0.20, "active_pos": [2, 3, 4, 5]},
-        4: {"rate": 0.16, "active_pos": [2, 3, 4, 5, 6, 7]},
+        4: {"rate": 0.16, "active_pos": [1, 2, 3, 4, 5]},
         5: {"rate": 0.12, "active_pos": [1, 2, 3, 4, 5, 6, 7]},
     },
 }

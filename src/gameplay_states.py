@@ -16,10 +16,10 @@ class State:
         pass
 
     def enter(self):
-        pass
+        print(f"Entering {self.__class__.__name__}")
 
     def exit(self):
-        pass
+        print(f"Exiting {self.__class__.__name__}")
 
     def handle_event(self, events):
         pass
@@ -40,11 +40,11 @@ class InitState(State):
         self.event_manager = event_manager
 
     def enter(self):
-        print("Entering InitState")
+        super().enter()
         self.event_manager.start()
 
     def exit(self):
-        print("Exiting InitState")
+        super().exit()
 
 
 class CutsceneState(State):
@@ -55,12 +55,12 @@ class CutsceneState(State):
         self.collision_manager = collision_manager
 
     def enter(self):
-        print("Entering CutsceneState")
+        super().enter()
         self.entity_manager.player_group.sprite.controls_enabled = False
         self.collision_manager.boundary_handling_enabled = False
 
     def exit(self):
-        print("Exiting CutsceneState")
+        super().exit()
 
     def handle_event(self, events):
         for event in events:
@@ -90,13 +90,12 @@ class PlayState(State):
         self.gameplay_ui = gameplay_ui
 
     def enter(self):
-        print("Entering PlayState")
+        super().enter()
         self.entity_manager.player_group.sprite.controls_enabled = True
         self.collision_manager.boundary_handling_enabled = True
 
     def exit(self):
-        print("Exiting PlayState")
-        pass
+        super().exit()
 
     def handle_event(self, events):
         for event in events:
@@ -125,12 +124,12 @@ class PausedState(State):
         self.pause_modal = pause_modal
 
     def enter(self):
-        print("Entering PausedState")
+        super().enter()
         self.entity_manager.player_group.sprite.controls_enabled = False
         self.pause_modal.is_visible = True
 
     def exit(self):
-        print("Exiting PausedState")
+        super().exit()
         self.pause_modal.is_visible = False
 
     def handle_event(self, events):
@@ -152,12 +151,12 @@ class GameOverState(State):
         self.gameplay = gameplay
 
     def enter(self):
-        print("Entering GameOverState")
+        super().enter()
         self.gameplay.create_game_over_modal()
         self.gameplay.game_over_modal.is_visible = True
 
     def exit(self):
-        print("Exiting GameOverState")
+        super().exit()
         self.gameplay.game_over_modal.is_visible = False
 
     def handle_event(self, events):
@@ -175,14 +174,14 @@ class MissionCompleteState(State):
         self.score_manager = score_manager
 
     def enter(self):
-        print("Entering MissionCompleteState")
+        super().enter()
         self.entity_manager.player_group.sprite.controls_enabled = False
         self.score_manager.store_score()
         self.gameplay.create_end_level_modal()
         self.gameplay.end_level_modal.is_visible = True
 
     def exit(self):
-        print("Exiting MissionCompleteState")
+        super().exit()
         self.gameplay.end_level_modal.is_visible = False
 
     def handle_event(self, events):

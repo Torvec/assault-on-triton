@@ -1,15 +1,15 @@
 import pygame
+import data.settings as s
 from src.screens import Start, Options, Scoreboard, Credits, Thanks
 from src.gameplay_screen import GamePlay
 from src.score_store import ScoreStore
-from data.settings import DISPLAY
 
 
 class Game:
 
     def __init__(self, display_surface):
         self.display_surface = display_surface
-        self.game_surface = pygame.Surface((DISPLAY["base_gs_w"], DISPLAY["base_gs_h"]))
+        self.game_surface = pygame.Surface((s.BASE_GS_WIDTH, s.BASE_GS_HEIGHT))
         self.scale_factor = self.get_scale_factor()
         self.scaled_gs = self.scale_game_surface(self.scale_factor)
         self.scaled_gs_rect = self.scaled_gs.get_rect(
@@ -39,8 +39,8 @@ class Game:
         self.current_screen = self.screens[screen_name](self)
 
     def get_scale_factor(self):
-        scale_w = self.display_surface.get_width() // DISPLAY["base_gs_w"]
-        scale_h = self.display_surface.get_height() // DISPLAY["base_gs_h"]
+        scale_w = self.display_surface.get_width() // s.BASE_GS_WIDTH
+        scale_h = self.display_surface.get_height() // s.BASE_GS_HEIGHT
         return max(1, min(scale_w, scale_h))
 
     def scale_game_surface(self, scale):
@@ -55,7 +55,7 @@ class Game:
     def run(self):
         """
         Main game loop that handles events, updates game state, and renders.
-        
+
         The loop performs the following steps each frame:
         1. Process pygame events (quit, input, etc.)
         2. Handle screen-specific events
@@ -89,5 +89,5 @@ class Game:
             self.display_surface.blit(self.ui_surface, self.ui_surface_rect)
 
             pygame.display.flip()
-            self.dt = self.clock.tick(DISPLAY["target_fps"]) / 1000
+            self.dt = self.clock.tick(s.TARGET_FPS) / 1000
         pygame.quit()

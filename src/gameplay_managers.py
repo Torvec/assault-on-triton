@@ -1,4 +1,5 @@
 import pygame
+import data.settings as s
 from src.entities import (
     Player,
     AsteroidXL,
@@ -29,7 +30,6 @@ from src.gameplay_states import (
     GameOverState,
     MissionCompleteState,
 )
-from data.settings import SCORING, SPAWN_LOCATIONS
 
 
 class StateManager:
@@ -387,7 +387,7 @@ class SpawnManager:
     def calc_position(self, location):
 
         if isinstance(location, str):
-            offset_x, side_y = SPAWN_LOCATIONS[location]
+            offset_x, side_y = s.SPAWN_LOCATIONS[location]
             offset_y = 64
 
             if side_y == "top":
@@ -662,10 +662,10 @@ class ScoreManager:
     def __init__(self, score_store):
         self.score_store = score_store
         self.score = 0
-        self.multiplier = SCORING["init_multiplier"]
-        self.streak_meter = SCORING["init_streak_meter"]
-        self.streak_meter_threshold = SCORING["streak_threshold_base"]
-        self.streak_meter_decay_amount = SCORING["streak_decay_base"]
+        self.multiplier = s.STREAK_MULTIPLIER_INIT
+        self.streak_meter = s.STREAK_METER_INIT
+        self.streak_meter_threshold = s.STREAK_THESHOLD_BASE
+        self.streak_meter_decay_amount = s.STREAK_DECAY_BASE
         self.streak_meter_delay_decay_timer = 0
 
     def handle_score(self, amount):
@@ -673,7 +673,7 @@ class ScoreManager:
             self.score += amount
         else:
             self.score += amount * self.multiplier
-            self.streak_meter_delay_decay_timer = SCORING["streak_delay"]
+            self.streak_meter_delay_decay_timer = s.STREAK_DELAY_BASE
 
     def handle_streak_meter_inc(self, amount):
         self.streak_meter += amount

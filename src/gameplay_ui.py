@@ -1,9 +1,9 @@
 import pygame
+import data.settings as ui
+import data.assets as a
 from src.render_text import render_text
-from data.settings import UI
 from data.dialogue import SCRIPTED
 from data.messages import MESSAGES
-import data.assets as assets
 
 
 class GamePlayUI:
@@ -23,6 +23,13 @@ class GamePlayUI:
         self.current_message = None
         self.message_duration = 0
         self.message_is_blocking = False
+
+        # hud icons
+        self.hp_hud_icon = pygame.image.load(a.HP_HUD_ICON).convert_alpha()
+        self.bomb_ammo_hud_icon = pygame.image.load(
+            a.BOMB_AMMO_HUD_ICON
+        ).convert_alpha()
+        self.pwr_lvl_hud_icon = pygame.image.load(a.PWR_LVL_HUD_ICON).convert_alpha()
 
     def display_dialogue(self, dialogue_id):
         dialogue = SCRIPTED[dialogue_id]
@@ -74,8 +81,8 @@ class GamePlayUI:
         render_text(
             screen=surface,
             text="SCORE:",
-            font_path=assets.ZENDOTS_FONT,
-            font_size=6,
+            font_path=a.ZENDOTS_FONT,
+            font_size=8,
             scale_factor=scale_factor,
             color="#E6D819",
             pos=rect.topleft,
@@ -84,18 +91,18 @@ class GamePlayUI:
         render_text(
             screen=surface,
             text=f"{self.gameplay.score_manager.score:09}",
-            font_path=assets.ZENDOTS_FONT,
-            font_size=6,
+            font_path=a.ZENDOTS_FONT,
+            font_size=8,
             scale_factor=scale_factor,
             color="white",
-            pos=(rect.topleft[0] + 32 * scale_factor, rect.topleft[1]),
-            align="topleft"
+            pos=(rect.topleft[0] + 42 * scale_factor, rect.topleft[1]),
+            align="topleft",
         )
         render_text(
             screen=surface,
             text=f"x{self.gameplay.score_manager.multiplier}",
-            font_path=assets.ZENDOTS_FONT,
-            font_size=6,
+            font_path=a.ZENDOTS_FONT,
+            font_size=8,
             scale_factor=scale_factor,
             color="#E6D819",
             pos=rect.topright,
@@ -107,7 +114,7 @@ class GamePlayUI:
             render_text(
                 screen=surface,
                 text=self.current_message,
-                font_path=assets.ZENDOTS_FONT,
+                font_path=a.ZENDOTS_FONT,
                 font_size=18,
                 scale_factor=scale_factor,
                 color="#E6D819",
@@ -129,7 +136,7 @@ class GamePlayUI:
         )
         rect.bottomleft = surface.get_rect().bottomleft
         rect.x += 4 * scale_factor
-        rect.y -= 16 * scale_factor
+        rect.y -= 24 * scale_factor
 
         pygame.draw.rect(surface, "grey10", rect)
 
@@ -148,7 +155,7 @@ class GamePlayUI:
         render_text(
             screen=surface,
             text=self.current_speaker,
-            font_path=assets.ZENDOTS_FONT,
+            font_path=a.ZENDOTS_FONT,
             font_size=10,
             scale_factor=scale_factor,
             color="gray80",
@@ -171,54 +178,59 @@ class GamePlayUI:
             align="midleft",
         )
 
+    def scale_icon(self, icon, scale_factor):
+        w = int(icon.get_width() * scale_factor)
+        h = int(icon.get_height() * scale_factor)
+        return pygame.transform.scale(icon, (w, h))
+
     def draw_player_status_hud(self, surface, scale_factor):
         if not self.gameplay.entity_manager.player_group.sprite:
             return
 
+        player = self.gameplay.entity_manager.player_group.sprite
         gs_rect = surface.get_rect()
 
         hud_height = 16 * scale_factor
         hud_width = gs_rect.width - 8 * scale_factor
+        hud_rect = pygame.Rect(0, 0, hud_width, hud_height)
+        hud_rect.midbottom = (gs_rect.centerx, gs_rect.bottom - 4 * scale_factor)
 
-        rect = pygame.Rect(0, 0, hud_width, hud_height)
-        rect.midbottom = (gs_rect.centerx, gs_rect.bottom - 4 * scale_factor)
+        power_display = ui.UI["power_levels"].get(player.power_level, "?")
+        sections = [
+            (self.scale_icon(self.hp_hud_icon, scale_factor), f"{player.hp}%"),
+            (
+                self.scale_icon(self.bomb_ammo_hud_icon, scale_factor),
+                f"x {player.bomb_ammo}",
+            ),
+            (
+                self.scale_icon(self.pwr_lvl_hud_icon, scale_factor),
+                f"Lv. {power_display}",
+            ),
+        ]
 
-        player = self.gameplay.entity_manager.player_group.sprite
+        section_width = hud_rect.width // len(sections)
+        gap = 2 * scale_factor
 
-        # TODO: Render the HP ui icon instead of HP
-        render_text(
-            screen=surface,
-            text=f"HP {player.hp}%",
-            font_path=assets.ZENDOTS_FONT,
-            font_size=6,
-            scale_factor=scale_factor,
-            color="#E6D819",
-            pos=rect.bottomleft,
-            align="bottomleft",
-        )
-        # TODO: Render the bomb ui Icon instead of the B
-        render_text(
-            screen=surface,
-            text=f"B x {player.bomb_ammo}",
-            font_path=assets.ZENDOTS_FONT,
-            font_size=6,
-            scale_factor=scale_factor,
-            color="#E6D819",
-            pos=rect.midbottom,
-            align="midbottom",
-        )
-        # TODO: Render the power level ui icon instead of a P
-        power_display = UI["power_levels"].get(player.power_level, "( ? )")
-        render_text(
-            screen=surface,
-            text=f"P Lv. {power_display}",
-            font_path=assets.ZENDOTS_FONT,
-            font_size=6,
-            scale_factor=scale_factor,
-            color="#E6D819",
-            pos=rect.bottomright,
-            align="bottomright",
-        )
+        for i, (icon, text) in enumerate(sections):
+            section_rect = pygame.Rect(
+                hud_rect.x + i * section_width,
+                hud_rect.y,
+                section_width,
+                hud_rect.height,
+            )
+            text_surf = pygame.font.Font(a.ZENDOTS_FONT, int(8 * scale_factor)).render(
+                text, False, "#E6D819"
+            )
+            total_width = icon.get_width() + gap + text_surf.get_width()
+            start_x = section_rect.centerx - total_width // 2
+
+            icon_rect = icon.get_rect(midleft=(start_x, section_rect.centery))
+            surface.blit(icon, icon_rect)
+
+            text_rect = text_surf.get_rect(
+                midleft=(icon_rect.right + gap, section_rect.centery)
+            )
+            surface.blit(text_surf, text_rect)
 
     def update(self, dt):
         self.handle_dialogue_duration(dt)
